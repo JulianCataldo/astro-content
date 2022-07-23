@@ -1,0 +1,7 @@
+{
+  "yaml.schemas": {
+    "content/boats/boat.schema.json": [
+      "content/boats/*/frontmatter.yaml"
+    ]
+  }
+}
