@@ -6,7 +6,7 @@ TS / JSON Schema / VS Code / Markdown / Astro — Synchronization
 
 ```zsh
 
-pnpm i
+pnpm i -r
 pnpm run dev & pnpm run demo
 
 ```
