@@ -25,7 +25,7 @@ https://user-images.githubusercontent.com/603498/180596260-83e8624e-6c43-448d-a9
 ## Edition
 
 1. `./content/<collection>/<type>.schema.json`
-   1. Generate types in `./demo/types/<type>.ts`
+   1. Generate types in `./demo/types/<type>.ts`  
       **Example**: [`./demo/types/boat.ts`](./demo/types/boat.ts)
       - Provides type awareness in Astro files.  
         **Example**: [`./demo/src/pages/index.astro`](./demo/src/pages/index.astro)
