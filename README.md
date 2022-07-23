@@ -31,7 +31,7 @@ https://user-images.githubusercontent.com/603498/180596260-83e8624e-6c43-448d-a9
         **Example**: [`./demo/src/pages/index.astro`](./demo/src/pages/index.astro)
    2. Generate VSCode settings `./.vscode/settings.json`
       - Provides schema auto-completion and validation in `./content/<collection>/<name>/frontmatter.yaml`  
-        **Example**: [`./content/boats/the-huge-yellow-one/frontmatter.yaml`](`./content/boats/the-huge-yellow-one/frontmatter.yaml`)
+        **Example**: [`./content/boats/the-huge-yellow-one/frontmatter.yaml`](./content/boats/the-huge-yellow-one/frontmatter.yaml)
 2. `./content/**/*/*.md`.
    1. Generate HTML in `demo/content/<collection>/<name>/body.html`
       1. Provides content in Astro files.  
