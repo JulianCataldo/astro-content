@@ -1,0 +1,33 @@
+---
+import type { Boat } from '../../types/boat';
+import content from '../content'
+ 
+
+const yellowOne = await content('boats/the-huge-yellow-one')
+  .then((comp) => ({
+      frontmatter: comp.frontmatter as Boat,
+      body: comp.body
+    }))
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width" />
+		<title>Content Components Demo</title>
+	</head>
+	<body>
+		<h1>MODEL: {yellowOne.frontmatter?.model}</h1>
+    <h2>YEAR: {yellowOne.frontmatter?.year}</h2>
+    <h3>COLOR: {yellowOne.frontmatter?.color}</h3>
+    <h3>BRAND: {yellowOne.frontmatter?.brand}</h3>
+
+    <hr>
+
+    <article>
+      Article Body ! <br />
+      <p set:html={yellowOne?.body}></p>      
+    </article>
+
+	</body>
+</html>
