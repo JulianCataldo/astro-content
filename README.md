@@ -1,3 +1,7 @@
+# Content components transformer
+
+TS / JSON Schema / VS Code / Markdown / Astro — Synchronization
+
 # Usage
 
 ```zsh
