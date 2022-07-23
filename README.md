@@ -7,6 +7,9 @@ pnpm run dev & pnpm run demo
 
 ```
 
+> **Note**:
+> Astro demo site is not configured yet for SSR, but should work with live content updates without problems
+
 ## Edition
 
 1. `./content/<collection>/<type>.schema.json`
