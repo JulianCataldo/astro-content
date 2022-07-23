@@ -7,13 +7,21 @@ pnpm run dev & pnpm run demo
 
 ```
 
-> **Note**:
+# Quick demo
+
+---
+
+https://user-images.githubusercontent.com/603498/180596260-83e8624e-6c43-448d-a957-49420677d73e.mp4
+
+---
+
+> **Note**  
 > Astro demo site is not configured yet for SSR, but should work with live content updates without problems
 
 ## Edition
 
 1. `./content/<collection>/<type>.schema.json`
-   1. Generate types in [`./demo/types/<type>.ts`](./demo/types/boat.ts)  
+   1. Generate types in `./demo/types/<type>.ts`
       **Example**: [`./demo/types/boat.ts`](./demo/types/boat.ts)
       - Provides type awareness in Astro files.  
         **Example**: [`./demo/src/pages/index.astro`](./demo/src/pages/index.astro)
