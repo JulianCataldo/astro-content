@@ -11,6 +11,8 @@ pnpm run dev & pnpm run demo
 
 ```
 
+Make sure to have `redhat.vscode-yaml` extension installed, this will enable YAML schema support.
+
 # Quick demo
 
 ---
