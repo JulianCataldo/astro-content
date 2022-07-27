@@ -1,0 +1,45 @@
+{
+  "title": "Dessert",
+  "type": "object",
+  "properties": {
+    "frontmatter": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Wow this brand must be expensive"
+        },
+        "calories": {
+          "type": "number",
+          "description": "Not too old, not too new"
+        },
+        "color": {
+          "description": "Peemp it",
+          "type": "string",
+          "enum": [
+            "red",
+            "green",
+            "blue"
+          ]
+        },
+        "taste": {
+          "description": "Peemp it",
+          "type": "string",
+          "enum": [
+            "awful",
+            "exquisite",
+            "meh",
+            "wow"
+          ]
+        }
+      },
+      "required": [
+        "taste"
+      ]
+    },
+    "body": {
+      "$ref": "../../schemas/markdown.schema.yaml"
+    }
+  }
+}

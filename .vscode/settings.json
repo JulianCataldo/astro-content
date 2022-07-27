@@ -1,7 +1,33 @@
 {
+  "[php]": {},
   "yaml.schemas": {
-    "content/boats/boat.schema.json": [
-      "content/boats/*/frontmatter.yaml"
+    "http://json-schema.org/draft-07/schema#": [
+      "**/*.schema.yaml"
+    ],
+    "": "",
+    "ss": "",
+    "./demo/.build/schemas/vscode/desserts-frontmatter.schema.json": [
+      "content/desserts/cherry/frontmatter.yaml",
+      "content/desserts/banana/frontmatter.yaml"
+    ],
+    "./demo/.build/schemas/vscode/desserts-body.schema.json": [
+      "content/desserts/cherry/body.yaml",
+      "content/desserts/banana/body.yaml"
+    ],
+    "./demo/.build/schemas/vscode/boats-some-features.schema.json": [
+      "content/boats/the-small-red-one/some-features.yaml",
+      "content/boats/the-shiny-one/some-features.yaml",
+      "content/boats/the-huge-yellow-one/some-features.yaml"
+    ],
+    "./demo/.build/schemas/vscode/boats-the-rich-text-desc.schema.json": [
+      "content/boats/the-small-red-one/the-rich-text-desc.yaml",
+      "content/boats/the-shiny-one/the-rich-text-desc.yaml",
+      "content/boats/the-huge-yellow-one/the-rich-text-desc.yaml"
+    ],
+    "./demo/.build/schemas/vscode/boats-hey-wow.schema.json": [
+      "content/boats/the-small-red-one/hey-wow.yaml",
+      "content/boats/the-shiny-one/hey-wow.yaml",
+      "content/boats/the-huge-yellow-one/hey-wow.yaml"
     ]
   }
 }

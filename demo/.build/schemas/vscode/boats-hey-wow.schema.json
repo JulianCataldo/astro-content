@@ -1,0 +1,20 @@
+{
+  "title": "Hey wow",
+  "type": "object",
+  "description": "Wow this brand must be expensive",
+  "required": [
+    "model",
+    "year"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "model": {
+      "type": "string",
+      "description": "Wow this brand must be expensive"
+    },
+    "year": {
+      "type": "number",
+      "description": "Not too old, not too new"
+    }
+  }
+}

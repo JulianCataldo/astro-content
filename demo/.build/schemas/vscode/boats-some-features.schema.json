@@ -1,0 +1,40 @@
+{
+  "title": "Some features!",
+  "type": "object",
+  "description": "Wow this brand must be expensive",
+  "required": [
+    "model",
+    "year",
+    "color",
+    "brand"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "model": {
+      "type": "string",
+      "description": "Wow this brand must be expensive"
+    },
+    "year": {
+      "type": "number",
+      "description": "Not too old, not too new"
+    },
+    "color": {
+      "description": "Peemp it",
+      "type": "string",
+      "enum": [
+        "red",
+        "green",
+        "blue"
+      ]
+    },
+    "brand": {
+      "description": "Wiw it!!",
+      "type": "string",
+      "enum": [
+        "dou",
+        "bi",
+        "douda"
+      ]
+    }
+  }
+}
