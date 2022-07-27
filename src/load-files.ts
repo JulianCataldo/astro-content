@@ -1,55 +1,71 @@
-import glob from 'glob-promise';
-import config from '../config';
-import type { ContentComponent } from '../types';
+import chokidar from 'chokidar';
+import * as fs from 'node:fs/promises';
+import _ from 'lodash-es';
+import path from 'node:path';
+import yaml from 'js-yaml';
 
-const supportedExtensions = ['yaml', 'yml', 'md'];
+import conf from '../config';
+import mdToHtml from './md-to-html';
+import state from './state';
 
-// TODO: make component unique with child files embedded in each object
-// Then find a way to generate types enums for all found components
+export default async function loadFiles() {
+  chokidar
+    .watch(`${conf.components.src}/**/*.{md,yaml}`)
+    .on('all', (eventName, schemaPath) => {
+      if (['add', 'change'].includes(eventName)) {
+        const parts = path.relative(conf.components.src, schemaPath);
 
-export default async function load() {
-  const files = await glob(
-    `${config.components.src}/**/*.{${supportedExtensions}}`,
-  );
+        const typePath = path.dirname(path.dirname(parts));
+        const objectPath = path.dirname(parts);
 
-  const contentComponents: ContentComponent[] = [];
+        const currentType = _.get(state.content, typePath.replaceAll('/', '.'));
 
-  files.forEach(async (filePath) => {
-    const parts = filePath.split('/').splice(2);
+        if (currentType?.type === 'collection') {
+          const schema = state.schemas.content[typePath];
 
-    const basename = parts[parts.length - 1].split('.');
-    const extension = basename.pop();
-    const role = basename.pop();
+          Object.entries(schema.properties)?.forEach(async ([key, val]) => {
+            const base = path.join(conf.components.src, path.dirname(parts));
 
-    let type;
-    switch (extension) {
-      case 'yaml':
-        type = 'yaml';
-        break;
-      case 'yml':
-        type = 'yaml';
-        break;
-      case 'md':
-        type = 'markdown';
-        break;
-      default:
-        type = 'unknown';
-        /* Unhandled case, exit iteration */
-        return;
-    }
+            const collection = _.camelCase(path.basename(objectPath));
 
-    const contentComponent: ContentComponent = {
-      name: parts[parts.length - 2],
-      collection: parts[parts.length - 3],
-      type,
-      role,
-      path: filePath,
-    };
+            if (val['$ref']?.includes('markdown.schema')) {
+              const mdPath = path.join(base, `${_.kebabCase(key)}.md`);
 
-    contentComponents.push(contentComponent);
-  });
+              const file = await fs.readFile(mdPath, 'utf-8').catch(() => null);
 
-  console.log(contentComponents);
+              schema.properties[key] = state.schemas.internals.MarkdownFile;
 
-  return contentComponents;
+              if (file) {
+                const result = await mdToHtml(mdPath);
+
+                const data = {
+                  headings: 'yolo',
+                  excerpt: 'yo',
+                  body: result,
+                };
+                currentType.items[collection] = {
+                  ...currentType.items[collection],
+                  [key]: data,
+                };
+              }
+            } else if (val.type === 'object') {
+              const yamlPath = path.join(base, `${_.kebabCase(key)}.yaml`);
+
+              const file = await fs
+                .readFile(yamlPath, 'utf-8')
+                .catch(() => null);
+
+              if (file) {
+                const data = yaml.load(file);
+
+                currentType.items[collection] = {
+                  ...currentType.items[collection],
+                  [key]: data,
+                };
+              }
+            }
+          });
+        }
+      }
+    });
 }
