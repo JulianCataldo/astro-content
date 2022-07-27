@@ -1,33 +1,60 @@
 ---
-import type { Boat } from '../../types/boat';
-import content from '../content'
- 
+import { exists } from '@julian_cataldo/content-components/src/client/fetch-content';
+import _, { divide } from 'lodash-es';
 
-const yellowOne = await content('boats/the-huge-yellow-one')
-  .then((comp) => ({
-      frontmatter: comp.frontmatter as Boat,
-      body: comp.body
-    }))
+import {
+  getBoats,
+  getDessertsArray,
+  getDesserts,
+} from '.build/helpers/get-content';
+import { getBoatsArray } from '.build/helpers/get-content';
+
+import Default from 'src/layouts/Default.astro';
+import { Dessert } from '.build/types/Dessert';
+
+const boats = await getBoats();
+const dessertsArray = await getDessertsArray();
+const desserts = await getDesserts();
+const boatsArray = await getBoatsArray();
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
-		<title>Content Components Demo</title>
-	</head>
-	<body>
-		<h1>MODEL: {yellowOne.frontmatter?.model}</h1>
-    <h2>YEAR: {yellowOne.frontmatter?.year}</h2>
-    <h3>COLOR: {yellowOne.frontmatter?.color}</h3>
-    <h3>BRAND: {yellowOne.frontmatter?.brand}</h3>
+<Default>
+  ss
+  {desserts && <div>{desserts?.banana?.body}</div>}
+  <!-- {x.tesssssst.ssd.sss} -->
+  <!-- {boatsArray && boatsArray.map((boat)=><div>{boat?.theHugeYellowOne?.someFeatures?.model}</div>)} -->
 
-    <hr>
+  <!-- {JSON.stringify(Desserts && Desserts[0]?.body?.body)} -->
 
-    <article>
-      Article Body ! <br />
-      <div set:html={yellowOne?.body}></div>      
-    </article>
+  <!-- { Desserts &&  Desserts.banana.frontmatter.color} -->
 
-	</body>
-</html>
+  <!-- <div>
+    {dessertsArray &&
+      dessertsArray.map((obj) => {
+        return <div>{JSON.stringify(obj)}</div>
+      })}
+  </div> -->
+  <!-- {boats && boats.theHugeYellowOne.someFeatures.} -->
+  <!-- {data.Desserts.} -->
+
+  <!-- {boatTheHugeYellowOne.} -->
+  <!-- {boatsArray.length && boatsArray[3].someFeatures} -->
+  <!-- {boats.theHugeYellowOne.someFeatures}
+  {boatsArray[0]} -->
+
+  <!-- { boatOne && boatOne.} -->
+  <!-- {boatOne.frontmatter} -->
+  <!-- <h1>MODEL: {boatOne.frontmatter}</h1> -->
+  <!-- <h2>YEAR: {boatOne.frontmatter?.year}</h2> -->
+  <!-- <h3>COLOR: {boatOne.frontmatter?.color}</h3> -->
+  <!-- <h3>BRAND: {boatOne.frontmatter.brand}</h3> -->
+
+  <hr />
+
+  <article>
+    Article Body ! <br />
+    <!-- <div set:html={boatOne?.body}></div>       -->
+  </article>
+
+  <section></section>
+</Default>
