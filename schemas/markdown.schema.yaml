@@ -1,0 +1,12 @@
+title: Markdown file
+type: object
+properties:
+  headings:
+    type: string
+  body:
+    type: string
+  excerpt:
+    type: string
+required:
+  - body
+additionalProperties: false
