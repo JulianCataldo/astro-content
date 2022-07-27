@@ -11,15 +11,21 @@ const rewriteOptions: RehypeRewriteOptions = {
 };
 
 const configuration = {
+  helpers: {
+    dest: './demo/.build/helpers',
+  },
   components: {
     src: './content',
-    dest: './demo/content',
+    dest: './demo/.build/content',
   },
   markdown: {
     rewriteOptions,
   },
-  schemas: {
-    dest: './demo/types',
+  vscode: {
+    dest: './demo/.build/schemas/vscode',
+  },
+  types: {
+    dest: './demo/.build/types',
   },
 };
 
