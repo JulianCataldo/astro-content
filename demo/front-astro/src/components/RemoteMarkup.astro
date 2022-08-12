@@ -1,0 +1,16 @@
+---
+import TileGallery from 'src/components/TileGallery.astro';
+import { Markup } from 'astro-remote';
+
+export interface Props {
+  content: string;
+}
+const props = { ...Astro.props } as Props;
+/* ———————————————————————————————————————————— Typeguards + Fallbacks —————— */
+if (typeof props.content !== 'string') props.content = '';
+/* —————————————————————————————————————————————————————————————————————————— */
+
+const components = { gallery: TileGallery };
+---
+
+<Markup content={props.content} components={components} />

@@ -1,0 +1,23 @@
+---
+import Layout from 'src/layout.astro';
+import content from 'content/get';
+import RemoteMarkup from 'src/components/RemoteMarkup.astro';
+
+const articles = await content.getArticles().then((data) => {
+  console.log(data);
+  return data;
+});
+
+console.log('object');
+if (articles) {
+  console.log(articles.dolelda.main.body);
+}
+---
+
+<Layout>
+  {
+    articles &&
+    articles.dolelda && <RemoteMarkup content={articles.dolelda.main.body} />
+  }
+  <!-- <Articles /> -->
+</Layout>
