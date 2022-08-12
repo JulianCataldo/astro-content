@@ -1,31 +1,60 @@
-// import generateApi from './gen-api';
-import state from './state';
-import serve from './serve';
-
+import dotenv from 'dotenv';
+/* ·········································································· */
+import { loadConfig } from './config';
 import loadSchemas from './load-schemas';
 import loadFiles from './load-files';
+import loadFakeData from './load-fake-data';
 import generateHelper from './generate-client-helper';
 import updateVsCode from './update-vscode';
+import serve from './serve';
+/* ·········································································· */
+import type { CcConfig } from '../types/config';
+/* —————————————————————————————————————————————————————————————————————————— */
+
+dotenv.config();
+if (process.env.DIR) {
+  process.chdir(process.env.DIR);
+  // eslint-disable-next-line no-console
+  console.log(`Current dir: ${process.env.DIR}`);
+} else {
+  console.log(`Current dir: ${process.cwd()}`);
+}
+
+let fakeMode = false;
+switch (process.argv[2]) {
+  case 'fake':
+    fakeMode = true;
+    break;
+  default:
+}
+
+await loadConfig();
 
 await loadSchemas();
-// console.log({ schemas: state.schemas });
 
-setTimeout(async () => {
-  await loadFiles();
-  // console.log({ content: state.content });
-}, 200);
+if (fakeMode) {
+  // eslint-disable-next-line no-console
+  console.log('Loading fake data…');
+  setTimeout(async () => {
+    await loadFakeData();
+  }, 200);
+} else {
+  setTimeout(async () => {
+    await loadFiles();
+  }, 200);
+}
 
+// FIXME: avoid timeouts if possible
 setTimeout(async () => {
   await generateHelper();
-  // console.log({ content: state.content });
 }, 500);
 
 setTimeout(async () => {
   await updateVsCode();
-  // console.log({ content: state.content });
 }, 500);
 
-// generateApi();
-// console.log({ api });
+setTimeout(async () => {
+  serve();
+}, 1000);
 
-serve();
+export type Config = Partial<CcConfig>;
