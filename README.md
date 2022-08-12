@@ -14,6 +14,8 @@ A **text** based, **structured content** framework, for **edition** and **consum
   - [Configuration](#configuration)
   - [How does it works? An eagle view](#how-does-it-works-an-eagle-view)
   - [Content ingestion](#content-ingestion)
+    - [Helper](#helper)
+      - [Astro template](#astro-template)
   - [Consumers](#consumers)
 
 ## Highlights
@@ -97,6 +99,39 @@ pnpm run dev
 As for now, supports: pure Markdown\* and YAML.
 
 _\*with advanced features like GFM, directives, TOC…_
+
+### Helper
+
+```ts
+import content from 'content/get';
+
+const articles = await content.getArticles();
+
+if (articles) {
+  console.log(articles?.someNamedArticle);
+  console.log(articles?.someNamedArticle?.main?.body);
+}
+```
+
+#### Astro template
+
+```astro
+---
+import content from 'content/get';
+import { Markup } from 'astro-remote';
+import Gallery from 'src/components/Gallery.astro';
+
+const articles = await content.getArticles();
+
+const content = articles &&
+  articles?.someNamedArticle &&
+  articles.someNamedArticle?.main?.body;
+
+const components = { Gallery };
+---
+
+{ content && <Markup {content} {components} /> }
+```
 
 ## Consumers
 
