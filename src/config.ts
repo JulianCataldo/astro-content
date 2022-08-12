@@ -3,21 +3,12 @@ import chalk from 'chalk';
 import mkdirp from 'mkdirp';
 import * as fs from 'node:fs/promises';
 import path from 'node:path';
-import { RehypeRewriteOptions } from 'rehype-rewrite';
+// TODO: replace with esbuild
 import ts from 'typescript';
 /* ·········································································· */
 import { CcConfig } from '../types/config';
 import { $log } from './utils';
 /* —————————————————————————————————————————————————————————————————————————— */
-
-const rewriteOptions: RehypeRewriteOptions = {
-  rewrite(/* node */) {
-    // Some DOM manipulation example
-    // if (node.type === 'element' && node.tagName === 'p') {
-    //   node.tagName = 'strong';
-    // }
-  },
-};
 
 let userConfig: CcConfig;
 
@@ -56,7 +47,7 @@ const conf: CcConfig = {
   },
   get markdown() {
     return {
-      rewriteOptions: userConfig?.markdown?.rewriteOptions || rewriteOptions,
+      remarkPlugins: userConfig?.markdown?.remarkPlugins || [],
     };
   },
   get fake() {
