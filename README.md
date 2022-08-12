@@ -1,71 +1,66 @@
-# Content components transformer
+# Content Maestro 💁‍♂️📚
 
-TS / JSON Schema / VS Code / Markdown / Astro — Synchronization
+A **text** based, **structured content** framework, for **edition** and **consumption**.
 
-# Usage
+> **Warning**: Under heavy development
 
-```zsh
+## Highlights
 
-pnpm i -r
-pnpm run dev & pnpm run demo
+- Manage your content in a predictable way
+- Prevents entropy for ever growing knowledge base
+- Future-proof: based on standards, idioms and popular tools
+- Transform and serve your content
+- Generate type-safe import Helpers
+- Agnostic API: target any consumer type
 
-```
+You might have 10 wiki entries, it's easy to refactor for a category name typo.  
+But what if we have hundreds of entries accross dozens of differents collections types?
 
-Make sure to have `redhat.vscode-yaml` extension installed, this will enable YAML schema support.
+That's where Content Maestro intervene, by giving a schema first based approach.  
+The whole pipeline originate from a seed: your schemas definitions.
 
-# Quick demo
+> **Current state of DX for code edition is phenomenal** thanks to TypeScript, languages servers, linting tools, smart IDEs…  
+> Thankfully, we are making some progress regarding content edition.
 
----
+## For whom?
 
-https://user-images.githubusercontent.com/603498/180596260-83e8624e-6c43-448d-a957-49420677d73e.mp4
+Mainly for us, **developers** 🤓.  
+We enjoy building tools that make content editing simpler for non-technical people.  
+Still, for us, text-based editing is unbeatable.  
+However, this presents a challenge: how do we keep track of structural changes?  
+How can we make this predictable for content consumers like your wiki,
+documentation, blog, web garden, or any server-rendered or static website?
 
----
+# Let's get into the details
 
-> **Note**  
-> Astro demo site is not configured yet for SSR, but should work with live content updates without problems
+## What's in the box?
 
-## Edition
-
-1. `./content/<collection>/<type>.schema.json`
-   1. Generate types in `./demo/types/<type>.ts`  
-      **Example**: [`./demo/types/boat.ts`](./demo/types/boat.ts)
-      - Provides type awareness in Astro files.  
-        **Example**: [`./demo/src/pages/index.astro`](./demo/src/pages/index.astro)
-   2. Generate VSCode settings `./.vscode/settings.json`
-      - Provides schema auto-completion and validation in `./content/<collection>/<name>/frontmatter.yaml`  
-        **Example**: [`./content/boats/the-huge-yellow-one/frontmatter.yaml`](./content/boats/the-huge-yellow-one/frontmatter.yaml)
-2. `./content/**/*/*.md`.
-   1. Generate HTML in `demo/content/<collection>/<name>/body.html`
-      1. Provides content in Astro files.  
-         **Example**: [`./demo/src/pages/index.astro`](./demo/src/pages/index.astro)
-3. `./content/**/*/*.yaml`
-   1. Generate JSON in `demo/content/<collection>/<name>/frontmatter.json`
-      1. Provides metadata in Astro files.  
-         **Example**: [`./demo/src/pages/index.astro`](./demo/src/pages/index.astro)
+- Sensible defaults for a quick new project bootstrap
+- State-of-the-art Markdown (and friends) environment
+- A command line initializer, with options
+- A command line editing server
+- Fake entries mock server, with valid content for _lorem ipsum_ purposes
+- A command line assistant for scaffolding new entries
+- An open gate for adding your own transformers
+- A graphical interface for content preview / problems reviews
+- Linting / checking pre-configured and orchestrated for you
+- Refactoring assistance, thanks to all your IDE toolings
 
 ## Configuration
 
-[`./config.ts`](./config.ts)
+[See the Configuration API](types/config.ts)
 
-# WIP
+## How does it works? An eagle view
 
-Expected goal:
+[See the diagram here](./docs/how-it-works.md)
 
-```ts
-interface ContentComponent {
-  name: string;
-  collection: string;
-  path: string;
+This tool is made with the Astro framework in mind, as it provides easy way to
+integrate and "augment" remote content, but you could really use anything on
+the other side of the wire.  
+Content helpers are just plain typescript functions, with no ties, outside of AJV.
 
-  frontmatter: {
-    [key: string]: unknown;
-  };
-  body: string;
+---
 
-  assets: {
-    path: string;
-    // type
-    // ...
-  };
-}
-```
+As for now, supports: pure Markdown\* and YAML.
+
+_\*with advanced features like GFM, directives, TOC…_
