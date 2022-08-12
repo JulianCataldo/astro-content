@@ -14,7 +14,9 @@ const state = {
     content: {} as { [key: string]: JSONSchema },
   },
 
-  // api: {},
+  errors: {} as {
+    [key: string]: unknown;
+  },
 };
 
 export default state;
