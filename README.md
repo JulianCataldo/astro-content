@@ -54,13 +54,16 @@ documentation, blog, web garden, or any server-rendered or static website?
 
 [See the diagram here](./docs/how-it-works.md)
 
-This tool is made with the Astro framework in mind, as it provides easy way to
-integrate and "augment" remote content, but you could really use anything on
-the other side of the wire.  
-Content helpers are just plain typescript functions, with no ties, outside of AJV.
-
----
+## Content ingestion
 
 As for now, supports: pure Markdown\* and YAML.
 
 _\*with advanced features like GFM, directives, TOC…_
+
+## Consumers
+
+You could really use **anything** on
+the other side of the wire, though, Content Maestro is made with the **Astro**
+framework in mind, as it provides easy way to
+integrate and "**augment**" remote markup.  
+Content helpers are just plain typescript functions, with no ties, outside of AJV.
