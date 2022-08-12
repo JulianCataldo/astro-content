@@ -7,7 +7,7 @@ import { set } from 'lodash-es';
 /* ·········································································· */
 import state from './state';
 import { conf } from './config';
-import { log } from './utils';
+import { $log } from './utils';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 export default async function serve() {
@@ -22,7 +22,7 @@ export default async function serve() {
   });
 
   app.use('*', async (req, res) => {
-    log(`Access url: ${req.baseUrl}`);
+    $log(`Access url: ${req.baseUrl}`);
     // FIXME:
     const basePath = path.join(process.cwd(), '.ccomp/build');
     const thePath = path.join(basePath, req.baseUrl);
