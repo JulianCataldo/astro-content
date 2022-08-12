@@ -88,7 +88,6 @@ async function watchFilesSchemas() {
     })
     .on('all', async (eventName, schemaPath) => {
       if (['add', 'change'].includes(eventName)) {
-        // eslint-disable-next-line no-console
         $log(
           `${chalk.black.bgMagenta('Schemas')}(${chalk.green(
             eventName,

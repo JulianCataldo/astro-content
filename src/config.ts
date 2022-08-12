@@ -1,12 +1,14 @@
-// /* eslint-disable no-param-reassign */
+/* eslint-disable no-param-reassign */
 import chalk from 'chalk';
 import mkdirp from 'mkdirp';
 import * as fs from 'node:fs/promises';
 import path from 'node:path';
 import { RehypeRewriteOptions } from 'rehype-rewrite';
 import ts from 'typescript';
+/* ·········································································· */
 import { CcConfig } from '../types/config';
-// /* —————————————————————————————————————————————————————————————————————————— */
+import { $log } from './utils';
+/* —————————————————————————————————————————————————————————————————————————— */
 
 const rewriteOptions: RehypeRewriteOptions = {
   rewrite(/* node */) {
@@ -76,8 +78,7 @@ const conf: CcConfig = {
 
 async function loadConfig() {
   // TODO: dynamic reloading of config thanks to a watcher
-  // eslint-disable-next-line no-console
-  console.log('Loading user config…');
+  $log('Loading user config…');
 
   const source = await fs
     .readFile(path.join(process.cwd(), './cc-config.ts'), 'utf-8')
@@ -85,8 +86,7 @@ async function loadConfig() {
     .catch(() => null);
 
   if (source) {
-    // eslint-disable-next-line no-console
-    console.log(chalk.cyan('User TS configuration detected'));
+    $log(chalk.cyan('User TS configuration detected'));
 
     const jsCompiled = ts.transpileModule(source, {
       compilerOptions: { module: ts.ModuleKind.ESNext },

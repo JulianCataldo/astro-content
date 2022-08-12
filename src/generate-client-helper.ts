@@ -7,6 +7,7 @@ import { pascalCase } from 'change-case';
 /* ·········································································· */
 import { conf } from './config';
 import state from './state';
+import { $log } from './utils';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 export default async function generateHelper() {
@@ -106,8 +107,7 @@ export default {
   const dest = path.join(conf.helpers.dest, 'get.ts');
   await fs.writeFile(dest, content);
 
-  // eslint-disable-next-line no-console
-  console.log(
+  $log(
     `${chalk.black.bgBlueBright('Helper')}(${chalk.green(
       'generate',
     )}): ${chalk.cyan(dest)}`,

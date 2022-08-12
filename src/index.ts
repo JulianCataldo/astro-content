@@ -9,15 +9,15 @@ import updateVsCode from './update-vscode';
 import serve from './serve';
 /* ·········································································· */
 import type { CcConfig } from '../types/config';
+import { $log } from './utils';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 dotenv.config();
 if (process.env.DIR) {
   process.chdir(process.env.DIR);
-  // eslint-disable-next-line no-console
-  console.log(`Current dir: ${process.env.DIR}`);
+  $log(`Current dir: ${process.env.DIR}`);
 } else {
-  console.log(`Current dir: ${process.cwd()}`);
+  $log(`Current dir: ${process.cwd()}`);
 }
 
 let fakeMode = false;
@@ -33,8 +33,7 @@ await loadConfig();
 await loadSchemas();
 
 if (fakeMode) {
-  // eslint-disable-next-line no-console
-  console.log('Loading fake data…');
+  $log('Loading fake data…');
   setTimeout(async () => {
     await loadFakeData();
   }, 200);

@@ -12,6 +12,7 @@ import { conf } from './config';
 import mdToHtml from './md-to-html';
 import state from './state';
 import validateData from './validate-data';
+import { $log } from './utils';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 // Write dummy file for front-end framework hot-reload triggering in dev mode
@@ -95,10 +96,8 @@ function loadFile(eventName: string, schemaPath: string) {
       }
 
       triggerDevChange();
-      // eslint-disable-next-line no-console
-      console.log(
-        `Content(${chalk.green(eventName)}): ${chalk.yellow(schemaPath)}`,
-      );
+
+      $log(`Content(${chalk.green(eventName)}): ${chalk.yellow(schemaPath)}`);
     }
     return true;
   });

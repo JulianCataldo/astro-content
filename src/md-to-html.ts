@@ -70,8 +70,7 @@ export default async function mdToHtml(path: string, schema) {
 
     .process(content);
 
-  // eslint-disable-next-line no-console
-  console.log(
+  $log(
     `${chalk.bgCyanBright('Markdown')}(${chalk.green(
       'transform',
     )}): ${chalk.yellow(path)}`,
