@@ -1,22 +1,14 @@
 ---
-// interface Props {
-//   articles: NewsArticle[] | Article[];
-// }
 const props = Astro.props;
 ---
 
 <div class="tile-gallery">
-  {JSON.stringify(props)}
-  {props['thumb-size']}
   <slot />
 </div>
 
 <style lang="scss">
   .tile-gallery {
-    // --unit: 1fr;
-    // @include md {
     --unit: calc(64px + 5px);
-    // }
 
     display: grid;
     grid-template-columns: repeat(auto-fill, var(--unit));
