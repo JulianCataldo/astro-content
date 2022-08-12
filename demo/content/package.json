@@ -2,7 +2,6 @@
   "name": "content",
   "version": "1.0.0",
   "dependencies": {
-    "@julian_cataldo/content-components": "link:../..",
-    "@julian_cataldo/content-components-client": "link:../../client"
+    "@julian_cataldo/content-components": "link:../.."
   }
 }
