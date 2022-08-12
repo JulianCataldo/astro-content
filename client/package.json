@@ -1,9 +1,0 @@
-{
-  "name": "@julian_cataldo/content-components-client",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {},
-  "dependencies": {
-    "ajv": "^8.11.0"
-  }
-}
