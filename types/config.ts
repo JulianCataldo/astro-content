@@ -1,5 +1,3 @@
-import type { RehypeRewriteOptions } from 'rehype-rewrite';
-
 export interface CcConfig {
   server: {
     /** **Default**: `'localhost'` */
@@ -39,7 +37,7 @@ export interface CcConfig {
      *
      * See https://github.com/jaywcjlove/rehype-rewrite
      * */
-    rewriteOptions: RehypeRewriteOptions;
+    remarkPlugins: [];
   };
   fake: {
     /** **Default**: `1200` */
