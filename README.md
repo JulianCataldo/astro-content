@@ -15,6 +15,9 @@ A **text** based, **structured content** framework, for **edition** and **consum
   - [How does it works? An eagle view](#how-does-it-works-an-eagle-view)
   - [Content ingestion](#content-ingestion)
     - [Helper](#helper)
+    - [Markdown](#markdown)
+      - [Checking (linting + validation)](#checking-linting--validation)
+      - [Transformer](#transformer)
       - [Astro template](#astro-template)
   - [Consumers](#consumers)
 
@@ -113,7 +116,34 @@ if (articles) {
 }
 ```
 
+### Markdown
+
+These are the already bundled Mardown transformers
+
+#### Checking (linting + validation)
+
+- Preset — Recommended
+- Preset — Style Guide
+- Preset — Consistent
+- YAML frontmatter schema validation
+<!-- - Case police -->
+
+#### Transformer
+
+- Transform markdown directives to custom components
+- Load GitHub-flavored Markdown features
+- Extract YAML frontmatter
+- Convert to formatted HTML
+- Pass `<Components />` for front-end to handle
+- Bundle and build entries static JSONs
+
 #### Astro template
+
+[See demo project](./demo/front-astro).  
+Pre-configured for SSR bundling then serve.
+
+Front-end works in concert with **content server**
+and will fast-refresh its changes in dev. mode.
 
 ```astro
 ---
