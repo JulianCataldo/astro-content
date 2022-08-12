@@ -9,18 +9,11 @@
     "resolveJsonModule": true,
     // Enable stricter transpilation for better output.
     "isolatedModules": true,
-    "types": ["node"],
+    // Add type definitions for our Astro runtime.
+    "types": ["astro/client", "node"],
 
-    "allowJs": true,
-    "noEmit": true, // When `tsc` is for typechecking only, not for compilation
-
-    "noImplicitAny": true,
-
-    "baseUrl": "./demo",
-    "paths": {},
+    "baseUrl": ".",
 
     "allowSyntheticDefaultImports": true
-
-    // "moduleDetection": "auto"
   }
 }
