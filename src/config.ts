@@ -67,6 +67,11 @@ const conf: CcConfig = {
       dest: userConfig?.remote?.dest || null,
     };
   },
+  get log() {
+    return {
+      verbose: userConfig?.log?.verbose || false,
+    };
+  },
 };
 
 async function loadConfig() {

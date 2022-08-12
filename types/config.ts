@@ -49,4 +49,7 @@ export interface CcConfig {
     /** **Default**: `null` */
     dest: string;
   };
+  log: {
+    verbose: boolean;
+  };
 }
