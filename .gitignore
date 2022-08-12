@@ -5,6 +5,7 @@ content
 !demo/content
 
 .dev*
+*.dev.*
 .old*
 
 
