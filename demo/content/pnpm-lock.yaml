@@ -1,0 +1,9 @@
+lockfileVersion: 5.4
+
+specifiers:
+  '@julian_cataldo/content-components': link:../..
+  '@julian_cataldo/content-components-client': link:../../client
+
+dependencies:
+  '@julian_cataldo/content-components': link:../..
+  '@julian_cataldo/content-components-client': link:../../client
