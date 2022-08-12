@@ -4,6 +4,18 @@ A **text** based, **structured content** framework, for **edition** and **consum
 
 > **Warning**: Under heavy development
 
+- [Content Maestro 💁‍♂️📚](#content-maestro-️)
+  - [Highlights](#highlights)
+  - [For whom?](#for-whom)
+- [Let's get into the details](#lets-get-into-the-details)
+  - [What's in the box?](#whats-in-the-box)
+  - [Installation](#installation)
+  - [Demo](#demo)
+  - [Configuration](#configuration)
+  - [How does it works? An eagle view](#how-does-it-works-an-eagle-view)
+  - [Content ingestion](#content-ingestion)
+  - [Consumers](#consumers)
+
 ## Highlights
 
 - Manage your content in a predictable way
@@ -46,9 +58,35 @@ documentation, blog, web garden, or any server-rendered or static website?
 - Linting / checking pre-configured and orchestrated for you
 - Refactoring assistance, thanks to all your IDE toolings
 
+## Installation
+
+```sh
+pnpx degit \
+JulianCataldo/content-components/demo \
+my-projects
+
+
+cd my-projects
+pnpm install --recursive
+
+# Terminal A — Content
+cd content
+# Start content server,
+pnpm ccomp
+# Happy editing!
+
+# Terminal B — Consumer
+cd front-astro
+pnpm run dev
+```
+
+## Demo
+
+[See the demo workspace](./demo)
+
 ## Configuration
 
-[See the Configuration API](types/config.ts)
+[See the Configuration API](./types/config.ts)
 
 ## How does it works? An eagle view
 
