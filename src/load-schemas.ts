@@ -2,7 +2,7 @@ import * as fs from 'node:fs/promises';
 import mkdirp from 'mkdirp';
 import path from 'node:path';
 import chokidar from 'chokidar';
-import yaml from 'js-yaml';
+import yaml from 'yaml';
 import _ from 'lodash-es';
 import chalk from 'chalk';
 import { pascalCase } from 'change-case';
@@ -20,7 +20,7 @@ async function updateSchema({ schemaPath }: { schemaPath: string }) {
   const schemaName = path.basename(parts).replace('.schema.yaml', '');
 
   const file = await fs.readFile(schemaPath, 'utf-8');
-  const schema: JSONSchema = yaml.load(file);
+  const schema: JSONSchema = yaml.parse(file);
   let isSingleton = false;
 
   if (path.dirname(parts) === schemaName) {

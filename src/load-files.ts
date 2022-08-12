@@ -3,7 +3,7 @@ import * as fs from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import _, { kebabCase } from 'lodash-es';
 import path from 'node:path';
-import yaml from 'js-yaml';
+import yaml from 'yaml';
 import chalk from 'chalk';
 import mkdirp from 'mkdirp';
 
@@ -77,7 +77,7 @@ function loadFile(eventName: string, schemaPath: string) {
         .catch(() => null);
 
       if (file) {
-        data = yaml.load(file);
+        data = yaml.parse(file);
       }
     }
 

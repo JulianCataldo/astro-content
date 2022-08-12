@@ -1,7 +1,7 @@
 import * as fs from 'node:fs/promises';
 import { kebabCase } from 'lodash-es';
 import path from 'node:path';
-import yaml from 'js-yaml';
+import yaml from 'yaml';
 import Ajv from 'ajv';
 import addFormats from 'ajv-formats';
 import mkdirp from 'mkdirp';
@@ -49,7 +49,7 @@ export default async function validateData(
       // );
       // const header = `# Source file://${sourceFilePath}\n\n`;
       const header = ``;
-      const yamlContent = `${header}${yaml.dump(validate.errors)}`;
+      const yamlContent = `${header}${yaml.stringify(validate.errors)}`;
 
       let previous;
       if (state.errors[parent]) {

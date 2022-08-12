@@ -3,7 +3,7 @@ import { kebabCase } from 'lodash-es';
 import chalk from 'chalk';
 import * as fs from 'node:fs/promises';
 import path from 'node:path';
-import yaml from 'js-yaml';
+import yaml from 'yaml';
 import { existsSync as fileExists } from 'node:fs';
 /* ·········································································· */
 import state from './state';
@@ -33,7 +33,7 @@ export default async function updateVsCode() {
         );
       }
 
-      fs.writeFile(dest, yaml.dump(propVal));
+      fs.writeFile(dest, yaml.stringify(propVal));
     });
     return true;
   });
