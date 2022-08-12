@@ -1,7 +1,7 @@
 {
   "name": "content-maestro",
-  "version": "0.0.1-alpha.7",
-  "description": "TS / JSON Schema / VS Code / Markdown / Astro — Synchronization",
+  "version": "0.0.1-alpha.8",
+  "description": "A text based, structured content framework, for edition and consumption.",
   "source": "./src/index.ts",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -22,9 +22,6 @@
     "build": "parcel build",
     "release": "semantic-release"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "@julian_cataldo/remark-lint-frontmatter-schema": "^3.4.0",
     "ajv": "^8.11.0",
@@ -90,12 +87,35 @@
   "engines": {
     "node": ">=14"
   },
-  "shebang": [
-    {
-      "interpreter": "node",
-      "files": [
-        "./cli.ts"
-      ]
-    }
+  "author": "Julian Cataldo",
+  "license": "ISC",
+  "homepage": "https://github.com/JulianCataldo/content-maestro",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JulianCataldo/content-maestro"
+  },
+  "bugs": {
+    "url": "https://github.com/JulianCataldo/content-maestro/issues",
+    "email": "contact@juliancataldo.com"
+  },
+  "keywords": [
+    "markdown",
+    "cms",
+    "lint",
+    "yaml",
+    "remark",
+    "tooling",
+    "validation",
+    "linting",
+    "json-schema",
+    "linter",
+    "unified",
+    "frontmatter",
+    "typescript",
+    "typings",
+    "ajv",
+    "vscode",
+    "codegen",
+    "wiki"
   ]
 }
