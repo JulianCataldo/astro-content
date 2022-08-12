@@ -1,8 +1,7 @@
 dist
 .build
 .parcel-cache
-content
-!demo/content
+
 
 .dev*
 *.dev.*
