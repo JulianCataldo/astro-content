@@ -39,7 +39,7 @@
     "chokidar": "^3.5.3",
     "content": "link:../content",
     "dotenv": "^16.0.1",
-    "esbuild": "^0.14.50",
+    "esbuild": "^0.15.0",
     "express": "^4.18.1",
     "glob": "^8.0.3",
     "glob-promise": "^4.2.2",
