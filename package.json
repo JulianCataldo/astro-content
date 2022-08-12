@@ -1,6 +1,6 @@
 {
   "name": "content-maestro",
-  "version": "0.0.1-alpha.8",
+  "version": "0.0.1-alpha.9",
   "description": "A text based, structured content framework, for edition and consumption.",
   "source": "./src/index.ts",
   "main": "./dist/index.js",
@@ -100,22 +100,26 @@
   },
   "keywords": [
     "markdown",
-    "cms",
     "lint",
+    "cms",
+    "json-schema",
     "yaml",
-    "remark",
     "tooling",
     "validation",
-    "linting",
-    "json-schema",
-    "linter",
-    "unified",
     "frontmatter",
     "typescript",
     "typings",
-    "ajv",
     "vscode",
     "codegen",
-    "wiki"
+    "astro",
+    "react",
+    "wiki",
+    "docs",
+    "knowledge-base",
+    "ajv",
+    "remark",
+    "unified",
+    "rpc",
+    "server"
   ]
 }
