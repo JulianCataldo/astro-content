@@ -1,7 +1,11 @@
 {
   "name": "content",
   "version": "1.0.0",
+  "private": "true",
+  "scripts": {
+    "start": "maestro"
+  },
   "dependencies": {
-    "@julian_cataldo/content-components": "link:../.."
+    "content-maestro": "^0.0.1-alpha.7"
   }
 }
