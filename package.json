@@ -21,7 +21,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@astrojs/mdx": "^0.5.0",
+    "@astrojs/mdx": "^0.8.0",
     "@astrojs/react": "^0.4.2",
     "@julian_cataldo/astro-diagram": "link:../../packages/astro/components/Diagram",
     "@julian_cataldo/remark-lint-frontmatter-schema": "link:../../packages/remark-lint-frontmatter-schema",
