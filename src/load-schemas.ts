@@ -40,7 +40,7 @@ async function updateSchema({ schemaPath }: { schemaPath: string }) {
     _.set(state.content, pathParsed, data);
 
     $log(
-      `${chalk.bgMagenta('Schemas')}(${pathParsed}): ${chalk.yellow(
+      `${chalk.bgMagenta('Schemas')}(${parts}): ${chalk.yellow(
         'Content structure updated',
       )}`,
     );
@@ -91,7 +91,7 @@ async function watchFilesSchemas() {
         $log(
           `${chalk.black.bgMagenta('Schemas')}(${chalk.green(
             eventName,
-          )}): ${chalk.yellow(schemaPath)}`,
+          )}): ${chalk.yellow(path.relative(process.cwd(), schemaPath))}`,
         );
         await updateSchema({ schemaPath });
       }
