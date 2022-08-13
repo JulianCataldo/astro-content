@@ -37,7 +37,8 @@ export default async function validateData(
     const dir = path.join(process.cwd(), conf.errors.dest, entryPath);
     const fileDest = path.join(dir, `${name}.log.yaml`);
     if (validate?.errors?.length) {
-      $log(validate.errors);
+      // FIXME: pretty error
+      // $log(validate.errors);
 
       await mkdirp(dir);
 
