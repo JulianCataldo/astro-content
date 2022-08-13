@@ -8,7 +8,6 @@ const articles = await content.getArticles().then((data) => {
   return data;
 });
 
-console.log('object');
 if (articles) {
   console.log(articles.dolelda.main.body);
 }
