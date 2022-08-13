@@ -17,28 +17,50 @@ export default async function updateVsCode() {
   await mkdirp(conf.vscode.dest);
 
   const vsCodeSettings: { [key: string]: string[] } = {};
+  const remarkSchemaSettings: { [key: string]: string[] } = {};
 
   Object.entries(schemas).forEach(([key, val]) => {
     if (val.properties === undefined) return false;
 
     Object.entries(val.properties).forEach(([propKey, propVal]) => {
-      const dest = `${conf.vscode.dest}/${kebabCase(key)}-${kebabCase(
-        propKey,
-      )}.schema.yaml`;
-
       if (state.content[key]?.items) {
-        vsCodeSettings[dest] = Object.entries(state.content[key].items).map(
-          ([entryKey]) =>
-            `content/${key}/${kebabCase(entryKey)}/${kebabCase(propKey)}.yaml`,
-        );
-      }
+        // vsCodeSettings[dest] = Object.entries(state.content[key].items).map(
+        //   ([entryKey]) =>
+        //     `content/${key}//${kebabCase(propKey)}.yaml`,
 
-      fs.writeFile(dest, yaml.stringify(propVal));
+        let data = propVal;
+
+        const isMd =
+          state.schemas.content[key].properties[propKey].properties
+            ?.frontmatter;
+        if (isMd) {
+          data = propVal.properties.frontmatter;
+        }
+
+        const dest = path.join(
+          conf.vscode.dest,
+          `${kebabCase(key)}-${kebabCase(propKey)}${
+            isMd ? '.frontmatter' : ''
+          }.schema.yaml`,
+        );
+        // );
+
+        // console.log({ ext, s: state.schemas.content[key] });
+        let scPath: string;
+        if (isMd) {
+          scPath = `content/${key}/*/body.${isMd ? 'md' : 'yaml'}`;
+          remarkSchemaSettings[dest] = [scPath];
+        } else {
+          scPath = `content/${key}/*/${kebabCase(propKey)}.yaml`;
+          vsCodeSettings[dest] = [scPath];
+        }
+        fs.writeFile(dest, yaml.stringify(data));
+      }
     });
     return true;
   });
 
-  const jsonSchemaSchema = {
+  const jsonMetaSchema = {
     'http://json-schema.org/draft-07/schema#': ['**/*.schema.yaml'],
   };
 
@@ -57,8 +79,8 @@ export default async function updateVsCode() {
     {
       ...currentSettings,
       'yaml.schemas': {
-        ...currentSettings['yaml.schemas'],
-        ...jsonSchemaSchema,
+        // ...currentSettings['yaml.schemas'],
+        ...jsonMetaSchema,
         ...vsCodeSettings,
       },
     },
@@ -66,6 +88,11 @@ export default async function updateVsCode() {
     2,
   );
   await fs.writeFile(settingsPath, data);
+
+  await fs.writeFile(
+    path.join(conf.vscode.dest, 'schemas.mjs'),
+    `export default ${JSON.stringify(remarkSchemaSettings, null, 2)}`,
+  );
 
   $log(
     `${chalk.black.bgYellowBright('VSCode settings')}(${chalk.green(
