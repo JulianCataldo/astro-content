@@ -1,6 +1,12 @@
-import type { Config } from '@julian_cataldo/content-components';
+import type { Config } from 'content-maestro';
 
 export default {
-  // Use typescript auto-completion to override default settings
-  // remarkPlugins: [''],
+  /* v—————— Use TypeScript auto-completion to override default settings ———— */
+
+  components: {
+    // src:"./content"
+  },
+  log: {
+    verbose: true,
+  },
 } as Config;
