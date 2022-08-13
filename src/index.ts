@@ -10,6 +10,7 @@ import serve from './serve';
 /* ·········································································· */
 import type { CcConfig } from '../types/config';
 import { $log } from './utils';
+import createEntity from './create-entity';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 dotenv.config();
@@ -21,11 +22,37 @@ if (process.env.DIR) {
 }
 
 let fakeMode = false;
+let initModelMode: boolean;
+let createEntityMode: string;
 switch (process.argv[2]) {
   case 'fake':
     fakeMode = true;
     break;
-  default:
+
+  case 'init':
+    createEntityMode = 'singleton';
+    if (process.argv[4]) {
+      createEntityMode = 'collection';
+    }
+
+    $log(
+      `Initialize -${createEntityMode}- '${process.argv[3]}' ` +
+        `with model '${process.argv[4]}'`,
+    );
+    break;
+
+  // case 'create':
+  //   createEntityMode = 'singleton';
+  //   if (process.argv[4]) {
+  //     createEntityMode = 'collection';
+  //   }
+
+  //   $log(
+  //     `Creating collection ${process.argv[3]} with model ${process.argv[4]}`,
+  //   );
+  //   break;
+
+  // default:
 }
 
 await loadConfig();
@@ -41,6 +68,14 @@ if (fakeMode) {
   setTimeout(async () => {
     await loadFiles();
   }, 200);
+}
+
+if (createEntityMode) {
+  $log(
+    `Creating collection "${process.argv[3]}" with model name "${process.argv[4]}"`,
+  );
+  await createEntity(process.argv[3], process.argv[4]);
+  process.exit();
 }
 
 // FIXME: avoid timeouts if possible
