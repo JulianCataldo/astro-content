@@ -6,6 +6,7 @@ dist
 .dev*
 *.dev.*
 .old*
+demo/content/.vscode/settings.json
 
 
 # dependencies
