@@ -65,24 +65,51 @@ documentation, blog, web garden, or any server-rendered or static website?
 
 ## Installation
 
+<!-- > **Note**: for using **NPM** insteadof **PNPM**, just remove the **`"p"`** prepended on commands -->
+
+Example project setup is:
+
+- A package folder where all your **content** with its dedicated environment lives.
+  - The **content server**, which can act both for **dev**. and **prod**.
+  - **Content helpers**, exported as a package for consumers to import
+  - Pre-configured local dev. tooling for **edition**
+- A folder with your **front end** consumer, could be anything:  
+  Nuxt, Next, Gatsby, Astro, plain TypeScript…  
+  Here we use Astro.
+
+Boilerplate below gives you a package which can be imported
+by your own means: mono-repos with linked package, separate repos, multiple consumers,…
+We won't get in details here.  
+Content Maestro is really just a versionable, independent Node package for your data.  
+File structure is for demonstration purpose.
+
 ```sh
+# Create the parent housing folder for your project
+mkdir my-project && cd my-project
+
+# Content Maestro boilerplate + CLI
 pnpx degit \
-JulianCataldo/content-components/demo \
-my-projects
+JulianCataldo/content-components/demo/content-base
 
+# (Optional) Demo front-end content consumer
+# `content-base` package is linked-imported in this front-end
+pnpx degit \
+JulianCataldo/content-components/demo/front-astro
 
-cd my-projects
+# Bootstrap all dependencies
 pnpm install --recursive
 
-# Terminal A — Content
-cd content
-# Start content server,
-pnpm ccomp
-# Happy editing!
+# Terminal A — Content server
+cd content-base
+pnpm run start
 
-# Terminal B — Consumer
+# Terminal B — Consumer web GUI
 cd front-astro
+# Development mode
 pnpm run dev
+
+# -OR- pack + launch server side rendered website
+pnpm run build:start
 ```
 
 ## Demo
