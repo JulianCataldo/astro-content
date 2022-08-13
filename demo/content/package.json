@@ -6,6 +6,10 @@
     "start": "maestro"
   },
   "dependencies": {
-    "content-maestro": "^0.0.1-alpha.7"
+    "content-maestro": "link:../.."
+  },
+  "devDependencies": {
+    "remark": "^14.0.2",
+    "remark-cli": "^11.0.0"
   }
 }
