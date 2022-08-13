@@ -175,6 +175,7 @@ and will fast-refresh its changes in dev. mode.
 ```astro
 ---
 import content from 'content/get';
+
 import { Markup } from 'astro-remote';
 import Gallery from 'src/components/Gallery.astro';
 import Link from 'src/components/Link.astro';
@@ -186,9 +187,9 @@ const content = someNamedArticle?.main?.body;
 const title = someNamedArticle?.main?.frontmatter?.title;
 const someMeta = someNamedArticle?.meta?.foo;
 
-/** Augment markup by mapping your own Astro / React / Vue / Svelte components
+/** Augment markup by mapping your Astro / React / Vue / Svelte components
  * Server-side rendering only (no client-side hydration) */
-const components = { Gallery, 'a': Link };
+const components = { Gallery, 'a': Link, /* … */ };
 ---
 
 { title && <h1>{title}</h1> }
