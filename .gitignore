@@ -6,6 +6,8 @@ dist
 .dev*
 *.dev.*
 .old*
+demo/content-base/.vscode/settings.json
+docs
 demo/content/.vscode/settings.json
 
 
@@ -27,4 +29,3 @@ pnpm-debug.log*
 
 # macOS-specific files
 .DS_Store
-
