@@ -13,5 +13,5 @@ pnpm run build
 pnpm run serve
 
 # Both
-pnpm run build:start
+pnpm run build:serve
 ```
