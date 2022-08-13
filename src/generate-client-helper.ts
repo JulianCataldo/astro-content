@@ -15,7 +15,7 @@ export default async function generateHelper() {
 
   let content = `/* AUTO-GENERATED — Do not edit! */
 import { timestamp } from '../.timestamp.json';
-import fetchApi from '@julian_cataldo/content-components/client/fetch-api';\n
+import fetchApi from 'content-maestro/client/fetch-api';\n
 `;
 
   const contentSchemas = Object.entries(state.schemas.content);
