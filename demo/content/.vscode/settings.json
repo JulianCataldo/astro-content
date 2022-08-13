@@ -1,8 +1,1 @@
-{
-  "yaml.schemas": {
-    "http://json-schema.org/draft-07/schema#": ["**/*.schema.yaml"],
-    "./.ccomp/schemas/vscode/articles-meta.schema.yaml": [
-      "content/articles/*/meta.yaml"
-    ]
-  }
-}
+{}
