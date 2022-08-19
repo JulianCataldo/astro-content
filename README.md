@@ -80,21 +80,21 @@ Example project setup is:
 Boilerplate below gives you a package which can be imported
 by your own means: mono-repos with linked package, separate repos, multiple consumers,…
 We won't get in details here.  
-Content Maestro is really just a versionable, independent Node package for your data.  
+Content Maestro is really just a version-able, independent Node package for your data.  
 File structure is for demonstration purpose.
 
 ```sh
 # Create the parent housing folder for your project
-mkdir my-project && cd my-project
+mkdir ./my-project && cd ./my-project
 
 # Content Maestro boilerplate + CLI
 pnpx degit \
-JulianCataldo/content-components/demo/content-base
+JulianCataldo/content-maestro/demo/content-base ./content-base
 
 # (Optional) Demo front-end content consumer
 # `content-base` package is linked-imported in this front-end
 pnpx degit \
-JulianCataldo/content-components/demo/front-astro
+JulianCataldo/content-maestro/demo/front-astro ./front-astro
 
 # Bootstrap all dependencies
 pnpm install --recursive
@@ -110,6 +110,43 @@ pnpm run dev
 
 # -OR- pack + launch server side rendered website
 pnpm run build:start
+
+# ——————————————————————————————————————————————————————————————————————————————
+
+# Terminal C — Content creation CLI utilities
+
+# Bootstrap a singleton entity
+pnpm maestro create profile
+
+# Bootstrap a collection of entities
+pnpm maestro create people person
+#                       ↑      ↑
+# Collection name ——————·      |
+# Entity singular name ————————·
+# 
+# Yields:
+#
+# content/people
+# ├── person.schema.yaml     (basic schema)
+# └── voice-hay-lif          (random words)
+#     ├── body.md            (basic frontmatter + markdown)
+#     └── meta.yaml          (basic extra metadata)
+
+# ··············································································
+
+# Create a new entity inside an existing collection
+pnpm maestro create people elisabeth
+#                       ↑        ↑
+# Collection name ——————·        |
+# New entity name ———————————————·
+# 
+# Yields:
+#
+# content/people
+# └── elisabeth
+#     ├── […].md            (schema generated fake data frontmatter + markdown)
+#     └── […].yaml          (schema generated fake metadata)
+
 ```
 
 ## Demo
