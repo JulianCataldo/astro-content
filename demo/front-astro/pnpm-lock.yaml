@@ -10,7 +10,7 @@ specifiers:
   '@types/prettier': 2.7.0
   '@typescript-eslint/eslint-plugin': 5.33.0
   '@typescript-eslint/parser': 5.33.0
-  astro: 1.0.2
+  astro: 1.0.6
   astro-eslint-parser: 0.5.0
   astro-remote: 0.0.1
   content: link:../content-base
@@ -41,7 +41,7 @@ specifiers:
 dependencies:
   '@astrojs/node': 1.0.0
   '@types/express': 4.17.13
-  astro: 1.0.2
+  astro: 1.0.6
   astro-remote: 0.0.1
   content: link:../content-base
   express: 4.18.1
@@ -93,6 +93,11 @@ packages:
 
   /@astrojs/compiler/0.23.1:
     resolution: {integrity: sha512-KsoDrASGwTKZoWXbjy8SlIeoDv7y1OfBJtHVLuPuzhConA8e0SZpGzFqIuVRfG4bhisSTptZLDQZ7oxwgPv2jA==}
+    dev: true
+
+  /@astrojs/compiler/0.23.3:
+    resolution: {integrity: sha512-eBWo0d3DoRDeg2Di1/5YJtOXh5eGFSjJMp1wVoVfoITHR4egdUGgsrDHZTzj0a25M/S9W5S6SpXCyNWcqi8jOA==}
+    dev: false
 
   /@astrojs/language-server/0.20.3:
     resolution: {integrity: sha512-MuzTsSpUjtmMXfrBThtZwgO39Jc+Bbl5hLevumkp01N/YCKE+Iipd3ELSdbk7+TPiuBV+/SKrVmaQPvJBnWPkA==}
@@ -1145,12 +1150,12 @@ packages:
       ultrahtml: 0.0.4
     dev: false
 
-  /astro/1.0.2:
-    resolution: {integrity: sha512-7Bmw8wGQnh/rRpybc6owYbAyr6SXKm7kX56gg82ABJbqnTQhbgOPtg8+k+KKkJekMU/gPe3LfMIh0+Ie+F9xUw==}
+  /astro/1.0.6:
+    resolution: {integrity: sha512-QAkdkzP3PbauiO4YnOgVTWY6z26heKruoXW9TnN8Bbmwtf7DUFIchi6CFSAVYSONX8XtRnj+p6fCkk06OWfJ4w==}
     engines: {node: ^14.18.0 || >=16.12.0, npm: '>=6.14.0'}
     hasBin: true
     dependencies:
-      '@astrojs/compiler': 0.23.1
+      '@astrojs/compiler': 0.23.3
       '@astrojs/language-server': 0.20.3
       '@astrojs/markdown-remark': 1.0.0
       '@astrojs/telemetry': 1.0.0
