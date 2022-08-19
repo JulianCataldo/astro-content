@@ -10,10 +10,12 @@
     // Enable stricter transpilation for better output.
     "isolatedModules": true,
     // Add type definitions for our Astro runtime.
-    "types": ["astro/client", "node"],
+    "types": ["node"],
 
     "baseUrl": ".",
 
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+
+    "noImplicitAny": true
   }
 }
