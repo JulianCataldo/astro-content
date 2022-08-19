@@ -20,6 +20,7 @@ import { visit } from 'unist-util-visit';
 import type { Root } from 'mdast';
 /* ·········································································· */
 import { $log } from './utils';
+import type { JSONSchema7 } from 'json-schema';
 // import state from './state.js';
 /* —————————————————————————————————————————————————————————————————————————— */
 
@@ -45,7 +46,7 @@ const directiveToNonStandardComponent: Plugin<[], Root> = () => (tree) =>
   });
 
 // FIXME: this function is called too many times
-export default async function mdToHtml(path: string, schema) {
+export default async function mdToHtml(path: string, schema: JSONSchema7) {
   const content = await fs.readFile(path, 'utf-8');
 
   let frontmatter;
