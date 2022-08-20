@@ -6,7 +6,7 @@
     "start": "maestro"
   },
   "dependencies": {
-    "content-maestro": "link:../.."
+    "content-maestro": "latest"
   },
   "devDependencies": {
     "remark": "14.0.2",
