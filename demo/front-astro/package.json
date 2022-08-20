@@ -14,7 +14,7 @@
   "devDependencies": {
     "@astrojs/react": "1.0.0",
     "@astrojs/vue": "1.0.0",
-    "@julian_cataldo/astro-configs": "0.12.3",
+    "@julian_cataldo/astro-configs": "0.13.0",
     "@types/eslint": "8.4.6",
     "@types/prettier": "2.7.0",
     "@typescript-eslint/eslint-plugin": "5.33.1",

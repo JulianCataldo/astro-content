@@ -4,7 +4,7 @@ specifiers:
   '@astrojs/node': 1.0.0
   '@astrojs/react': 1.0.0
   '@astrojs/vue': 1.0.0
-  '@julian_cataldo/astro-configs': 0.12.3
+  '@julian_cataldo/astro-configs': 0.13.0
   '@types/eslint': 8.4.6
   '@types/express': 4.17.13
   '@types/prettier': 2.7.0
@@ -50,7 +50,7 @@ dependencies:
 devDependencies:
   '@astrojs/react': 1.0.0_zpnidt7m3osuk7shl3s4oenomq
   '@astrojs/vue': 1.0.0_vue@3.2.30
-  '@julian_cataldo/astro-configs': 0.12.3
+  '@julian_cataldo/astro-configs': 0.13.0
   '@types/eslint': 8.4.6
   '@types/prettier': 2.7.0
   '@typescript-eslint/eslint-plugin': 5.33.1_vsoshirnpb7xw6mr7xomgfas2i
@@ -593,8 +593,8 @@ packages:
       '@jridgewell/resolve-uri': 3.1.0
       '@jridgewell/sourcemap-codec': 1.4.14
 
-  /@julian_cataldo/astro-configs/0.12.3:
-    resolution: {integrity: sha512-oxGGe8fswdadUrpuEU8c3I5yOOvk4D14uLauJrMyFgTJ5EDizzis0jnEapK5ay7/kKsRSCf+8lfnbSfq3T+Wew==}
+  /@julian_cataldo/astro-configs/0.13.0:
+    resolution: {integrity: sha512-PvO5yYu2EqDUspzfE8drcM/zZuwL5B1P5Nk1yaN+JRc0da2d55TV7NmefYZSkFbor1RSCH6q3hWAnOWagwlR3g==}
     dev: true
 
   /@ljharb/has-package-exports-patterns/0.0.2:
