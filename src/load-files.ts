@@ -39,8 +39,8 @@ function loadFile(eventName: string, schemaPath: string) {
   const parts = path.relative(conf.components.src, schemaPath) || schemaPath;
 
   const objectPath = path.dirname(parts);
-  const c = state.content[objectPath];
-  const isSingleton = c?.type === 'singleton';
+
+  const isSingleton = state.content[objectPath]?.type === 'singleton';
 
   const typePath = isSingleton
     ? path.dirname(parts)
@@ -68,7 +68,7 @@ function loadFile(eventName: string, schemaPath: string) {
     const mdPath = `${pathNoExt}.md`;
     const mdExists = existsSync(mdPath);
     if (mdExists) {
-      const md = await mdToHtml(mdPath, val.properties.frontmatter);
+      const md = await mdToHtml(mdPath);
 
       data = {
         headings: 'yolo',
@@ -89,15 +89,17 @@ function loadFile(eventName: string, schemaPath: string) {
     if (data) {
       validateData(typePath, collection, key, data);
 
-      if (isSingleton) {
+      if (isSingleton && contentState?.data) {
         contentState.data[key] = data;
-        saveBuild(typePath, null, key, data);
-      } else {
+        saveBuild(typePath, '', key, data);
+      } else if (contentState?.items) {
         contentState.items[collection] = {
           ...contentState.items[collection],
           [key]: data,
         };
         saveBuild(typePath, collection, key, data);
+      } else {
+        return false;
       }
 
       triggerDevChange();

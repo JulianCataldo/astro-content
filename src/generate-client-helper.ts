@@ -3,7 +3,7 @@ import * as fs from 'node:fs/promises';
 import mkdirp from 'mkdirp';
 import _ from 'lodash-es';
 import path from 'node:path';
-import { pascalCase } from 'change-case';
+import { camelCase, pascalCase } from 'change-case';
 /* ·········································································· */
 import { conf } from './config';
 import state from './state';
@@ -32,17 +32,17 @@ import fetchApi from 'content-maestro/client/fetch-api';\n
 
   contentSchemas.forEach(([key, schema]) => {
     if (schema.properties === undefined) return false;
+    // if (state.content[key].type === 'singleton') return false;
     const name = schema.title;
 
     const entries: string[] = [];
-    if (state.content[key] !== undefined) {
       if (state.content[key]?.items) {
-        const items = Object.entries(state.content[key]?.items);
+      console.log({ dd: state.content[key].items });
+      const items = Object.entries(state.content[key].items);
         items.forEach(([entryKey]) => {
-          entries.push(entryKey);
+        entries.push(camelCase(entryKey));
         });
       }
-    }
 
     if (entries.length) {
       const itemsJoined = entries.join("' | '");
@@ -50,7 +50,7 @@ import fetchApi from 'content-maestro/client/fetch-api';\n
 
       content += entriesName;
       content += `export type ${_.startCase(_.camelCase(key))} = {
-  [key in ${name}EntryNames]: ${name};
+  [key in ${name}EntryNames]?: ${name};
 };
 `;
       // IDEA: re-export?
@@ -64,25 +64,31 @@ import fetchApi from 'content-maestro/client/fetch-api';\n
   contentSchemas.forEach(([key]) => {
     const fnName = `get${pascalCase(key)}`;
     const fnArrayName = `${fnName}Array`;
-    exports.push(fnName, fnArrayName);
 
     content += `
-async function ${fnName}(): Promise<${pascalCase(key)} | false> {
+async function ${fnName}(): Promise<${pascalCase(key)}> {
   const ${key} = await fetchApi('${url}', '${key}');
+  
+  const empty = {} as unknown as ${pascalCase(key)};
   if (${key} === false) {
-    return false;
+    return empty;
   }
   if (Object.keys(${key}).length) {
     return ${key} as unknown as ${pascalCase(key)};
   }
-  return false;
+  return empty;
 }
+`;
+    const arrayFn = `
 async function ${fnArrayName}(): Promise<${
       state.schemas.content[key].title
-    }[] | false>  {
+    }[]>  {
   const ${key} = await fetchApi('${url}', '${key}');
+
+
+  const empty = [] as unknown as ${state.schemas.content[key].title}[]
   if (${key} === false) {
-    return false;
+    return empty;
   }
   if (Object.keys(${key}).length) {
     const entries = Object.entries(${key}).map(
@@ -90,11 +96,16 @@ async function ${fnArrayName}(): Promise<${
         return { _key: key, ...(val as ${pascalCase(key)}) };
       },
     );
-    return entries as unknown as ${state.schemas.content[key].title}[];
+    return entries as ${state.schemas.content[key].title}[];
   }
-  return false;
+  return empty;
 }
 `;
+    exports.push(fnName);
+    if (state.content[key].type === 'collection') {
+      content += arrayFn;
+      exports.push(fnArrayName);
+    }
   });
 
   content += `
