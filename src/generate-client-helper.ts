@@ -36,13 +36,13 @@ import fetchApi from 'content-maestro/client/fetch-api';\n
     const name = schema.title;
 
     const entries: string[] = [];
-      if (state.content[key]?.items) {
+    if (state.content[key]?.items) {
       console.log({ dd: state.content[key].items });
       const items = Object.entries(state.content[key].items);
-        items.forEach(([entryKey]) => {
+      items.forEach(([entryKey]) => {
         entries.push(camelCase(entryKey));
-        });
-      }
+      });
+    }
 
     if (entries.length) {
       const itemsJoined = entries.join("' | '");
@@ -110,7 +110,8 @@ async function ${fnArrayName}(): Promise<${
 
   content += `
 export default {
-  ${exports.join(',\n  ')}
+  ${exports.join(',\n  ')},
+  apiUrl: '${url}'
 }
 `;
 
