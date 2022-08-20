@@ -48,7 +48,7 @@ export default async function updateVsCode() {
         // console.log({ ext, s: state.schemas.content[key] });
         let scPath: string;
         if (isMd) {
-          scPath = `content/${key}/*/body.${isMd ? 'md' : 'yaml'}`;
+          scPath = `content/${key}/*/${propKey}.${isMd ? 'md' : 'yaml'}`;
           remarkSchemaSettings[dest] = [scPath];
         } else {
           scPath = `content/${key}/*/${kebabCase(propKey)}.yaml`;

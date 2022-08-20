@@ -86,6 +86,9 @@ export default async function createEntity(
   const firstEntryDest = path.join(baseDest, rdmFileName);
 
   await mkdirp(firstEntryDest).catch(() => null);
-  await fs.writeFile(path.join(firstEntryDest, 'body.md'), baseMdFileContent);
+  await fs.writeFile(
+    path.join(firstEntryDest, 'content.md'),
+    baseMdFileContent,
+  );
   await fs.writeFile(path.join(firstEntryDest, 'meta.yaml'), baseMeta);
 }
