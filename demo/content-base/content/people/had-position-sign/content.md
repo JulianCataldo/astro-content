@@ -1,6 +1,6 @@
 ---
 title: Add future combination money differ
-portrait: /people/previous-long/assets/3d_cities-w1650px.jpg
+portrait: /people/had-position-sign/assets/3d_cities-w1650px.jpg
 ---
 
 # Eleven moving unusual nuts enemy

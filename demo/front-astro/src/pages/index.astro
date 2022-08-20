@@ -10,6 +10,7 @@ const peopleArray = await content.getPeopleArray();
 const profile = await content.getProfile();
 
 const portrait = `${content.apiUrl}${people?.previousLong?.content?.frontmatter?.portrait}`;
+const portrait2 = `${content.apiUrl}${people?.hadPositionSign?.content?.frontmatter?.portrait}`;
 ---
 
 <Layout>
@@ -35,7 +36,12 @@ const portrait = `${content.apiUrl}${people?.previousLong?.content?.frontmatter?
       widths={[400, 800, 1200]}
       aspectRatio="12:5"
       sizes="100vw"
-      formats={['png']}
+    />
+    <Picture
+      src={portrait2}
+      widths={[400, 800, 1200]}
+      aspectRatio="12:5"
+      sizes="100vw"
     />
   </div>
 
