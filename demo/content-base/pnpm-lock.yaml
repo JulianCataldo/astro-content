@@ -1,12 +1,12 @@
 lockfileVersion: 5.4
 
 specifiers:
-  content-maestro: 0.0.1-alpha.16
+  content-maestro: 0.0.1-alpha.17
   remark: 14.0.2
   remark-cli: 11.0.0
 
 dependencies:
-  content-maestro: 0.0.1-alpha.16
+  content-maestro: 0.0.1-alpha.17
 
 devDependencies:
   remark: 14.0.2
@@ -43,7 +43,7 @@ packages:
     resolution: {integrity: sha512-mYfQWgXlUGEzMG1rczzvLtgljidLiix99c3tfgnVtSLg23SrFC9R4tQQqvVLSLkyn62gamswi9/ay7DXT0XB5w==}
     dependencies:
       ajv: 8.11.0
-      ajv-formats: 2.1.1
+      ajv-formats: 2.1.1_ajv@8.11.0
       glob-to-regexp: 0.4.1
       unified-lint-rule: 2.1.1
       vfile-location: 4.0.1
@@ -170,8 +170,10 @@ packages:
       negotiator: 0.6.3
     dev: false
 
-  /ajv-formats/2.1.1:
+  /ajv-formats/2.1.1_ajv@8.11.0:
     resolution: {integrity: sha512-Wx0Kx52hxE7C18hkMEggYlEifqWZtYaRgouJor+WMdPnQyEK13vgEWyVNup7SoeeoLMsr4kf5h6dOW11I15MUA==}
+    peerDependencies:
+      ajv: ^8.0.0
     peerDependenciesMeta:
       ajv:
         optional: true
@@ -221,7 +223,7 @@ packages:
     dev: false
 
   /array-flatten/1.1.1:
-    resolution: {integrity: sha1-ml9pkFGx5wczKPKgCJaLZOopVdI=}
+    resolution: {integrity: sha512-PCVAQswWemu6UdxsDFFX/+gVeYqKAod3D3UVm91jHwynguOwAvYPhx8nNlM++NqRcK6CxxpUafjmhIdKiHibqg==}
     dev: false
 
   /bail/2.0.2:
@@ -412,7 +414,7 @@ packages:
     dev: false
 
   /concat-map/0.0.1:
-    resolution: {integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=}
+    resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
     dev: false
 
   /concat-stream/2.0.0:
@@ -440,14 +442,14 @@ packages:
       safe-buffer: 5.2.1
     dev: false
 
-  /content-maestro/0.0.1-alpha.16:
-    resolution: {integrity: sha512-J/bbQ7EZmkQ1rVJFgdzL98ehxJ3dai9xGA3bXLvksQVwcg62Ylqzm/UZsEkCZS+NM87Mxqw4U47wR/gMdRhb/A==}
+  /content-maestro/0.0.1-alpha.17:
+    resolution: {integrity: sha512-xbR6SDF3IJyPdeyWyMPhyWYAQVP8tcNKej8m7d2DnHA7TOkuOpJ1Vl96o7sP0yaZu9Y5usoD7x51QJHy7Wo4rw==}
     engines: {node: '>=14'}
     hasBin: true
     dependencies:
       '@julian_cataldo/remark-lint-frontmatter-schema': 3.5.1
       ajv: 8.11.0
-      ajv-formats: 2.1.1
+      ajv-formats: 2.1.1_ajv@8.11.0
       chalk: 5.0.1
       change-case: 4.1.2
       chokidar: 3.5.3
@@ -486,7 +488,7 @@ packages:
     dev: false
 
   /cookie-signature/1.0.6:
-    resolution: {integrity: sha1-4wOogrNCzD7oylE6eZmXNNqzriw=}
+    resolution: {integrity: sha512-QADzlaHc8icV8I7vbaJXJwod9HWYp8uCqf1xa4OfNu1T7JVxQIrUgOWtHdNDtPiywmFbiS12VjotIXLrKM3orQ==}
     dev: false
 
   /cookie/0.5.0:
@@ -562,7 +564,7 @@ packages:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
 
   /ee-first/1.1.1:
-    resolution: {integrity: sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=}
+    resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
     dev: false
 
   /emoji-regex/9.2.2:
@@ -1323,7 +1325,7 @@ packages:
     dev: false
 
   /media-typer/0.3.0:
-    resolution: {integrity: sha1-hxDXrwqmJvj/+hzgAWhUUmMlV0g=}
+    resolution: {integrity: sha512-dq+qelQ9akHpcOl/gUVRTxVIOkAJ1wR3QAvb4RsVjS8oVoFjDGTc679wJYmUmknUF5HwMLOgb5O+a3KxfWapPQ==}
     engines: {node: '>= 0.6'}
     dev: false
 
@@ -1341,7 +1343,7 @@ packages:
     dev: false
 
   /merge-descriptors/1.0.1:
-    resolution: {integrity: sha1-sAqqVW3YtEVoFQ7J0blT8/kMu2E=}
+    resolution: {integrity: sha512-cCi6g3/Zr1iqQi6ySbseM1Xvooa98N0w31jzUYrXPX2xqObmFGHJ0tQ5u74H3mVh7wLouTseZyYIq39g8cNp1w==}
     dev: false
 
   /methods/1.1.2:
@@ -3005,7 +3007,7 @@ packages:
     dev: true
 
   /utils-merge/1.0.1:
-    resolution: {integrity: sha1-n5VxD1CiZ5R7LMwSR0HBAoQn5xM=}
+    resolution: {integrity: sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==}
     engines: {node: '>= 0.4.0'}
     dev: false
 
