@@ -22,7 +22,12 @@ function triggerDevChange() {
   fs.writeFile(path.join(conf.dev.triggerFile), data);
 }
 
-async function saveBuild(type, entry, prop, data) {
+async function saveBuild(
+  type: string,
+  entry: string = '',
+  prop: string,
+  data: { [key: string]: unknown },
+) {
   const base = path.join(kebabCase(type), kebabCase(entry));
   const dir = path.join(conf.components.dest, base);
   await mkdirp(dir);

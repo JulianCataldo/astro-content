@@ -46,7 +46,7 @@ const directiveToNonStandardComponent: Plugin<[], Root> = () => (tree) =>
   });
 
 // FIXME: this function is called too many times
-export default async function mdToHtml(path: string, schema: JSONSchema7) {
+export default async function mdToHtml(path: string, schema?: JSONSchema7) {
   const content = await fs.readFile(path, 'utf-8');
 
   let frontmatter;
