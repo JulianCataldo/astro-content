@@ -69,7 +69,7 @@
     "@types/mdast": "3.0.10",
     "@types/mkdirp": "1.0.2",
     "@types/node": "18.7.6",
-    "@types/prettier": "2.6.3",
+    "@types/prettier": "2.7.0",
     "@types/unist": "2.0.6",
     "@typescript-eslint/eslint-plugin": "5.33.1",
     "@typescript-eslint/parser": "5.33.1",
