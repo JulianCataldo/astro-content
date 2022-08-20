@@ -1,12 +1,12 @@
 lockfileVersion: 5.4
 
 specifiers:
-  content-maestro: 0.0.1-alpha.16
+  content-maestro: 0.0.1-alpha.17
   remark: 14.0.2
   remark-cli: 11.0.0
 
 dependencies:
-  content-maestro: 0.0.1-alpha.16
+  content-maestro: 0.0.1-alpha.17
 
 devDependencies:
   remark: 14.0.2
@@ -440,8 +440,8 @@ packages:
       safe-buffer: 5.2.1
     dev: false
 
-  /content-maestro/0.0.1-alpha.16:
-    resolution: {integrity: sha512-J/bbQ7EZmkQ1rVJFgdzL98ehxJ3dai9xGA3bXLvksQVwcg62Ylqzm/UZsEkCZS+NM87Mxqw4U47wR/gMdRhb/A==}
+  /content-maestro/0.0.1-alpha.17:
+    resolution: {integrity: sha512-xbR6SDF3IJyPdeyWyMPhyWYAQVP8tcNKej8m7d2DnHA7TOkuOpJ1Vl96o7sP0yaZu9Y5usoD7x51QJHy7Wo4rw==}
     engines: {node: '>=14'}
     hasBin: true
     dependencies:
