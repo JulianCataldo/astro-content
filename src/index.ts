@@ -29,7 +29,7 @@ switch (process.argv[2]) {
     fakeMode = true;
     break;
 
-  case 'init':
+  case 'create':
     createEntityMode = 'singleton';
     if (process.argv[4]) {
       createEntityMode = 'collection';
