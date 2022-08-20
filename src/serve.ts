@@ -23,7 +23,7 @@ export default async function serve() {
     res.status(200).send(state.errors);
   });
 
-  app.use('**/*.png', async (req, res) => {
+  app.use('**/*.{jpg,jpeg,png}', async (req, res) => {
     const filePath = path.join(process.cwd(), req.baseUrl);
     console.log({ filePath });
     if (existsSync(filePath)) {
