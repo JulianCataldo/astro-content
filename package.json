@@ -23,7 +23,7 @@
     "release": "semantic-release"
   },
   "dependencies": {
-    "@julian_cataldo/remark-lint-frontmatter-schema": "3.5.0",
+    "@julian_cataldo/remark-lint-frontmatter-schema": "3.5.1",
     "ajv": "8.11.0",
     "ajv-formats": "2.1.1",
     "chalk": "5.0.1",
