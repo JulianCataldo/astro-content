@@ -39,8 +39,8 @@ specifiers:
   prettier: 2.7.1
   prettier-plugin-astro: 0.5.0
   prismjs: ^1.28.0
-  react: 18.0.0
-  react-dom: 18.0.0
+  react: 18.2.0
+  react-dom: 18.2.0
   tsx: 3.8.2
   typescript: 4.7.4
   vue: 3.2.30
@@ -62,7 +62,7 @@ dependencies:
   tsx: 3.8.2
 
 devDependencies:
-  '@astrojs/react': 1.0.0_zpnidt7m3osuk7shl3s4oenomq
+  '@astrojs/react': 1.0.0_biqbaboplfbrettd7655fr4n2y
   '@astrojs/vue': 1.0.0_vue@3.2.30
   '@julian_cataldo/astro-configs': 0.13.0
   '@types/eslint': 8.4.6
@@ -87,8 +87,8 @@ devDependencies:
   postcss-html: 1.5.0
   prettier: 2.7.1
   prettier-plugin-astro: 0.5.0
-  react: 18.0.0
-  react-dom: 18.0.0_react@18.0.0
+  react: 18.2.0
+  react-dom: 18.2.0_react@18.2.0
   typescript: 4.7.4
   vue: 3.2.30
 
@@ -203,7 +203,7 @@ packages:
       prismjs: 1.28.0
     dev: false
 
-  /@astrojs/react/1.0.0_zpnidt7m3osuk7shl3s4oenomq:
+  /@astrojs/react/1.0.0_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-CHJQ1dwjpYOTunioi02yWKdSxN/YeLP1vI70Xq+AqhcTmcmdbCMwbtYOEVwIK1k/AJmLItsJMcrsTfRoQU+Z+Q==}
     engines: {node: ^14.18.0 || >=16.12.0}
     peerDependencies:
@@ -212,8 +212,8 @@ packages:
     dependencies:
       '@babel/core': 7.18.10
       '@babel/plugin-transform-react-jsx': 7.18.10_@babel+core@7.18.10
-      react: 18.0.0
-      react-dom: 18.0.0_react@18.0.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -5032,22 +5032,22 @@ packages:
       strip-json-comments: 2.0.1
     dev: false
 
-  /react-dom/18.0.0_react@18.0.0:
-    resolution: {integrity: sha512-XqX7uzmFo0pUceWFCt7Gff6IyIMzFUn7QMZrbrQfGxtaxXZIcGQzoNpRLE3fQLnS4XzLLPMZX2T9TRcSrasicw==}
+  /react-dom/18.2.0_react@18.2.0:
+    resolution: {integrity: sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==}
     peerDependencies:
-      react: ^18.0.0
+      react: ^18.2.0
     dependencies:
       loose-envify: 1.4.0
-      react: 18.0.0
-      scheduler: 0.21.0
+      react: 18.2.0
+      scheduler: 0.23.0
     dev: true
 
   /react-is/16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
     dev: true
 
-  /react/18.0.0:
-    resolution: {integrity: sha512-x+VL6wbT4JRVPm7EGxXhZ8w8LTROaxPXOqhlGyVSrv0sB1jkyFGgXxJ8LVoPRLvPR6/CIZGFmfzqUa2NYeMr2A==}
+  /react/18.2.0:
+    resolution: {integrity: sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==}
     engines: {node: '>=0.10.0'}
     dependencies:
       loose-envify: 1.4.0
@@ -5308,8 +5308,8 @@ packages:
       suf-log: 2.5.3
     dev: true
 
-  /scheduler/0.21.0:
-    resolution: {integrity: sha512-1r87x5fz9MXqswA2ERLo0EbOAU74DpIUO090gIasYTqlVoJeMcl+Z1Rg7WHz+qtPujhS/hGIt9kxZOYBV3faRQ==}
+  /scheduler/0.23.0:
+    resolution: {integrity: sha512-CtuThmgHNg7zIZWAXi3AsyIzA3n4xx7aNyjwC2VJldO2LMVDhFK+63xGqq6CsJH4rTAt6/M+N4GhZiDYPx9eUw==}
     dependencies:
       loose-envify: 1.4.0
     dev: true
