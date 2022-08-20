@@ -26,7 +26,6 @@ Thankfully, we are making some progress regarding content management and **EX** 
 
 - [Content Maestro 💁‍♂️📚](#content-maestro-️)
   - [Highlights](#highlights)
-  - [Thankfully, we are making some progress regarding content management and **EX** (editor experience).](#thankfully-we-are-making-some-progress-regarding-content-management-and-ex-editor-experience)
   - [Installation](#installation)
     - [Recommended VS Code extensions](#recommended-vs-code-extensions)
     - [Typical structure](#typical-structure)
@@ -43,6 +42,8 @@ Thankfully, we are making some progress regarding content management and **EX** 
       - [Checking (linting + validation)](#checking-linting--validation)
       - [Transformer](#transformer)
   - [How does it works? An eagle view](#how-does-it-works-an-eagle-view)
+
+---
 
 ## Installation
 
@@ -72,7 +73,7 @@ cd front-astro
 pnpm run dev
 
 # -OR- pack + launch server side rendered website
-pnpm run build:start
+pnpm run build:serve
 
 # ——————————————————————————————————————————————————————————————————————————————
 
