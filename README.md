@@ -27,6 +27,9 @@ Thankfully, we are making some progress regarding content management and **EX** 
 - [Content Maestro 💁‍♂️📚](#content-maestro-️)
   - [Highlights](#highlights)
   - [Installation](#installation)
+    - [Create project](#create-project)
+    - [Launch content server & front end](#launch-content-server--front-end)
+    - [Create content](#create-content)
     - [Recommended VS Code extensions](#recommended-vs-code-extensions)
     - [Typical structure](#typical-structure)
   - [Content ingestion](#content-ingestion)
@@ -47,6 +50,8 @@ Thankfully, we are making some progress regarding content management and **EX** 
 
 ## Installation
 
+### Create project
+
 ```sh
 # Create the parent housing folder for your project
 mkdir ./my-project && cd ./my-project
@@ -61,8 +66,12 @@ pnpx degit \
 JulianCataldo/content-maestro/demo/front-astro ./front-astro
 
 # Bootstrap all dependencies
-pnpm install --recursive
+pnpm install --recursive --shamefully-hoist
+```
 
+### Launch content server & front end
+
+```sh
 # Terminal A — Content server
 cd content-base
 pnpm run start
@@ -74,9 +83,11 @@ pnpm run dev
 
 # -OR- pack + launch server side rendered website
 pnpm run build:serve
+```
 
-# ——————————————————————————————————————————————————————————————————————————————
+### Create content
 
+```sh
 # Terminal C — Content creation CLI utilities
 
 # Bootstrap a singleton entity
