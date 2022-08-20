@@ -3,7 +3,7 @@
 // import conf from '../config';
 /* —————————————————————————————————————————————————————————————————————————— */
 
-async function getData(fullUrl) {
+async function getData(fullUrl: string) {
   const result = await fetch(fullUrl)
     .then((response) => response.json())
     .catch((_) => null)
