@@ -73,11 +73,11 @@ pnpm install --recursive --shamefully-hoist
 
 ```sh
 # Terminal A — Content server
-cd content-base
+cd ./content-base
 pnpm run start
 
 # Terminal B — Consumer web GUI
-cd front-astro
+cd ./front-astro
 # Development mode
 pnpm run dev
 
@@ -89,6 +89,7 @@ pnpm run build:serve
 
 ```sh
 # Terminal C — Content creation CLI utilities
+cd ./content-base
 
 # Bootstrap a singleton entity
 pnpm maestro create profile
@@ -170,7 +171,7 @@ console.log(articles?.someNamedArticle?.main?.body);
 
 #### Astro template
 
-[See demo front-end project](./demo/front-astro).  
+[See demo front-end implementations](./demo/front-astro/src/pages/index.astro).  
 Pre-configured for SSR bundling, then serve.
 
 Front-end works in concert with **content server**
