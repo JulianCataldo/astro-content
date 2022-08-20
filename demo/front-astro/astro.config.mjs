@@ -1,12 +1,11 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import { defineConfig } from 'astro/config';
 import nodeJs from '@astrojs/node';
 /* ·········································································· */
-import vue from '@astrojs/vue';
-import react from '@astrojs/react';
+import image from '@astrojs/image';
+// import vue from '@astrojs/vue';
+// import react from '@astrojs/react';
 /* —————————————————————————————————————————————————————————————————————————— */
 
-// https://astro.build/config
 export default defineConfig({
   site: 'https://example.com',
   server: {
@@ -15,5 +14,9 @@ export default defineConfig({
   },
   output: 'server',
   adapter: nodeJs(),
-  integrations: [vue(), react()],
+  integrations: [
+    // vue(),
+    // react(),
+    image(),
+  ],
 });
