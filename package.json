@@ -35,7 +35,7 @@
     "glob-promise": "5.0.0",
     "hastscript": "7.0.2",
     "json-schema-faker": "0.5.0-rcv.44",
-    "json-schema-to-typescript": "11.0.1",
+    "json-schema-to-typescript": "11.0.2",
     "lodash-es": "4.17.21",
     "mkdirp": "1.0.4",
     "random-words": "1.2.0",
