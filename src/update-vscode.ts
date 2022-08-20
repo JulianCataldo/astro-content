@@ -73,7 +73,12 @@ export default async function updateVsCode() {
       JSON.stringify({ 'yaml.schemas': {} }, null, 2),
     );
   }
-  const currentSettings = JSON.parse(await fs.readFile(settingsPath, 'utf-8'));
+
+  let currentSettings;
+  const literal = await fs.readFile(settingsPath, 'utf-8');
+  if (literal) {
+    currentSettings = JSON.parse(literal);
+  }
 
   const data = JSON.stringify(
     {
