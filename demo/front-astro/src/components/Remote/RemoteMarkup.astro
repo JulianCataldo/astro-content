@@ -1,16 +1,18 @@
 ---
-import Gallery from 'src/components/TileGallery.astro';
 import { Markup } from 'astro-remote';
+import Gallery from './Inject/RemoteInjectTileGallery.astro';
+import Code from './Inject/RemoteInjectCode.astro';
+import Tweet from './Inject/RemoteInjectTweet.astro';
 
 export interface Props {
   content: string;
 }
 const props = { ...Astro.props } as Props;
 /* ———————————————————————————————————————————— Typeguards + Fallbacks —————— */
-if (typeof props.content !== 'string') props.content = '';
+if (typeof props.content !== 'string') props.content = '<!-- No content -->';
 /* —————————————————————————————————————————————————————————————————————————— */
 
-const components = { Gallery };
+const components = { Gallery, Tweet, pre: Code };
 ---
 
 <Markup content={props.content} components={components} />
