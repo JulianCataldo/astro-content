@@ -16,6 +16,8 @@
 
     "allowSyntheticDefaultImports": true,
 
-    "noImplicitAny": true
+    "noImplicitAny": true,
+
+    "strictNullChecks": true
   }
 }
