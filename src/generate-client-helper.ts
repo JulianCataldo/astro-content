@@ -37,7 +37,6 @@ import fetchApi from 'content-maestro/client/fetch-api';\n
 
     const entries: string[] = [];
     if (state.content[key]?.items) {
-      console.log({ dd: state.content[key].items });
       const items = Object.entries(state.content[key].items);
       items.forEach(([entryKey]) => {
         entries.push(camelCase(entryKey));
