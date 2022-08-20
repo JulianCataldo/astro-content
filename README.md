@@ -12,6 +12,7 @@ A **text** based, **structured content** framework, for **edition** and **consum
   - [Installation](#installation)
   - [Demo](#demo)
   - [Configuration](#configuration)
+    - [Recommended VS Code extensions](#recommended-vs-code-extensions)
   - [How does it works? An eagle view](#how-does-it-works-an-eagle-view)
   - [Content ingestion](#content-ingestion)
     - [Helper](#helper)
@@ -123,7 +124,7 @@ pnpm maestro create people person
 #                       ↑      ↑
 # Collection name ——————·      |
 # Entity singular name ————————·
-# 
+#
 # Yields:
 #
 # content/people
@@ -139,7 +140,7 @@ pnpm maestro create people elisabeth
 #                       ↑        ↑
 # Collection name ——————·        |
 # New entity name ———————————————·
-# 
+#
 # Yields:
 #
 # content/people
@@ -156,6 +157,13 @@ pnpm maestro create people elisabeth
 ## Configuration
 
 [See the Configuration API](./types/config.ts)
+
+### Recommended VS Code extensions
+
+```sh
+code --install-extension redhat.vscode-yaml
+code --install-extension unifiedjs.vscode-remark
+```
 
 ## How does it works? An eagle view
 
@@ -174,10 +182,8 @@ import content from 'content/get';
 
 const articles = await content.getArticles();
 
-if (articles) {
-  console.log(articles?.someNamedArticle);
-  console.log(articles?.someNamedArticle?.main?.body);
-}
+console.log(articles?.someNamedArticle);
+console.log(articles?.someNamedArticle?.main?.body);
 ```
 
 ### Markdown
@@ -219,13 +225,13 @@ import Link from 'src/components/Link.astro';
 
 const articles = await content.getArticles();
 
-const someNamedArticle = articles && articles?.someNamedArticle
+const someNamedArticle = articles?.someNamedArticle
 const content = someNamedArticle?.main?.body;
 const title = someNamedArticle?.main?.frontmatter?.title;
 const someMeta = someNamedArticle?.meta?.foo;
 
-/** Augment markup by mapping your Astro / React / Vue / Svelte components
- * Server-side rendering only (no client-side hydration) */
+/* Augment markup by mapping your Astro / React / Vue / Svelte components
+   Server-side rendering only (no client-side hydration) */
 const components = { Gallery, 'a': Link, /* … */ };
 ---
 
