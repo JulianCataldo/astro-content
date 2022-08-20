@@ -1,0 +1,36 @@
+type: object
+title: Car
+properties:
+  meta:
+    type: object
+    properties:
+      baz:
+        type: string
+      foo:
+        type: string
+        enum:
+          - bar
+          - moz
+          - das
+    required:
+      - foo
+  content:
+    type: object
+    title: Content
+    description: |-
+      Markdown content of this entry,
+      with frontmatter
+    properties:
+      frontmatter:
+        type: object
+        properties:
+          title:
+            description: Entry title
+            type: string
+        required:
+          - title
+      body:
+        type: string
+    required:
+      - frontmatter
+      - body

@@ -1,5 +1,5 @@
 .ccomp
 errors
-content
+# content
 !content/.gitkeep
 .vscode
