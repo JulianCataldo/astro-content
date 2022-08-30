@@ -1,3 +1,7 @@
+# .vscode/*
+
+.re-integrate
+
 dist
 .build
 .parcel-cache
@@ -21,7 +25,7 @@ yarn-error.log*
 pnpm-debug.log*
 
 # demo/src/content
-# demo/content
+demo/content
 
 # environment variables
 .env

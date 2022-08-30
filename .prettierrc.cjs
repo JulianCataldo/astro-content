@@ -1,20 +1,5 @@
 /** @type {import("@types/prettier").Options} */
 
 module.exports = {
-  printWidth: 80,
-  semi: true,
-  singleQuote: true,
-  tabWidth: 2,
-  trailingComma: 'all',
-  useTabs: false,
-
-  plugins: [],
-  overrides: [
-    {
-      files: ['.*', '*.json', '*.md', '*.toml', '*.yml'],
-      options: {
-        useTabs: false,
-      },
-    },
-  ],
+  ...require('@julian_cataldo/astro-configs/prettier-astro.cjs'),
 };
