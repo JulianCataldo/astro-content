@@ -10,4 +10,4 @@ console.log(`Maestro — CLI — ${pkg.version}`);
 
 /* —————————————————————————————————————————————————————————————————————————— */
 
-import './dist/index.js';
+import './lib/cli/index.js';

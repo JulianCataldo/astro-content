@@ -1,0 +1,36 @@
+{
+  "name": "@astro-content/cli",
+  "version": "0.0.0-alpha.0",
+  "description": "",
+  "main": "astro-integration.ts",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/react": "^18.0.17",
+    "astro": "1.1.1"
+  },
+  "dependencies": {
+    "@floating-ui/react-dom-interactions": "^0.9.3",
+    "@iconify/react": "^3.2.2",
+    "@monaco-editor/react": "^4.4.5",
+    "change-case": "^4.1.2",
+    "classnames": "^2.3.1",
+    "github-markdown-css": "^5.1.0",
+    "lodash-es": "^4.17.21",
+    "monaco-editor": "^0.34.0",
+    "monaco-marker-data-provider": "^1.1.1",
+    "react": "18.2.0",
+    "react-dom": "^18.2.0",
+    "react-merge-refs": "^2.0.1",
+    "react-split-pane": "^0.1.92",
+    "sass": "^1.54.5",
+    "@astro-content/server": "workspace:*",
+    "yaml": "^2.1.1",
+    "zustand": "^4.1.1"
+  }
+}
