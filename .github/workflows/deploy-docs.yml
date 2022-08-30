@@ -1,0 +1,71 @@
+name: Deploy — [Docs]
+
+on:
+  push:
+    branches: [master]
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      # ————————————————————————————————————————————————————————————————————————
+
+      - name: Use Node.js 'lts/gallium'
+        uses: actions/setup-node@v3
+        with:
+          node-version: lts/gallium
+
+      # ————————————————————————————————————————————————————————————————————————
+
+      - name: Setup PNPM 7
+        uses: pnpm/action-setup@v2.2.2
+        with:
+          version: 7.9.0
+          run_install: false
+
+      - name: Get PNPM store directory
+        id: pnpm-cache
+        run: |
+          echo "::set-output name=pnpm_cache_dir::$(pnpm store path)"
+
+      - uses: actions/cache@v3
+        name: Setup PNPM cache
+        with:
+          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      # ————————————————————————————————————————————————————————————————————————
+
+      - name: Install Node dependencies
+        # `production` to exclude dev. dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build Astro Website
+        working-directory: ./docs
+        run: pnpm run build
+
+      # ————————————————————————————————————————————————————————————————————————
+
+      # - name: Deploy to Netlify
+      #   uses: nwtgck/actions-netlify@v1.2.3
+      #   with:
+      #     publish-dir: './docs/dist'
+      #     production-branch: master
+      #     github-token: ${{ secrets.GITHUB_TOKEN }}
+      #     deploy-message: 'Deploy from GitHub Actions'
+      #     enable-pull-request-comment: false
+      #     enable-commit-comment: false
+      #     enable-commit-status: false
+      #     overwrites-pull-request-comment: false
+      #   env:
+      #     NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+      #     NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+      #   timeout-minutes: 1

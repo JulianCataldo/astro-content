@@ -1,9 +1,8 @@
-name: Release
+name: Release — [Packages]
 
 on:
   push:
-    branches:
-      - master
+    branches: [release]
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
@@ -65,8 +64,8 @@ jobs:
           # Custom publishing script in package.json
           publish: pnpm ci:publish
           # Messages
-          commit: "chore(deploy): Release"
-          title: "chore(deploy): Release"
+          commit: 'chore(deploy): Release'
+          title: 'chore(deploy): Release'
         env:
           # npm publish token required for publishing. Set this in secrets
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
