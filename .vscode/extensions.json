@@ -1,3 +1,16 @@
 {
-  "recommendations": ["redhat.vscode-yaml", "unifiedjs.vscode-remark"]
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "astro-build.astro-vscode",
+    "stylelint.vscode-stylelint",
+    "redhat.vscode-yaml",
+    "unifiedjs.vscode-remark",
+    "esbenp.prettier-vscode",
+    "editorconfig.editorconfig",
+    "mrmlnc.vscode-scss",
+    "pranaygp.vscode-css-peek",
+    "aaron-bond.better-comments",
+    "Gruntfuggly.todo-tree",
+    "wayou.vscode-todo-highlight"
+  ]
 }
