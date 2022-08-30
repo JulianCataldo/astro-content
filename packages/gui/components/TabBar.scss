@@ -1,0 +1,33 @@
+.component-tab-bar {
+  position: fixed;
+  display: flex;
+  width: 100%;
+  user-select: none;
+  background-color: var(--vscode-quickInput-background);
+
+  & + * {
+    margin-top: 3rem;
+  }
+
+  & > * {
+    padding: 0.75rem 1.5rem;
+    margin: 0rem 0rem;
+    color: var(--vscode-quickInput-foreground);
+    cursor: pointer;
+    border-top: 2px solid transparent;
+
+    &:hover {
+      background-color: var(--vscode-toolbar-hoverBackground);
+    }
+  }
+
+  .inspector-pane & {
+    margin: -1rem 0 1rem -1rem;
+  }
+
+  .active {
+    color: var(--vscode-list-activeSelectionForeground);
+    background-color: var(--vscode-menu-background);
+    border-top: 2px solid var(--vscode-input-placeholderForeground);
+  }
+}

@@ -1,0 +1,48 @@
+.component-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 4rem;
+  background-color: var(--vscode-menu-background);
+  outline: 1px solid var(--vscode-scrollbar-shadow);
+  box-shadow: 0 0.15rem 0.15rem var(--vscode-widget-shadow);
+
+  .actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &.file {
+      display: flex;
+      flex-grow: 1;
+      justify-content: flex-start;
+    }
+
+    & > * {
+      font-weight: 700;
+    }
+  }
+
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    & > * {
+      display: flex;
+      align-items: center;
+      padding: 1rem;
+
+      svg {
+        margin-right: 0.5em;
+      }
+
+      & > * {
+        padding: 0.75rem;
+      }
+
+      font-weight: 700;
+    }
+  }
+}

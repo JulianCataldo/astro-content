@@ -1,0 +1,58 @@
+/* stylelint-disable selector-class-pattern */
+.component-gui {
+  main {
+    position: relative;
+    height: calc(100vh - 4rem) !important;
+  }
+
+  .Resizer {
+    --color: var(--vscode-inputOption-activeBackground);
+
+    z-index: 1;
+    box-sizing: border-box;
+    background: var(--vscode-textSeparator-foreground);
+    background-clip: padding-box;
+    opacity: 1;
+    transition: all 0.2s ease;
+  }
+
+  .Resizer:hover {
+    -webkit-transition: all 0.4s ease;
+    transition: all 0.4s ease;
+  }
+
+  .Resizer.horizontal {
+    width: 100%;
+    height: 11px;
+    margin: -5px 0;
+    cursor: row-resize;
+    border-top: 5px solid rgba(255, 255, 255, 0);
+    border-bottom: 5px solid rgba(255, 255, 255, 0);
+  }
+
+  .Resizer.horizontal:hover {
+    border-top: 5px solid var(--color);
+    border-bottom: 5px solid var(--color);
+  }
+
+  .Resizer.vertical {
+    width: 11px;
+    margin: 0 -5px;
+    cursor: col-resize;
+    border-right: 5px solid rgba(255, 255, 255, 0);
+    border-left: 5px solid rgba(255, 255, 255, 0);
+  }
+
+  .Resizer.vertical:hover {
+    border-right: 5px solid var(--color);
+    border-left: 5px solid var(--color);
+  }
+
+  .Resizer.disabled {
+    cursor: not-allowed;
+  }
+
+  .Resizer.disabled:hover {
+    border-color: transparent;
+  }
+}

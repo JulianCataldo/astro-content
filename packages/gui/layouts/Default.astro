@@ -1,0 +1,17 @@
+---
+import 'github-markdown-css';
+/* ·········································································· */
+import './Default.scss';
+/* —————————————————————————————————————————————————————————————————————————— */
+
+import Base from './Base.astro';
+---
+
+<Base>
+  <Fragment slot="head">
+    <!-- _ -->
+  </Fragment>
+  <Fragment slot="body">
+    <slot />
+  </Fragment>
+</Base>

@@ -1,0 +1,24 @@
+*::-webkit-scrollbar {
+  width: 16px;
+}
+
+*::-webkit-scrollbar-track {
+  // background: _;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--vscode-scrollbarSlider-background);
+  // border-radius: 10px;
+  // border: 3px solid #ffffff;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  /* hover thumb styles */
+  // background-color: red;
+  cursor: default;
+  background-color: var(--vscode-scrollbarSlider-activeBackground);
+}
+// ::-webkit-scrollbar-thumb:horizontal:active,
+// ::-webkit-scrollbar-thumb:vertical:active {
+//   /* active thumb styles */
+// }
