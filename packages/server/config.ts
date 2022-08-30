@@ -1,20 +1,12 @@
-/* eslint-disable no-param-reassign */
-import chalk from 'chalk';
-import mkdirp from 'mkdirp';
-import * as fs from 'node:fs/promises';
-import path from 'node:path';
-// TODO: replace with esbuild
-import ts from 'typescript';
 /* ·········································································· */
-import { CcConfig } from '../types/config';
-import { $log } from './utils';
+import type { UserConfig } from './types/config';
 /* —————————————————————————————————————————————————————————————————————————— */
 
-let userConfig: CcConfig;
+let userConfig: Partial<UserConfig>;
 
 const ccompPath = './.ccomp';
 
-const conf: CcConfig = {
+const conf: UserConfig = {
   get server() {
     return {
       host: userConfig?.server?.host || 'localhost',
@@ -26,7 +18,7 @@ const conf: CcConfig = {
   },
   get components() {
     return {
-      src: userConfig?.components?.src || './content',
+      src: userConfig?.components?.src || './src/content',
       dest: userConfig?.components?.dest || `${ccompPath}/build/content`,
     };
   },
@@ -62,36 +54,12 @@ const conf: CcConfig = {
   },
   get log() {
     return {
-      verbose: userConfig?.log?.verbose || false,
+      verbose: userConfig?.log?.verbose || true,
     };
+  },
+  get previewUrl() {
+    return userConfig?.previewUrl || 'http://localhost:9054/';
   },
 };
 
-async function loadConfig() {
-  // TODO: dynamic reloading of config thanks to a watcher
-  $log('Loading user config…');
-
-  const source = await fs
-    .readFile(path.join(process.cwd(), './cc-config.ts'), 'utf-8')
-    .then((file) => file)
-    .catch(() => null);
-
-  if (source) {
-    $log(chalk.cyan('User TS configuration detected'));
-
-    const jsCompiled = ts.transpileModule(source, {
-      compilerOptions: { module: ts.ModuleKind.ESNext },
-    });
-    const confJsDir = path.join(process.cwd(), ccompPath);
-    const confJsPath = path.join(confJsDir, 'conf.mjs');
-
-    await mkdirp(confJsDir);
-    await fs.writeFile(confJsPath, jsCompiled.outputText);
-
-    userConfig = await import(confJsPath)
-      .then((module) => module.default)
-      .catch(() => null);
-  }
-}
-
-export { loadConfig, conf };
+export { conf };

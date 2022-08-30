@@ -1,0 +1,16 @@
+{
+  "title": "Markdown file",
+  "description": "Markdown content of this entry with frontmatter",
+  "properties": {
+    "headings": {
+      "items": [
+        {
+          "properties": { "level": { "type": "number" } },
+          "required": ["level"]
+        }
+      ]
+    },
+    "body": { "type": "string" }
+  },
+  "required": ["body", "headings"]
+}
