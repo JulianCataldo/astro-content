@@ -1,0 +1,26 @@
+{
+  "name": "astro-content",
+  "version": "0.0.0-alpha.0",
+  "description": "",
+  "main": "astro-integration.ts",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "astro": "1.1.1"
+  },
+  "dependencies": {
+    "@modyfi/vite-plugin-yaml": "^1.0.3",
+    "@rollup/pluginutils": "^4.2.1",
+    "@types/js-yaml": "^4.0.5",
+    "@astro-content/gui": "workspace:*",
+    "js-yaml": "^4.1.0",
+    "@astro-content/server": "workspace:*",
+    "tosource": "2.0.0-alpha.3",
+    "yaml": "^2.1.1"
+  }
+}
