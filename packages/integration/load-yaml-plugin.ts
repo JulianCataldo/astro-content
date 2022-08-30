@@ -1,12 +1,14 @@
+// Based on: https://github.com/Modyfi/vite-plugin-yaml
+
 import { load, DEFAULT_SCHEMA } from 'js-yaml';
 import { createFilter } from '@rollup/pluginutils';
 import toSource from 'tosource';
-
 import type { YAMLException, Schema } from 'js-yaml';
 import type { Plugin } from 'vite';
 import type { FilterPattern } from '@rollup/pluginutils';
+/* —————————————————————————————————————————————————————————————————————————— */
 
-export type PluginOptions = {
+export interface PluginOptions {
   /**
    * A minimatch pattern, or array of patterns, which specifies the files in the build the plugin
    * should operate on.
@@ -33,7 +35,7 @@ export type PluginOptions = {
    * Defaults to `console.warn()`.
    */
   onWarning?: (warning: YAMLException) => void;
-};
+}
 
 const yamlExtension = /\.ya?ml$/;
 
@@ -45,7 +47,7 @@ export default (
 ): Plugin => ({
   name: 'vite:transform-yaml',
 
-  async transform(code: string, id: string) {
+  transform(code: string, id: string) {
     if (yamlExtension.test(id)) {
       // Filters the filesystem for files to include/exclude. Includes all files by default.
       const filter = createFilter(options.include, options.exclude);
@@ -61,13 +63,17 @@ export default (
         filename: id,
         schema: options.schema,
         onWarning: (warning: YAMLException) =>
-          options?.onWarning && typeof options.onWarning === 'function'
+          options.onWarning && typeof options.onWarning === 'function'
             ? options.onWarning(warning)
             : console.warn(warning.toString()),
       });
 
       return {
-        code: `const data = ${toSource(yamlData)};\nexport default data;`,
+        code: `const { file, data, rawYaml } = ${toSource({
+          file: id,
+          data: yamlData,
+          rawYaml: code,
+        })};\nexport { file, data, rawYaml };`,
       };
     }
     return null;
