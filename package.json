@@ -1,6 +1,7 @@
 {
-  "name": "content-maestro",
+  "name": "@astro-content/root",
   "version": "0.0.1-alpha.19",
+  "private": "true",
   "description": "A text based, structured content framework, for edition and consumption.",
   "scripts": {
     "demo": "cd demo pnpm run dev",
@@ -48,7 +49,6 @@
     "stylelint-order": "^5.0.0",
     "typescript": "^4.8.2"
   },
-  "private": "true",
   "keywords": [],
   "author": "",
   "license": "ISC"
