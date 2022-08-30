@@ -1,0 +1,30 @@
+---
+import { get } from 'astro-content';
+// import Gui from 'astro-content/node_modules/@astro-content/gui/app.astro';
+/* ·········································································· */
+import Layout from '../layouts/Bare.astro';
+import Button from '../components/Button';
+/* —————————————————————————————————————————————————————————————————————————— */
+
+const content = await get(Astro.glob('/content/**/*.{md,mdx,yaml}'));
+
+// const builtSignal = content?.cars?.builtSignal?.content;
+// console.log({ builtSignal });
+---
+
+<Layout>
+  <!-- <builtSignal.Content /> -->
+  <div>Hello!</div>
+
+  <Button />
+
+  <hr />
+  <!-- IDEA: Embedded demo GUI preview (for docs) -->
+  <!-- <Gui /> -->
+</Layout>
+
+<style lang="scss">
+  a {
+    color: red;
+  }
+</style>
