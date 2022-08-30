@@ -46,7 +46,7 @@ jobs:
 
       - name: Install Node dependencies
         # `NODE_ENV=production` to exclude dev. dependencies
-        run: pnpm install --recursive # --frozen-lockfile
+        run: pnpm --recursive install --frozen-lockfile
 
       - name: Build Astro Website
         # working-directory: ./docs
