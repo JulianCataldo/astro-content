@@ -12,7 +12,8 @@ dist
 .old*
 
 **/.vscode/settings.json
-docs
+**/.astro-content
+**/content
 
 
 
