@@ -236,7 +236,7 @@ importers:
   packages/server:
     specifiers:
       '@julian_cataldo/remark-lint-frontmatter-schema': ^3.6.2
-      '@julian_cataldo/retext-case-police': link:../../../../packages/retext-case-police
+      '@julian_cataldo/retext-case-police': latest
       '@types/lodash-es': ^4.17.6
       '@types/mkdirp': ^1.0.2
       '@types/node': ^18.7.13
@@ -264,7 +264,7 @@ importers:
       yaml: ^2.1.1
     dependencies:
       '@julian_cataldo/remark-lint-frontmatter-schema': 3.6.2
-      '@julian_cataldo/retext-case-police': link:../../../../packages/retext-case-police
+      '@julian_cataldo/retext-case-police': 1.0.3
       ajv: 8.11.0
       ajv-formats: 2.1.1
       chalk: 5.0.1
@@ -1036,6 +1036,14 @@ packages:
       glob-to-regexp: 0.4.1
       unified-lint-rule: 2.1.1
       yaml: 2.1.1
+    dev: false
+
+  /@julian_cataldo/retext-case-police/1.0.3:
+    resolution: {integrity: sha512-YnMRONLEQ7eh5SSW+6HF8NaIJ89xua/y0xLQRDNwEoa/3S2dmGK79bHIuf/PP1dJOUtZhTsJHSMyH97+srrr9g==}
+    dependencies:
+      case-police: 0.5.9
+      nlcst-search: 3.1.0
+      nlcst-to-string: 3.1.0
     dev: false
 
   /@ljharb/has-package-exports-patterns/0.0.2:
@@ -2141,6 +2149,11 @@ packages:
       no-case: 3.0.4
       tslib: 2.4.0
       upper-case-first: 2.0.2
+    dev: false
+
+  /case-police/0.5.9:
+    resolution: {integrity: sha512-i9j4pNqLdiDhorjC4cy/ewQLXmKLduWnvnRqabxwu5G8arrYeinBCJ3kBBINdt04o0V/M8nVKtcU2tZE2XKIEw==}
+    hasBin: true
     dev: false
 
   /ccount/2.0.1:
