@@ -8,6 +8,12 @@ $dark: rgb(57, 91, 100);
 $light: rgb(165, 201, 202);
 $white: rgb(231, 246, 242);
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body {
   padding: 0;
   margin: 0;
