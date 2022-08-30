@@ -86,7 +86,7 @@ export default function Entity() {
           </a>
 
           <div className="action">
-            <Icon icon="system-uicons:info-circle" width="2em" />
+            <Icon icon="system-uicons:info-circle" width="2em" height="1.5em" />
             Infos
           </div>
 
@@ -101,7 +101,11 @@ export default function Entity() {
               )}
             >
               <div className="action">
-                <Icon icon="system-uicons:document-list" width="2em" />
+                <Icon
+                  icon="system-uicons:document-list"
+                  width="2em"
+                  height="2.5em"
+                />
                 Headings
               </div>
             </ModalPopover>

@@ -43,7 +43,12 @@ export default function Tree() {
               onClick={(e) => setRoute(key, false, false)}
               className={cx('entity-link route', entity === key && 'active')}
             >
-              <Icon icon="system-uicons:chevron-down" className="folder" />
+              <Icon
+                icon="system-uicons:chevron-down"
+                className="folder"
+                width={'1.25rem'}
+                height={'1.25rem'}
+              />
               <span className="tree-label">{sentenceCase(key)}</span>{' '}
               <span className="spacer" />
               <span onClick={() => createEntity(key)} className="trigger">
@@ -70,11 +75,37 @@ export default function Tree() {
                     errorsReport = errors[key][eKey][ppKey];
                   }
 
-                  const fileLabel =
-                    parentProp?.excerpt?.html?.replaceAll('\n', '<br />') ||
-                    `${parentProp.rawYaml
+                  function toPretty({ data = null, literal = '' }) {
+                    let convert = literal;
+                    if (data) {
+                      convert = yaml.stringify(data);
+                    }
+                    return `${convert
                       ?.replaceAll('\n', '<br />')
                       ?.substring(0, 50)}…`;
+                  }
+
+                  const richText = toPretty({
+                    literal: parentProp?.excerpt?.html || 'No excerpt\n',
+                  });
+
+                  let frontmatter = '';
+
+                  if (
+                    parentProp?.frontmatter &&
+                    Object.entries(parentProp?.frontmatter).length
+                  ) {
+                    const literal = toPretty({ data: parentProp?.frontmatter });
+                    frontmatter = `<p><strong>Frontmatter</strong><hr />${literal}</p><p><strong>`;
+
+                    // }
+                  }
+                  // console.log({ parentProp });
+                  const mdPreview = `${frontmatter}Excerpt</strong><hr />${richText}</p>`;
+
+                  const fileLabel = parentProp?.frontmatter
+                    ? mdPreview
+                    : toPretty({ literal: parentProp.rawYaml });
 
                   const propActive =
                     entity === key && entry === eKey && property === ppKey;
@@ -109,7 +140,8 @@ export default function Tree() {
                                   ? 'system-uicons:circle-split'
                                   : 'system-uicons:circle'
                               }
-                              width="1rem"
+                              width={'1.15rem'}
+                              height={'1.15rem'}
                               className={cx(
                                 parentProp?.headings && parentProp.rawMd
                                   ? 'icon-md'
