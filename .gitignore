@@ -10,9 +10,10 @@ dist
 .dev*
 *.dev.*
 .old*
-demo/content-base/.vscode/settings.json
+
+**/.vscode/settings.json
 docs
-demo/content/.vscode/settings.json
+
 
 
 # dependencies
