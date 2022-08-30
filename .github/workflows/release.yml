@@ -1,0 +1,74 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - master
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      # ————————————————————————————————————————————————————————————————————————
+
+      - name: Use Node.js 'lts/gallium'
+        uses: actions/setup-node@v3
+        with:
+          node-version: lts/gallium
+          # cache: "pnpm"
+          # cache-dependency-path: '**/package-lock.json'
+
+      - name: Setup PNPM 7
+        uses: pnpm/action-setup@v2.2.2
+        with:
+          version: 7.9.0
+          run_install: false
+
+      - name: Get PNPM store directory
+        id: pnpm-cache
+        run: |
+          echo "::set-output name=pnpm_cache_dir::$(pnpm store path)"
+
+      - uses: actions/cache@v3
+        name: Setup PNPM cache
+        with:
+          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Set up NPM credentials
+        run: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Setup PNPM config
+        run: pnpm config set store-dir $PNPM_CACHE_FOLDER
+
+      - name: Install Node dependencies
+        # `production` to exclude dev. dependencies
+        run: pnpm install --frozen-lockfile
+
+        # run: NODE_ENV=production pnpm install --recursive --frozen-lockfile
+      - name: Create Release Pull Request
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          # Custom versioning script in package.json
+          version: pnpm ci:version
+          # Custom publishing script in package.json
+          publish: pnpm ci:publish
+          # Messages
+          commit: "chore(deploy): Release"
+          title: "chore(deploy): Release"
+        env:
+          # npm publish token required for publishing. Set this in secrets
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          # automatically available in actions
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
