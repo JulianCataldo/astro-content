@@ -2,7 +2,7 @@ import { unified } from 'unified';
 import { remark } from 'remark';
 import remarkFrontmatter from 'remark-frontmatter';
 import rlFmSchema from '@julian_cataldo/remark-lint-frontmatter-schema';
-import retextCasePolice from '@julian_cataldo/retext-case-police/index';
+import retextCasePolice from '@julian_cataldo/retext-case-police';
 import retextStringify from 'retext-stringify';
 import remarkPresetLintRecommended from 'remark-preset-lint-recommended';
 import remarkPresetLintMarkdownStyleGuide from 'remark-preset-lint-markdown-style-guide';
