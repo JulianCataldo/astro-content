@@ -2,7 +2,8 @@ import { unified } from 'unified';
 import { remark } from 'remark';
 import remarkFrontmatter from 'remark-frontmatter';
 import rlFmSchema from '@julian_cataldo/remark-lint-frontmatter-schema';
-import retextCasePolice from '@julian_cataldo/retext-case-police';
+// FIXME: Module "file:///home/runner/work/astro-content/astro-content/node_modules/.pnpm/case-police@0.5.9/node_modules/case-police/dict/abbreviates.json" needs an import assertion of type "json"
+// import retextCasePolice from '@julian_cataldo/retext-case-police';
 import retextStringify from 'retext-stringify';
 import remarkPresetLintRecommended from 'remark-preset-lint-recommended';
 import remarkPresetLintMarkdownStyleGuide from 'remark-preset-lint-markdown-style-guide';
@@ -24,9 +25,7 @@ export default async function validateMd(
 
   const lintingAndSchema = await remark()
     .use(remarkFrontmatter)
-    .use(rlFmSchema, {
-      embed: schema,
-    })
+    .use(rlFmSchema, { embed: schema })
     .use(remarkPresetLintRecommended)
     .use(remarkPresetLintMarkdownStyleGuide)
     .use(remarkPresetLintConsistent)
@@ -47,7 +46,7 @@ export default async function validateMd(
     .use(retextEnglish)
     .use(retextProfanities)
     .use(retextStringify)
-    .use(retextCasePolice)
+    // .use(retextCasePolice)
     .process(content);
 
   return {
