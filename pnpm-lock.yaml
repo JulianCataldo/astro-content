@@ -103,6 +103,27 @@ importers:
       react-dom: 18.2.0_react@18.2.0
       typescript: 4.8.2
 
+  docs:
+    specifiers:
+      '@astrojs/mdx': ^0.10.2
+      '@astrojs/react': ^1.1.0
+      astro: 1.0.6
+      astro-content: workspace:*
+      react: ^18.0.0
+      react-dom: ^18.0.0
+      serve: ^14.0.1
+      typescript: ^4.8.2
+    dependencies:
+      astro: 1.0.6
+      serve: 14.0.1
+    devDependencies:
+      '@astrojs/mdx': 0.10.2
+      '@astrojs/react': 1.1.0_biqbaboplfbrettd7655fr4n2y
+      astro-content: link:../packages/integration
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      typescript: 4.8.2
+
   packages/cli:
     specifiers:
       '@astro-content/server': workspace:*
@@ -343,6 +364,29 @@ packages:
       vfile: 5.3.4
     transitivePeerDependencies:
       - supports-color
+
+  /@astrojs/mdx/0.10.2:
+    resolution: {integrity: sha512-wayFVQx22DSfDD2JnVvPHqJDZNDdbfUu2kfTc3ecf8v6QGa0DqNI97zvfJwtHWJkpJxpbjI7Yw5IF6vdNXvJNg==}
+    engines: {node: ^14.18.0 || >=16.12.0}
+    dependencies:
+      '@astrojs/prism': 1.0.1
+      '@mdx-js/mdx': 2.1.3
+      '@mdx-js/rollup': 2.1.3
+      acorn: 8.8.0
+      es-module-lexer: 0.10.5
+      github-slugger: 1.4.0
+      gray-matter: 4.0.3
+      rehype-raw: 6.1.1
+      remark-frontmatter: 4.0.1
+      remark-gfm: 3.0.1
+      remark-smartypants: 2.0.0
+      shiki: 0.10.1
+      unist-util-visit: 4.1.1
+      vfile: 5.3.4
+    transitivePeerDependencies:
+      - rollup
+      - supports-color
+    dev: true
 
   /@astrojs/mdx/0.10.2_rollup@2.78.1:
     resolution: {integrity: sha512-wayFVQx22DSfDD2JnVvPHqJDZNDdbfUu2kfTc3ecf8v6QGa0DqNI97zvfJwtHWJkpJxpbjI7Yw5IF6vdNXvJNg==}
@@ -1036,6 +1080,19 @@ packages:
       unist-util-position-from-estree: 1.1.1
       unist-util-stringify-position: 3.0.2
       unist-util-visit: 4.1.1
+      vfile: 5.3.4
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  /@mdx-js/rollup/2.1.3:
+    resolution: {integrity: sha512-KaX9GcZ63TDaLNH9UYYE94+naZQldV2IUzmMkDVOlPxDtTh8kcEn8l6/4W1P79wxZZbakSOFejTuaYmcstl5sA==}
+    peerDependencies:
+      rollup: '>=2'
+    dependencies:
+      '@mdx-js/mdx': 2.1.3
+      '@rollup/pluginutils': 4.2.1
+      source-map: 0.7.4
       vfile: 5.3.4
     transitivePeerDependencies:
       - supports-color
