@@ -15,7 +15,9 @@ import { useAppStore } from '../store';
 export default function Gui({ ssrContent }) {
   const save = useAppStore((state) => state.save);
   const { errors } = useAppStore((state) => state.data);
-  const { entity, entry, property } = useAppStore((state) => state.route);
+  const { entity, entry, property } = useAppStore(
+    (state) => state.uiState.route,
+  );
   const [didMount, setDidMount] = useState(false);
 
   /* Save — Keyboard shortcut */
@@ -30,7 +32,6 @@ export default function Gui({ ssrContent }) {
   });
 
   const prop = errors?.[entity]?.[entry]?.[property];
-  const hasErrors = prop?.schema || prop?.lint || prop?.prose;
 
   return (
     <div className="component-gui">
@@ -42,15 +43,14 @@ export default function Gui({ ssrContent }) {
         <main>
           <SplitPane split="vertical" defaultSize={260} minSize={200}>
             {/* LEFT-SIDEBAR */}
+
             <Tree />
-            <SplitPane
-              split="horizontal"
-              defaultSize={hasErrors ? '65%' : '100%'}
-              minSize={200}
-            >
+
+            <SplitPane split="horizontal" defaultSize="65%" minSize={200}>
               {/* DUAL-VIEW EDITOR */}
               <SplitPane split="vertical" defaultSize="50%" minSize={200}>
                 <File />
+
                 <Preview />
               </SplitPane>
               {/* LOWER SIDE-BAR INSPECTOR */}

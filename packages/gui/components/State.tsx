@@ -4,7 +4,7 @@ import { useAppStore } from '../store';
 /* ·········································································· */
 
 export default function State(params) {
-  const [timestamp, setTimestamp] = useState();
+  // const [timestamp, setTimestamp] = useState();
 
   const state = useAppStore((state) => state.data);
 
@@ -23,18 +23,22 @@ export default function State(params) {
 
   const fetchData = useAppStore((state) => state.fetchData);
   useEffect(() => {
-    fetchData();
-  }, [timestamp]);
+    fetchData()
+      .then(() => null)
+      .catch(() => null);
+  }, []);
+  // timestamp
 
-  const fetchCurrentRoute = useAppStore((state) => state.fetchCurrentRoute);
+  const fetchSavedUiState = useAppStore((state) => state.fetchSavedUiState);
+
   useEffect(() => {
-    fetchCurrentRoute();
+    fetchSavedUiState();
   }, []);
 
   return <div></div>;
   return (
     <details>
-      <h1>STATE</h1>
+      <h1>State</h1>
       <pre>
         <code>{JSON.stringify(state, null, 2)} </code>
       </pre>

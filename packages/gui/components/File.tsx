@@ -6,7 +6,9 @@ import Editor from './Editor';
 
 export default function Entity() {
   const { content, schemas } = useAppStore((state) => state.data);
-  const { entity, entry, property } = useAppStore((state) => state.route);
+  const { entity, entry, property } = useAppStore(
+    (state) => state.uiState.route,
+  );
 
   const isMd =
     content?.[entity]?.[entry]?.[property]?.headings &&

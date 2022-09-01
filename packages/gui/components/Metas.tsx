@@ -32,16 +32,18 @@ export default function Meta({ value }) {
           />
         </div>
         <table>
-          <tr>
-            <td></td>
-            <td></td>
-            <td>Reading time</td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td>{value?.readingTime}</td>
-          </tr>
+          <tbody>
+            <tr>
+              <td></td>
+              <td></td>
+              <td>Reading time</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td>{value?.readingTime}</td>
+            </tr>
+          </tbody>
         </table>
       </div>
     </div>
