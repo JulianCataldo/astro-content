@@ -14,7 +14,7 @@ export function getStaticPaths() {
     { params: { endpoint: 'config' } },
     { params: { endpoint: 'content' } },
     { params: { endpoint: 'errors' } },
-    { params: { endpoint: '__save' } },
+    // { params: { endpoint: '__save' } },
   ];
 }
 

@@ -124,15 +124,19 @@ const astroContent = (): AstroIntegration => {
         await fs
           .readFile(path.join(tempDir, 'state.json'), 'utf-8')
           .then(async (data) => {
-            const obj = JSON.parse(data);
-            return Promise.all(
-              Object.entries(obj).map(async ([key]) =>
-                fs.writeFile(
-                  path.join(process.cwd(), `dist/__content/api/${key}`),
-                  JSON.stringify(obj[key]),
-                ),
-              ),
-            );
+            if (typeof data === 'string') {
+              const obj = JSON.parse(data);
+              if (typeof obj === 'object') {
+                return Promise.all(
+                  Object.entries(obj).map(async ([key]) =>
+                    fs.writeFile(
+                      path.join(process.cwd(), `dist/__content/api/${key}`),
+                      JSON.stringify(obj[key]),
+                    ),
+                  ),
+                );
+              }
+            }
           });
       },
     },
