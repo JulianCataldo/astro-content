@@ -4,7 +4,7 @@ import { remark } from 'remark';
 import remarkFrontmatter from 'remark-frontmatter';
 import rlFmSchema from '@julian_cataldo/remark-lint-frontmatter-schema';
 // FIXME: Module "file:///home/runner/work/astro-content/astro-content/node_modules/.pnpm/case-police@0.5.9/node_modules/case-police/dict/abbreviates.json" needs an import assertion of type "json"
-// import retextCasePolice from '@julian_cataldo/retext-case-police/index';
+import retextCasePolice from '@julian_cataldo/retext-case-police';
 import remarkPresetLintRecommended from 'remark-preset-lint-recommended';
 import remarkPresetLintMarkdownStyleGuide from 'remark-preset-lint-markdown-style-guide';
 import remarkPresetLintConsistent from 'remark-preset-lint-consistent';
@@ -56,7 +56,7 @@ export default async function validateMd(
     .use(remarkFrontmatter)
     .use(remarkRetext, Parser)
     // .use(retextProfanities)
-    // .use(retextCasePolice)
+    .use(retextCasePolice)
     .use(retextReadability, { age: 26 })
     .use(retextRepeatedWords)
     // .use(retextSpell, dictionary)
