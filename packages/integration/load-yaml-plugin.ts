@@ -6,6 +6,8 @@ import toSource from 'tosource';
 import type { YAMLException, Schema } from 'js-yaml';
 import type { Plugin } from 'vite';
 import type { FilterPattern } from '@rollup/pluginutils';
+import type { YamlInstance } from '@astro-content/types/file';
+
 /* —————————————————————————————————————————————————————————————————————————— */
 
 export interface PluginOptions {
@@ -68,12 +70,16 @@ export default (
             : console.warn(warning.toString()),
       });
 
+      const keys = `{ file, data, rawYaml }`;
+
+      const data: YamlInstance<unknown> = {
+        file: id,
+        data: yamlData,
+        rawYaml: code,
+      };
+
       return {
-        code: `const { file, data, rawYaml } = ${toSource({
-          file: id,
-          data: yamlData,
-          rawYaml: code,
-        })};\nexport { file, data, rawYaml };`,
+        code: `const ${keys} = ${toSource(data)};\n\nexport ${keys};`,
       };
     }
     return null;

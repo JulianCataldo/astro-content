@@ -6,11 +6,12 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import mkdirp from 'mkdirp';
 import bodyParser from 'body-parser';
-import get from '@astro-content/server/collect';
+import collect from '@astro-content/server/collect';
 // import state from '@astro-content/server/state';
 import save from '@astro-content/server/save';
 import validateYaml from '@astro-content/server/validate-yaml';
 import validateMd from '@astro-content/server/validate-md';
+import state from '@astro-content/server/state';
 import ViteYaml from './load-yaml-plugin';
 /* —————————————————————————————————————————————————————————————————————————— */
 
@@ -42,7 +43,12 @@ const astroContent = (): AstroIntegration => {
             plugins: [ViteYaml()],
             server: {
               watch: {
-                // ignored: ['**/content/**'],
+                ignored: [
+                  //
+                  // '**/content/**',
+                  '**/.astro-content/**',
+                  '**/get.ts',
+                ],
               },
             },
           },
@@ -60,6 +66,11 @@ const astroContent = (): AstroIntegration => {
           pattern: '/__content',
           entryPoint: 'astro-content/node_modules/@astro-content/gui/app.astro',
         });
+
+        fs.writeFile(
+          path.join(process.cwd(), 'get.ts'),
+          `${state.types.ide}`,
+        ).catch(() => null);
       },
 
       // 'astro:config:done': ({ config }) => {},
@@ -74,6 +85,7 @@ const astroContent = (): AstroIntegration => {
           console.log(event, path);
         });
 
+        // FIXME: bodyParser typings
         server.middlewares.use(bodyParser.json());
         // eslint-disable-next-line @typescript-eslint/no-misused-promises
         server.middlewares.use(async (req, res, next) => {
@@ -144,4 +156,4 @@ const astroContent = (): AstroIntegration => {
 };
 
 export default astroContent;
-export { get };
+export { collect };

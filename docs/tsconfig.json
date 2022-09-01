@@ -13,7 +13,7 @@
     // Astro will directly run your TypeScript code, no transpilation needed.
     "noEmit": true,
 
-    // "types": ["./.ccomp/types"]
+    // "types": [],
     "paths": {
       // Make TS Happy with absolute paths
       "/*": ["./*"]

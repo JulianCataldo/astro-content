@@ -5,19 +5,32 @@ import create from 'zustand';
 /* ·········································································· */
 import type { SaveDTO } from '@astro-content/types/dto';
 import type { AppState, Language, Part } from '@astro-content/types/gui-state';
+import type {
+  Errors,
+  PropertyErrors,
+  ServerState,
+} from '@astro-content/types/server-state';
 import { $log } from './utils';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 const apiBase = '/__content/api';
+
+const emptyData: ServerState = {
+  content: null,
+  schemas: null,
+  errors: null,
+  types: null,
+  config: null,
+};
 
 export async function fetchData() {
   $log('Fetching…');
 
   const endpointList = ['schemas', 'content', 'errors', 'types', 'config'];
 
-  const data = {};
+  const data: ServerState = { ...emptyData };
   await Promise.all(
-    endpointList.map(async (key) =>
+    endpointList.map(async (key: keyof ServerState) =>
       fetch(`${apiBase}/${key}`).then((r) =>
         r
           .json()
@@ -25,7 +38,6 @@ export async function fetchData() {
             data[key] = j;
           })
           .catch((e) => {
-            data[key] = {};
             console.log(e);
           }),
       ),
@@ -105,18 +117,23 @@ const useAppStore = create<AppState>()((set) => ({
 
   /* ········································································ */
 
-  data: {
-    content: null,
-    schemas: null,
-    errors: null,
-    types: null,
-    config: null,
-  },
+  data: emptyData,
+
   fetchData: async () => {
-    const res = await fetchData().catch((_) => null);
-    set(() => {
-      return { data: res };
-    });
+    const res = await fetchData()
+      .then((s: ServerState) => s)
+      .catch(() => null);
+
+    if (typeof res === 'object' && res) {
+      set((state) => {
+        const newUiSate = { ...state.uiState };
+
+        if (!state.uiState.route.entity) {
+          newUiSate.route.entity = 'bills';
+        }
+        return { data: res };
+      });
+    }
   },
   updateContentForValidation: async (
     entity: Part,
@@ -143,22 +160,30 @@ const useAppStore = create<AppState>()((set) => ({
         schema,
       }),
     })
-      .then((e) => e.json().then((j) => j as unknown))
+      .then((e) =>
+        e
+          .json()
+          .then((j) => j.errors as PropertyErrors)
+          .catch(() => null),
+      )
       .catch((e) => console.log(e));
 
     set((state) => {
       const newStateErrors = state.data.errors;
       console.log(newStateErrors);
 
-      newStateErrors[entity][entry][property] = errors.errors;
+      if (
+        entity &&
+        entry &&
+        property &&
+        newStateErrors?.[entity]?.[entry]?.[property] &&
+        errors
+      ) {
+        newStateErrors[entity][entry][property] = errors;
+      }
 
       return { data: { ...state.data, errors: newStateErrors } };
     });
-
-    // const res = await fetchData().catch((_) => null);
-    // set(() => {
-    //   return { data: res };
-    // });
   },
 
   /* ········································································ */

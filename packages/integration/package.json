@@ -17,6 +17,7 @@
     "astro": "1.1.1"
   },
   "dependencies": {
+    "@astro-content/types": "workspace:*",
     "@astro-content/cli": "workspace:*",
     "@astro-content/gui": "workspace:*",
     "@astro-content/server": "workspace:*",

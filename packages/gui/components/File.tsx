@@ -10,36 +10,39 @@ export default function Entity() {
     (state) => state.uiState.route,
   );
 
-  const isMd =
-    content?.[entity]?.[entry]?.[property]?.headings &&
-    content?.[entity]?.[entry]?.[property]?.rawMd;
+  if (entity && entry && property && content?.[entity]?.[entry]?.[property]) {
+    const isMd =
+      content?.[entity]?.[entry]?.[property]?.headings &&
+      content?.[entity]?.[entry]?.[property]?.rawMd;
 
-  return (
-    content && (
-      <>
-        {schemas?.content[entity] && !property && (
+    return (
+      content && (
+        <>
+          {schemas?.content[entity] && !property && (
+            <div className="file-entity">
+              <Editor language="yaml" value={schemas?.raw[entity]} readOnly />
+            </div>
+          )}
           <div className="file-entity">
-            <Editor language="yaml" value={schemas?.raw[entity]} readOnly />
-          </div>
-        )}
-        <div className="file-entity">
-          {isMd ? (
-            <Editor
-              language="markdown"
-              value={content[entity][entry][property]?.rawMd}
-              isMain
-            />
-          ) : (
-            content?.[entity]?.[entry]?.[property] && (
+            {isMd && (
+              <Editor
+                language="markdown"
+                value={content[entity][entry][property]?.rawMd}
+                isMain
+              />
+            )}
+            {!isMd && content?.[entity]?.[entry]?.[property] && (
               <Editor
                 language="yaml"
                 value={content[entity][entry][property]?.rawYaml}
                 isMain
               />
-            )
-          )}
-        </div>
-      </>
-    )
-  );
+            )}
+          </div>
+        </>
+      )
+    );
+  }
+
+  return <></>;
 }

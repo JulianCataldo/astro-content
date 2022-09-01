@@ -2,7 +2,14 @@
 import './TabBar.scss';
 /* —————————————————————————————————————————————————————————————————————————— */
 
-export default function Entity({ tabs, switchPane, currentTab }) {
+export type Tabs = Record<string, { button: { title: string } }>;
+
+interface Props {
+  tabs: Tabs;
+  switchPane: (index: string) => void;
+  currentTab: string;
+}
+export default function Entity({ tabs, switchPane, currentTab }: Props) {
   return (
     <div className="component-tab-bar">
       {Object.entries(tabs).map(([index, tab]) => (

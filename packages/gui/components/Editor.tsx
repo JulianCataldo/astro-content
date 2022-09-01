@@ -1,10 +1,11 @@
+/* eslint-disable max-lines */
 import Monaco from '@monaco-editor/react';
 import type { Monaco as MonacoType } from '@monaco-editor/react';
 import type { editor as nsEd, editor, languages } from 'monaco-editor';
 import { useEffect, useRef, useState } from 'react';
 import yaml from 'yaml';
 /* ·········································································· */
-import type { Language } from '@astro-content/types/gui-state';
+import type { EditorLanguage } from '@astro-content/types/gui-state';
 import { useAppStore } from '../store';
 /* —————————————————————————————————————————————————————————————————————————— */
 
@@ -15,7 +16,7 @@ export default function Editor({
   isMain,
 }: {
   value: string;
-  language: Language | ('typescript' | 'json' | 'html');
+  language: EditorLanguage;
   readOnly: boolean;
   isMain: boolean;
 }) {
@@ -130,9 +131,9 @@ export default function Editor({
       setDefaultEditor(passedEd);
 
       console.log(monaco);
-      const model = editorRef.current?.getModel();
+      const model = editorRef.current.getModel();
       if (model && monaco) {
-        setCurrentLanguage(model?.getLanguageId() as Languages);
+        setCurrentLanguage(model.getLanguageId() as EditorLanguage);
         validate(model, monaco);
       }
     }
@@ -157,9 +158,12 @@ export default function Editor({
     });
 
     console.log({ typesB: types });
-    if (types?.browser) {
+
+    if (types.browser) {
+      const global = `${types.common}\n\n${types.browser}`;
+      console.log({ global });
       monaco.languages.typescript.typescriptDefaults.addExtraLib(
-        types.browser,
+        global,
         'global.d.ts',
       );
     }
@@ -167,7 +171,7 @@ export default function Editor({
 
   useEffect(() => {
     if (isMain && value) {
-      handleChange();
+      handleChange().catch(() => null);
     }
   }, [errors, value]);
 
@@ -189,7 +193,9 @@ export default function Editor({
         beforeMount={handleEditorWillMount}
         onMount={handleEditorDidMount}
         path={isMain ? `${entity}/${entry}/${property}.${language}` : ''}
-        onChange={handleChange}
+        onChange={() => {
+          handleChange().catch(() => null);
+        }}
       />
     </div>
   );

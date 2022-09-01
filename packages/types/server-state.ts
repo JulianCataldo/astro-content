@@ -4,21 +4,20 @@ import type { Position } from 'unist';
 
 export interface Content {
   [key: string]: {
-    type: 'singleton' | 'collection';
-    data?: { [key: string]: unknown };
-    items?: { [key: string]: { [key: string]: unknown } };
+    [key: string]: { [key: string]: unknown };
   };
 }
 
 export interface Schemas {
-  internals: { [key: string]: JSONSchema7 };
+  internals?: { [key: string]: JSONSchema7 };
   content: { [key: string]: JSONSchema7 };
-  raw: { [key: string]: string };
+  raw?: { [key: string]: string };
 }
 
 export interface Types {
-  entity: { [key: string]: string };
+  common: string;
   browser: string;
+  ide: string;
 }
 
 export interface ErrorsSchema {
@@ -34,28 +33,32 @@ export interface ErrorsProse {
   position?: Position;
 }
 
+export interface PropertyErrors {
+  schema: ErrorsSchema[];
+  lint: ErrorsLint[];
+  prose: ErrorsProse[];
+}
 export interface Errors {
   [key: string]: {
     [key: string]: {
-      [key: string]: {
-        schema: ErrorsSchema[];
-        lint: ErrorsLint[];
-        prose: ErrorsProse[];
-      };
+      [key: string]: PropertyErrors;
     };
   };
 }
 
 export interface ServerState {
-  content: Content;
+  content: Content | null;
 
-  schemas: Schemas;
+  schemas: Schemas | null;
 
-  errors: Errors;
+  errors: Errors | null;
 
-  types: Types;
+  types: Types | null;
 
-  config: {
-    previewUrl: string;
-  };
+  config:
+    | {
+        previewUrl?: string;
+      }
+    | {}
+    | null;
 }

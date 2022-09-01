@@ -1,5 +1,3 @@
-import { useState } from 'react';
-import { pascalCase } from 'change-case';
 /* ·········································································· */
 import TabBar from './TabBar';
 import Editor from './Editor';

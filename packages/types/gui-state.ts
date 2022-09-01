@@ -1,6 +1,6 @@
 import type { editor as nsEd } from 'monaco-editor';
 
-import type { Content, Errors, Schemas, Types } from './server-state';
+import type { ServerState } from './server-state';
 
 export type Part = string | null | false;
 export interface Route {
@@ -9,14 +9,9 @@ export interface Route {
   property: Part;
 }
 
-export interface Data {
-  content: Content;
-  schemas: Schemas | null;
-  errors: Errors;
-  types: Types;
-  config: { previewUrl: string };
-}
 export type Language = 'yaml' | 'md';
+
+export type EditorLanguage = Language | ('typescript' | 'json' | 'html');
 
 export interface AppState {
   uiState: {
@@ -31,9 +26,9 @@ export interface AppState {
   setRoute: (entity: Part, entry: Part, property: Part) => void;
   setInspectorPane: (name: string) => void;
   setPreviewPane: (name: string) => void;
-  setCurrentLanguage: (name: Language) => void;
+  setCurrentLanguage: (name: EditorLanguage) => void;
   /* ········································································ */
-  data: Data;
+  data: ServerState;
   fetchData: () => Promise<void>;
   updateContentForValidation: (
     entity: Part,

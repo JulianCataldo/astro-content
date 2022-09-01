@@ -2,6 +2,10 @@
 import type { ServerState } from '@astro-content/types/server-state';
 import { conf } from './config';
 
+const ide = `import { collect } from 'astro-content';
+
+export default collect as (files: unknown) => Promise<Entities>;`;
+
 const state: ServerState = {
   content: {},
 
@@ -14,7 +18,8 @@ const state: ServerState = {
   errors: {},
 
   types: {
-    entity: {},
+    common: '',
+    ide,
     browser: '',
   },
 

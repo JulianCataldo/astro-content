@@ -10,7 +10,7 @@ import type {
 import { useAppStore } from '../store';
 /* —————————————————————————————————————————————————————————————————————————— */
 
-import TabBar from './TabBar';
+import TabBar, { Tabs } from './TabBar';
 import Tooltip from './Tooltip';
 
 export default function Inspector() {
@@ -120,7 +120,7 @@ export default function Inspector() {
     );
   }
 
-  const tabs = {};
+  const tabs: Tabs = {};
   const errs = errors?.[entity]?.[entry]?.[property];
 
   tabs.schema = {
@@ -149,41 +149,44 @@ export default function Inspector() {
   return (
     <div className="inspector-pane">
       {/* Inspector */}
-      {entity && entry && property && content?.[entity]?.[entry]?.[property] && (
-        <>
-          <TabBar
-            tabs={tabs}
-            switchPane={setInspectorPane}
-            currentTab={inspectorPane}
-          />
-          {hasAll && inspectorPane === 'schema' && (
-            <div>
-              <ErrorPane errs={errs?.schema} />
-            </div>
-          )}
-          {hasAll && inspectorPane === 'lint' && (
-            <div>
-              <ErrorPane errs={errs?.lint} />
-            </div>
-          )}
-          {hasAll && inspectorPane === 'prose' && (
-            <div>
-              {JSON.stringify(errs.prose)}
-              <ErrorPane errs={errs?.prose} />
-            </div>
-          )}
-          {hasAll && inspectorPane === 'refs' && (
-            <div>
-              <div></div>
-            </div>
-          )}
-          {hasAll && inspectorPane === 'footnotes' && (
-            <div>
-              <div></div>
-            </div>
-          )}
-        </>
-      )}
+      {entity &&
+        entry &&
+        property &&
+        content?.[entity]?.[entry]?.[property] !== undefined && (
+          <>
+            <TabBar
+              tabs={tabs}
+              switchPane={setInspectorPane}
+              currentTab={inspectorPane}
+            />
+            {hasAll && inspectorPane === 'schema' && (
+              <div>
+                <ErrorPane errs={errs?.schema} />
+              </div>
+            )}
+            {hasAll && inspectorPane === 'lint' && (
+              <div>
+                <ErrorPane errs={errs?.lint} />
+              </div>
+            )}
+            {hasAll && inspectorPane === 'prose' && (
+              <div>
+                {JSON.stringify(errs.prose)}
+                <ErrorPane errs={errs?.prose} />
+              </div>
+            )}
+            {hasAll && inspectorPane === 'refs' && (
+              <div>
+                <div></div>
+              </div>
+            )}
+            {hasAll && inspectorPane === 'footnotes' && (
+              <div>
+                <div></div>
+              </div>
+            )}
+          </>
+        )}
     </div>
   );
 }
