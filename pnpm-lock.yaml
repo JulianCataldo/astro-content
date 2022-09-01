@@ -187,7 +187,6 @@ importers:
       '@iconify/react': ^3.2.2
       '@monaco-editor/react': ^4.4.5
       '@types/react': ^18.0.17
-      astro: 1.1.1
       change-case: ^4.1.2
       classnames: ^2.3.1
       github-markdown-css: ^5.1.0
@@ -222,7 +221,6 @@ importers:
     devDependencies:
       '@astro-content/types': link:../types
       '@types/react': 18.0.17
-      astro: 1.1.1_sass@1.54.5
 
   packages/integration:
     specifiers:
