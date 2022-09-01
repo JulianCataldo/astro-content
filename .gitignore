@@ -13,7 +13,8 @@ dist
 
 **/.vscode/settings.json
 **/.astro-content
-**/content
+**/content*
+**/docs/get.ts
 
 
 
