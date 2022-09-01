@@ -7,6 +7,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "bin": {
+    "content": "./node_modules/@astro-content/cli/dist/index.js"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -14,6 +17,7 @@
     "astro": "1.1.1"
   },
   "dependencies": {
+    "@astro-content/cli": "workspace:*",
     "@astro-content/gui": "workspace:*",
     "@astro-content/server": "workspace:*",
     "@modyfi/vite-plugin-yaml": "^1.0.3",
