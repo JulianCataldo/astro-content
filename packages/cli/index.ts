@@ -6,8 +6,11 @@
 /* —————————————————————————————————————————————————————————————————————————— */
 
 import pkg from './package.json' assert { type: 'json' };
-console.log(`Maestro — CLI — ${pkg.version}`);
-
+/* ·········································································· */
+// NOTE: Force embedding in dist. with Parcel
+import './node_modules/@astro-content/server/add';
 /* —————————————————————————————————————————————————————————————————————————— */
 
-import './lib/cli/index.js';
+console.log(`Maestro — CLI — ${pkg.version}`);
+
+// pnpm content add zebras zebra
