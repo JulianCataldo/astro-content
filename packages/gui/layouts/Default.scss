@@ -35,10 +35,20 @@ a {
 .Tooltip,
 .Popover {
   // transition-duration: 0s !important;
+  & > * {
+    &:first-child {
+      margin-top: 0;
+    }
+
+    &:last-child {
+      margin-top: 0;
+    }
+  }
+
   z-index: 999;
   display: block;
   min-width: 19rem;
-  padding: 0.5rem;
+  padding: 1rem;
   color: var(--vscode-badge-foreground);
   background-color: var(--vscode-menu-background);
   border: 1px solid var(--vscode-editorWidget-border);
@@ -194,9 +204,16 @@ a {
   }
 }
 
-input[type='text'] {
+input[type='text'],
+input[type='search'] {
   all: unset;
-  background: var(--vscode-diffEditor-diagonalFill);
+  padding: 0.7rem;
+  border-bottom: 1px solid var(--vscode-diffEditor-diagonalFill);
+  transition: background-color 0.15s;
+
+  &:hover {
+    background-color: var(--vscode-diffEditor-diagonalFill);
+  }
 }
 
 .headings {
@@ -216,4 +233,9 @@ input[type='text'] {
       }
     }
   }
+}
+
+hr {
+  margin: 1em 0.25em;
+  border-color: var(--vscode-diffEditor-diagonalFill);
 }
