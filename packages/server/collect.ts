@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import * as path from 'node:path';
 import { sentenceCase } from 'change-case';
 import fs from 'node:fs/promises';
@@ -10,6 +11,8 @@ import draft7MetaSchema from 'ajv/dist/refs/json-schema-draft-07.json';
 import state from './state';
 import validateData from './validate-yaml';
 import validateMd from './validate-md';
+import schemaToTypes from './schemas-to-types';
+import generateBrowserTypes from './generate-browser-types';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 interface File {
@@ -33,6 +36,8 @@ delete draft7MetaSchema.$id;
 
 ajv.addMetaSchema(draft7MetaSchema);
 
+const tempDir = path.join(process.cwd(), '.astro-content');
+
 /* ·········································································· */
 
 function getTrio(relPath: string) {
@@ -47,7 +52,7 @@ function getTrio(relPath: string) {
 
 /* ·········································································· */
 
-function handleSchema(filePath: string, file) {
+async function handleSchema(filePath: string, file) {
   // FOR DEBUG ——v
   // state.schemas.content = {};
 
@@ -65,6 +70,10 @@ function handleSchema(filePath: string, file) {
     ...file.data,
   };
   state.schemas.raw[entity] = file.rawYaml;
+
+  const type = await schemaToTypes(state.schemas.content[entity]);
+
+  state.types.entity[entity] = type;
 
   // /* Core meta schema validation */
   // let validate;
@@ -172,20 +181,22 @@ async function handleContent(filePath: string, file) {
 const collect = async (pFiles: Promise<AnyFile[]>) => {
   const files = await pFiles.then((p) => p);
 
-  console.log({ files });
+  // console.log({ files });
 
   // /* HANDLE USER SCHEMAS — Defaults + entities */
-  files.forEach((inputFile) => {
+  const schemaPromises = files.map(async (inputFile) => {
     const filePath = inputFile.file;
     if (filePath) {
       if (
         filePath.endsWith('.schema.yaml') &&
         !filePath.endsWith('default.schema.yaml')
       ) {
-        handleSchema(filePath, inputFile);
+        await handleSchema(filePath, inputFile);
       }
     }
   });
+
+  await Promise.all(schemaPromises);
 
   // TODO: Reset state
   /* HANDLE CONTENT — YAML + MD + MDX */
@@ -197,6 +208,16 @@ const collect = async (pFiles: Promise<AnyFile[]>) => {
     }
   });
   await Promise.all(promises);
+
+  state.types.browser = generateBrowserTypes(
+    state.content,
+    state.schemas,
+    state.types,
+  );
+
+  fs.writeFile(path.join(tempDir, 'state.json'), JSON.stringify(state)).catch(
+    () => null,
+  );
 
   return state.content;
 };
