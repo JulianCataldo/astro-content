@@ -14,12 +14,12 @@ export default function validateData(
   property: string,
   data: unknown,
   rawYaml?: string,
+  schema?: unknown,
 ) {
   const schemaForAjv = {
-    definitions: { ...state.schemas.internals },
-    ...state.schemas?.content[entity].properties[property],
+    // definitions: { ...state.schemas.internals },
+    ...(state.schemas?.content?.[entity]?.properties?.[property] || schema),
   };
-
   let validate;
   try {
     validate = ajv.compile(schemaForAjv);
@@ -68,6 +68,7 @@ export default function validateData(
         },
       );
     }
+    return state.errors[entity][entry][property];
   }
   return false;
 }

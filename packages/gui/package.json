@@ -12,7 +12,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/react": "^18.0.17",
-    "astro": "1.1.1"
+    "@astro-content/types": "workspace:*"
   },
   "dependencies": {
     "@floating-ui/react-dom-interactions": "^0.9.3",

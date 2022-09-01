@@ -1,8 +1,17 @@
 import type { AstroIntegration } from 'astro';
+
 /* ·········································································· */
+
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import mkdirp from 'mkdirp';
+import bodyParser from 'body-parser';
 import get from '@astro-content/server/collect';
+// import state from '@astro-content/server/state';
+import save from '@astro-content/server/save';
+import validateYaml from '@astro-content/server/validate-yaml';
+import validateMd from '@astro-content/server/validate-md';
 import ViteYaml from './load-yaml-plugin';
-// import state from 'server/state';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 let defaultLogLevel = 'info';
@@ -11,6 +20,8 @@ if (process.argv.includes('--verbose')) {
 } else if (process.argv.includes('--silent')) {
   defaultLogLevel = 'silent';
 }
+
+const tempDir = path.join(process.cwd(), '.astro-content');
 
 const astroContent = (): AstroIntegration => {
   console.log('object');
@@ -29,6 +40,11 @@ const astroContent = (): AstroIntegration => {
         updateConfig({
           vite: {
             plugins: [ViteYaml()],
+            server: {
+              watch: {
+                // ignored: ['**/content/**'],
+              },
+            },
           },
         });
 
@@ -48,17 +64,76 @@ const astroContent = (): AstroIntegration => {
 
       // 'astro:config:done': ({ config }) => {},
 
-      'astro:server:setup': (/* { server } */) => {
-        // server.watcher.on('all', (event, path) => {});
-        //
-        // server.middlewares.use((req, res, next) => {
-        //   if (req.url?.startsWith('/__content/middleware')) {
-        //     console.log({ r: req.url });
-        //     res.end(JSON.stringify(state));
-        //   } else {
-        //     next();
-        //   }
+      'astro:server:setup': ({ server }) => {
+        // server.watcher.on('all', (event, path) => {
+        //   console.log(event, path);
         // });
+        server.ws.on('vite:beforeFullReload', (event, path) => {
+          console.log(event, path);
+          console.log(event, path);
+          console.log(event, path);
+        });
+
+        server.middlewares.use(bodyParser.json());
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
+        server.middlewares.use(async (req, res, next) => {
+          if (req.url === '/__content/api/__save') {
+            console.log({ r: req.url });
+            console.log({ r: req.body });
+            if (req.body) {
+              await save(req.body);
+            }
+
+            res.end(JSON.stringify({ success: true }));
+          } else if (req.url === '/__content/api/__validate') {
+            console.log({ r: req.url });
+            console.log({ r: req.body });
+            let errors;
+            if (req.body.language === 'markdown') {
+              console.log('some MD');
+              errors = await validateMd(
+                req.body.value,
+                req.body?.schema?.allOf?.[1]?.properties?.frontmatter || {},
+              );
+            } else if (req.body.language === 'yaml') {
+              console.log('some YAML');
+              errors = await validateYaml(
+                req.body.entity,
+                req.body.entry,
+                req.body.property,
+                null,
+                req.body.value,
+                req.body.schema,
+              );
+            }
+            res.end(JSON.stringify({ success: true, errors }));
+          } else {
+            next();
+          }
+        });
+        // console.log(state);
+        // ssrData = state;
+      },
+
+      'astro:build:start': async (a) => {
+        console.log(a);
+        await mkdirp(tempDir);
+      },
+      'astro:build:done': async (a) => {
+        console.log('DONE');
+        await fs
+          .readFile(path.join(tempDir, 'state.json'), 'utf-8')
+          .then(async (data) => {
+            const obj = JSON.parse(data);
+            return Promise.all(
+              Object.entries(obj).map(async ([key]) =>
+                fs.writeFile(
+                  path.join(process.cwd(), `dist/__content/api/${key}`),
+                  JSON.stringify(obj[key]),
+                ),
+              ),
+            );
+          });
       },
     },
   };
