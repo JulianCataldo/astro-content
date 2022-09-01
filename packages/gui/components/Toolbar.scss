@@ -24,10 +24,60 @@
     }
   }
 
+  .Popover {
+    .prefix {
+      user-select: none;
+    }
+
+    pre {
+      code {
+        display: inline-block;
+        width: calc(100% - 1rem);
+        padding: 0.5rem;
+        background: var(--vscode-breadcrumb-background);
+        border-radius: 0.15rem;
+        cursor: pointer;
+
+        &:hover {
+          background: var(--vscode-toolbar-activeBackground);
+        }
+      }
+    }
+
+    h3,
+    h4 {
+      cursor: default;
+    }
+  }
+
   .breadcrumb {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding-left: 1.5rem;
+
+    .chevron-property {
+      &.md {
+        // span {
+        //   border-bottom: 1px solid
+        //     var(--vscode-editorSuggestWidget-selectedBackground);
+        // }
+
+        svg {
+          color: var(--vscode-charts-purple);
+        }
+      }
+
+      &.yaml {
+        // span {
+        //   border-bottom: 1px solid
+        //     var(--vscode-editorMarkerNavigationWarning-background);
+        // }
+        svg {
+          color: var(--vscode-charts-green);
+        }
+      }
+    }
 
     & > * {
       display: flex;
@@ -35,8 +85,8 @@
       padding: 1rem;
 
       svg {
-        margin-right: 0.5em;
-        opacity: 0.5;
+        margin-right: 1.5em;
+        opacity: 0.6;
       }
 
       font-weight: 700;
