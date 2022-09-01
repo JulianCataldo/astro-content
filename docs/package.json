@@ -11,10 +11,15 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@julian_cataldo/astro-base": "^0.13.5",
+    "@julian_cataldo/astro-link": "^0.12.5",
+    "@julian_cataldo/astro-seo": "^0.13.2",
+    "@julian_cataldo/astro-tooltips": "^0.11.0",
     "astro": "1.0.6",
     "serve": "^14.0.1"
   },
   "devDependencies": {
+    "@astro-content/demo": "workspace:*",
     "@astrojs/mdx": "^0.10.2",
     "@astrojs/react": "^1.1.0",
     "astro-content": "workspace:*",

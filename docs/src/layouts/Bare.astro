@@ -1,16 +1,26 @@
 ---
-// _
+import Document from '@julian_cataldo/astro-base/Document.astro';
+import Body from '@julian_cataldo/astro-base/Body.astro';
+import SEO from '@julian_cataldo/astro-seo/SEO.astro';
+import Tooltips from '@julian_cataldo/astro-tooltips/Tooltips.astro';
+import NavigationBar from '../components/NavigationBar.astro';
 ---
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body>
+<!-- All properties are optional -->
+<Document>
+  <Fragment slot="head">
+    <SEO
+      image={'/some_image_url-preferably_absolute.jpg'}
+      title={'Astro Content — Documentation & Demo — Structured content integration for Astro Web Framework'}
+      description={'A text based, structured content manager, for edition and consumption — Comes as an AstroJS Integration'}
+      siteName={'Astro Content — Structured content framework'}
+    />
+    <Tooltips />
+  </Fragment>
+
+  <Body slot="body">
+    <NavigationBar />
+
     <slot />
-  </body>
-</html>
+  </Body>
+</Document>

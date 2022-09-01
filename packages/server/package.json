@@ -21,7 +21,7 @@
   "dependencies": {
     "@faker-js/faker": "^7.5.0",
     "@julian_cataldo/remark-lint-frontmatter-schema": "^3.6.2",
-    "@julian_cataldo/retext-case-police": "link:../../../../packages/retext-case-police",
+    "@julian_cataldo/retext-case-police": "1.1.2",
     "ajv": "^8.11.0",
     "ajv-formats": "^2.1.1",
     "chalk": "^5.0.1",

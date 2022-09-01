@@ -107,8 +107,13 @@ importers:
 
   docs:
     specifiers:
+      '@astro-content/demo': workspace:*
       '@astrojs/mdx': ^0.10.2
       '@astrojs/react': ^1.1.0
+      '@julian_cataldo/astro-base': ^0.13.5
+      '@julian_cataldo/astro-link': ^0.12.5
+      '@julian_cataldo/astro-seo': ^0.13.2
+      '@julian_cataldo/astro-tooltips': ^0.11.0
       astro: 1.0.6
       astro-content: workspace:*
       react: ^18.0.0
@@ -116,9 +121,14 @@ importers:
       serve: ^14.0.1
       typescript: ^4.8.2
     dependencies:
+      '@julian_cataldo/astro-base': 0.13.5
+      '@julian_cataldo/astro-link': 0.12.5
+      '@julian_cataldo/astro-seo': 0.13.2
+      '@julian_cataldo/astro-tooltips': 0.11.0
       astro: 1.0.6
       serve: 14.0.1
     devDependencies:
+      '@astro-content/demo': link:../demo
       '@astrojs/mdx': 0.10.2
       '@astrojs/react': 1.1.0_biqbaboplfbrettd7655fr4n2y
       astro-content: link:../packages/integration
@@ -227,6 +237,7 @@ importers:
       '@astro-content/cli': workspace:*
       '@astro-content/gui': workspace:*
       '@astro-content/server': workspace:*
+      '@astro-content/types': workspace:*
       '@modyfi/vite-plugin-yaml': ^1.0.3
       '@rollup/pluginutils': ^4.2.1
       '@types/body-parser': ^1.19.2
@@ -241,6 +252,7 @@ importers:
       '@astro-content/cli': link:../cli
       '@astro-content/gui': link:../gui
       '@astro-content/server': link:../server
+      '@astro-content/types': link:../types
       '@modyfi/vite-plugin-yaml': 1.0.3_vite@3.0.9
       '@rollup/pluginutils': 4.2.1
       '@types/body-parser': 1.19.2
@@ -258,7 +270,7 @@ importers:
       '@astro-content/types': workspace:*
       '@faker-js/faker': ^7.5.0
       '@julian_cataldo/remark-lint-frontmatter-schema': ^3.6.2
-      '@julian_cataldo/retext-case-police': link:../../../../packages/retext-case-police
+      '@julian_cataldo/retext-case-police': 1.1.2
       '@types/jabber': ^1.2.0
       '@types/lodash-es': ^4.17.6
       '@types/mkdirp': ^1.0.2
@@ -301,7 +313,7 @@ importers:
     dependencies:
       '@faker-js/faker': 7.5.0
       '@julian_cataldo/remark-lint-frontmatter-schema': 3.6.2
-      '@julian_cataldo/retext-case-police': link:../../../../packages/retext-case-police
+      '@julian_cataldo/retext-case-police': 1.1.2
       ajv: 8.11.0
       ajv-formats: 2.1.1
       chalk: 5.0.1
@@ -1125,6 +1137,24 @@ packages:
     resolution: {integrity: sha512-4JQNk+3mVzK3xh2rqd6RB4J46qUR19azEHBneZyTZM+c456qOrbbM/5xcR8huNCCcbVt7+UmizG6GuUvPvKUYg==}
     dev: false
 
+  /@julian_cataldo/astro-base/0.13.5:
+    resolution: {integrity: sha512-P2ZVwFbGdOTKF6vZ9s9uceSaKfdZS/OKQsf5Cae01gw8bK/8zZo7EShBBRwNVNqRaiQWoNg2RjYMhTYbfO3V3Q==}
+    dev: false
+
+  /@julian_cataldo/astro-link/0.12.5:
+    resolution: {integrity: sha512-zbEwpOYdj3AGuWrIzONAtfdRC44lyrzKPUe0AGS7BpgEsplrR2ZyR9ZrZT6LIculawD+D8hUu0+rfwzjFHIiKg==}
+    dev: false
+
+  /@julian_cataldo/astro-seo/0.13.2:
+    resolution: {integrity: sha512-/oX9QP/Y863ofShk4bgvfAjOkGrKz7Hmg9d1K12w00UkukqMxwhk41863dm9mh+b4xgiW8RoztZ1dyrOtfJ6Dw==}
+    dev: false
+
+  /@julian_cataldo/astro-tooltips/0.11.0:
+    resolution: {integrity: sha512-kr5OmL6xjmE579HarlYPtpLXCJ5s3EUGlmuA9T95qdlqZGup/tKLCuySYFPJq7BZ1ybvB1i1TRbfjUYhoGIVpA==}
+    dependencies:
+      tippy.js: 6.3.7
+    dev: false
+
   /@julian_cataldo/remark-lint-frontmatter-schema/3.6.2:
     resolution: {integrity: sha512-nD3U5oHyGIrWjmv5DQvv7h8F9baN0r5v3somTBzL/dWdtxyg5axnZKZYdHgaJexNOIRGpt2U2nn8UqSdgAyOQg==}
     dependencies:
@@ -1133,6 +1163,14 @@ packages:
       glob-to-regexp: 0.4.1
       unified-lint-rule: 2.1.1
       yaml: 2.1.1
+    dev: false
+
+  /@julian_cataldo/retext-case-police/1.1.2:
+    resolution: {integrity: sha512-wJs9nApF2yVMp6v3krCtguum7X8oMBRRB/KEfecgGIcKFDqI+Rjtoo/6FD7pUPyg7aA5hitxTxZ5mvbS2GDzag==}
+    dependencies:
+      case-police: 0.5.9
+      nlcst-search: 3.1.0
+      nlcst-to-string: 3.1.0
     dev: false
 
   /@lezer/common/0.15.12:
@@ -2189,6 +2227,10 @@ packages:
   /@polka/url/1.0.0-next.21:
     resolution: {integrity: sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==}
 
+  /@popperjs/core/2.11.6:
+    resolution: {integrity: sha512-50/17A98tWUfQ176raKiOGXuYpLyyVMkxxG6oylzL3BPOlA6ADGdK7EYunSa4I064xerltq9TGXs8HmOk5E+vw==}
+    dev: false
+
   /@proload/core/0.3.2:
     resolution: {integrity: sha512-4ga4HpS0ieVYWVMS+F62W++6SNACBu0lkw8snw3tEdH6AeqZu8i8262n3I81jWAWXVcg3sMfhb+kBexrfGrTUQ==}
     dependencies:
@@ -3190,6 +3232,11 @@ packages:
       no-case: 3.0.4
       tslib: 2.4.0
       upper-case-first: 2.0.2
+    dev: false
+
+  /case-police/0.5.9:
+    resolution: {integrity: sha512-i9j4pNqLdiDhorjC4cy/ewQLXmKLduWnvnRqabxwu5G8arrYeinBCJ3kBBINdt04o0V/M8nVKtcU2tZE2XKIEw==}
+    hasBin: true
     dev: false
 
   /ccount/2.0.1:
@@ -9558,6 +9605,12 @@ packages:
       globalyzer: 0.1.0
       globrex: 0.1.2
     dev: true
+
+  /tippy.js/6.3.7:
+    resolution: {integrity: sha512-E1d3oP2emgJ9dRQZdf3Kkn0qJgI6ZLpyS5z6ZkY1DF3kaQaBsGZsndEpHwx+eC+tYM41HaSNvNtLx8tU57FzTQ==}
+    dependencies:
+      '@popperjs/core': 2.11.6
+    dev: false
 
   /tmp/0.0.33:
     resolution: {integrity: sha512-jRCJlojKnZ3addtTOjdIqoRuPEKBvNXcGYqzO6zWZX8KfKEpnGY5jfggJQ3EjKuu8D4bJRr0y+cYJFmYbImXGw==}
