@@ -19,7 +19,8 @@ export async function fetchData() {
   await Promise.all(
     endpointList.map(async (key) =>
       fetch(`${apiBase}/${key}`).then((r) =>
-        (key === 'types' ? r.text() : r.json())
+        r
+          .json()
           .then((j) => {
             data[key] = j;
           })
@@ -33,65 +34,76 @@ export async function fetchData() {
   return data;
 }
 
-type Part = string | null | false;
-interface Route {
-  entity: Part;
-  entry: Part;
-  property: Part;
-}
-
-interface Data {
-  content: Content | null;
-  schemas: Schemas | null;
-  errors: Errors | null;
-  types: string | null;
-  config: { previewUrl: string } | null;
-  // language: 'markdown' | 'yaml';
-}
-
-interface AppState {
-  route: Route;
-  setRoute: (route: [Part, Part, Part]) => void;
-  fetchCurrentRoute: () => void;
-
-  data: Data;
-  fetchData: () => Promise<void>;
-
-  defaultEditor: null | nsEd.IStandaloneCodeEditor;
-  setDefaultEditor: (ref: nsEd.IStandaloneCodeEditor) => void;
+function saveUiStateToLocalStorage(val: unknown) {
+  localStorage.setItem('uiState', JSON.stringify(val));
 }
 
 const useAppStore = create<AppState>()((set) => ({
-  route: {
-    entity: null,
-    entry: null,
-    property: null,
-    types: null,
-    config: null,
+  uiState: {
+    route: { entity: null, entry: null, property: null },
+    language: null,
+    inspectorPane: 'schema',
+    previewPane: 'preview',
   },
+  fetchSavedUiState: () => {
+    const storage = localStorage.getItem('uiState');
+    if (storage) {
+      const uiState = JSON.parse(storage) as AppState['uiState'];
+      console.log({ fromlocal: uiState });
+      set(() => {
+        return { uiState };
+      });
+    }
+  },
+
+  /* ········································································ */
+
   setRoute: (entity: Part, entry: Part, property: Part) => {
     // const newRoute = [route.entity, route.entry, route.property].join('/');
     // window.history.pushState(null, '', `/${newRoute}`);
 
-    set(() => {
-      const route = { entity, entry, property };
-
-      console.log(route);
-
-      localStorage.setItem('route', JSON.stringify(route));
-      return { route };
-    });
-  },
-  fetchCurrentRoute: () => {
     set((state) => {
-      const storage = localStorage.getItem('route');
-      if (storage) {
-        const route: Route = JSON.parse(storage) as Route;
-        return { route };
-      }
-      return { route: state };
+      const newUiState: AppState['uiState'] = {
+        ...state.uiState,
+        route: { entity, entry, property },
+      };
+      saveUiStateToLocalStorage(newUiState);
+      return { uiState: newUiState };
     });
   },
+  setInspectorPane: (name: string) => {
+    set((state) => {
+      const newUiState: AppState['uiState'] = {
+        ...state.uiState,
+        inspectorPane: name,
+      };
+      saveUiStateToLocalStorage(newUiState);
+      return { uiState: newUiState };
+    });
+  },
+  setPreviewPane: (name: string) => {
+    set((state) => {
+      const newUiState: AppState['uiState'] = {
+        ...state.uiState,
+        previewPane: name,
+      };
+      saveUiStateToLocalStorage(newUiState);
+      return { uiState: newUiState };
+    });
+  },
+  setCurrentLanguage: (id: Language) => {
+    console.log({ language: id });
+    set((state) => {
+      const newUiState: AppState['uiState'] = {
+        ...state.uiState,
+        language: id,
+      };
+      saveUiStateToLocalStorage(newUiState);
+      return { uiState: newUiState };
+    });
+  },
+
+  /* ········································································ */
 
   data: {
     content: null,
@@ -106,6 +118,50 @@ const useAppStore = create<AppState>()((set) => ({
       return { data: res };
     });
   },
+  updateContentForValidation: async (
+    entity: Part,
+    entry: Part,
+    property: Part,
+    language: Language,
+    value: string,
+    schema: unknown,
+  ) => {
+    console.log({
+      updateContentForValidation: { entity, entry, property, value, schema },
+    });
+
+    const url = [apiBase, '__validate'].join('/');
+    const errors = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        entity,
+        entry,
+        property,
+        language,
+        value,
+        schema,
+      }),
+    })
+      .then((e) => e.json().then((j) => j as unknown))
+      .catch((e) => console.log(e));
+
+    set((state) => {
+      const newStateErrors = state.data.errors;
+      console.log(newStateErrors);
+
+      newStateErrors[entity][entry][property] = errors.errors;
+
+      return { data: { ...state.data, errors: newStateErrors } };
+    });
+
+    // const res = await fetchData().catch((_) => null);
+    // set(() => {
+    //   return { data: res };
+    // });
+  },
+
+  /* ········································································ */
 
   defaultEditor: null,
   setDefaultEditor: (ref) => {
@@ -114,31 +170,36 @@ const useAppStore = create<AppState>()((set) => ({
     });
   },
 
+  /* ········································································ */
+
   save: () => {
-    const url = [apiBase, 'content'].join('/');
+    const url = [apiBase, '__save'].join('/');
 
     set((state) => {
       let value;
       if (state.defaultEditor !== null) {
         value = state.defaultEditor.getValue();
+      } else {
+        /* Abandon further actions */
+        value = 'no';
+        return {};
       }
 
-      const extension =
-        state.defaultEditor._configuration._rawOptions.language === 'markdown'
-          ? '.md'
-          : '.yaml';
+      console.log();
+      const language = `.${state.uiState.language ?? ''}`;
+      const DTO: SaveDTO = {
+        ...state.uiState.route,
+        language,
+        value,
+      };
 
       fetch(url, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...state.route,
-          extension,
-          value,
-        }),
+        body: JSON.stringify(DTO),
       })
-        .then(() => null)
-        .catch(() => null);
+        .then((e) => console.log(e))
+        .catch((e) => console.log(e));
       return {};
     });
   },
