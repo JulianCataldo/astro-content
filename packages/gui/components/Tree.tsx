@@ -1,6 +1,8 @@
+/* eslint-disable max-lines */
 import yaml from 'yaml';
 import { sentenceCase } from 'change-case';
 import cx from 'classnames';
+import { useEffect, useState } from 'react';
 /* ·········································································· */
 import { Icon } from '@iconify/react';
 import type { Route } from '@astro-content/types/gui-state';
@@ -12,62 +14,130 @@ import { useAppStore } from '../store';
 
 export default function Tree() {
   const { content, errors } = useAppStore((state) => state.data);
-  const { entity, entry, property } = useAppStore((state) => state.route);
+  const { entity, entry, property } = useAppStore(
+    (state) => state.uiState.route,
+  );
   const setRoute = useAppStore((state) => state.setRoute);
+  const setInspectorPane = useAppStore((state) => state.setInspectorPane);
 
-  const MiniReport = ({ errors, type, title }) => {
-    return errors.length ? (
-      <Tooltip
-        label={`<strong>${title}</strong> errors (${
-          errors.length
-        }):<br/><br/>${yaml.stringify(errors[0]).replaceAll('\n', '<br />')}`}
-        placement="top"
-      >
-        <span className={`error errors-${type}`}>
-          {title.charAt(0)}:&nbsp;<strong>{errors?.length}</strong>
-        </span>
-      </Tooltip>
-    ) : (
-      <span className={`error errors-${type}`}>
-        {title.charAt(0)}&nbsp;: <strong>{errors?.length}</strong>
-      </span>
+  const [searchInput, setSearchInput] = useState('');
+  const [filteredContent, setFilteredContent] = useState({});
+
+  // eslint-disable-next-line react/no-unstable-nested-components
+  function MiniReport({
+    errors: errs,
+    type,
+    title,
+    route,
+  }: {
+    errors: { [key: string]: string | unknown }[];
+    type: string;
+    title: string;
+    route: Route;
+  }) {
+    return (
+      errs.length > 0 && (
+        <Tooltip
+          label={`<strong>${title}</strong> (${errs.length}):${Array(
+            errs.length,
+          )
+            .fill(0)
+            .map(
+              (val, index) =>
+                `<br/><br/>- ${
+                  errs[index]?.message || JSON.stringify(errs[index])
+                }`,
+            )
+            .join('')}`}
+          placement="right"
+        >
+          {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events */}
+          <span
+            className={`error errors-${type}`}
+            onClick={(e) => {
+              setInspectorPane(type);
+              setRoute(...route);
+            }}
+          >
+            <span>
+              {title.charAt(0)}:&nbsp;<strong>{errs?.length}</strong>
+            </span>
+          </span>
+        </Tooltip>
+      )
     );
-  };
+  }
+
+  useEffect(() => {
+    const filtered = {};
+    if (content) {
+      Object.entries(content).forEach(([eKey, eVal]) => {
+        if (filtered[eKey] === undefined) {
+          filtered[eKey] = {};
+        }
+        Object.entries(eVal).forEach(([rKey, rVal]) => {
+          if (rKey.toLowerCase().match(searchInput.toLowerCase())) {
+            filtered[eKey][rKey] = rVal;
+          } else {
+            Object.entries(rVal).forEach(([pKey, pVal]) => {
+              if (pKey.toLowerCase().match(searchInput.toLowerCase())) {
+                filtered[eKey][rKey] = {};
+                filtered[eKey][rKey][pKey] = pVal;
+              }
+            });
+          }
+        });
+      });
+
+      setFilteredContent(filtered);
+    }
+    console.log('set', searchInput, content, filteredContent);
+  }, [content, searchInput]);
 
   return (
     <div className="component-tree">
+      <div>
+        <input
+          type="search"
+          name=""
+          id=""
+          placeholder="Search…"
+          onChange={(e) => setSearchInput(e.target.value)}
+        />
+      </div>
       {content &&
-        Object.entries(content).map(([key, entries]) => (
+        Object.entries(filteredContent).map(([key, entries]) => (
           <div key={key} className="leaf entity">
             <div
               href={`/${key}`}
               onClick={(e) => setRoute(key, false, false)}
               className={cx('entity-link route', entity === key && 'active')}
             >
-              <Icon
-                icon="system-uicons:chevron-down"
-                className="folder"
-                width={'1.25rem'}
-                height={'1.25rem'}
-              />
+              <div className="folder">
+                <Icon icon="system-uicons:chevron-down" />
+              </div>
               <span className="tree-label">{sentenceCase(key)}</span>{' '}
               <span className="spacer" />
-              <span onClick={() => createEntity(key)} className="trigger">
+              {/* <span onClick={() => createEntity(key)} className="trigger">
                 <Icon icon="system-uicons:create" width="1em" />
-              </span>
+              </span> */}
             </div>
 
             {Object.entries(entries).map(([eKey, curEntry]) => (
               <div key={eKey} className="leaf child entry">
                 <div
                   href={`/${key}/${eKey}`}
-                  onClick={(e) => setRoute(key, eKey, property)}
+                  onClick={(e) =>
+                    setRoute(key, property ? eKey : entry, property)
+                  }
                   className={cx(
                     'route entry-link',
                     entity === key && entry === eKey && 'active',
                   )}
                 >
-                  <Icon icon="system-uicons:chevron-down" className="folder" />
+                  <div className="folder">
+                    <Icon icon="system-uicons:chevron-down" />
+                  </div>
                   <span className="tree-label">{sentenceCase(eKey)}</span>
                 </div>
                 {Object.entries(curEntry).map(([ppKey, parentProp]) => {
@@ -82,8 +152,8 @@ export default function Tree() {
                       convert = yaml.stringify(data);
                     }
                     return `${convert
-                      ?.replaceAll('\n', '<br />')
-                      ?.substring(0, 50)}…`;
+                      .replaceAll('\n', '<br />')
+                      .substring(0, 350)}${convert.length > 350 ? '…' : ''}`;
                   }
 
                   const richText = toPretty({
@@ -134,15 +204,15 @@ export default function Tree() {
                           <span className="file-infos trigger">
                             <Icon
                               icon={
-                                parentProp?.headings &&
-                                Object.entries(parentProp?.frontmatter).length >
-                                  0 &&
                                 parentProp.rawMd
-                                  ? 'system-uicons:circle-split'
-                                  : 'system-uicons:circle'
+                                  ? Object.entries(parentProp?.frontmatter)
+                                      .length
+                                    ? 'bi:circle-square'
+                                    : 'bi:square-fill'
+                                  : 'bi:circle-fill'
                               }
-                              width={'1.15rem'}
-                              height={'1.15rem'}
+                              width="1.15rem"
+                              height="1.15rem"
                               className={cx(
                                 parentProp?.headings && parentProp.rawMd
                                   ? 'icon-md'
@@ -166,6 +236,7 @@ export default function Tree() {
                                 errors={errorsReport?.schema}
                                 type="schema"
                                 title="Schema"
+                                route={[key, eKey, ppKey]}
                               />
                             )}
                             {errorsReport?.lint?.length > 0 && (
@@ -173,6 +244,7 @@ export default function Tree() {
                                 errors={errorsReport?.lint}
                                 type="lint"
                                 title="Linting"
+                                route={[key, eKey, ppKey]}
                               />
                             )}
                             {errorsReport?.prose?.length > 0 && (
@@ -180,6 +252,7 @@ export default function Tree() {
                                 errors={errorsReport?.prose}
                                 type="prose"
                                 title="Prose"
+                                route={[key, eKey, ppKey]}
                               />
                             )}
                           </div>

@@ -5,9 +5,14 @@
   overflow-y: auto;
   font-size: 85%;
 
+  input[type='search'] {
+    width: calc(100% - 2rem);
+    font-size: 1rem;
+  }
+
   .route {
     display: block;
-    padding: 0.5rem;
+    // padding: 0.5rem;
     cursor: pointer;
   }
 
@@ -16,10 +21,13 @@
   }
 
   .trigger {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
     min-width: 1em;
-    padding-top: 0.1rem;
-    margin: 0.2rem;
+    height: 2rem;
+    // padding-top: 0.1rem;
+    // margin: 0.2rem;
+    padding: 0 0.5rem;
     text-align: center;
   }
 
@@ -29,12 +37,19 @@
 
   .leaf {
     .file-infos {
-      margin-right: 0.5rem;
+      // margin-right: 0.5rem;
       opacity: 0;
       transition: opacity 0.14s;
     }
 
     .file-title {
+      .tree-label {
+        display: flex;
+        align-items: center;
+        height: 2rem;
+        padding: 0 0.5rem;
+      }
+
       .trigger {
         opacity: 0.2;
       }
@@ -54,7 +69,7 @@
 
     .route {
       display: flex;
-      padding: 0.3em;
+      // padding: 0.3em;
     }
 
     &.entity {
@@ -66,8 +81,10 @@
     }
 
     .folder {
-      margin-right: 0.3rem;
-      margin-left: 0.2rem;
+      display: flex;
+      align-items: center;
+      padding-right: 0.1em;
+      padding-left: 0.67em;
     }
 
     svg {
@@ -91,23 +108,31 @@
     }
 
     .entry-link {
+      margin-top: 0.3rem;
+      margin-bottom: 0.3rem;
+
+      .tree-label {
+        padding: 0.4rem 0.3rem;
+      }
+
       &.active {
         background: var(--vscode-tree-tableColumnsBorder);
       }
 
       font-size: 115%;
       background: var(--vscode-keybindingLabel-border);
-
-      .tree-label {
-        border-bottom: 1px dashed var(--vscode-input-background);
-      }
     }
 
     .entity-link {
       position: sticky;
       top: 0;
       z-index: 5;
+      margin-top: 0.5rem;
       background: var(--vscode-scrollbar-shadow);
+
+      .tree-label {
+        padding: 0.4rem 0.3rem;
+      }
     }
 
     .property {
@@ -126,17 +151,32 @@
     }
 
     .errors {
+      height: 100%;
       // padding-bottom: 0.25rem;
       font-size: 80%;
       user-select: none;
 
       .error {
-        padding: 0.4rem;
-        border-radius: 1rem;
+        display: flex;
+        display: inline-flex;
+        align-items: center;
+        height: 100%;
+        padding: 0.25rem 0.01rem;
+
+        span {
+          padding: 0.3rem 0.3rem;
+          border-radius: 0.5rem;
+        }
 
         &:hover {
-          background: var(--vscode-editorSuggestWidget-background);
+          span {
+            background: var(--vscode-editorSuggestWidget-background);
+          }
         }
+      }
+
+      .Tooltip {
+        font-size: 120%;
       }
 
       .errors-schema {
@@ -148,6 +188,12 @@
       .errors-lint {
         strong {
           color: var(--vscode-inputValidation-warningBorder);
+        }
+      }
+
+      .errors-prose {
+        strong {
+          color: var(--vscode-inputValidation-infoBorder);
         }
       }
     }
@@ -173,11 +219,11 @@
   }
 
   .icon-md {
-    color: var(--vscode-editorSuggestWidget-highlightForeground);
+    color: var(--vscode-charts-purple);
     opacity: 0.9;
   }
 
   .icon-yaml {
-    color: var(--vscode-editorMarkerNavigationWarning-background);
+    color: var(--vscode-charts-green);
   }
 }
