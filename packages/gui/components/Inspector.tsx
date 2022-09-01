@@ -15,14 +15,14 @@ import Tooltip from './Tooltip';
 
 export default function Inspector() {
   const { content, errors } = useAppStore((state) => state.data);
-  const { entity, entry, property } = useAppStore((state) => state.route);
-  const [currentPane, setCurrentPane] = useState(0);
+  const inspectorPane = useAppStore((state) => state.uiState.inspectorPane);
+  const setInspectorPane = useAppStore((state) => state.setInspectorPane);
+  const { entity, entry, property } = useAppStore(
+    (state) => state.uiState.route,
+  );
 
   const defaultEditor = useAppStore((state) => state.defaultEditor);
 
-  function switchPane(index: number) {
-    setCurrentPane(index);
-  }
   function jumpToCode(position: Position) {
     console.log({ position });
     if (position?.start?.line) {
@@ -47,15 +47,17 @@ export default function Inspector() {
     return (
       <div className="errors-pane">
         <div className="row header">
-          {currentPane === 0 && (
+          <div></div>
+          {inspectorPane === 'schema' && errs && errs[0] && (
             <>
-              <div>Location</div>
-              <div>Keyword</div>
-              <div>Missing property</div>
+              {errs[0].schemaPath && <div>Location</div>}
+              {errs[0].keyword && <div>Keyword</div>}
+              {errs[0].params?.missingProperty && <div>Missing property</div>}
+              {errs[0].message && <div>Message</div>}
+              {errs[0].note && <div>Full message</div>}
             </>
           )}
-          <div>Message</div>
-          {currentPane === 1 && (
+          {inspectorPane === 'lint' && (
             <>
               <div>Source (rule)</div>
               <div>Url</div>
@@ -63,8 +65,9 @@ export default function Inspector() {
           )}
         </div>
         {Array.isArray(errs) &&
-          errs.map((error) => (
+          errs.map((error, key) => (
             <div
+              key={key}
               tabIndex="0"
               className={`row ${error?.position?.start?.line ? 'jumper' : ''}`}
               onClick={() => jumpToCode(error.position)}
@@ -74,7 +77,7 @@ export default function Inspector() {
               ) : (
                 <div></div>
               )}
-              {error && currentPane === 0 && (
+              {error && inspectorPane === 'schema' && (
                 <>
                   {typeof error?.schemaPath === 'string' && (
                     <div>{error.schemaPath}</div>
@@ -91,7 +94,10 @@ export default function Inspector() {
               {error?.message && typeof error.message === 'string' && (
                 <div>{error?.message}</div>
               )}
-              {currentPane === 1 && (
+              {error?.note && typeof error.note === 'string' && (
+                <div>{error?.note}</div>
+              )}
+              {inspectorPane === 'lint' && (
                 <div>
                   <Tooltip
                     label={typeof error.url === 'string' ? error.url : ''}
@@ -114,29 +120,31 @@ export default function Inspector() {
     );
   }
 
-  const tabs = [];
+  const tabs = {};
   const errs = errors?.[entity]?.[entry]?.[property];
 
-  if (errs) {
-    tabs.push({
-      button: {
-        title: `Schema ${
-          errs?.schema?.length ? `(${errs?.schema?.length})` : ''
-        }`,
-      },
-    });
-    tabs.push({
-      button: {
-        title: `Lint ${errs?.lint?.length ? `(${errs?.lint?.length})` : ''}`,
-      },
-    });
-    tabs.push({
-      button: {
-        title: `Prose ${errs?.prose?.length ? `(${errs?.prose?.length})` : ''}`,
-      },
-    });
-  }
-  tabs.push({ button: { title: 'References' } });
+  tabs.schema = {
+    button: {
+      title: `Schema ${
+        errs?.schema?.length ? `(${errs?.schema?.length})` : ''
+      }`,
+    },
+  };
+  tabs.lint = {
+    button: {
+      title: `Lint ${errs?.lint?.length ? `(${errs?.lint?.length})` : ''}`,
+    },
+  };
+  tabs.prose = {
+    button: {
+      title: `Prose ${errs?.prose?.length ? `(${errs?.prose?.length})` : ''}`,
+    },
+  };
+
+  tabs.refs = { button: { title: 'References' } };
+  tabs.footnotes = { button: { title: 'Foot notes' } };
+
+  const hasAll = errors && entity && entry && property;
 
   return (
     <div className="inspector-pane">
@@ -145,34 +153,33 @@ export default function Inspector() {
         <>
           <TabBar
             tabs={tabs}
-            switchPane={switchPane}
-            currentTab={currentPane}
+            switchPane={setInspectorPane}
+            currentTab={inspectorPane}
           />
-
-          {errors && entity && entry && property && currentPane === 0 && (
+          {hasAll && inspectorPane === 'schema' && (
             <div>
               <ErrorPane errs={errs?.schema} />
             </div>
           )}
-          {errors && entity && entry && property && currentPane === 1 && (
+          {hasAll && inspectorPane === 'lint' && (
             <div>
               <ErrorPane errs={errs?.lint} />
             </div>
           )}
-          {errors && entity && entry && property && currentPane === 2 && (
+          {hasAll && inspectorPane === 'prose' && (
             <div>
+              {JSON.stringify(errs.prose)}
               <ErrorPane errs={errs?.prose} />
             </div>
           )}
-          {errors && entity && entry && property && currentPane === 3 && (
+          {hasAll && inspectorPane === 'refs' && (
             <div>
-              <h3>References</h3>
-              <div>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Dolores quaerat molestiae nostrum amet eaque odit cupiditate
-                doloribus est, harum ex repellat earum quae autem, tenetur modi
-                fuga velit impedit. Architecto.
-              </div>
+              <div></div>
+            </div>
+          )}
+          {hasAll && inspectorPane === 'footnotes' && (
+            <div>
+              <div></div>
             </div>
           )}
         </>
