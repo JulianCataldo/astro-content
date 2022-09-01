@@ -5,7 +5,7 @@ import { Icon } from '@iconify/react';
 import type {
   ErrorsLint,
   ErrorsSchema,
-} from '@astro-content/server/types/state';
+} from '@astro-content/types/server-state';
 /* ·········································································· */
 import { useAppStore } from '../store';
 /* —————————————————————————————————————————————————————————————————————————— */

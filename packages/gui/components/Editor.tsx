@@ -4,6 +4,7 @@ import type { editor as nsEd, editor, languages } from 'monaco-editor';
 import { useEffect, useRef, useState } from 'react';
 import yaml from 'yaml';
 /* ·········································································· */
+import type { Language } from '@astro-content/types/gui-state';
 import { useAppStore } from '../store';
 /* —————————————————————————————————————————————————————————————————————————— */
 

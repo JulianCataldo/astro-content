@@ -13,6 +13,12 @@ export interface Content {
 export interface Schemas {
   internals: { [key: string]: JSONSchema7 };
   content: { [key: string]: JSONSchema7 };
+  raw: { [key: string]: string };
+}
+
+export interface Types {
+  entity: { [key: string]: string };
+  browser: string;
 }
 
 export interface ErrorsSchema {
@@ -37,5 +43,19 @@ export interface Errors {
         prose: ErrorsProse[];
       };
     };
+  };
+}
+
+export interface ServerState {
+  content: Content;
+
+  schemas: Schemas;
+
+  errors: Errors;
+
+  types: Types;
+
+  config: {
+    previewUrl: string;
   };
 }

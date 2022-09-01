@@ -1,19 +1,22 @@
 /* eslint-disable max-lines */
-import type { Content, Schemas, Errors } from './types/state';
+import type { ServerState } from '@astro-content/types/server-state';
 import { conf } from './config';
 
-const state = {
-  content: {} as Content,
+const state: ServerState = {
+  content: {},
 
   schemas: {
     internals: {},
     content: {},
     raw: {},
-  } as Schemas,
+  },
 
-  errors: {} as Errors,
+  errors: {},
 
-  types: 'NONE',
+  types: {
+    entity: {},
+    browser: '',
+  },
 
   config: {
     previewUrl: conf.previewUrl,

@@ -1,5 +1,5 @@
 /* ·········································································· */
-import type { UserConfig } from './types/config';
+import type { UserConfig } from '@astro-content/types/user-config';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 let userConfig: Partial<UserConfig>;

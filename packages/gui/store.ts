@@ -1,8 +1,10 @@
+/* eslint-disable max-lines */
 /* eslint-disable arrow-body-style */
-import type { editor as nsEd } from 'monaco-editor';
-import type { Content, Errors, Schemas } from 'server/types/state';
+
 import create from 'zustand';
 /* ·········································································· */
+import type { SaveDTO } from '@astro-content/types/dto';
+import type { AppState, Language, Part } from '@astro-content/types/gui-state';
 import { $log } from './utils';
 /* —————————————————————————————————————————————————————————————————————————— */
 

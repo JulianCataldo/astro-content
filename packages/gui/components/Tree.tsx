@@ -3,6 +3,7 @@ import { sentenceCase } from 'change-case';
 import cx from 'classnames';
 /* ·········································································· */
 import { Icon } from '@iconify/react';
+import type { Route } from '@astro-content/types/gui-state';
 import Tooltip from './Tooltip';
 /* ·········································································· */
 import './Tree.scss';
