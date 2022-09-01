@@ -15,14 +15,20 @@ export default function Editor({
   isMain,
 }: {
   value: string;
-  language: string;
+  language: Language | ('typescript' | 'json' | 'html');
   readOnly: boolean;
   isMain: boolean;
 }) {
-  const { errors, types } = useAppStore((state) => state.data);
-  const { entity, entry, property } = useAppStore((state) => state.route);
+  const { schemas, errors, types } = useAppStore((state) => state.data);
+  const { entity, entry, property } = useAppStore(
+    (state) => state.uiState.route,
+  );
+  const updateContentForValidation = useAppStore(
+    (state) => state.updateContentForValidation,
+  );
 
   const setDefaultEditor = useAppStore((state) => state.setDefaultEditor);
+  const setCurrentLanguage = useAppStore((state) => state.setCurrentLanguage);
 
   const editorRef = useRef<nsEd.IStandaloneCodeEditor | null>(null);
   const [monacoInst, setMonaco] = useState<MonacoType | null>(null);
@@ -32,7 +38,7 @@ export default function Editor({
 
     if (errors?.[entity]?.[entry]?.[property]) {
       let positions = {};
-
+      // TODO: Refactor all
       if (errors[entity][entry][property]?.lint) {
         errors[entity][entry][property]?.lint.forEach((err) => {
           if (err.position) {
@@ -44,11 +50,11 @@ export default function Editor({
             };
           }
           errorMessages.push({
-            message: yaml.stringify(err),
+            message: err.message, // yaml.stringify(err),
             ...positions,
-            severity: 2,
-            // code: 'Lint',
-            // source: 'YAML source',
+            severity: 4,
+            code: err.ruleId,
+            source: err.source,
           });
           if (err.ruleId === 'frontmatter-schema') {
             console.log({ l: err });
@@ -57,6 +63,7 @@ export default function Editor({
       }
       if (Array.isArray(errors[entity][entry][property]?.schema)) {
         errors[entity][entry][property]?.schema?.forEach((err) => {
+          // TODO: Refactor
           if (err.position) {
             positions = {
               startLineNumber: err.position.start.line,
@@ -67,10 +74,30 @@ export default function Editor({
           }
           errorMessages.push({
             message: yaml.stringify(err),
+
             ...positions,
-            severity: 3,
-            // code: 'Lint',
-            // source: 'YAML source',
+            severity: 8,
+            code: err.ruleId || 'YAML',
+            source: err.source || 'schema',
+          });
+        });
+      }
+      if (Array.isArray(errors[entity][entry][property]?.prose)) {
+        errors[entity][entry][property]?.prose?.forEach((err) => {
+          if (err.position) {
+            positions = {
+              startLineNumber: err.position.start.line,
+              startColumn: err.position.start.column,
+              endLineNumber: err.position.end.line || err.position.start.line,
+              endColumn: err.position.end.column || err.position.start.column,
+            };
+          }
+          errorMessages.push({
+            message: err.message, // yaml.stringify(err),
+            ...positions,
+            severity: 2,
+            code: err.ruleId,
+            source: err.source,
           });
         });
       }
@@ -78,10 +105,19 @@ export default function Editor({
     monaco.editor.setModelMarkers(model, 'owner', errorMessages);
   }
 
-  function handleChange() {
+  async function handleChange() {
     const model = editorRef.current?.getModel();
     if (model && monacoInst) {
       console.log('e');
+      setCurrentLanguage(language);
+      await updateContentForValidation(
+        entity,
+        entry,
+        property,
+        language,
+        model.getValue(),
+        schemas?.content?.[entity]?.properties?.[property],
+      );
       validate(model, monacoInst);
     }
   }
@@ -96,6 +132,7 @@ export default function Editor({
       console.log(monaco);
       const model = editorRef.current?.getModel();
       if (model && monaco) {
+        setCurrentLanguage(model?.getLanguageId() as Languages);
         validate(model, monaco);
       }
     }
@@ -116,12 +153,13 @@ export default function Editor({
       noImplicitAny: true,
       strictNullChecks: true,
       importsNotUsedAsValues: 'error',
+      // allowSyntheticDefaultImports: true,
     });
 
-    console.log({ types });
-    if (types) {
+    console.log({ typesB: types });
+    if (types?.browser) {
       monaco.languages.typescript.typescriptDefaults.addExtraLib(
-        types,
+        types.browser,
         'global.d.ts',
       );
     }
