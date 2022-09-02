@@ -7,6 +7,7 @@ import ModalPopover from './ModalPopover';
 /* ·········································································· */
 import './Toolbar.scss';
 import { useAppStore } from '../store';
+import Tooltip from './Tooltip';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 export default function Entity() {
@@ -18,7 +19,8 @@ export default function Entity() {
   const setRoute = useAppStore((state) => state.setRoute);
   const save = useAppStore((state) => state.save);
 
-  const value = content?.[entity]?.[entry]?.[property];
+  const value =
+    entity && entry && property && content?.[entity]?.[entry]?.[property];
   const isMd = value?.headings && value?.rawMd;
 
   const copy = async (e) => {
@@ -151,10 +153,25 @@ export default function Entity() {
             Preview
           </a>
 
-          <div className="action">
-            <Icon icon="system-uicons:info-circle" width="2em" height="1.5em" />
-            Infos
-          </div>
+          <Tooltip
+            label={
+              <>
+                {/* {JSON.stringify(content[entity][entry][property])} */}
+                {content[entity][entry][property].file}
+              </>
+            }
+            jsx
+            placement="top"
+          >
+            <div className="action">
+              <Icon
+                icon="system-uicons:info-circle"
+                width="2em"
+                height="1.5em"
+              />
+              <span>Infos</span>
+            </div>
+          </Tooltip>
         </div>
       )}
     </div>

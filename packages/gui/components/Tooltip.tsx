@@ -20,9 +20,15 @@ interface Props {
   label: string;
   placement?: Placement;
   children: JSX.Element;
+  jsx: boolean;
 }
 
-export default function Tooltip({ children, label, placement = 'top' }: Props) {
+export default function Tooltip({
+  jsx = false,
+  children,
+  label,
+  placement = 'top',
+}: Props) {
   const [open, setOpen] = useState(false);
 
   const { x, y, reference, floating, strategy, context } = useFloating({
@@ -61,7 +67,11 @@ export default function Tooltip({ children, label, placement = 'top' }: Props) {
             },
           })}
         >
-          <div dangerouslySetInnerHTML={{ __html: label }}></div>
+          {jsx ? (
+            label
+          ) : (
+            <div dangerouslySetInnerHTML={{ __html: label }}></div>
+          )}
         </div>
       )}
     </>
