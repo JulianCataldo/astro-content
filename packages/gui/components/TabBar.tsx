@@ -1,8 +1,10 @@
+import { Icon } from '@iconify/react';
+import cx from 'classnames';
 /* ·········································································· */
 import './TabBar.scss';
 /* —————————————————————————————————————————————————————————————————————————— */
 
-export type Tabs = Record<string, { button: { title: string } }>;
+export type Tabs = Record<string, { button: { icon?: string; title: string } }>;
 
 interface Props {
   tabs: Tabs;
@@ -15,10 +17,12 @@ export default function Entity({ tabs, switchPane, currentTab }: Props) {
       {Object.entries(tabs).map(([index, tab]) => (
         <div
           key={index}
-          className={currentTab === index ? 'active' : ''}
+          className={cx(currentTab === index && 'active', 'tab')}
           onClick={() => switchPane(index)}
         >
-          {tab?.button?.title}
+          {tab.button.icon && <Icon icon={tab.button.icon} />}
+
+          <span className="tab-label"> {tab?.button?.title}</span>
         </div>
       ))}
     </div>

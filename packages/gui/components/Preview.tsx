@@ -50,16 +50,42 @@ console.log({
 
   if (value) {
     if (isMd) {
-      tabs.preview = { button: { title: 'Preview' } };
-      tabs.meta = { button: { title: 'Meta' } };
-      tabs.html = { button: { title: 'HTML output' } };
+      tabs.preview = {
+        button: {
+          icon: 'system-uicons:eye',
+          title: 'Preview',
+        },
+      };
+      // tabs.meta = { button: { title: 'Meta' } };
     } else {
-      tabs.preview = { button: { title: 'Preview (JSON)' } };
+      tabs.preview = {
+        button: {
+          icon: 'mdi:code-json',
+          title: 'JSON',
+        },
+      };
     }
-    tabs.ts = { button: { title: 'Import (TS)' } };
-    tabs.api = { button: { title: 'API response' } };
+    if (isMd) {
+      tabs.html = {
+        button: {
+          icon: 'system-uicons:code',
+          title: 'HTML',
+        },
+      };
+    }
+    tabs.ts = {
+      button: { icon: 'simple-icons:typescript', title: 'Import' },
+    };
+    tabs.api = {
+      button: {
+        icon: 'mdi:code-json',
+        title: 'API response',
+      },
+    };
   } else if (entity && !entry) {
-    tabs.preview = { button: { title: 'Preview (TS)' } };
+    tabs.preview = {
+      button: { icon: 'simple-icons:typescript', title: 'Import' },
+    };
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return

@@ -10,7 +10,7 @@
   }
 
   & > * {
-    padding: 0.75rem 1.5rem;
+    padding: 0.75rem 1.25rem;
     margin: 0rem 0rem;
     color: var(--vscode-quickInput-foreground);
     cursor: pointer;
@@ -29,5 +29,14 @@
     color: var(--vscode-list-activeSelectionForeground);
     background-color: var(--vscode-menu-background);
     border-top: 2px solid var(--vscode-input-placeholderForeground);
+  }
+
+  .tab {
+    display: flex;
+    align-items: center;
+
+    svg {
+      margin-right: 0.5em;
+    }
   }
 }

@@ -73,7 +73,11 @@ export default function Inspector() {
               onClick={() => jumpToCode(error.position)}
             >
               {error?.position?.start?.line ? (
-                <Icon icon="system-uicons:code" width="1em" height="1em" />
+                <Icon
+                  icon="system-uicons:arrow-top-right"
+                  width="1em"
+                  height="1em"
+                />
               ) : (
                 <div></div>
               )}
