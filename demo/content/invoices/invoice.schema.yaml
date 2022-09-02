@@ -1,0 +1,24 @@
+properties:
+  termsOfService:
+    allOf:
+      - $ref: '#/definitions/MarkdownFile'
+      - properties:
+          frontmatter:
+            properties:
+              legalReferences:
+                description: Entry title
+                type: array
+                items:
+                  - type: string
+            required:
+              - legalReferences
+        required:
+          - frontmatter
+  footnotes:
+    allOf:
+      - $ref: '#/definitions/MarkdownFile'
+required:
+  - content
+  - meta
+  - gallery
+  - footnotes

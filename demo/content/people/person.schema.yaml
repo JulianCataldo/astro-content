@@ -1,0 +1,24 @@
+properties:
+  informations:
+    properties:
+      name:
+        type: string
+      dateOfBirth:
+        type: string
+        title: Hello
+        # required: true
+        description: Correct format of Date Of Birth is dd-mmm-yyyy
+        pattern: /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/i
+        # message:
+        #   required: Date of Birth is Required Property
+        #   pattern: Correct format of Date Of Birth is dd-mmm-yyyy
+    required:
+      - name
+
+  notes:
+    allOf:
+      - $ref: '#/definitions/MarkdownFile'
+
+required:
+  - informations
+  - notes
