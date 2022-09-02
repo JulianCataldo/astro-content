@@ -1,6 +1,12 @@
 # Astro Content
 
-[\[**Documentation** / Live **Demo**\] website] (https://astro-content.netlify.app)
+> **Warning**  
+> Status: under development  
+> Not published yet
+
+---
+
+**[Documentation / Live demo website](https://astro-content.netlify.app)**
 
 ## Installation
 
