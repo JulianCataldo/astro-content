@@ -29,7 +29,7 @@ with a focus on **editor** and **integrator** experience.
 
 ### Uses cases
 
-Wiki, documentation, web gardens, personal, blog, news website…
+Wiki, documentation, web gardens, personal, blog, news…
 
 You can now engage large content refactors with an eagle view,  
 without complicated toolings setup.
