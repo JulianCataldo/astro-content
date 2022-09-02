@@ -58,7 +58,7 @@ const conf: UserConfig = {
     };
   },
   get previewUrl() {
-    return userConfig?.previewUrl || 'http://localhost:9054/';
+    return userConfig?.previewUrl || '/';
   },
 };
 
