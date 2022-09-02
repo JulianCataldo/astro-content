@@ -5,7 +5,7 @@
 - Clinton Boyer: Call
 - Dillon Bowers: Call
 - Whoopi Holland: Call
-- Gay Rivers, vulputate@google.couk
+- Gay Rivers, <vulputate@google.couk>
 
 ### Longing
 
@@ -15,10 +15,10 @@
 
 ## Leads
 
-- Joe Rivers, https://naver.com
-- Sylvester Harmon, http://bbc.co.uk
-- Simone Blackburn, http://instagram.com
-- Karly Cain, http://yahoo.com
+- Joe Rivers, <https://naver.com>
+- Sylvester Harmon, <http://bbc.co.uk>
+- Simone Blackburn, <http://instagram.com>
+- Karly Cain, <http://yahoo.com>
 - Clementine Kramer, https://ebay.com
 
 ---

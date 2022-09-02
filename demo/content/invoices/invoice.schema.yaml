@@ -1,5 +1,5 @@
 properties:
-  termsOfService:
+  contract:
     allOf:
       - $ref: '#/definitions/MarkdownFile'
       - properties:
@@ -10,6 +10,9 @@ properties:
                 type: array
                 items:
                   - type: string
+              contactLink:
+                description: Entry title
+                type: string
             required:
               - legalReferences
         required:
