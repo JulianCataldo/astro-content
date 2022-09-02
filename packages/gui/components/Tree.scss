@@ -5,6 +5,8 @@
   overflow-y: auto;
   font-size: 85%;
 
+  padding-bottom: 3rem;
+
   input[type='search'] {
     width: calc(100% - 2rem);
     font-size: 1rem;
@@ -128,7 +130,7 @@
       top: 0;
       z-index: 5;
       margin-top: 0.5rem;
-      background: var(--vscode-widget-shadow);
+      background: hsl(0, 0%, 9%);
 
       .tree-label {
         padding: 0.4rem 0.3rem;
@@ -151,6 +153,7 @@
     }
 
     .errors {
+      display: flex;
       height: 100%;
       // padding-bottom: 0.25rem;
       font-size: 80%;
