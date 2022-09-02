@@ -87,6 +87,7 @@ console.log({
       button: { icon: 'simple-icons:typescript', title: 'Import' },
     };
   }
+  const typesPrev = `${types?.common.substring(1)}${types?.browser}`;
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return (
@@ -102,11 +103,7 @@ console.log({
           {schemas?.content[entity] && !content[entity][entry] && (
             <div className="preview">
               <div className="editor">
-                <Editor
-                  language="typescript"
-                  value={types?.entity?.[entity]}
-                  readOnly
-                />
+                <Editor language="typescript" value={typesPrev} readOnly />
               </div>
             </div>
           )}
