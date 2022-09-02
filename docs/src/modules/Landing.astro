@@ -1,7 +1,65 @@
 ---
 import Link from '@julian_cataldo/astro-link/Link.astro';
+import { Icon } from '@iconify/react';
+import './Landing.scss';
+
+const { data } = Astro.props; // as { data: Demo };
 ---
 
-<Link>
-  <div>Link</div>
-</Link>
+<div class="module-landing">
+  <div class="hero">
+    <article class="hero-body article-body">
+      <data.text.Content />
+    </article>
+
+    <div class="try">
+      <div class="cta">
+        <Link href="/__content" target="_blank">
+          <div class="editor-preview">
+            <img
+              src="/public/demos/landing-small.png"
+              height="100%"
+              width="100%"
+              alt=""
+            />
+            <div class="button main">
+              <Icon icon="system-uicons:create" client:load />
+              <span>Live <strong>demo</strong>&nbsp;&nbsp;🧱</span>
+            </div>
+            <div class="sub-desc">
+              <strong>Pre-loaded</strong> with data - <strong>read-only</strong>
+              editor
+            </div>
+          </div>
+        </Link>
+      </div>
+
+      <div class="install article-body">
+        <data.install.Content />
+      </div>
+    </div>
+  </div>
+
+  <Icon
+    height="6rem"
+    icon="system-uicons:chevron-down"
+    client:load
+    className="divider"
+  />
+
+  <article class="footnotes">
+    <Link
+      class="button"
+      href="/__content"
+      target="_blank"
+      title="GitHub repository"
+      data-tooltip-placement="top"
+    >
+      <Icon icon="simple-icons:opensourceinitiative" client:load />
+      <span>Open Source</span>
+    </Link>
+    <div class="related">
+      <data.relations.Content />
+    </div>
+  </article>
+</div>

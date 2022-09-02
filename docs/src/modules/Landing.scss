@@ -1,0 +1,118 @@
+@use 'sass:color';
+
+.module-landing {
+  .hero {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    min-height: 44rem;
+    padding: 3rem;
+    margin-bottom: 0rem;
+
+    .button {
+      margin-top: 2.5rem;
+      font-size: 2em;
+    }
+
+    .sub-desc {
+      padding: 1rem;
+      color: $ca-white;
+    }
+
+    .article-body {
+      & > * {
+        margin: 1.5em 0;
+      }
+    }
+  }
+
+  .divider {
+    width: 100%;
+  }
+
+  .footnotes {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-around;
+    padding: 5vw;
+    margin-bottom: 2rem;
+
+    .button {
+      display: inline-flex;
+      margin-bottom: 4rem;
+      font-size: 1.3rem;
+      background: color.adjust($ca-black, $alpha: -0.1);
+    }
+
+    .related {
+      display: flex;
+      justify-content: space-around;
+    }
+
+    h1 {
+      margin: 0 0 0 2vw;
+    }
+
+    ul {
+      margin: 0 0rem;
+    }
+  }
+
+  .hero-body {
+    min-width: 30em;
+
+    header {
+      margin: 0rem 3rem 3rem 0rem;
+    }
+  }
+
+  .install {
+    padding: 4rem 0;
+  }
+
+  .try {
+    height: 100%;
+  }
+
+  .cta {
+    position: relative;
+    z-index: 0;
+  }
+
+  .editor-preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: 2rem;
+  }
+
+  img {
+    width: 100%;
+  }
+
+  .overlay {
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+
+    .sub-desc {
+      padding: 1rem;
+      color: $ca-white;
+      background: $ca-black;
+    }
+
+    .link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+    }
+  }
+}

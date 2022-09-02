@@ -1,26 +1,37 @@
 ---
-import { get } from 'astro-content';
+import get from '/get';
+// import { collect } from 'astro-content';
 // import Gui from 'astro-content/node_modules/@astro-content/gui/app.astro';
 /* ·········································································· */
-import Layout from '../layouts/Bare.astro';
-import Button from '../components/Button';
+import Layout from '../layouts/Default.astro';
+import Landing from '../modules/Landing.astro';
+import Demo from '../modules/Demo.astro';
 /* —————————————————————————————————————————————————————————————————————————— */
 
-const content = await get(Astro.glob('/**/*.{md,mdx,yaml}'));
+/* Docs content */
+// const content =
+await get(
+  Astro.glob('/node_modules/@astro-content/demo/content/**/*.{md,mdx,yaml}'),
+);
 
-// const builtSignal = content?.cars?.builtSignal?.content;
-// console.log({ builtSignal });
+/* Demo content */
+
+const content = await get(Astro.glob('/content/**/*.{md,mdx,yaml}'));
+
+const demos = content.demos;
+const landing = content.modules.landing;
 ---
 
 <Layout>
-  <!-- <builtSignal.Content /> -->
-  <div>Hello!</div>
+  <Landing data={landing} />
 
-  <pre><code>{JSON.stringify(content, null, 2)}</code></pre>
+  <Demo data={demos.typescriptCompletion} />
 
-  <Button />
+  <Demo data={demos.typescriptCompletion} />
+
+  <Demo data={demos.typescriptCompletion} />
 
   <hr />
+
   <!-- IDEA: Embedded demo GUI preview (for docs) -->
-  <!-- <Gui /> -->
 </Layout>

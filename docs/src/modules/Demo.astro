@@ -1,0 +1,54 @@
+---
+// import Link from '@julian_cataldo/astro-link/Link.astro';
+// import { Icon } from '@iconify/react';
+import './Landing.scss';
+
+const { data } = Astro.props;
+---
+
+<div class="demo-content">
+  <div>
+    <data.text.Content />
+  </div>
+
+  <div class="editor-preview"></div>
+  <!-- 
+  <img
+    src={`/public/demos/${data.gallery.data.public[0]}.png`}
+    height="100%"
+    width="100%"
+    alt=""
+  /> -->
+
+  <video muted="muted" controls class="module-demo-video">
+    <source src="/public/demos/main-demo.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+  <!-- <data.text.Content /> -->
+</div>
+
+<script>
+  const options = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.8,
+  };
+
+  const callback = (entries, observer) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.play();
+      } else {
+        entry.target.pause();
+      }
+    });
+  };
+
+  const observer = new IntersectionObserver(callback, options);
+  const videos = document.querySelectorAll('.module-demo-video');
+
+  videos.forEach((video) => {
+    console.log(video);
+    observer.observe(video);
+  });
+</script>

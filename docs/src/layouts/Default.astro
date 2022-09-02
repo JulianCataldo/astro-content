@@ -4,9 +4,10 @@ import Body from '@julian_cataldo/astro-base/Body.astro';
 import SEO from '@julian_cataldo/astro-seo/SEO.astro';
 import Tooltips from '@julian_cataldo/astro-tooltips/Tooltips.astro';
 import NavigationBar from '../components/NavigationBar.astro';
+/* ·········································································· */
+import './Default.scss';
 ---
 
-<!-- All properties are optional -->
 <Document>
   <Fragment slot="head">
     <SEO
@@ -19,8 +20,6 @@ import NavigationBar from '../components/NavigationBar.astro';
   </Fragment>
 
   <Body slot="body">
-    <NavigationBar />
-
     <slot />
   </Body>
 </Document>

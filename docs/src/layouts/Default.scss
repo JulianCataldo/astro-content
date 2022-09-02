@@ -1,0 +1,77 @@
+@use 'sass:color';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: calc(14px + 0.15vw);
+  line-height: 1.5;
+  color: $ca-white;
+  background: linear-gradient(
+    87deg,
+    color.adjust($ca-main-4, $lightness: -49%) 30%,
+    color.adjust($ca-black, $lightness: -12%) 100%
+  );
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.link,
+.article-body a {
+  font-weight: bold;
+  color: $ca-white;
+  text-decoration: none;
+  border-bottom: 1px solid color.adjust($ca-accent, $alpha: -0.6);
+
+  &:hover {
+    border-bottom: 1px solid color.adjust($ca-accent, $alpha: -0.1);
+  }
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  padding: 1em;
+  color: $ca-white;
+  border: 4px solid $ca-main-4;
+  border-radius: 1em;
+
+  svg {
+    margin-right: 1rem;
+  }
+}
+
+.demo-content {
+  display: flex;
+  justify-content: center;
+  min-height: 61vh;
+
+  & > * {
+    max-width: 45rem;
+  }
+}
+
+// .article-body {
+// }
+
+hr {
+  margin: 1em 0;
+  border: 1px solid color.adjust($ca-accent, $alpha: -0.5);
+}
+
+pre.astro-code {
+  padding: 1rem;
+  background-color: color.adjust($ca-accent, $lightness: -45%) !important;
+  border-radius: 0.5rem;
+  box-shadow: 1px 1px 7px color.adjust($ca-main-3, $alpha: -0.5);
+
+  // code {
+  // }
+}
