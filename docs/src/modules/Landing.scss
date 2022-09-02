@@ -5,8 +5,8 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    min-height: 44rem;
-    padding: 3rem;
+    // min-height: 44rem;
+    padding: 3vw 3vw 2vw 3vw;
     margin-bottom: 0rem;
 
     .button {
@@ -35,11 +35,12 @@
     flex-wrap: wrap;
     align-items: flex-start;
     justify-content: space-around;
-    padding: 5vw;
-    margin-bottom: 2rem;
+    padding: 6vh 2vw;
+    margin-bottom: 6rem;
 
     .button {
       display: inline-flex;
+      margin: 2rem 2.5rem 4rem 1.5rem;
       margin-bottom: 4rem;
       font-size: 1.3rem;
       background: color.adjust($ca-black, $alpha: -0.1);
@@ -47,20 +48,31 @@
 
     .related {
       display: flex;
+      flex-wrap: wrap;
       justify-content: space-around;
+
+      div {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        margin: 2rem 1vw;
+      }
     }
 
     h1 {
-      margin: 0 0 0 2vw;
+      margin: 0 0 1em 1.5vw;
     }
 
     ul {
-      margin: 0 0rem;
+      margin: 0;
     }
   }
 
   .hero-body {
-    min-width: 30em;
+    flex-grow: 1;
+    // min-width: 17em;
+    max-width: calc(29em + 7vw);
+    padding: 0 5vw 0 2vw;
 
     header {
       margin: 0rem 3rem 3rem 0rem;
@@ -68,7 +80,11 @@
   }
 
   .install {
-    padding: 4rem 0;
+    padding: 3vw 0;
+
+    & > * {
+      padding: 0 2rem;
+    }
   }
 
   .try {
@@ -85,11 +101,22 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    max-width: calc(17em + 38vw);
+    padding: 0 0vw;
     padding-top: 2rem;
   }
 
-  img {
-    width: 100%;
+  // img {
+  //   width: 100%;
+  // }
+  .video {
+    display: block;
+    min-width: 50vw;
+    margin: 2rem 0;
+
+    video {
+      width: 100%;
+    }
   }
 
   .overlay {

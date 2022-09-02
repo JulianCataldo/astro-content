@@ -23,11 +23,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+a {
+  text-decoration: none;
+}
+
 .link,
 .article-body a {
   font-weight: bold;
   color: $ca-white;
-  text-decoration: none;
   border-bottom: 1px solid color.adjust($ca-accent, $alpha: -0.6);
 
   &:hover {
@@ -40,8 +43,12 @@ body {
   align-items: center;
   padding: 1em;
   color: $ca-white;
-  border: 4px solid $ca-main-4;
+  border: 4px solid $ca-main-5;
   border-radius: 1em;
+
+  &:hover {
+    border: 4px solid $ca-main-4;
+  }
 
   svg {
     margin-right: 1rem;
@@ -50,11 +57,18 @@ body {
 
 .demo-content {
   display: flex;
+  align-items: flex-start;
   justify-content: center;
   min-height: 61vh;
 
+  &:nth-child(odd) {
+    direction: rtl;
+  }
+
   & > * {
     max-width: 45rem;
+    margin: 2rem;
+    direction: ltr;
   }
 }
 
@@ -67,11 +81,21 @@ hr {
 }
 
 pre.astro-code {
-  padding: 1rem;
+  width: 100%;
+  max-width: 90vw;
+  padding: 2vw !important;
+  margin: 2rem 0 !important;
+  overflow-x: scroll;
   background-color: color.adjust($ca-accent, $lightness: -45%) !important;
   border-radius: 0.5rem;
   box-shadow: 1px 1px 7px color.adjust($ca-main-3, $alpha: -0.5);
 
   // code {
   // }
+}
+
+.main-footer {
+  display: flex;
+  justify-content: center;
+  padding: 5rem;
 }

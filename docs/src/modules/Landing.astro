@@ -14,24 +14,30 @@ const { data } = Astro.props; // as { data: Demo };
 
     <div class="try">
       <div class="cta">
-        <Link href="/__content" target="_blank">
-          <div class="editor-preview">
-            <img
-              src="/public/demos/landing-small.png"
-              height="100%"
-              width="100%"
-              alt=""
-            />
+        <div class="editor-preview">
+          <img
+            src="/public/demos/landing-2-small.png"
+            height="100%"
+            width="100%"
+            alt=""
+          />
+          <!-- <div class="video">
+            <video muted="muted" autoplay controls>
+              <source src="/public/demos/main-demo.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div> -->
+          <a href="/__content" target="_blank">
             <div class="button main">
               <Icon icon="system-uicons:create" client:load />
               <span>Live <strong>demo</strong>&nbsp;&nbsp;🧱</span>
             </div>
-            <div class="sub-desc">
-              <strong>Pre-loaded</strong> with data - <strong>read-only</strong>
-              editor
-            </div>
+          </a>
+          <div class="sub-desc">
+            <strong>Pre-loaded</strong> with data - <strong>read-only</strong>
+            editor
           </div>
-        </Link>
+        </div>
       </div>
 
       <div class="install article-body">
@@ -41,7 +47,7 @@ const { data } = Astro.props; // as { data: Demo };
   </div>
 
   <Icon
-    height="6rem"
+    height="5rem"
     icon="system-uicons:chevron-down"
     client:load
     className="divider"
@@ -50,12 +56,11 @@ const { data } = Astro.props; // as { data: Demo };
   <article class="footnotes">
     <Link
       class="button"
-      href="/__content"
-      target="_blank"
+      href="https://github.com/JulianCataldo/astro-content"
       title="GitHub repository"
       data-tooltip-placement="top"
     >
-      <Icon icon="simple-icons:opensourceinitiative" client:load />
+      <Icon icon="simple-icons:github" client:load />
       <span>Open Source</span>
     </Link>
     <div class="related">
