@@ -74,7 +74,7 @@ export default function Editor({
             };
           }
           errorMessages.push({
-            message: yaml.stringify(err),
+            message: err.message, // yaml.stringify(err),
 
             ...positions,
             severity: 8,

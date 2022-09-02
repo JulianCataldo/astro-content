@@ -175,7 +175,6 @@ export default function Inspector() {
             )}
             {hasAll && inspectorPane === 'prose' && (
               <div>
-                {JSON.stringify(errs.prose)}
                 <ErrorPane errs={errs?.prose} />
               </div>
             )}
