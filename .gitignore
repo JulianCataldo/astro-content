@@ -13,7 +13,8 @@ dist
 
 **/.vscode/settings.json
 **/.astro-content
-**/content*
+design
+# **/content*
 **/docs/get.ts
 
 
@@ -28,7 +29,7 @@ yarn-error.log*
 pnpm-debug.log*
 
 # demo/src/content
-demo/content
+# demo/content
 
 # environment variables
 .env
