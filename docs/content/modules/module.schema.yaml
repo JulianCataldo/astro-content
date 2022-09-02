@@ -1,0 +1,21 @@
+properties:
+  gallery:
+    properties:
+      source:
+        type: string
+    required:
+      - source
+
+  text:
+    allOf:
+      - $ref: '#/definitions/MarkdownFile'
+  relations:
+    allOf:
+      - $ref: '#/definitions/MarkdownFile'
+  install:
+    allOf:
+      - $ref: '#/definitions/MarkdownFile'
+
+required:
+  - text
+  # - gallery
