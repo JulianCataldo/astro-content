@@ -9,7 +9,7 @@ import content from 'astro-content';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://example.com',
+  site: 'https://astro-content.netlify.app',
   server: {
     port: 9054,
     host: true,
