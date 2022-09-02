@@ -43,7 +43,7 @@ export default async function handleMd(
       // const rawMd = 'sdfsdf';
       collected = {
         ...file,
-        file: undefined,
+        file: path.relative(process.cwd(), filePath),
         headings: file.getHeadings(),
         rawMd,
         body: prettier.format(file.compiledContent(), { parser: 'html' }),

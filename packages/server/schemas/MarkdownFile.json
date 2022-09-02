@@ -10,7 +10,7 @@
         }
       ]
     },
-    "body": { "type": "string" }
+    "Content": { "type": "object" }
   },
   "required": ["body", "headings"]
 }

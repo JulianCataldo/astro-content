@@ -21,4 +21,16 @@ export default defineConfig({
     react(),
     mdx(),
   ],
+
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: `
+          @use "./src/vars" as *;
+        `,
+        },
+      },
+    },
+  },
 });
