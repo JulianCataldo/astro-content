@@ -10,6 +10,7 @@ import remarkPresetLintMarkdownStyleGuide from 'remark-preset-lint-markdown-styl
 import remarkPresetLintConsistent from 'remark-preset-lint-consistent';
 /* ·········································································· */
 import remarkRetext from 'remark-retext';
+import remarkGfm from 'remark-gfm';
 import retextStringify from 'retext-stringify';
 import { Parser } from 'retext-english';
 // import retextProfanities from 'retext-profanities';
@@ -36,6 +37,7 @@ export default async function validateMd(
   const lintingAndSchema = await remark()
     .use(remarkFrontmatter)
     .use(rlFmSchema, { embed: schema })
+    .use(remarkGfm)
     .use(remarkPresetLintRecommended)
     .use(remarkPresetLintMarkdownStyleGuide)
     .use(remarkPresetLintConsistent)
@@ -56,7 +58,7 @@ export default async function validateMd(
     .use(remarkFrontmatter)
     .use(remarkRetext, Parser)
     // .use(retextProfanities)
-    .use(retextCasePolice)
+    .use(retextCasePolice, { ignore: ['HTTPS', 'HTTP'] })
     .use(retextReadability, { age: 26 })
     .use(retextRepeatedWords)
     // .use(retextSpell, dictionary)
