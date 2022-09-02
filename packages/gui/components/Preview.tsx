@@ -20,8 +20,8 @@ export default function Entity() {
 // Fetch everything
 const allContent = await get(Astro.glob('/**/*.{md,mdx,yaml}'));
 
-// Hit \`Ctrl\` + \`Space\` ——————————————v
-const tryAutoCompletion = allContent?. ;
+// Start typing a '.' ——————————————v
+const tryAutoCompletion = allContent ;
 
 // Narrow to some entities, for performance
 const content = await get(Astro.glob('/{${entity}}/**/*.{md,mdx,yaml}'));
