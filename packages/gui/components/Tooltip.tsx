@@ -1,3 +1,6 @@
+// Bare example from: https://floating-ui.com/docs/react-dom-interactions
+// TODO: Refactor + lint
+
 import { cloneElement, useMemo, useState } from 'react';
 import {
   Placement,
@@ -17,10 +20,10 @@ import { mergeRefs } from 'react-merge-refs';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 interface Props {
-  label: string;
+  label: string | JSX.Element;
   placement?: Placement;
   children: JSX.Element;
-  jsx: boolean;
+  jsx?: boolean;
 }
 
 export default function Tooltip({

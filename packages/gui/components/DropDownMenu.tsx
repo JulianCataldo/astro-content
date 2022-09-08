@@ -1,4 +1,4 @@
-// Example from: https://floating-ui.com/docs/react-dom-interactions
+// Bare example from: https://floating-ui.com/docs/react-dom-interactions
 // TODO: Refactor + lint
 
 import React, {
