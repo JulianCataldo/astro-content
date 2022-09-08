@@ -47,16 +47,15 @@ a {
 
   z-index: 999;
   display: block;
-  min-width: 19rem;
+  // min-width: 19rem;
   padding: 1rem;
   color: var(--vscode-badge-foreground);
+  white-space: pre;
   background-color: var(--vscode-menu-background);
   border: 1px solid var(--vscode-editorWidget-border);
   border-radius: 0.15rem;
-  // word-wrap: break-word;
-
-  box-shadow: 0.1rem 0.1rem 0.2rem var(--vscode-textCodeBlock-background),
-    0.1rem 0.1rem 1.2rem var(--vscode-textCodeBlock-background);
+  box-shadow: 0.08rem 0.08rem 0.2rem var(--vscode-textBlockQuote-background),
+    0.1rem 0.1rem 0.5rem var(--vscode-widget-shadow);
 }
 
 /* stylelint-disable-next-line selector-class-pattern */
@@ -112,12 +111,23 @@ a {
 }
 
 .inspector-pane {
+  position: relative;
+  // .panes {
+  //   height: 100%;
+  //   overflow-y: scroll;
+  // }
+  width: 100%;
   min-height: 100%;
   padding: 1rem;
   background-color: var(--vscode-menu-background);
+
+  .component-tab-bar {
+    margin: -1rem 0 1rem -1rem;
+  }
 }
 
 .Pane.horizontal.Pane2 {
+  overflow-x: hidden;
   overflow-y: scroll;
 }
 
@@ -134,7 +144,9 @@ a {
   padding-top: 2px;
 
   .row {
+    z-index: 1;
     display: flex;
+    align-items: center;
 
     &:nth-child(even) {
       background: var(--vscode-editorInlayHint-parameterBackground);
@@ -195,6 +207,7 @@ a {
       padding: 0.25rem 0.5rem;
       margin-top: -1.35rem;
       margin-left: -1rem;
+      // margin-right: 3rem;
       font-size: 75%;
       font-weight: bold;
       user-select: none;
@@ -219,12 +232,12 @@ input[type='search'] {
 .headings {
   .headings-details {
     min-width: 22rem;
-    overflow-y: scroll;
-    font-size: 50%;
+    overflow-y: auto;
+    font-size: 100%;
     text-align: right;
 
     & > * {
-      padding: 1rem;
+      padding: 1em;
       font-weight: 400;
       cursor: pointer;
 
@@ -243,14 +256,13 @@ hr {
 
 input[type='checkbox'] {
   all: unset;
+  display: inline-block;
   width: 0.7em;
   height: 0.7em;
-  display: inline-block;
   margin: 0 0.5em;
   margin-bottom: -0.14em;
-  border-radius: 0.15em;
-
   border: 0.15em solid var(--vscode-diffEditor-diagonalFill);
+  border-radius: 0.15em;
 
   &:checked {
     background: var(--vscode-input-foreground);
@@ -260,5 +272,56 @@ input[type='checkbox'] {
 }
 
 .astro-code {
+  padding: 1rem;
+}
+
+.component-copy-inline-code {
+  position: relative;
+  font-weight: 700;
+  cursor: pointer;
+
+  .prefix {
+    user-select: none;
+  }
+
+  .overlay {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background: var(--vscode-breadcrumb-background);
+    border-radius: 0.15rem;
+    opacity: 0;
+
+    &.visible {
+      opacity: 1;
+    }
+  }
+
+  &:hover {
+    code {
+      background: var(--vscode-toolbar-activeBackground);
+    }
+  }
+
+  pre {
+    code {
+      display: inline-block;
+      width: calc(100% - 1rem);
+      padding: 0.5rem;
+      cursor: pointer;
+      background: var(--vscode-breadcrumb-background);
+      border-radius: 0.15rem;
+    }
+  }
+}
+
+.message-no-database {
+  padding: 1.5rem;
+}
+
+.message-please-select-file {
   padding: 1rem;
 }
