@@ -1,4 +1,6 @@
 // Based on: https://github.com/Modyfi/vite-plugin-yaml
+// IDEA: could make this an independent package / plugin?
+// TODO: Refactor / simplify: remove unused stuff, like YAML schema handling?
 
 import { load, DEFAULT_SCHEMA } from 'js-yaml';
 import { createFilter } from '@rollup/pluginutils';
@@ -67,7 +69,8 @@ export default (
         onWarning: (warning: YAMLException) =>
           options.onWarning && typeof options.onWarning === 'function'
             ? options.onWarning(warning)
-            : console.warn(warning.toString()),
+            : // eslint-disable-next-line no-console
+              console.warn(warning.toString()),
       });
 
       const keys = `{ file, data, rawYaml }`;
