@@ -1,133 +1,147 @@
-import fs from 'node:fs/promises';
-import path from 'node:path';
-import prettier from 'prettier';
+// import { unified } from 'unified';
+// import remarkParse from 'remark-parse';
+// import yaml from 'yaml';
+import { remark } from 'remark';
+import remarkFrontmatter from 'remark-frontmatter';
+import rlFmSchema from '@julian_cataldo/remark-lint-frontmatter-schema';
+import retextCasePolice from '@julian_cataldo/retext-case-police/index';
+import remarkPresetLintRecommended from 'remark-preset-lint-recommended';
+import remarkPresetLintMarkdownStyleGuide from 'remark-preset-lint-markdown-style-guide';
+import remarkPresetLintConsistent from 'remark-preset-lint-consistent';
 /* ·········································································· */
-import type { MarkdownInstance } from 'astro';
-import type { FileInstance, YamlInstance } from '@astro-content/types/file';
-import { state } from './state';
-import { validateYaml } from './validate-yaml';
-import { validateMd } from './validate-md';
-import { getTrio } from './utils';
-import generateExcerpt from './generate-excerpt';
+import remarkRetext from 'remark-retext';
+import remarkGfm from 'remark-gfm';
+import retextStringify from 'retext-stringify';
+import { Parser } from 'retext-english';
+import retextRepeatedWords from 'retext-repeated-words';
+import retextReadability from 'retext-readability';
+import { visit } from 'unist-util-visit';
+import { toHast } from 'mdast-util-to-hast';
+import { toHtml } from 'hast-util-to-html';
+/* ·········································································· */
+/* NOTE: TOO HEAVY */
+// import dictionary from 'dictionary-en';
+// import retextSpell from 'retext-spell';
+/* NOTE: Not working */
+// import retextSentenceSpacing from 'retext-sentence-spacing';
+// import retextOveruse from 'retext-overuse';
+/* ·········································································· */
+import type { JSONSchema7 } from 'json-schema';
+
+import type {
+  ErrorLint,
+  ErrorSchema,
+  PropertyReport,
+  ReportFootnote,
+  ReportLink,
+} from '@astro-content/types/server-state';
+/* ·········································································· */
 import { log } from './logger';
 /* —————————————————————————————————————————————————————————————————————————— */
 
-export async function handleMd(
-  filePath: string,
-  file: FileInstance,
-  editMode = false,
-) {
-  const { first: entity, second: entry, third: property } = getTrio(filePath);
+export async function handleMd(content: string, schema?: JSONSchema7) {
+  // let frontmatterSchema: JSONSchema7 = {};
+  // if (
+  //   schema?.allOf?.length &&
+  //   typeof schema.allOf[1] === 'object' &&
+  //   typeof schema.allOf[1].properties?.frontmatter === 'object'
+  // ) {
+  //   frontmatterSchema = schema.allOf[1].properties.frontmatter;
+  // }
+  log('Validate MD', 'debug', 'pretty');
 
-  if (property && state.schemas.content[entity].properties?.[property]) {
-    let collected: FileInstance | null = null;
+  const footnotes: ReportFootnote = {
+    references: [],
+    definitions: [],
+  };
+  const links: ReportLink[] = [];
+  const lint: ErrorLint[] = [];
+  const schemaErrs: ErrorSchema[] = [];
 
-    if (state.content[entity] === undefined) {
-      state.content[entity] = {};
+  const lintingAndSchema = await remark()
+    .use(remarkFrontmatter)
+    .use(rlFmSchema, { embed: schema })
+    .use(remarkGfm)
+    // TODO: extract "validate" to general "handle"?
+    .use(() => (tree, file) => {
+      log({ data: file }, 'absurd');
+      visit(
+        tree,
+        ['footnoteDefinition', 'footnoteReference', 'link'],
+        (node) => {
+          if (node.type === 'link') {
+            log(node, 'absurd');
+
+            const html = toHtml(toHast(node.children[0]));
+            links.push({ url: node.url, position: node.position, html });
+          } else if (node.type === 'footnoteDefinition') {
+            log(node, 'absurd');
+
+            let html = '';
+            if (node.children.length) {
+              // FIXME: weird typings shifting in IDE
+              html = toHtml(toHast(node.children[0]));
+            }
+
+            footnotes.definitions.push({
+              position: node.position,
+              label: node.label,
+              html,
+              // id,
+            });
+          } else if (node.type === 'footnoteReference') {
+            log(node, 'absurd');
+
+            footnotes.references.push({
+              position: node.position,
+              label: node.label,
+              // html: 'HTML',
+              // id,
+            });
+          }
+        },
+      );
+    })
+    .use(remarkPresetLintRecommended)
+    .use(remarkPresetLintMarkdownStyleGuide)
+    .use(remarkPresetLintConsistent)
+    .process(content);
+
+  log({ lintingAndSchema }, 'absurd');
+
+  lintingAndSchema.messages.forEach((error) => {
+    if (error.ruleId === 'frontmatter-schema') {
+      log({ error });
+      // FIXME:
+      // IDEA: Map AJV properties to `remark-lint-frontmatter-schema` output?
+      // Actually parsing the note, not ideal at all
+      // schemaErrs.push({ message: yaml.parse(error.note). });
+      schemaErrs.push({ message: error.note });
+    } else {
+      lint.push(error);
     }
-    if (state.content[entity]?.[entry] === undefined) {
-      state.content[entity] = {
-        ...state.content[entity],
-        [entry]: {},
-      };
-    }
+  });
 
-    if (filePath.endsWith('yaml') || filePath.endsWith('yml')) {
-      const yamlFile = file as YamlInstance<unknown>;
-      collected = {
-        data: yamlFile.data,
-        rawYaml: yamlFile.rawYaml,
-        file: path.relative(process.cwd(), filePath),
-      };
+  const naturalLanguage = await remark()
+    .use(remarkFrontmatter)
+    .use(remarkRetext, Parser)
+    .use(retextCasePolice, { ignore: ['HTTPS', 'HTTP'] })
+    .use(retextReadability, { age: 26 })
+    .use(retextRepeatedWords)
+    // .use(retextSpell, dictionary)
+    .use(retextStringify)
+    .process(content);
 
-      validateYaml(entity, entry, property, collected.rawYaml);
-    }
-    if (filePath.endsWith('md')) {
-      const mdFile = file as MarkdownInstance<Record<string, unknown>>;
+  log({ lint }, 'absurd');
+  log({ links });
 
-      collected = {
-        ...mdFile,
-        // For YAML, remove this
-        file: path.relative(process.cwd(), filePath),
-      };
+  const Report: PropertyReport = {
+    schema: schemaErrs,
+    lint,
+    prose: naturalLanguage.messages,
+    footnotes,
+    links,
+  };
 
-      // collected.Content = file?.Content;
-
-      if (editMode) {
-        const rawMd = await fs.readFile(filePath, 'utf8');
-        collected.headingsCompiled = mdFile.getHeadings();
-        collected.rawMd = rawMd;
-        collected.bodyCompiled = prettier.format(mdFile.compiledContent(), {
-          parser: 'html',
-        });
-        collected.excerpt = await generateExcerpt(rawMd);
-
-        log({ file, collected }, 'absurd');
-
-        // NO VALIDATION outside edit-mode for now
-        const propSchema =
-          typeof state.schemas.content[entity] === 'object' &&
-          state.schemas.content[entity].properties?.[property];
-
-        if (typeof propSchema !== 'object') {
-          return false;
-        }
-        if (Array.isArray(propSchema.allOf)) {
-          log({ property });
-          const frontmatterSchema =
-            typeof propSchema.allOf[1] === 'object' &&
-            typeof propSchema.allOf[1]?.properties?.frontmatter === 'object' &&
-            propSchema.allOf[1]?.properties?.frontmatter;
-
-          log(frontmatterSchema);
-
-          validateMd(rawMd, frontmatterSchema || {})
-            .then((report) => {
-              if (state.errors[entity] === undefined) {
-                state.errors[entity] = {};
-              }
-
-              if (state.errors[entity]?.[entry] === undefined) {
-                state.errors[entity] = { ...state.errors[entity], [entry]: {} };
-              }
-              if (state.errors[entity]?.[entry]?.[property] === undefined) {
-                state.errors[entity] = {
-                  ...state.errors[entity],
-                  [entry]: {
-                    ...state.errors[entity][entry],
-                    [property]: {
-                      schema: [],
-                      lint: [],
-                      prose: [],
-                      footnotes: [],
-                      links: [],
-                    },
-                  },
-                };
-              }
-              state.errors[entity][entry][property] = report;
-            })
-            .then(() => null)
-            .catch(() => null);
-        }
-        // if (filePath.endsWith('mdx')) {
-        //   const rawMd = await fs.readFile(filePath, 'utf8');
-        //   collected = {
-        //     ...file,
-        //     file: undefined,
-        //     headings: file.getHeadings(),
-        //     rawMd,
-        //   };
-        // }
-      }
-    }
-
-    log({ collected }, 'absurd');
-
-    // FIXME:
-    // if  (state.content[entity]?.[entry]?.[property])
-    if (collected && typeof state.content[entity]?.[entry] === 'object') {
-      state.content[entity][entry][property] = collected;
-    }
-  }
+  return Report;
 }

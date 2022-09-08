@@ -6,8 +6,8 @@ import { log } from '@astro-content/server/logger';
 /* ·········································································· */
 import { save } from '@astro-content/server/save';
 
-import { validateYaml } from '@astro-content/server/validate-yaml';
-import { validateMd } from '@astro-content/server/validate-md';
+import { handleYaml } from '@astro-content/server/handle-yaml';
+import { handleMd } from '@astro-content/server/handle-md';
 import { generateFakeEntries } from '@astro-content/server/generate-fake-data';
 
 import type { PropertyReport } from '@astro-content/types/server-state';
@@ -57,12 +57,12 @@ const serverSetup: AstroIntegration['hooks']['astro:server:setup'] = ({
             //
             body.language === 'markdown'
           ) {
-            errors = await validateMd(body.value, body.schema);
+            errors = await handleMd(body.value, body.schema);
           } else if (
             //
             body.language === 'yaml'
           ) {
-            const result = validateYaml(
+            const result = handleYaml(
               body.entity,
               body.entry,
               body.property,

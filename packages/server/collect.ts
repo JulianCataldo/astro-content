@@ -11,7 +11,7 @@ import type { JSONSchema7 } from 'json-schema';
 import type { ServerState } from '@astro-content/types/server-state';
 import { state } from './state';
 import { generateTypes } from './generate-types';
-import { handleMd } from './handle-md';
+import { loadFile } from './load-file';
 import { getTrio } from './utils';
 import { log } from './logger';
 // import coreSchemaValidation from './core-schema-validation';
@@ -129,7 +129,7 @@ const collect = async (
     const filePath = inputFile.file;
 
     if (filePath && !filePath.endsWith('.schema.yaml')) {
-      await handleMd(filePath, inputFile, options?.editMode);
+      await loadFile(filePath, inputFile, options?.editMode);
     }
   });
   if (promises) {

@@ -21,7 +21,7 @@ const ajv = new Ajv({
 });
 addFormats(ajv);
 
-export function validateYaml(
+export function handleYaml(
   entity: Part,
   entry: Part,
   property: Part,
