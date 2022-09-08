@@ -15,31 +15,13 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@parcel/transformer-babel": "^2.7.0",
+    "@types/inquirer": "^9.0.1",
     "@types/react": "^18.0.17",
-    "astro": "1.1.1",
-    "babel": "^6.23.0",
-    "parcel": "^2.7.0",
-    "typescript": "^4.8.2"
+    "parcel": "^2.7.0"
   },
   "dependencies": {
-    "@astro-content/server": "workspace:0.0.0-alpha.0",
-    "@floating-ui/react-dom-interactions": "^0.9.3",
-    "@iconify/react": "^3.2.2",
-    "@monaco-editor/react": "^4.4.5",
-    "change-case": "^4.1.2",
-    "classnames": "^2.3.1",
-    "github-markdown-css": "^5.1.0",
-    "kleur": "^4.1.5",
-    "lodash-es": "^4.17.21",
-    "monaco-editor": "^0.34.0",
-    "monaco-marker-data-provider": "^1.1.1",
-    "react": "18.2.0",
-    "react-dom": "^18.2.0",
-    "react-merge-refs": "^2.0.1",
-    "react-split-pane": "^0.1.92",
-    "sass": "^1.54.5",
-    "yaml": "^2.1.1",
-    "zustand": "^4.1.1"
+    "@astro-content/server": "workspace:*",
+    "commander": "^9.4.0",
+    "inquirer": "^9.1.1"
   }
 }
