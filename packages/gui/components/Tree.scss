@@ -1,11 +1,10 @@
 .component-tree {
   height: 100%;
+  padding-bottom: 3rem;
   // padding: 0 0rem 0 0rem;
   // overflow-x: hidden;
   overflow-y: auto;
   font-size: 85%;
-
-  padding-bottom: 3rem;
 
   input[type='search'] {
     width: calc(100% - 2rem);
@@ -39,12 +38,27 @@
 
   .leaf {
     .file-infos {
-      // margin-right: 0.5rem;
       opacity: 0;
       transition: opacity 0.14s;
+
+      &:hover {
+        background: var(--vscode-badge-background);
+      }
     }
 
     .file-title {
+      .Tooltip {
+        * {
+          max-width: 100%;
+        }
+        max-height: 80vh;
+        overflow: hidden;
+
+        min-width: 27rem;
+        max-width: 48rem;
+        white-space: initial;
+      }
+
       .tree-label {
         display: flex;
         align-items: center;
@@ -160,11 +174,10 @@
       user-select: none;
 
       .error {
-        display: flex;
         display: inline-flex;
         align-items: center;
         height: 100%;
-        padding: 0.25rem 0.01rem;
+        padding: 0.25rem 0.01rem 0.3rem 0.01rem;
 
         span {
           padding: 0.3rem 0.3rem;
