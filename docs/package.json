@@ -2,19 +2,22 @@
   "name": "@astro-content/docs",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
     "start": "pnpm serve dist",
-    "build:serve": "pnpm run build && pnpm run start",
+    "build:start": "pnpm run build ; pnpm run start",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/image": "^0.5.0",
     "@julian_cataldo/astro-base": "^0.13.5",
     "@julian_cataldo/astro-link": "^0.12.5",
     "@julian_cataldo/astro-seo": "^0.13.2",
     "@julian_cataldo/astro-tooltips": "^0.11.0",
+    "asciinema-player": "^3.0.1",
     "astro": "1.0.6",
     "serve": "^14.0.1"
   },
