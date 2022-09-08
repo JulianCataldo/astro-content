@@ -1,31 +1,27 @@
 import { pascalCase } from 'change-case';
 /* ·········································································· */
+import type { JSONSchema } from 'json-schema-to-typescript';
 import type {
-  Content,
-  Schemas,
   ServerState,
   Types,
+  // Content,
 } from '@astro-content/types/server-state';
 import schemaToTypes from './schemas-to-types';
 /* —————————————————————————————————————————————————————————————————————————— */
 
-export default async function generateBrowserTypes(
-  content: ServerState['config'],
+export async function generateTypes(
+  content: ServerState['content'],
   schemas: ServerState['schemas'],
-  ide: ServerState['types']['ide'],
-): Promise<Types | false> {
-  if (!schemas || !content) return false;
+): Promise<Types> {
+  if (!schemas || !content) return { common: '', browser: '', ide: '' };
 
   const contentSchemas = Object.entries(schemas.content);
 
-  const types = await schemaToTypes({
-    title: 'Unused',
-    properties: schemas.content,
+  const iFaces = await schemaToTypes({
+    // Asserting JSONSchema4 (`json-schema-to-typescript`)
+    // as JSONSchema7 (`json-schema`)
+    properties: schemas.content as JSONSchema,
   });
-
-  const iFaces = types
-    .replaceAll('export interface', 'interface')
-    .replaceAll('export type', 'type');
 
   let typesLiteral = '';
 
@@ -34,6 +30,7 @@ export default async function generateBrowserTypes(
 
     const entryNames =
       typeof content[key] === 'object' &&
+      // FIXME:
       Object.entries(content[key])
         .map(([k]) => `'${k || 'none'}'`)
         .join(' | ');
@@ -50,7 +47,7 @@ type ${pascalCase(key)} = {
   });
 
   const iFacesEntities = `
-interface Entities {
+export interface Entities {
 ${contentSchemas
   .map(([key, schema]) => {
     if (schema.properties === undefined) return false;
@@ -61,7 +58,26 @@ ${contentSchemas
 }
 `;
 
+  const common = `
+/* Interfaces */
+${iFaces}
+/* /Interfaces */
+
+
+/* Entities */
+${iFacesEntities}
+/* /Entities */
+
+
+/* Types */
+${typesLiteral}
+
+/* /Types */
+`;
+
   const browser = `
+${common}
+
 async function get(files: unknown) {
   return files as Entities;
 }
@@ -72,54 +88,10 @@ declare namespace Astro {
  const glob = (pattern: string) => {return []};
  export { glob };
 }
-declare module 'astro-content' {
- export { get };
+`
+    .replaceAll('export interface', 'interface')
+    .replaceAll('export type', 'type');
+
+  // TODO: Re-organize types object ——v
+  return { common: '', browser, ide: common };
 }
- `;
-
-  const common = `
-/* Interfaces */
-${iFaces}
-/* /Interfaces */
-
-/* Entities */
-${iFacesEntities}
-/* /Entities */
-
-/* Types */
-${typesLiteral}
-/* /Types */
-`;
-
-  return { common, browser, ide };
-}
-
-//   const entitiesNames = `
-// declare const entitiesNames: ${contentSchemas
-//     .map(([key, schema]) => {
-//       if (schema.properties === undefined) return false;
-
-//       return `'${key}'`;
-//     })
-//     .join(' | ')};
-// `;
-/* interfaces Entities */
-// $ {iFacesEntities}
-/* /Types */
-
-// $ {entitiesNames}
-// console.log({ types, s: schemas.content });
-// const typesArr = await Promise.all(
-//   contentSchemas.map(async ([entity]) => {
-//     console.log({ type });
-//     return type;
-//   }),
-// );
-
-// state.types.entity[entity] = type;
-// const typesArr = Object.entries(types.entity);
-
-// const iFaces = typesArr.map(([, val]) => {
-//   const c = val?.replaceAll('export interface', 'interface');
-//   return c;
-// });
