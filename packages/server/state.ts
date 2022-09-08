@@ -1,30 +1,47 @@
 /* eslint-disable max-lines */
+/* ·········································································· */
 import type { ServerState } from '@astro-content/types/server-state';
-import { conf } from './config';
+import markdownFile from './schemas/MarkdownFile.json' assert { type: 'json' };
+/* —————————————————————————————————————————————————————————————————————————— */
 
-const ide = `import { collect } from 'astro-content';
-
-export default collect as (files: unknown) => Promise<Entities>;`;
-
-const state: ServerState = {
+const emptyState = {
   content: {},
 
   schemas: {
-    internals: {},
     content: {},
     raw: {},
+    internals: {
+      MarkdownFile: markdownFile,
+    },
   },
 
   errors: {},
 
   types: {
     common: '',
-    ide,
+    ide: '',
     browser: '',
   },
 
   config: {
-    previewUrl: conf.previewUrl,
+    previewUrl: '/',
+    // TODO: auto-detection + injection for GUI command hints for example
+    packageManager: 'pnpm',
   },
 };
-export default state;
+
+const getEmptyState = () =>
+  JSON.parse(JSON.stringify(emptyState)) as ServerState;
+
+const state = getEmptyState();
+
+const endpoints = [
+  'schemas',
+  'types',
+  'config',
+  'content',
+  'errors',
+  //
+];
+
+export { state, endpoints, getEmptyState };
