@@ -10,13 +10,13 @@ import pkg from './package.json' assert { type: 'json' };
 // IDEA: Force embedding in dist. with Parcel?
 /* `bin` is forwarded from `/packages/integration/package.json`,
    so we're using sub `node_modules` import  */
-import add from './node_modules/@astro-content/server/create-entity';
+import { add } from '@astro-content/server/add';
 import {
   // setupRemark,
   setupContentBase,
   setupUnifiedVsCode,
   isValidContentBase,
-} from './node_modules/@astro-content/server/setup';
+} from '@astro-content/server/setup';
 
 /* —————————————————————————————————————————————————————————————————————————— */
 

@@ -6,7 +6,7 @@ import path from 'node:path';
 import mkdirp from 'mkdirp';
 import { spawn } from 'node:child_process';
 import hjson from 'hjson';
-import createEntity from './create-entity';
+import { add } from './add';
 /* ·········································································· */
 // import { $log } from './utils';
 /* —————————————————————————————————————————————————————————————————————————— */
@@ -87,10 +87,10 @@ export async function setupContentBase() {
   await fs.cp(src, dest);
 
   // A bit brutal
-  await createEntity('articles', 'article');
-  await createEntity('articles', 'article');
-  await createEntity('articles', 'article');
-  await createEntity('articles', 'article');
-  await createEntity('people', 'person');
-  await createEntity('people', 'person');
+  await add('articles', 'article');
+  await add('articles', 'article');
+  await add('articles', 'article');
+  await add('articles', 'article');
+  await add('people', 'person');
+  await add('people', 'person');
 }

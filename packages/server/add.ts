@@ -19,7 +19,7 @@ import { log } from './logger';
 
 const jabber = new Jabber();
 
-export default async function createEntity(
+export async function add(
   collectionOrSingletonName: string,
   singleName: string | null,
 ) {
