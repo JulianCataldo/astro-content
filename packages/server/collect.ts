@@ -4,36 +4,45 @@ import { sentenceCase } from 'change-case';
 import fs from 'node:fs/promises';
 import Ajv from 'ajv';
 import addFormats from 'ajv-formats';
-import draft7MetaSchema from 'ajv/dist/refs/json-schema-draft-07.json';
+// import draft7MetaSchema from 'ajv/dist/refs/json-schema-draft-07.json';
 /* ·········································································· */
-import type { YamlInstance } from '@astro-content/types/file';
-import type { MarkdownInstance } from 'astro';
-import state from './state';
-import generateBrowserTypes from './generate-types';
-import handleMd from './handle-md';
+import type { FileInstance, YamlInstance } from '@astro-content/types/file';
+import type { JSONSchema7 } from 'json-schema';
+import type { ServerState } from '@astro-content/types/server-state';
+import { state } from './state';
+import { generateTypes } from './generate-types';
+import { handleMd } from './handle-md';
 import { getTrio } from './utils';
+import { log } from './logger';
 // import coreSchemaValidation from './core-schema-validation';
 /* —————————————————————————————————————————————————————————————————————————— */
 
-/* ·········································································· */
-
-const ajv = new Ajv({ allErrors: true, strict: false });
+const ajv = new Ajv({
+  allErrors: false,
+  strict: false,
+  logger: false,
+  strictSchema: false,
+  strictNumbers: false,
+  strictTypes: false,
+  strictTuples: false,
+  strictRequired: false,
+});
 addFormats(ajv);
 
 // FIXME: This prevents "duplicate key" error with AJV schema compiler
-delete draft7MetaSchema.$id;
-
-ajv.addMetaSchema(draft7MetaSchema);
+// delete draft7MetaSchema.$id;
+// ajv.addMetaSchema(draft7MetaSchema);
 
 const tempDir = path.join(process.cwd(), '.astro-content');
 
 /* ·········································································· */
 
-function handleSchema(filePath: string, file) {
-  // FOR DEBUG ——v
-  // state.schemas.content = {};
+function handleSchema(filePath: string, unknownYaml: YamlInstance<unknown>) {
+  log(['Schema', filePath]);
 
-  console.log('schema');
+  // TODO: validate + assert schema (core meta schema validation)
+  // await coreSchemaValidation();
+  const file = unknownYaml as YamlInstance<JSONSchema7>;
 
   const { second: entity } = getTrio(filePath);
 
@@ -45,8 +54,6 @@ function handleSchema(filePath: string, file) {
     ...file.data,
   };
   state.schemas.raw[entity] = file.rawYaml;
-
-  // await coreSchemaValidation();
 }
 
 /* ·········································································· */
@@ -54,30 +61,53 @@ function handleSchema(filePath: string, file) {
 function saveContentState() {
   const fState = JSON.stringify(state);
   const fPath = path.join(tempDir, 'state.json');
-  fs.writeFile(fPath, fState).catch(() => null);
+  fs.writeFile(fPath, fState).catch((e) => log(e));
+}
 
-  fs.writeFile(
-    path.join(process.cwd(), 'get.ts'),
-    `${state.types?.ide}\n${state.types?.common}`,
-  ).catch(() => null);
+const ide = `import { collect } from 'astro-content';
+import type { Entities } from './../.astro-content/types';
+
+const get = collect as (files: unknown) => Promise<Entities>;
+
+export { get };
+export * from "../.astro-content/types";
+`;
+export async function saveTsHelper() {
+  await fs
+    .writeFile(path.join(process.cwd(), 'content', 'index.ts'), ide)
+    .catch((e) => log(e));
+}
+export async function saveTsTypes() {
+  await fs
+    .writeFile(
+      path.join(process.cwd(), '.astro-content', 'types.ts'),
+      `${state.types.ide}`,
+    )
+    .catch(() => null);
 }
 
 /* ·········································································· */
 
+interface Options {
+  editMode?: boolean;
+}
 const collect = async (
-  pFiles: Promise<
-    MarkdownInstance<Record<string, unknown>>[] | YamlInstance<unknown>[]
-  >,
-) => {
-  const files = await pFiles.then((p) => p);
-  // console.log({ files });
+  pFiles: Promise<FileInstance[]>,
+  options?: Options,
+): Promise<ServerState['content']> => {
+  const files = await pFiles.then((p) => p).catch(() => null);
+  log({ files });
 
-  if (Array.isArray(files) === false) {
-    console.log('No files!');
-    return;
+  if (!Array.isArray(files)) {
+    log('No files!');
+    return {};
   }
 
   /* HANDLE USER SCHEMAS — Defaults + entities */
+
+  /* Clean-up */
+  state.schemas.content = {};
+
   files.forEach((inputFile) => {
     const filePath = inputFile.file;
     if (filePath) {
@@ -90,26 +120,32 @@ const collect = async (
     }
   });
 
-  // TODO: Reset state
   /* HANDLE CONTENT — YAML + MD + MDX */
-  const promises = files.map(async (inputFile) => {
+
+  /* Clean-up */
+  state.content = {};
+
+  const promises = files?.map(async (inputFile: FileInstance) => {
     const filePath = inputFile.file;
 
     if (filePath && !filePath.endsWith('.schema.yaml')) {
-      await handleMd(filePath, inputFile);
+      await handleMd(filePath, inputFile, options?.editMode);
     }
   });
-  await Promise.all(promises);
+  if (promises) {
+    await Promise.all(promises);
+    // TODO: Sort entities / entries / properties after everything is collected
+  }
 
-  state.types = await generateBrowserTypes(
-    state.content,
-    state.schemas,
-    state.types.ide,
-  );
+  state.types = await generateTypes(state.content, state.schemas);
 
+  // // Build mode
+  // if (import.meta.env.PROD) {
   saveContentState();
+  // }
+  saveTsTypes().catch((e) => log(e));
 
   return state.content;
 };
 
-export default collect;
+export { collect };
