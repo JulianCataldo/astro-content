@@ -1,10 +1,10 @@
 // import { unified } from 'unified';
 // import remarkParse from 'remark-parse';
+// import yaml from 'yaml';
 import { remark } from 'remark';
 import remarkFrontmatter from 'remark-frontmatter';
 import rlFmSchema from '@julian_cataldo/remark-lint-frontmatter-schema';
-// FIXME: Module "file:///home/runner/work/astro-content/astro-content/node_modules/.pnpm/case-police@0.5.9/node_modules/case-police/dict/abbreviates.json" needs an import assertion of type "json"
-import retextCasePolice from '@julian_cataldo/retext-case-police';
+import retextCasePolice from '@julian_cataldo/retext-case-police/index';
 import remarkPresetLintRecommended from 'remark-preset-lint-recommended';
 import remarkPresetLintMarkdownStyleGuide from 'remark-preset-lint-markdown-style-guide';
 import remarkPresetLintConsistent from 'remark-preset-lint-consistent';
@@ -13,9 +13,11 @@ import remarkRetext from 'remark-retext';
 import remarkGfm from 'remark-gfm';
 import retextStringify from 'retext-stringify';
 import { Parser } from 'retext-english';
-// import retextProfanities from 'retext-profanities';
 import retextRepeatedWords from 'retext-repeated-words';
 import retextReadability from 'retext-readability';
+import { visit } from 'unist-util-visit';
+import { toHast } from 'mdast-util-to-hast';
+import { toHtml } from 'hast-util-to-html';
 /* ·········································································· */
 /* NOTE: TOO HEAVY */
 // import dictionary from 'dictionary-en';
@@ -25,30 +27,96 @@ import retextReadability from 'retext-readability';
 // import retextOveruse from 'retext-overuse';
 /* ·········································································· */
 import type { JSONSchema7 } from 'json-schema';
+
+import type {
+  ErrorLint,
+  ErrorSchema,
+  PropertyReport,
+  ReportFootnote,
+  ReportLink,
+} from '@astro-content/types/server-state';
 /* ·········································································· */
-// import { $log } from './utils';
+import { log } from './logger';
 /* —————————————————————————————————————————————————————————————————————————— */
 
-export default async function validateMd(
-  // mdPath: string,
-  content: string,
-  schema?: JSONSchema7,
-) {
+export async function validateMd(content: string, schema?: JSONSchema7) {
+  // let frontmatterSchema: JSONSchema7 = {};
+  // if (
+  //   schema?.allOf?.length &&
+  //   typeof schema.allOf[1] === 'object' &&
+  //   typeof schema.allOf[1].properties?.frontmatter === 'object'
+  // ) {
+  //   frontmatterSchema = schema.allOf[1].properties.frontmatter;
+  // }
+  log('Validate MD', 'debug', 'pretty');
+
+  const footnotes: ReportFootnote = {
+    references: [],
+    definitions: [],
+  };
+  const links: ReportLink[] = [];
+  const lint: ErrorLint[] = [];
+  const schemaErrs: ErrorSchema[] = [];
+
   const lintingAndSchema = await remark()
     .use(remarkFrontmatter)
     .use(rlFmSchema, { embed: schema })
     .use(remarkGfm)
+    // TODO: extract "validate" to general "handle"?
+    .use(() => (tree, file) => {
+      log({ data: file }, 'absurd');
+      visit(
+        tree,
+        ['footnoteDefinition', 'footnoteReference', 'link'],
+        (node) => {
+          if (node.type === 'link') {
+            log(node, 'absurd');
+
+            const html = toHtml(toHast(node.children[0]));
+            links.push({ url: node.url, position: node.position, html });
+          } else if (node.type === 'footnoteDefinition') {
+            log(node, 'absurd');
+
+            let html = '';
+            if (node.children.length) {
+              // FIXME: weird typings shifting in IDE
+              html = toHtml(toHast(node.children[0]));
+            }
+
+            footnotes.definitions.push({
+              position: node.position,
+              label: node.label,
+              html,
+              // id,
+            });
+          } else if (node.type === 'footnoteReference') {
+            log(node, 'absurd');
+
+            footnotes.references.push({
+              position: node.position,
+              label: node.label,
+              // html: 'HTML',
+              // id,
+            });
+          }
+        },
+      );
+    })
     .use(remarkPresetLintRecommended)
     .use(remarkPresetLintMarkdownStyleGuide)
     .use(remarkPresetLintConsistent)
     .process(content);
 
-  const lint = [];
-  const schemaErrs = [];
+  log({ lintingAndSchema }, 'absurd');
 
   lintingAndSchema.messages.forEach((error) => {
     if (error.ruleId === 'frontmatter-schema') {
-      schemaErrs.push(error);
+      log({ error });
+      // FIXME:
+      // IDEA: Map AJV properties to `remark-lint-frontmatter-schema` output?
+      // Actually parsing the note, not ideal at all
+      // schemaErrs.push({ message: yaml.parse(error.note). });
+      schemaErrs.push({ message: error.note });
     } else {
       lint.push(error);
     }
@@ -57,7 +125,6 @@ export default async function validateMd(
   const naturalLanguage = await remark()
     .use(remarkFrontmatter)
     .use(remarkRetext, Parser)
-    // .use(retextProfanities)
     .use(retextCasePolice, { ignore: ['HTTPS', 'HTTP'] })
     .use(retextReadability, { age: 26 })
     .use(retextRepeatedWords)
@@ -65,9 +132,16 @@ export default async function validateMd(
     .use(retextStringify)
     .process(content);
 
-  return {
+  log({ lint }, 'absurd');
+  log({ links });
+
+  const Report: PropertyReport = {
     schema: schemaErrs,
     lint,
     prose: naturalLanguage.messages,
+    footnotes,
+    links,
   };
+
+  return Report;
 }
