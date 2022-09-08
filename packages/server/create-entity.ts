@@ -1,3 +1,5 @@
+// TODO: Refactor
+
 /* eslint-disable max-lines */
 import * as fs from 'node:fs/promises';
 import { existsSync } from 'node:fs';
@@ -12,8 +14,7 @@ import type { JSONSchema7 } from 'json-schema';
 import fetch from 'node-fetch';
 import Jabber from 'jabber';
 /* ·········································································· */
-
-import { $log } from './utils';
+import { log } from './logger';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 const jabber = new Jabber();
@@ -66,7 +67,7 @@ export default async function createEntity(
   const entryDest = path.join(baseDest, entryDirName);
 
   if (existsSync(entryDest)) {
-    $log('This entry already exist !');
+    log('This entry already exist !');
     return;
   }
   await mkdirp(entryDest).catch(() => null);
@@ -139,8 +140,4 @@ export default async function createEntity(
       ),
     );
   }
-}
-
-if (process.argv[2] === 'add') {
-  await createEntity(process.argv[3], process.argv[4]);
 }
