@@ -1,0 +1,42 @@
+---
+import { collect } from '@astro-content/server/collect';
+import { log, setLogLevel } from '@astro-content/server/logger';
+import { isValidContentBase } from '@astro-content/server/setup';
+/* ·········································································· */
+import Layout from './layouts/Default.astro';
+import Gui from './components/Gui';
+/* —————————————————————————————————————————————————————————————————————————— */
+
+setLogLevel(import.meta.env.PUBLIC_LOG_LEVEL || 'info');
+log(`Log level: ${import.meta.env.PUBLIC_LOG_LEVEL}`);
+log('SSR Entrypoint loaded', 'info', 'pretty');
+
+const isValid = isValidContentBase();
+// NOTE: Check is done once, not updating (yet)
+if (isValid) {
+  await collect(
+    //
+    Astro.glob('/content/**/*.{md,mdx,yaml}'),
+    { editMode: true },
+  );
+
+  // await collect(
+  //   //
+  //   Astro.glob('/node_modules/@astro-content/demo/content/**/*.{md,mdx,yaml}'),
+  //   { editMode: true },
+  // );
+}
+---
+
+<Layout>
+  <Gui client:load isValidContentBase={isValid} />
+</Layout>
+
+<script>
+  // FIXME: `import/extensions` not taking effect
+  // eslint-disable-next-line import/extensions
+  import { log } from './utils';
+
+  log(`Log level: ${import.meta.env.PUBLIC_LOG_LEVEL}`);
+  log('GUI entrypoint loaded', 'info', 'pretty');
+</script>
