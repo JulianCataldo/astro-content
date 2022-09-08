@@ -1,11 +1,53 @@
-export default function Meta({ value }) {
+// NOTE: Work in progress
+
+import validator from '@rjsf/validator-ajv6';
+import Form from '@rjsf/core';
+
+// const schema = {
+//   title: 'Todo',
+//   type: 'object',
+//   required: ['title'],
+//   properties: {
+//     title: { type: 'string', title: 'Title', default: 'A new task' },
+//     done: { type: 'boolean', title: 'Done?', default: false },
+//   },
+// };
+
+export default function Meta({ value, schema, errors }) {
+  const log = (type) => console.log.bind(console, type);
+
   return (
     <div>
-      <div className="meta">
+      <br />
+      <br />
+      <h1>Frontmatter</h1>
+      {JSON.stringify(schema)}
+      <hr />
+      {JSON.stringify(value?.frontmatter?.legalReferences)}
+      <hr />
+      {JSON.stringify({ errors })}
+      ss
+      {schema?.properties &&
+        value?.frontmatter &&
+        Object.entries(value.frontmatter).length > 1 && (
+          <Form
+            schema={schema}
+            validator={validator}
+            onChange={log('changed')}
+            // onSubmit={log('submitted')}
+            onError={log('errors')}
+            readonly="true"
+            formData={{
+              title: value?.frontmatter.title,
+              // legalReferences: value?.frontmatter?.legalReferences,
+            }}
+          />
+        )}
+      {/* <div className="meta">
         <h2>Meta</h2>
         <div>
           <h3>Excerpt</h3>
-          Length: {value?.excerpt?.text.length}
+          Length: {value?.excerpt?.text?.length}
           <div>
             <h4>Formatted</h4>
             <div
@@ -45,7 +87,7 @@ export default function Meta({ value }) {
             </tr>
           </tbody>
         </table>
-      </div>
+      </div> */}
     </div>
   );
 }
