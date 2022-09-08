@@ -1,12 +1,14 @@
+// REFACTOR: Split into sub-components
 /* eslint-disable max-lines */
+
 import Monaco from '@monaco-editor/react';
 import type { Monaco as MonacoType } from '@monaco-editor/react';
 import type { editor as nsEd, editor, languages } from 'monaco-editor';
 import { useEffect, useRef, useState } from 'react';
-import yaml from 'yaml';
 /* ·········································································· */
 import type { EditorLanguage } from '@astro-content/types/gui-state';
-import { useAppStore } from '../store';
+import useAppStore from '../store';
+import { log } from '../utils';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 export default function Editor({
@@ -17,8 +19,8 @@ export default function Editor({
 }: {
   value: string;
   language: EditorLanguage;
-  readOnly: boolean;
-  isMain: boolean;
+  readOnly?: boolean;
+  isMain?: boolean;
 }) {
   const { schemas, errors, types } = useAppStore((state) => state.data);
   const { entity, entry, property } = useAppStore(
@@ -29,7 +31,6 @@ export default function Editor({
   );
 
   const setDefaultEditor = useAppStore((state) => state.setDefaultEditor);
-  const setCurrentLanguage = useAppStore((state) => state.setCurrentLanguage);
 
   const editorRef = useRef<nsEd.IStandaloneCodeEditor | null>(null);
   const [monacoInst, setMonaco] = useState<MonacoType | null>(null);
@@ -37,54 +38,27 @@ export default function Editor({
   function validate(model: nsEd.ITextModel, monaco: MonacoType) {
     const errorMessages: languages.ProviderResult<editor.IMarkerData[]> = [];
 
-    if (errors?.[entity]?.[entry]?.[property]) {
-      let positions = {};
+    if (entity && entry && property) {
+      let positions = {
+        startLineNumber: 0,
+        startColumn: 0,
+        endLineNumber: 0,
+        endColumn: 0,
+      };
       // TODO: Refactor all
-      if (errors[entity][entry][property]?.lint) {
-        errors[entity][entry][property]?.lint.forEach((err) => {
-          if (err.position) {
-            positions = {
-              startLineNumber: err.position.start.line,
-              startColumn: err.position.start.column,
-              endLineNumber: err.position.end.line || err.position.start.line,
-              endColumn: err.position.end.column || err.position.start.column,
-            };
-          }
-          errorMessages.push({
-            message: err.message, // yaml.stringify(err),
-            ...positions,
-            severity: 4,
-            code: err.ruleId,
-            source: err.source,
-          });
-          if (err.ruleId === 'frontmatter-schema') {
-            console.log({ l: err });
-          }
-        });
-      }
-      if (Array.isArray(errors[entity][entry][property]?.schema)) {
-        errors[entity][entry][property]?.schema?.forEach((err) => {
-          // TODO: Refactor
-          if (err.position) {
-            positions = {
-              startLineNumber: err.position.start.line,
-              startColumn: err.position.start.column,
-              endLineNumber: err.position.end.line || err.position.start.line,
-              endColumn: err.position.end.column || err.position.start.column,
-            };
-          }
-          errorMessages.push({
-            message: err.message, // yaml.stringify(err),
 
-            ...positions,
-            severity: 8,
-            code: err.ruleId || 'YAML',
-            source: err.source || 'schema',
-          });
-        });
-      }
-      if (Array.isArray(errors[entity][entry][property]?.prose)) {
-        errors[entity][entry][property]?.prose?.forEach((err) => {
+      const propertyReport = errors[entity]?.[entry]?.[property];
+
+      if (
+        propertyReport?.schema?.length ||
+        propertyReport?.lint?.length ||
+        propertyReport?.prose?.length
+      ) {
+        [
+          ...(propertyReport.schema ?? []),
+          ...(propertyReport.lint ?? []),
+          ...(propertyReport.prose ?? []),
+        ].forEach((err) => {
           if (err.position) {
             positions = {
               startLineNumber: err.position.start.line,
@@ -93,31 +67,55 @@ export default function Editor({
               endColumn: err.position.end.column || err.position.start.column,
             };
           }
+          let severity = 8;
+          if ('ruleId' in err) {
+            if (err.ruleId !== 'frontmatter-schema') {
+              severity = 4;
+            }
+            if (err.ruleId?.startsWith('retext-')) {
+              severity = 2;
+            }
+          }
           errorMessages.push({
-            message: err.message, // yaml.stringify(err),
+            message: err.message ?? '',
+            severity,
+            code: 'ruleId' in err ? String(err.ruleId) : undefined,
+            source: 'source' in err ? String(err.source) : 'Root',
             ...positions,
-            severity: 2,
-            code: err.ruleId,
-            source: err.source,
           });
         });
       }
     }
+
     monaco.editor.setModelMarkers(model, 'owner', errorMessages);
   }
 
   async function handleChange() {
     const model = editorRef.current?.getModel();
-    if (model && monacoInst) {
-      console.log('e');
-      setCurrentLanguage(language);
+    if (
+      model &&
+      monacoInst &&
+      entity &&
+      entry &&
+      property &&
+      (language === 'markdown' || language === 'yaml')
+    ) {
+      const propSchema =
+        typeof schemas.content[entity] === 'object' &&
+        schemas.content[entity].properties?.[property];
+
+      const frontmatterSchema =
+        typeof propSchema === 'object' &&
+        typeof propSchema.allOf?.[1] === 'object' &&
+        propSchema.allOf[1]?.properties?.frontmatter;
+
       await updateContentForValidation(
         entity,
         entry,
         property,
         language,
         model.getValue(),
-        schemas?.content?.[entity]?.properties?.[property],
+        frontmatterSchema,
       );
       validate(model, monacoInst);
     }
@@ -130,17 +128,15 @@ export default function Editor({
       editorRef.current = passedEd;
       setDefaultEditor(passedEd);
 
-      console.log(monaco);
       const model = editorRef.current.getModel();
-      if (model && monaco) {
-        setCurrentLanguage(model.getLanguageId() as EditorLanguage);
+      if (model) {
         validate(model, monaco);
       }
     }
   };
 
   const handleEditorWillMount = (monaco: MonacoType) => {
-    console.log('here is the monaco instance:', monaco);
+    log(['Monaco instance:', monaco]);
     setMonaco(monaco);
 
     monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
@@ -157,11 +153,8 @@ export default function Editor({
       // allowSyntheticDefaultImports: true,
     });
 
-    console.log({ typesB: types });
-
     if (types.browser) {
       const global = `${types.common}\n\n${types.browser}`;
-      console.log({ global });
       monaco.languages.typescript.typescriptDefaults.addExtraLib(
         global,
         'global.d.ts',
@@ -175,6 +168,16 @@ export default function Editor({
     }
   }, [errors, value]);
 
+  let path = '';
+  if (isMain) {
+    const pathParts = [
+      entity ?? undefined,
+      entry ?? undefined,
+      property ?? undefined,
+    ];
+    // TODO: Map `language` to correct file extensions
+    path = `./${pathParts.join('/')}.${language}`;
+  }
   return (
     <div style={{ height: '100%' }} id={isMain ? 'main-editor' : 's'}>
       <Monaco
@@ -192,7 +195,7 @@ export default function Editor({
         value={value}
         beforeMount={handleEditorWillMount}
         onMount={handleEditorDidMount}
-        path={isMain ? `${entity}/${entry}/${property}.${language}` : ''}
+        path={path}
         onChange={() => {
           handleChange().catch(() => null);
         }}
@@ -200,3 +203,8 @@ export default function Editor({
     </div>
   );
 }
+
+Editor.defaultProps = {
+  readOnly: false,
+  isMain: false,
+};

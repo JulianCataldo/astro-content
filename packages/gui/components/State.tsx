@@ -1,12 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 /* —————————————————————————————————————————————————————————————————————————— */
-import { useAppStore } from '../store';
+import useAppStore from '../store';
+import { log } from '../utils';
 /* ·········································································· */
 
-export default function State(params) {
-  // const [timestamp, setTimestamp] = useState();
-
-  const state = useAppStore((state) => state.data);
+export default function State() {
+  // const data = useAppStore((state) => state.data);
 
   useEffect(() => {
     // const socket = new WebSocket('ws://localhost:5011');
@@ -16,7 +15,7 @@ export default function State(params) {
     // });
     // // Listen for messages
     // socket.addEventListener('message', (event) => {
-    //   console.log('Message from server ', event.data);
+    // log(['Message from server ', event.data]);
     //   setTimestamp(new Date());
     // });
   }, []);
@@ -35,13 +34,11 @@ export default function State(params) {
     fetchSavedUiState();
   }, []);
 
-  return <div></div>;
+  return null;
   return (
     <details>
       <h1>State</h1>
-      <pre>
-        <code>{JSON.stringify(state, null, 2)} </code>
-      </pre>
+      <pre>{/* <code>{JSON.stringify(state, null, 2)} </code> */}</pre>
     </details>
   );
 }
