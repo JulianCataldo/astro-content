@@ -19,31 +19,12 @@
       justify-content: flex-start;
     }
 
-    & > * {
+    & .action {
       font-weight: 700;
     }
   }
 
   .Popover {
-    .prefix {
-      user-select: none;
-    }
-
-    pre {
-      code {
-        display: inline-block;
-        width: calc(100% - 1rem);
-        padding: 0.5rem;
-        background: var(--vscode-breadcrumb-background);
-        border-radius: 0.15rem;
-        cursor: pointer;
-
-        &:hover {
-          background: var(--vscode-toolbar-activeBackground);
-        }
-      }
-    }
-
     h3,
     h4 {
       cursor: default;
@@ -96,6 +77,20 @@
       svg {
         opacity: 1;
       }
+    }
+  }
+
+  .infos-tooltip {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 1em;
+
+    .table {
+      padding: 1rem;
+      // width: 100%;
+      display: flex;
+      justify-content: space-between;
     }
   }
 }
