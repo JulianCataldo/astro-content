@@ -15,4 +15,4 @@
 //   if (validate.errors) {
 //   }
 // }
-export default function coreSchemaValidation(params) {}
+export default function coreSchemaValidation() {}
