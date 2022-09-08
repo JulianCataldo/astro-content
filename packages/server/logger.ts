@@ -21,13 +21,13 @@ export function getCurrentLevel() {
 }
 
 export function setLogLevel(level: LogLevel) {
-  if (process.argv.includes('--verbose')) {
-    currentLevel = 'debug';
-  } else if (process.argv.includes('--silent')) {
-    currentLevel = 'silent';
-  } else if (process.argv.includes('--absurd')) {
-    currentLevel = 'absurd';
-  }
+  // if (process.argv.includes('--verbose')) {
+  //   currentLevel = 'debug';
+  // } else if (process.argv.includes('--silent')) {
+  //   currentLevel = 'silent';
+  // } else if (process.argv.includes('--absurd')) {
+  //   currentLevel = 'absurd';
+  // }
   currentLevel = level;
 }
 
@@ -47,9 +47,11 @@ export function log(
   if (Levels[loggingLevel] <= Levels[currentLevel]) {
     if (mode === 'pretty') {
       const literal = typeof value === 'string' ? value : JSON.stringify(value);
+      const time = new Date().toLocaleTimeString();
+
       console.log(
         // TODO: Time
-        `${dim(grey('00:00:00'))} ` +
+        `${dim(time)} ` +
           // —————————————————————————————————————————————————
           `${bold(blue('[content]'))} ${literal}`,
       );

@@ -29,9 +29,11 @@ export function log(
   if (Levels[loggingLevel] <= Levels[currentLevel]) {
     if (mode === 'pretty') {
       const literal = typeof value === 'string' ? value : JSON.stringify(value);
+      const time = new Date().toLocaleTimeString();
+
       console.log(
         // TODO: Time
-        `${'00:00:00'} ` +
+        `${time} ` +
           // —————————————————————————————————————————————————
           `${'[content]'} ${literal}`,
       );
