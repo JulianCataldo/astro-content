@@ -9,29 +9,32 @@ import State from './State';
 import Toolbar from './Toolbar';
 /* ·········································································· */
 import './Gui.scss';
-import { useAppStore } from '../store';
+import useAppStore from '../store';
+import CopyInlineCode from './CopyInlineCode';
+import { log } from '../utils';
 /* —————————————————————————————————————————————————————————————————————————— */
 
-export default function Gui({ ssrContent }) {
-  const save = useAppStore((state) => state.save);
-  const { errors } = useAppStore((state) => state.data);
+interface Props {
+  isValidContentBase: boolean;
+}
+export default function Gui({ isValidContentBase }: Props) {
   const { entity, entry, property } = useAppStore(
     (state) => state.uiState.route,
   );
-  const [didMount, setDidMount] = useState(false);
+  const save = useAppStore((state) => state.save);
 
-  /* Save — Keyboard shortcut */
+  const [didMount, setDidMount] = useState(false);
   useEffect(() => {
+    /* Save — Keyboard shortcut */
     document.addEventListener('keydown', (e) => {
-      if ((e.key === 's' && e.metaKey) || e.ctrlKey) {
+      if (e.key === 's' && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
         save();
       }
     });
+    /* For client-only stuffs (`SplitPane` for ex.) */
     setDidMount(true);
   });
-
-  const prop = errors?.[entity]?.[entry]?.[property];
 
   return (
     <div className="component-gui">
@@ -41,16 +44,38 @@ export default function Gui({ ssrContent }) {
 
       {didMount && (
         <main>
+          {/* @ts-expect-error `SplitPane` JSX typings buggy with React 18 */}
           <SplitPane split="vertical" defaultSize={260} minSize={200}>
             {/* LEFT-SIDEBAR */}
 
+            {!isValidContentBase && (
+              <div className="message-no-database">
+                <strong>No valid content base was found</strong>
+                <hr />
+                <p>Create a minimal one by running:</p>
+                <CopyInlineCode text="pnpm content setup" />
+              </div>
+            )}
             <Tree />
 
+            {/* @ts-expect-error `SplitPane` JSX typings buggy with React 18 */}
             <SplitPane split="horizontal" defaultSize="65%" minSize={200}>
               {/* DUAL-VIEW EDITOR */}
-              <SplitPane split="vertical" defaultSize="50%" minSize={200}>
+              {/* @ts-expect-error `SplitPane` JSX typings buggy with React 18 */}
+              <SplitPane
+                split="vertical"
+                defaultSize="50%"
+                minSize={200}
+                onDragFinished={(s) => {
+                  log({ dragged: s });
+                }}
+              >
+                {!entity && !entry && !property && (
+                  <div className="message-please-select-file">
+                    ← Please select a schema (entity) or a property (file)…
+                  </div>
+                )}
                 <File />
-
                 <Preview />
               </SplitPane>
               {/* LOWER SIDE-BAR INSPECTOR */}
