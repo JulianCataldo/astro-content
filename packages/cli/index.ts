@@ -1,7 +1,7 @@
 #! /usr/bin/env node --no-warnings
 
 /* eslint-disable import/no-relative-packages */
-// TODO: Refactor
+// NOTE: WORK IN PROGRESS
 import { program } from 'commander';
 import inquirer from 'inquirer';
 import pkg from './package.json' assert { type: 'json' };
