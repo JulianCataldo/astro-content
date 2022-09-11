@@ -5,22 +5,22 @@ import yaml from 'yaml';
 import { useEffect, useState } from 'react';
 /* ·········································································· */
 import type { Fake } from '@astro-content/types/dto';
-import { log } from '../utils';
+import { actions } from '@astro-content/server/state';
+import { log, put } from '../utils';
 import TabBar, { Tabs } from './TabBar';
 import Editor from './Editor';
-// import Metas from './Metas';
+// import Metas from './Metas'
 /* ·········································································· */
 import useAppStore from '../store';
+import './Assistant.scss';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 export default function Preview() {
-  const { content, schemas, types } = useAppStore((state) => state.data);
-  const { entity, entry, property } = useAppStore(
-    (state) => state.uiState.route,
-  );
-  const language = useAppStore((state) => state.uiState.language);
-  const previewPane = useAppStore((state) => state.uiState.previewPane);
-  const setPreviewPane = useAppStore((state) => state.setPreviewPane);
+  const { content, schemas, types } = useAppStore((state) => state.data_server);
+  const { entity, entry, property } = useAppStore((state) => state.ui_route);
+  const language = useAppStore((state) => state.editor_language);
+  const assistantPane = useAppStore((state) => state.ui_assistantPane);
+  const setAssistantPane = useAppStore((state) => state.ui_setAssistantPane);
 
   const contentProp = property === 'content' ? 'contentProp' : property;
 
@@ -130,26 +130,22 @@ export {}`;
 
   // FIXME:
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  if (!tabs[previewPane]) {
-    setPreviewPane('preview');
+  if (!tabs[assistantPane]) {
+    setAssistantPane('preview');
   }
 
   const [fakeEntries, setFakeEntriesObj] = useState<unknown>({});
 
   useEffect(() => {
     if (entity) {
-      const Dto: Fake = {
+      const dto: Fake = {
         schema: {
           definitions: { ...schemas.internals },
           ...schemas.content[entity],
         },
       };
 
-      fetch('/__content/api/~fake', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(Dto),
-      })
+      put(actions.fake.endpoint, dto)
         .then((r) =>
           r
             .json()
@@ -173,20 +169,20 @@ export {}`;
     <>
       <TabBar
         tabs={tabs}
-        switchPane={setPreviewPane}
-        currentTab={previewPane}
+        switchPane={setAssistantPane}
+        currentTab={assistantPane}
         defaultTab="preview"
       />
       <div className="preview-entity">
-        {/* {previewPane} */}
+        {/* {assistantPane} */}
         {entity && entry && !content[entity]?.[entry] && (
           <div className="preview">
-            {previewPane === 'ts' && (
+            {assistantPane === 'ts' && (
               <div className="editor">
                 <Editor language="typescript" value={typesPrev} readOnly />
               </div>
             )}
-            {previewPane === 'preview' && (
+            {assistantPane === 'preview' && (
               <div className="editor">
                 <Editor
                   language="yaml"
@@ -197,7 +193,7 @@ export {}`;
             )}
           </div>
         )}
-        {previewPane === 'ts' && importHelpText && (
+        {assistantPane === 'ts' && importHelpText && (
           <div className="editor">
             <Editor language="typescript" value={importHelpText} />
           </div>
@@ -205,7 +201,7 @@ export {}`;
 
         {value && isMd && (
           <div className="preview">
-            {previewPane === 'preview' &&
+            {assistantPane === 'preview' &&
               'bodyCompiled' in value &&
               value.bodyCompiled && (
                 <div
@@ -216,7 +212,7 @@ export {}`;
                   }}
                 />
               )}
-            {/* {previewPane === 'meta' && (
+            {/* {assistantPane === 'meta' && (
                 <Metas
                   value={value}
                   schema={frontmatterSchema}
@@ -224,14 +220,14 @@ export {}`;
                 />
               )} */}
 
-            {previewPane === 'html' &&
+            {assistantPane === 'html' &&
               'bodyCompiled' in value &&
               value.bodyCompiled && (
                 <div className="editor">
                   <Editor language="html" value={value.bodyCompiled} readOnly />
                 </div>
               )}
-            {previewPane === 'api' && (
+            {assistantPane === 'api' && (
               <div className="editor">
                 <Editor
                   language="json"
@@ -244,13 +240,13 @@ export {}`;
         )}
         {value && (
           <div className="preview">
-            {previewPane === 'preview' && 'data' in value && (
+            {assistantPane === 'preview' && 'data' in value && (
               <Editor
                 language="json"
                 value={JSON.stringify(value.data, null, 2)}
               />
             )}
-            {previewPane === 'api' && (
+            {assistantPane === 'api' && (
               <Editor
                 language="json"
                 value={JSON.stringify(value, null, 2)}
