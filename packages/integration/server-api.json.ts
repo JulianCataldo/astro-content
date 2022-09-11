@@ -13,13 +13,14 @@ export const get: APIRoute = ({ params, request }) => {
   // NOTE: Only "GET" seems to work?
   log({ params, method: request.method }, 'absurd');
 
+  const endpoint = params.endpoint as Endpoint;
+
   if (
     request.method === 'GET' &&
     typeof params.endpoint === 'string' &&
-    endpoints.includes(params.endpoint)
+    endpoints.includes(endpoint)
   ) {
     log({ params, method: request.method });
-    const endpoint = params.endpoint as Endpoint;
     return {
       body: JSON.stringify(state[endpoint]),
     };

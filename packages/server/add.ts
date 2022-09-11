@@ -14,6 +14,7 @@ import type { JSONSchema7 } from 'json-schema';
 import fetch from 'node-fetch';
 import Jabber from 'jabber';
 /* ·········································································· */
+import { apiBase } from './state';
 import { log } from './logger';
 /* —————————————————————————————————————————————————————————————————————————— */
 
@@ -25,7 +26,7 @@ export async function add(
 ) {
   console.log({ collectionOrSingletonName, singleName });
 
-  const base = 'http://localhost:9054/__content/api';
+  const base = `${apiBase}`;
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const userSchemas = await fetch(`${base}/schemas`)
     .then((r) => r.json())

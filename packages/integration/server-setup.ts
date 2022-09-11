@@ -4,13 +4,14 @@ import type { AstroIntegration } from 'astro';
 /* ·········································································· */
 import { log } from '@astro-content/server/logger';
 /* ·········································································· */
+import { actions } from '@astro-content/server/state';
 import { save } from '@astro-content/server/save';
 
 import { handleYaml } from '@astro-content/server/handle-yaml';
 import { handleMd } from '@astro-content/server/handle-md';
 import { generateFakeEntries } from '@astro-content/server/generate-fake-data';
 
-import type { PropertyReport } from '@astro-content/types/server-state';
+import type { PropertyReport } from '@astro-content/types/reports';
 import type { Save, Validate, Fake } from '@astro-content/types/dto';
 /* —————————————————————————————————————————————————————————————————————————— */
 
@@ -36,7 +37,7 @@ const serverSetup: AstroIntegration['hooks']['astro:server:setup'] = ({
       if (req.body) {
         if (
           // —————————————————————————————————————————————————————— SAVE ———————
-          req.url === '/__content/api/~save'
+          req.url === actions.save.endpoint
         ) {
           const body = req.body as Save;
 
@@ -45,7 +46,7 @@ const serverSetup: AstroIntegration['hooks']['astro:server:setup'] = ({
           res.end(JSON.stringify({ success: true }));
         } else if (
           // —————————————————————————————————————————————————— VALIDATE ———————
-          req.url === '/__content/api/~validate'
+          req.url === actions.validate.endpoint
         ) {
           const body = req.body as Validate;
 
@@ -73,7 +74,7 @@ const serverSetup: AstroIntegration['hooks']['astro:server:setup'] = ({
             }
           }
           res.end(JSON.stringify({ success: true, errors }));
-        } else if (req.url === '/__content/api/~fake') {
+        } else if (req.url === actions.fake.endpoint) {
           /**
            *  ——————————————————————————————————————————————————— FAKE ———————
            * */
