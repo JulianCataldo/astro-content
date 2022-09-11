@@ -1,5 +1,7 @@
 /* eslint-disable no-console */
-import { blue, bold, dim, grey } from 'kleur/colors';
+import { blue, bold, dim } from 'kleur/colors';
+// TODO: Try consola
+// import consola from 'consola';
 /* ·········································································· */
 import type { LogLevel } from '@astro-content/types/logger';
 /* —————————————————————————————————————————————————————————————————————————— */
@@ -36,6 +38,8 @@ export function log(
   value: unknown,
   level?: LogLevel,
   mode: Mode = 'dump',
+  // TODO: Try consola
+  // type: 'success' | 'info' | 'error' = 'info',
 ) {
   let loggingLevel: LogLevel;
   if (!level) {
@@ -50,7 +54,6 @@ export function log(
       const time = new Date().toLocaleTimeString();
 
       console.log(
-        // TODO: Time
         `${dim(time)} ` +
           // —————————————————————————————————————————————————
           `${bold(blue('[content]'))} ${literal}`,
