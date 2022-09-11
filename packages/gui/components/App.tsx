@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Split from 'react-split';
 /* ·········································································· */
-import Tree from './Tree';
+import Tree from './Tree/Tree';
 import File from './File';
 import Assistant from './Assistant';
 import Inspector from './Inspector';
