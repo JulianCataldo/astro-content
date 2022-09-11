@@ -1,10 +1,14 @@
 ---
+// NOTE: This file might go in ../integration package,
+// so everything purely Astro-related will be in one place,
+// but some deps issues prevent this.
+
 import { collect } from '@astro-content/server/collect';
 import { log, setLogLevel } from '@astro-content/server/logger';
 import { isValidContentBase } from '@astro-content/server/setup';
 /* ·········································································· */
 import Layout from './layouts/Default.astro';
-import Gui from './components/Gui';
+import App from './components/App';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 setLogLevel(import.meta.env.PUBLIC_LOG_LEVEL || 'info');
@@ -29,13 +33,13 @@ if (isValid) {
 ---
 
 <Layout>
-  <Gui client:load isValidContentBase={isValid} />
+  <App client:load isValidContentBase={isValid} />
 </Layout>
 
 <script>
-  // FIXME: `import/extensions` rule not taking effect
+  // FIXME: `import/extensions` rule not taking effect for client side Astro JS?
   // eslint-disable-next-line import/extensions
-  import { log } from './utils';
+  import { log } from './logger';
 
   log(`Log level: ${import.meta.env.PUBLIC_LOG_LEVEL}`);
   log('GUI entrypoint loaded', 'info', 'pretty');

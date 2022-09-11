@@ -8,10 +8,10 @@ import Inspector from './Inspector';
 import State from './State';
 import Toolbar from './Toolbar';
 /* ·········································································· */
-import './Gui.scss';
+import './App.scss';
 import useAppStore from '../store';
 import CopyInlineCode from './CopyInlineCode';
-import { log } from '../utils';
+import { log } from '../logger';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 interface Props {
