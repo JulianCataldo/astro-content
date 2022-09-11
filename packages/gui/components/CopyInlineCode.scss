@@ -1,0 +1,42 @@
+.component-copy-inline-code {
+  position: relative;
+  font-weight: 700;
+  cursor: pointer;
+
+  .prefix {
+    user-select: none;
+  }
+
+  .overlay {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background: var(--vscode-breadcrumb-background);
+    border-radius: 0.15rem;
+    opacity: 0;
+
+    &.visible {
+      opacity: 1;
+    }
+  }
+
+  &:hover {
+    code {
+      background: var(--vscode-toolbar-activeBackground);
+    }
+  }
+
+  pre {
+    code {
+      display: inline-block;
+      width: calc(100% - 1rem);
+      padding: 0.5rem;
+      cursor: pointer;
+      background: var(--vscode-breadcrumb-background);
+      border-radius: 0.15rem;
+    }
+  }
+}

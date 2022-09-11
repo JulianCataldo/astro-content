@@ -5,6 +5,26 @@
     height: calc(100vh - 4rem) !important;
   }
 
+  .editor {
+    height: 100%;
+  }
+
+  .Pane.horizontal.Pane2 {
+    overflow-x: hidden;
+    overflow-y: scroll;
+  }
+
+  .file-entity {
+    width: 100%;
+    height: calc(100% - 0rem);
+  }
+
+  .monaco-editor {
+    height: 100%;
+  }
+
+  // ——————————————————————————————————
+
   .Resizer {
     --color: var(--vscode-inputOption-activeBackground);
 

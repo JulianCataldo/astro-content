@@ -1,0 +1,18 @@
+.headings {
+  .headings-details {
+    min-width: 22rem;
+    overflow-y: auto;
+    font-size: 100%;
+    text-align: right;
+
+    & > * {
+      padding: 1em;
+      font-weight: 400;
+      cursor: pointer;
+
+      &:hover {
+        background-color: var(--vscode-diffEditor-insertedTextBackground);
+      }
+    }
+  }
+}
