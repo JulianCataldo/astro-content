@@ -1,10 +1,29 @@
+.inspector-pane {
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  overflow: hidden;
+  background-color: var(--vscode-menu-background);
+
+  // .component-tab-bar {
+  // }
+}
+
 .pane-error {
   padding-bottom: 1rem;
   // border-bottom: 1px solid $dark;
 }
 
+.reports {
+  height: 100%;
+  height: calc(100% - 3rem);
+  overflow-y: scroll;
+}
+
 .reports-pane {
-  padding-top: 2px;
+  height: 100%;
 
   .row {
     z-index: 1;
@@ -16,7 +35,7 @@
     }
 
     &:nth-child(2) {
-      margin-top: 1.5rem;
+      margin-top: 0.5em;
     }
 
     &:not(.header).jumper {
@@ -65,12 +84,8 @@
     }
 
     &.header {
-      position: fixed;
       width: 100%;
       padding: 0.25rem 0.5rem;
-      margin-top: -1.35rem;
-      margin-left: -1rem;
-      // margin-right: 3rem;
       font-size: 75%;
       font-weight: bold;
       user-select: none;

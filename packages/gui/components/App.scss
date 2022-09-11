@@ -1,5 +1,5 @@
 /* stylelint-disable selector-class-pattern */
-.component-gui {
+.component-app {
   main {
     position: relative;
     height: calc(100vh - 4rem) !important;
@@ -7,11 +7,6 @@
 
   .editor {
     height: 100%;
-  }
-
-  .Pane.horizontal.Pane2 {
-    overflow-x: hidden;
-    overflow-y: scroll;
   }
 
   .file-entity {
@@ -23,56 +18,45 @@
     height: 100%;
   }
 
-  // ——————————————————————————————————
+  // TODO: Set min and max sizes for all panes
+  .component-tree {
+    // min-width: 200px;
+    // width: 260px;
+    // max-width: 800px;
+  }
 
-  .Resizer {
+  .split-h {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+  }
+
+  .split-v {
+    height: 100%;
+  }
+
+  .gutter {
     --color: var(--vscode-inputOption-activeBackground);
+    background-repeat: no-repeat;
+    background-position: 50%;
+    opacity: 0.15;
+    transition: opacity 0.4s, background-color 0.4s ease;
 
-    z-index: 1;
-    box-sizing: border-box;
-    background: var(--vscode-textSeparator-foreground);
-    background-clip: padding-box;
-    opacity: 1;
-    transition: all 0.2s ease;
+    &:hover {
+      background-color: var(--color);
+      opacity: 1;
+      transition: opacity 0.11s, background-color 0.11s;
+      transition-delay: 0.08s;
+    }
   }
 
-  .Resizer:hover {
-    -webkit-transition: all 0.4s ease;
-    transition: all 0.4s ease;
-  }
-
-  .Resizer.horizontal {
-    width: 100%;
-    height: 11px;
-    margin: -5px 0;
-    cursor: row-resize;
-    border-top: 5px solid rgba(255, 255, 255, 0);
-    border-bottom: 5px solid rgba(255, 255, 255, 0);
-  }
-
-  .Resizer.horizontal:hover {
-    border-top: 5px solid var(--color);
-    border-bottom: 5px solid var(--color);
-  }
-
-  .Resizer.vertical {
-    width: 11px;
-    margin: 0 -5px;
+  .gutter.gutter-horizontal {
     cursor: col-resize;
-    border-right: 5px solid rgba(255, 255, 255, 0);
-    border-left: 5px solid rgba(255, 255, 255, 0);
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==');
   }
 
-  .Resizer.vertical:hover {
-    border-right: 5px solid var(--color);
-    border-left: 5px solid var(--color);
-  }
-
-  .Resizer.disabled {
-    cursor: not-allowed;
-  }
-
-  .Resizer.disabled:hover {
-    border-color: transparent;
+  .gutter.gutter-vertical {
+    cursor: row-resize;
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAFAQMAAABo7865AAAABlBMVEVHcEzMzMzyAv2sAAAAAXRSTlMAQObYZgAAABBJREFUeF5jOAMEEAIEEFwAn3kMwcB6I2AAAAAASUVORK5CYII=');
   }
 }

@@ -251,45 +251,45 @@ export default function Inspector() {
         currentTab={inspectorPane}
         defaultTab="schema"
       />
-      {inspectorPane === 'schema' && (
-        <div>
-          <ErrorPane reps={reps.schema} />
-        </div>
-      )}
-      {/* <pre>
+      <div className="reports">
+        {inspectorPane === 'schema' && (
+          <div>
+            <ErrorPane reps={reps.schema} />
+          </div>
+        )}
+        {/* <pre>
         <code>{JSON.stringify(reps.schema, null, 2)}</code>
       </pre> */}
-      {entity && entry && property && content[entity]?.[entry]?.[property] && (
-        <>
-          {/* <div className="panes"> */}
-          {hasAll && inspectorPane === 'lint' && (
-            <div>
-              <ErrorPane reps={reps.lint} />
-            </div>
-          )}
-          {hasAll && inspectorPane === 'prose' && (
-            <div>
-              <ErrorPane reps={reps.prose} />
-            </div>
-          )}
-          {hasAll && inspectorPane === 'links' && (
-            <div>
-              <ErrorPane reps={reps.links} />
-            </div>
-          )}
-          {hasAll && inspectorPane === 'footnotes' && (
-            <div>
-              <ErrorPane
-                reps={[
-                  ...(reps.footnotes?.references ?? []),
-                  ...(reps.footnotes?.definitions ?? []),
-                ]}
-              />
-            </div>
-          )}
-          {/* </div> */}
-        </>
-      )}
+        {entity && entry && property && content[entity]?.[entry]?.[property] && (
+          <>
+            {hasAll && inspectorPane === 'lint' && (
+              <div>
+                <ErrorPane reps={reps.lint} />
+              </div>
+            )}
+            {hasAll && inspectorPane === 'prose' && (
+              <div>
+                <ErrorPane reps={reps.prose} />
+              </div>
+            )}
+            {hasAll && inspectorPane === 'links' && (
+              <div>
+                <ErrorPane reps={reps.links} />
+              </div>
+            )}
+            {hasAll && inspectorPane === 'footnotes' && (
+              <div>
+                <ErrorPane
+                  reps={[
+                    ...(reps.footnotes?.references ?? []),
+                    ...(reps.footnotes?.definitions ?? []),
+                  ]}
+                />
+              </div>
+            )}
+          </>
+        )}
+      </div>
       {isEntity && (
         // eslint-disable-next-line react/jsx-no-useless-fragment
         <>

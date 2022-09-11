@@ -114,7 +114,7 @@ export {}`;
       tabs.html = { icon: 'system-uicons:code', title: 'HTML' };
     }
     tabs.ts = { icon: 'simple-icons:typescript', title: 'Import' };
-    tabs.api = { icon: 'mdi:code-json', title: 'API response' };
+    tabs.api = { icon: 'mdi:code-json', title: 'API response' };
   } else if (entity && !entry) {
     tabs.preview = {
       icon: 'ion:dice',
@@ -176,10 +176,10 @@ export {}`;
         currentTab={assistantPane}
         defaultTab="preview"
       />
-      <div className="preview-entity">
+      <div className="component-assistant">
         {/* {assistantPane} */}
         {entity && entry && !content[entity]?.[entry] && (
-          <div className="preview">
+          <>
             {assistantPane === 'ts' && (
               <div className="editor">
                 <Editor language="typescript" value={typesPrev} readOnly />
@@ -194,7 +194,7 @@ export {}`;
                 />
               </div>
             )}
-          </div>
+          </>
         )}
         {assistantPane === 'ts' && importHelpText && (
           <div className="editor">
@@ -203,7 +203,7 @@ export {}`;
         )}
 
         {value && isMd && (
-          <div className="preview">
+          <>
             {assistantPane === 'preview' &&
               'bodyCompiled' in value &&
               value.bodyCompiled && (
@@ -230,6 +230,19 @@ export {}`;
                   <Editor language="html" value={value.bodyCompiled} readOnly />
                 </div>
               )}
+            {/* {assistantPane === 'api' && <div className="editor"></div>} */}
+          </>
+        )}
+        {value && (
+          <>
+            {assistantPane === 'preview' && 'data' in value && (
+              <div className="editor">
+                <Editor
+                  language="json"
+                  value={JSON.stringify(value.data, null, 2)}
+                />
+              </div>
+            )}
             {assistantPane === 'api' && (
               <div className="editor">
                 <Editor
@@ -239,24 +252,7 @@ export {}`;
                 />
               </div>
             )}
-          </div>
-        )}
-        {value && (
-          <div className="preview">
-            {assistantPane === 'preview' && 'data' in value && (
-              <Editor
-                language="json"
-                value={JSON.stringify(value.data, null, 2)}
-              />
-            )}
-            {assistantPane === 'api' && (
-              <Editor
-                language="json"
-                value={JSON.stringify(value, null, 2)}
-                readOnly
-              />
-            )}
-          </div>
+          </>
         )}
       </div>
     </>

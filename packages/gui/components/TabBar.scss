@@ -1,13 +1,9 @@
 .component-tab-bar {
-  position: fixed;
   display: flex;
-  // width: 100%;
+  overflow-x: auto;
   user-select: none;
   background-color: var(--vscode-quickInput-background);
-
-  & + * {
-    margin-top: 3rem;
-  }
+  box-shadow: 0 0.15rem 0.15rem var(--vscode-widget-shadow);
 
   & > * {
     padding: 0.75rem 1.25rem;
@@ -19,10 +15,6 @@
     &:hover {
       background-color: var(--vscode-toolbar-hoverBackground);
     }
-  }
-
-  .inspector-pane & {
-    margin: -1rem 0 1rem -1rem;
   }
 
   .active {

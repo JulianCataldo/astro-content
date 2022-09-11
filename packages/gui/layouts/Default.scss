@@ -29,8 +29,8 @@ a {
 }
 
 /* stylelint-disable-next-line selector-class-pattern */
-.Tooltip,
-.Popover {
+.component-tooltip,
+.component-popover {
   // transition-duration: 0s !important;
   & > * {
     &:first-child {
@@ -56,7 +56,7 @@ a {
 }
 
 /* stylelint-disable-next-line selector-class-pattern */
-.Tooltip {
+.component-tooltip {
   padding: 1rem 1rem;
 }
 

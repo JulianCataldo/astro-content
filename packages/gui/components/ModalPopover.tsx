@@ -66,7 +66,7 @@ export default function Popover({ children, render, placement }: Props) {
         >
           <div
             {...getFloatingProps({
-              className: 'Popover',
+              className: 'component-popover',
               ref: floating,
               style: {
                 position: strategy,

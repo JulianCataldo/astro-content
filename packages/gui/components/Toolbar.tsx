@@ -48,7 +48,7 @@ export default function Toolbar() {
 
               <CopyInlineCode
                 text="pnpm content add people person"
-                placement="right"
+                placement="top-end"
               />
 
               {/*
@@ -61,21 +61,21 @@ export default function Toolbar() {
 
               <CopyInlineCode
                 text="pnpm content add people jane"
-                placement="right"
+                placement="top-end"
               />
 
               <h5>Add an entry with a random name</h5>
 
               <CopyInlineCode
                 text="pnpm content add people"
-                placement="right"
+                placement="top-end"
               />
             </>
           )}
         >
-          <div className="action" data-tooltip-placement="bottom">
+          <div className="action">
             <Icon icon="system-uicons:create" width="2em" />
-            Create
+            <span className="label">Create</span>
           </div>
         </ModalPopover>
       </div>
@@ -85,7 +85,8 @@ export default function Toolbar() {
           // FIXME: JSX A11y
           // eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events
           <div className="action" onClick={save}>
-            <Icon icon="system-uicons:floppy" width="2em" /> Save
+            <Icon icon="system-uicons:floppy" width="2em" />
+            <span className="label">Save</span>
           </div>
         )}
 
@@ -105,7 +106,7 @@ export default function Toolbar() {
           {entity && !entry && (
             <div>
               <Icon icon="system-uicons:chevron-right" width="2em" />
-              Schema
+              <span className="label">Schema</span>
             </div>
           )}
           {entry && (
@@ -147,9 +148,9 @@ export default function Toolbar() {
                     <Icon
                       icon="system-uicons:document-list"
                       width="2em"
-                      height="2.5em"
+                      height="2em"
                     />
-                    Headings
+                    <span className="label">Headings</span>
                   </div>
                 </ModalPopover>
               </div>
@@ -161,7 +162,7 @@ export default function Toolbar() {
               className="action"
             >
               <Icon icon="simple-icons:astro" width="2em" height="1.5em" />
-              Preview
+              <span className="label">Preview</span>
             </a>
 
             <ModalPopover
@@ -197,7 +198,7 @@ export default function Toolbar() {
                     width="2em"
                     height="1.5em"
                   />
-                  <span>Infos</span>
+                  <span className="label">Infos</span>
                 </div>
               </div>
             </ModalPopover>
@@ -214,7 +215,7 @@ export default function Toolbar() {
                     width="2em"
                     height="1.5em"
                   />
-                  <span>IDE</span>
+                  <span className="label">IDE</span>
                 </a>
               </Tooltip>
             )}

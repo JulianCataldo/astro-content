@@ -62,7 +62,7 @@ export default function Tooltip({
         <div
           {...getFloatingProps({
             ref: floating,
-            className: 'Tooltip',
+            className: 'component-tooltip',
             style: {
               position: strategy,
               top: y ?? 0,

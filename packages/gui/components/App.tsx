@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import SplitPane from 'react-split-pane';
+import Split from 'react-split';
 /* ·········································································· */
 import Tree from './Tree';
 import File from './File';
@@ -7,10 +7,10 @@ import Assistant from './Assistant';
 import Inspector from './Inspector';
 import State from './State';
 import Toolbar from './Toolbar';
-/* ·········································································· */
-import './App.scss';
-import useAppStore from '../store';
 import CopyInlineCode from './CopyInlineCode';
+import './App.scss';
+/* ·········································································· */
+import useAppStore from '../store';
 import { log } from '../logger';
 /* —————————————————————————————————————————————————————————————————————————— */
 
@@ -28,58 +28,78 @@ export default function Gui({ isValidContentBase }: Props) {
       if (e.key === 's' && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
         save();
+        log('Keyboard: Meta+S fired!');
       }
     });
+
     /* For client-only stuffs (`SplitPane` for ex.) */
     setDidMount(true);
   });
 
   return (
-    <div className="component-gui">
+    <div className="component-app">
       <State />
 
       <Toolbar />
 
+      {!isValidContentBase && (
+        <div className="message-no-database">
+          <strong>No valid content base was found</strong>
+          <hr />
+          <p>Create a minimal one by running:</p>
+          <CopyInlineCode text="pnpm content setup" />
+        </div>
+      )}
+
       {didMount && (
         <main>
-          {/* Types problem: https://github.com/tomkp/react-split-pane/pull/819/commits/4795430f4cb6cb9b07b7ba93018ce46dd20a1ca0 */}
-          <SplitPane split="vertical" defaultSize={260} minSize={200}>
+          <Split
+            sizes={[15, 85]}
+            direction="horizontal"
+            className="split-h"
+            gutterSize={7}
+          >
             {/* LEFT-SIDEBAR */}
-
-            {!isValidContentBase && (
-              <div className="message-no-database">
-                <strong>No valid content base was found</strong>
-                <hr />
-                <p>Create a minimal one by running:</p>
-                <CopyInlineCode text="pnpm content setup" />
-              </div>
-            )}
             <Tree />
 
-            {/* @ts-expect-error `SplitPane` JSX typings buggy with React 18 */}
-            <SplitPane split="horizontal" defaultSize="65%" minSize={200}>
-              {/* DUAL-VIEW EDITOR */}
-              {/* @ts-expect-error `SplitPane` JSX typings buggy with React 18 */}
-              <SplitPane
-                split="vertical"
-                defaultSize="50%"
-                minSize={200}
-                onDragFinished={(s) => {
-                  log({ dragged: s });
-                }}
+            {/* ···························································· */}
+            {/* CURRENT FILE EDITOR */}
+            <Split
+              sizes={[70, 30]}
+              direction="vertical"
+              className="split-v"
+              gutterSize={7}
+            >
+              {/* SIDE BY SIDE */}
+              <Split
+                sizes={[50, 50]}
+                direction="horizontal"
+                className="split-h"
+                gutterSize={7}
               >
-                {!entity && !entry && !property && (
-                  <div className="message-please-select-file">
-                    ← Please select a schema (entity) or a property (file)…
-                  </div>
-                )}
-                <File />
-                <Assistant />
-              </SplitPane>
-              {/* LOWER SIDE-BAR INSPECTOR */}
-              <Inspector />
-            </SplitPane>
-          </SplitPane>
+                {/* FILE EDITOR */}
+                <div>
+                  {!entity && !entry && !property && (
+                    <div className="message-please-select-file">
+                      ← Please select a schema (entity) or a property (file)…
+                    </div>
+                  )}
+                  <File />
+                </div>
+                {/* ························································ */}
+                {/* FILE ASSISTANT */}
+                <div>
+                  <Assistant />
+                </div>
+              </Split>
+
+              {/* ·························································· */}
+              {/* LOWER SIDE-BAR FILE INSPECTOR */}
+              <div>
+                <Inspector />
+              </div>
+            </Split>
+          </Split>
         </main>
       )}
     </div>

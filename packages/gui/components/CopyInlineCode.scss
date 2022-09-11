@@ -23,12 +23,6 @@
     }
   }
 
-  &:hover {
-    code {
-      background: var(--vscode-toolbar-activeBackground);
-    }
-  }
-
   pre {
     code {
       display: inline-block;
@@ -37,6 +31,12 @@
       cursor: pointer;
       background: var(--vscode-breadcrumb-background);
       border-radius: 0.15rem;
+    }
+  }
+
+  &:hover {
+    code {
+      background: var(--vscode-toolbar-activeBackground);
     }
   }
 }
