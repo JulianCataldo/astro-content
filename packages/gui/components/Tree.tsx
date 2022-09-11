@@ -5,11 +5,8 @@ import cx from 'classnames';
 import { useEffect, useState } from 'react';
 /* ·········································································· */
 import type { Part } from '@astro-content/types/gui-state';
-import type {
-  Reports,
-  Schemas,
-  ServerState,
-} from '@astro-content/types/server-state';
+import type { Schemas, ServerState } from '@astro-content/types/server-state';
+import type { Reports } from '@astro-content/types/reports';
 import { Icon } from '@iconify/react';
 /* ·········································································· */
 import Tooltip from './Tooltip';
@@ -29,8 +26,8 @@ function MiniReport({
   title: string;
   route: [Part, Part, Part];
 }) {
-  const setRoute = useAppStore((state) => state.setRoute);
-  const setInspectorPane = useAppStore((state) => state.setInspectorPane);
+  const setRoute = useAppStore((state) => state.ui_setRoute);
+  const setInspectorPane = useAppStore((state) => state.ui_setInspectorPane);
 
   return (
     <Tooltip
@@ -61,11 +58,13 @@ function MiniReport({
 }
 
 export default function Tree() {
-  const { content, errors, schemas } = useAppStore((state) => state.data);
-  const { entity, entry, property } = useAppStore(
-    (state) => state.uiState.route,
-  );
-  const setRoute = useAppStore((state) => state.setRoute);
+  const {
+    content,
+    reports: errors,
+    schemas,
+  } = useAppStore((state) => state.data_server);
+  const { entity, entry, property } = useAppStore((state) => state.ui_route);
+  const setRoute = useAppStore((state) => state.ui_setRoute);
 
   const [searchInput, setSearchInput] = useState('');
   const [filteredContent, setFilteredContent] = useState<

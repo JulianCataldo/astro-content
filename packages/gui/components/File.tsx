@@ -5,12 +5,12 @@ import Editor from './Editor';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 export default function File() {
-  const { content, schemas } = useAppStore((state) => state.data);
-  const { entity, entry, property } = useAppStore(
-    (state) => state.uiState.route,
+  const { content, schemas } = useAppStore((state) => state.data_server);
+  const { entity, entry, property } = useAppStore((state) => state.ui_route);
+  const language = useAppStore((state) => state.editor_language);
+  const setCurrentLanguage = useAppStore(
+    (state) => state.editor_setCurrentLanguage,
   );
-  const language = useAppStore((state) => state.uiState.language);
-  const setCurrentLanguage = useAppStore((state) => state.setCurrentLanguage);
 
   const prop =
     entity && entry && property && content[entity]?.[entry]?.[property];

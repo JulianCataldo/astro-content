@@ -16,14 +16,14 @@ import CopyInlineCode from './CopyInlineCode';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 export default function Toolbar() {
-  const { content, schemas, config } = useAppStore((state) => state.data);
-  const {
-    route: { entity, entry, property },
-    language,
-  } = useAppStore((state) => state.uiState);
+  const { content, schemas, config } = useAppStore(
+    (state) => state.data_server,
+  );
+  const { entity, entry, property } = useAppStore((state) => state.ui_route);
+  const language = useAppStore((state) => state.editor_language);
 
-  const setRoute = useAppStore((state) => state.setRoute);
-  const save = useAppStore((state) => state.save);
+  const setRoute = useAppStore((state) => state.ui_setRoute);
+  const save = useAppStore((state) => state.editor_save);
 
   const isMd = language === 'markdown';
   const fullPath =

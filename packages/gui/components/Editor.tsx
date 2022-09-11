@@ -25,15 +25,13 @@ export default function Editor({
   readOnly?: boolean;
   isMain?: boolean;
 }) {
-  const { schemas, errors, types } = useAppStore((state) => state.data);
-  const { entity, entry, property } = useAppStore(
-    (state) => state.uiState.route,
-  );
+  const { schemas, reports, types } = useAppStore((state) => state.data_server);
+  const { entity, entry, property } = useAppStore((state) => state.ui_route);
   const updateContentForValidation = useAppStore(
-    (state) => state.updateContentForValidation,
+    (state) => state.editor_updateContentForValidation,
   );
 
-  const setDefaultEditor = useAppStore((state) => state.setDefaultEditor);
+  const setDefaultEditor = useAppStore((state) => state.editor_setDefault);
 
   const editorRef = useRef<nsEd.IStandaloneCodeEditor | null>(null);
   const [monacoInst, setMonaco] = useState<MonacoType | null>(null);
@@ -50,7 +48,7 @@ export default function Editor({
       };
       // TODO: Refactor all
 
-      const propertyReport = errors[entity]?.[entry]?.[property];
+      const propertyReport = reports[entity]?.[entry]?.[property];
 
       if (
         propertyReport?.schema?.length ||
@@ -172,7 +170,7 @@ export default function Editor({
     if (isMain && value) {
       handleChange().catch(() => null);
     }
-  }, [errors, value]);
+  }, [reports, value]);
 
   let path = '';
   if (isMain) {

@@ -5,7 +5,7 @@ import { log } from '../utils';
 /* ·········································································· */
 
 export default function State() {
-  // const data = useAppStore((state) => state.data);
+  // const data = useAppStore((state) => state.data_server);
 
   useEffect(() => {
     // const socket = new WebSocket('ws://localhost:5011');
@@ -20,15 +20,15 @@ export default function State() {
     // });
   }, []);
 
-  const fetchData = useAppStore((state) => state.fetchData);
+  const fetchData = useAppStore((state) => state.data_fetchServerData);
   useEffect(() => {
     fetchData()
-      .then(() => null)
+      .then((e) => log(e))
       .catch(() => null);
   }, []);
   // timestamp
 
-  const fetchSavedUiState = useAppStore((state) => state.fetchSavedUiState);
+  const fetchSavedUiState = useAppStore((state) => state.ui_fetchSaved);
 
   useEffect(() => {
     fetchSavedUiState();

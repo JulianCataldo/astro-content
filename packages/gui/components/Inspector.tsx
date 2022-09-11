@@ -1,24 +1,23 @@
 /* eslint-disable max-lines */
 import type { Position } from 'unist';
 import { Icon } from '@iconify/react';
-import type { Reports } from '@astro-content/types/server-state';
+import type { Reports } from '@astro-content/types/reports';
 /* ·········································································· */
 import useAppStore from '../store';
 import TabBar, { Tabs } from './TabBar';
 import Tooltip from './Tooltip';
 import { log } from '../utils';
+import './Inspector.scss';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 export default function Inspector() {
-  const { content, errors } = useAppStore((state) => state.data);
-  const inspectorPane = useAppStore((state) => state.uiState.inspectorPane);
-  const language = useAppStore((state) => state.uiState.language);
-  const setInspectorPane = useAppStore((state) => state.setInspectorPane);
-  const { entity, entry, property } = useAppStore(
-    (state) => state.uiState.route,
-  );
+  const { content, reports } = useAppStore((state) => state.data_server);
+  const inspectorPane = useAppStore((state) => state.ui_inspectorPane);
+  const language = useAppStore((state) => state.editor_language);
+  const setInspectorPane = useAppStore((state) => state.ui_setInspectorPane);
+  const { entity, entry, property } = useAppStore((state) => state.ui_route);
 
-  const defaultEditor = useAppStore((state) => state.defaultEditor);
+  const defaultEditor = useAppStore((state) => state.editor_default);
 
   function jumpToCode(position: Position) {
     log({ position });
@@ -37,9 +36,9 @@ export default function Inspector() {
   }
 
   // eslint-disable-next-line react/no-unstable-nested-components
-  function ErrorPane({ errs }: { errs: Reports }) {
+  function ErrorPane({ reps = [] }: { reps: Reports | undefined }) {
     return (
-      <div className="errors-pane">
+      <div className="reports-pane">
         <div className="row header">
           {/* Empty header column */}
           <div> </div>
@@ -60,7 +59,7 @@ export default function Inspector() {
             </>
           )}
 
-          {inspectorPane === 'footnotes' && 'definitions' in errs && (
+          {inspectorPane === 'footnotes' && (
             <>
               <div>Type</div>
               {/* <div>Label</div> */}
@@ -73,11 +72,12 @@ export default function Inspector() {
             <>
               <div>HREF</div>
               <div>Content</div>
+              <div>Title</div>
             </>
           )}
         </div>
-        {Array.isArray(errs) &&
-          errs.map((error, key) => (
+        {Array.isArray(reps) &&
+          reps.map((error, key) => (
             // FIXME: JSX Ally
             // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
             <div
@@ -138,13 +138,24 @@ export default function Inspector() {
 
               {'url' in error && inspectorPane === 'links' && (
                 <>
-                  <div>{error.url}</div>
+                  <div>
+                    <Tooltip label="Open URL in new window">
+                      <a
+                        href={error.url ?? ''}
+                        target="_blank"
+                        rel="noreferrer noopener nofollow"
+                      >
+                        {error.url}
+                      </a>
+                    </Tooltip>
+                  </div>
                   <div>
                     {'html' in error && error.html && (
                       // eslint-disable-next-line react/no-danger
                       <div dangerouslySetInnerHTML={{ __html: error.html }} />
                     )}
                   </div>
+                  {'title' in error && <div>{error.title}</div>}
                 </>
               )}
               {(inspectorPane === 'lint' || inspectorPane === 'prose') && (
@@ -178,50 +189,52 @@ export default function Inspector() {
     entity &&
     entry &&
     property &&
-    errors[entity]?.[entry]?.[property]?.footnotes;
+    reports[entity]?.[entry]?.[property]?.footnotes;
 
   const isEntity = entity && !entry && !property;
   const hasAll = entity && entry && property;
 
   const tabs: Tabs = {};
-  const errs = (entity &&
+  const reps = (entity &&
     entry &&
     property &&
-    errors[entity]?.[entry]?.[property]) || {
+    reports[entity]?.[entry]?.[property]) || {
     schema: [],
     lint: [],
     prose: [],
   };
 
   tabs.schema = {
-    title: `Schema ${errs.schema?.length ? `(${errs.schema.length})` : ''}`,
+    title: `Schema ${reps.schema?.length ? `(${reps.schema.length})` : ''}`,
   };
 
   if (isEntity) {
     tabs.entries = {
-      // title: `Schema ${errs?.schema?.length ? `(${errs?.schema?.length})` : ''}`,
+      // title: `Schema ${reps?.schema?.length ? `(${reps?.schema?.length})` : ''}`,
       title: `Entries`,
     };
   }
 
   if (language === 'markdown' && entity && entry && property) {
     tabs.lint = {
-      title: `Lint ${errs.lint?.length ? `(${errs.lint.length})` : ''}`,
+      title: `Lint ${reps.lint?.length ? `(${reps.lint.length})` : ''}`,
     };
     tabs.prose = {
-      title: `Prose ${errs.prose?.length ? `(${errs.prose.length})` : ''}`,
+      title: `Prose ${reps.prose?.length ? `(${reps.prose.length})` : ''}`,
     };
     tabs.links = {
       title: `Links ${
-        errors[entity]?.[entry]?.[property]?.links?.length
-          ? `(${String(errors[entity]?.[entry]?.[property]?.links?.length)})`
+        reports[entity]?.[entry]?.[property]?.links?.length
+          ? `(${String(reports[entity]?.[entry]?.[property]?.links?.length)})`
           : ''
       }`,
     };
 
-    const allFootNotesLength =
-      // FIXME:
-      footnotes?.references?.length + footnotes?.definitions?.length;
+    let allFootNotesLength = 0;
+    if (footnotes) {
+      allFootNotesLength =
+        footnotes.references.length + footnotes.definitions.length;
+    }
     tabs.footnotes = {
       title: `Foot notes ${
         allFootNotesLength > 0 ? `(${allFootNotesLength})` : ''
@@ -238,55 +251,52 @@ export default function Inspector() {
         currentTab={inspectorPane}
         defaultTab="schema"
       />
-      {inspectorPane === 'schema' && errs.schema?.length && (
+      {inspectorPane === 'schema' && (
         <div>
-          <ErrorPane errs={errs.schema} />
+          <ErrorPane reps={reps.schema} />
         </div>
       )}
-      {entity &&
-        entry &&
-        property &&
-        content[entity]?.[entry]?.[property] !== undefined && (
-          <>
-            {/* <div className="panes"> */}
-            {hasAll && inspectorPane === 'lint' && errs.lint?.length && (
-              <div>
-                <ErrorPane errs={errs.lint} />
-              </div>
-            )}
-            {hasAll && inspectorPane === 'prose' && errs.prose?.length && (
-              <div>
-                <ErrorPane errs={errs.prose} />
-              </div>
-            )}
-            {hasAll && inspectorPane === 'links' && errs.links?.length && (
-              <div>
-                <ErrorPane errs={errs.links} />
-              </div>
-            )}
-            {hasAll &&
-              inspectorPane === 'footnotes' &&
-              (errs.footnotes?.references.length ||
-                errs.footnotes?.definitions.length) && (
-                <div>
-                  <ErrorPane
-                    errs={[
-                      ...errs.footnotes.references,
-                      ...errs.footnotes.definitions,
-                    ]}
-                  />
-                </div>
-              )}
-            {/* </div> */}
-          </>
-        )}
+      {/* <pre>
+        <code>{JSON.stringify(reps.schema, null, 2)}</code>
+      </pre> */}
+      {entity && entry && property && content[entity]?.[entry]?.[property] && (
+        <>
+          {/* <div className="panes"> */}
+          {hasAll && inspectorPane === 'lint' && (
+            <div>
+              <ErrorPane reps={reps.lint} />
+            </div>
+          )}
+          {hasAll && inspectorPane === 'prose' && (
+            <div>
+              <ErrorPane reps={reps.prose} />
+            </div>
+          )}
+          {hasAll && inspectorPane === 'links' && (
+            <div>
+              <ErrorPane reps={reps.links} />
+            </div>
+          )}
+          {hasAll && inspectorPane === 'footnotes' && (
+            <div>
+              <ErrorPane
+                reps={[
+                  ...(reps.footnotes?.references ?? []),
+                  ...(reps.footnotes?.definitions ?? []),
+                ]}
+              />
+            </div>
+          )}
+          {/* </div> */}
+        </>
+      )}
       {isEntity && (
         // eslint-disable-next-line react/jsx-no-useless-fragment
         <>
           {inspectorPane === 'entries' && (
             <div>
               {/* Entries… */}
-              {/* <ErrorPane errs={content[entity][entry][property].references} /> */}
+              {/* <ErrorPane reps={content[entity][entry][property].references} /> */}
             </div>
           )}
         </>
