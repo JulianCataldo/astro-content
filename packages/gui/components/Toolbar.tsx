@@ -164,17 +164,18 @@ export default function Toolbar() {
               Preview
             </a>
 
-            <Tooltip
-              label={
+            <ModalPopover
+              render={({ close, labelId, descriptionId }) => (
                 <div className="infos-tooltip">
                   {/* {JSON.stringify(content[entity][entry][property])} */}
                   {fullPath && (
                     <div>
-                      <strong>Current file</strong>:{fullPath}
+                      <strong>Current file</strong>: {fullPath}
                       <hr />
                     </div>
                   )}
                   <div>
+                    <strong>Environment</strong>
                     {Object.entries(import.meta.env).map(([key, obj]) =>
                       obj && !['DEV', 'PROD'].includes(key) ? (
                         <div className="table" key={key}>
@@ -187,19 +188,19 @@ export default function Toolbar() {
                     )}
                   </div>
                 </div>
-              }
-              jsx
-              placement="top"
+              )}
             >
-              <div className="action">
-                <Icon
-                  icon="system-uicons:info-circle"
-                  width="2em"
-                  height="1.5em"
-                />
-                <span>Infos</span>
+              <div>
+                <div className="action">
+                  <Icon
+                    icon="system-uicons:info-circle"
+                    width="2em"
+                    height="1.5em"
+                  />
+                  <span>Infos</span>
+                </div>
               </div>
-            </Tooltip>
+            </ModalPopover>
 
             {fullPath && (
               <Tooltip
