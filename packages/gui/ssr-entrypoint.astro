@@ -15,13 +15,13 @@ const isValid = isValidContentBase();
 // NOTE: Check is done once, not updating (yet)
 if (isValid) {
   await collect(
-    //
     Astro.glob('/content/**/*.{md,mdx,yaml}'),
+    // IDEA: `editMode` could be `mode: 'default' | 'edit' | 'api'`…?
     { editMode: true },
   );
 
+  // TODO: Find a pretty and handy way to handle multiple content bases
   // await collect(
-  //   //
   //   Astro.glob('/node_modules/@astro-content/demo/content/**/*.{md,mdx,yaml}'),
   //   { editMode: true },
   // );
@@ -33,7 +33,7 @@ if (isValid) {
 </Layout>
 
 <script>
-  // FIXME: `import/extensions` not taking effect
+  // FIXME: `import/extensions` rule not taking effect
   // eslint-disable-next-line import/extensions
   import { log } from './utils';
 

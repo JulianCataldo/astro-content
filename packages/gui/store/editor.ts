@@ -60,8 +60,16 @@ const editor = (set: StoreApi<AppState>['setState']): EditorState => ({
         value,
       };
 
+      // TODO: Add notification
+      // await Notification.requestPermission();
+      // new Notification('');
       put(actions.save.endpoint, dto)
-        .then((e) => log(e))
+        .then(
+          // async
+          (e) => {
+            log(e);
+          },
+        )
         .catch((e) => log(e, 'info'));
 
       return {};
