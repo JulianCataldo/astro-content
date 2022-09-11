@@ -16,7 +16,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/inquirer": "^9.0.1",
-    "@types/react": "^18.0.17",
+    "@types/react": "^18.0.19",
     "parcel": "^2.7.0"
   },
   "dependencies": {

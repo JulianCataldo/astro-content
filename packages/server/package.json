@@ -2,12 +2,17 @@
   "name": "@astro-content/server",
   "version": "0.0.0-alpha.0",
   "description": "",
-  "main": "astro-integration.ts",
+  "private": "true",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
+  "// exports": {
+    ".": "./dist",
+    "./*": "./dist/*.js",
+    "./package.json": "./package.json"
+  },
   "author": "",
   "license": "ISC",
   "devDependencies": {
@@ -15,19 +20,20 @@
     "@types/jabber": "^1.2.0",
     "@types/lodash-es": "^4.17.6",
     "@types/mkdirp": "^1.0.2",
-    "@types/node": "^18.7.13",
+    "@types/node": "^18.7.16",
     "json-schema": "^0.4.0",
     "vfile-message": "^3.1.2"
   },
   "dependencies": {
     "@faker-js/faker": "^7.5.0",
-    "@julian_cataldo/remark-lint-frontmatter-schema": "link:../../../../packages/remark-lint-frontmatter-schema",
+    "@julian_cataldo/remark-lint-frontmatter-schema": "^3.7.2",
     "@julian_cataldo/retext-case-police": "link:../../../../packages/retext-case-police",
     "ajv": "^8.11.0",
     "ajv-formats": "^2.1.1",
     "chalk": "^5.0.1",
     "change-case": "^4.1.2",
     "chokidar": "^3.5.3",
+    "consola": "^2.15.3",
     "dictionary-en": "^3.2.0",
     "glob": "^8.0.3",
     "glob-promise": "^5.0.0",
@@ -56,7 +62,6 @@
     "remark-rehype": "^10.1.0",
     "remark-retext": "^5.0.1",
     "retext-english": "^4.1.0",
-    "retext-overuse": "^1.1.1",
     "retext-profanities": "^7.2.1",
     "retext-readability": "^7.2.0",
     "retext-repeated-words": "^4.2.0",

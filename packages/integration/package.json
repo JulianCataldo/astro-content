@@ -2,6 +2,7 @@
   "name": "astro-content",
   "version": "0.0.0-alpha.0",
   "description": "",
+  "// source": "astro-integration.ts",
   "main": "astro-integration.ts",
   "type": "module",
   "scripts": {
@@ -14,13 +15,13 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "astro": "1.1.1"
+    "astro": "1.2.1"
   },
   "dependencies": {
-    "@astro-content/types": "workspace:*",
     "@astro-content/cli": "workspace:*",
     "@astro-content/gui": "workspace:*",
     "@astro-content/server": "workspace:*",
+    "@astro-content/types": "workspace:*",
     "@modyfi/vite-plugin-yaml": "^1.0.3",
     "@rollup/pluginutils": "^4.2.1",
     "@types/body-parser": "^1.19.2",
