@@ -26,6 +26,14 @@
 
     "strictNullChecks": true,
 
-    "importsNotUsedAsValues": "error"
+    "importsNotUsedAsValues": "error",
+
+    "noEmit": true
+
+    // "noEmitOnError": false,
+    // "outDir": "./dist"
   }
+
+  // "include": ["./packages/integration/astro-integration.ts"]
+  // "exclude": ["./**/node_modules/*"]
 }
