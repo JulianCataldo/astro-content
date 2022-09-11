@@ -12,7 +12,7 @@ import { Icon } from '@iconify/react';
 import Tooltip from './Tooltip';
 import './Tree.scss';
 import useAppStore from '../store';
-import { log } from '../utils';
+import { log } from '../logger';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 function MiniReport({
@@ -58,11 +58,9 @@ function MiniReport({
 }
 
 export default function Tree() {
-  const {
-    content,
-    reports: errors,
-    schemas,
-  } = useAppStore((state) => state.data_server);
+  const { content, reports, schemas } = useAppStore(
+    (state) => state.data_server,
+  );
   const { entity, entry, property } = useAppStore((state) => state.ui_route);
   const setRoute = useAppStore((state) => state.ui_setRoute);
 
@@ -161,8 +159,11 @@ export default function Tree() {
                 {entryTree &&
                   Object.entries(entryTree).map(([propKey, propTree]) => {
                     const errorsReport =
-                      errors[entityKey]?.[entryKey]?.[propKey];
+                      reports[entityKey]?.[entryKey]?.[propKey];
 
+                    const realPath =
+                      content[entityKey]?.[entryKey]?.[propKey]?.file;
+                    // REFACTOR: To JSX
                     function toPretty({
                       data = null,
                       literal = '',
@@ -210,6 +211,10 @@ export default function Tree() {
                           'rawYaml' in propTree &&
                           toPretty({ literal: propTree.rawYaml });
 
+                    const fileInfo = `
+                          ${realPath ?? ''}<hr />${filePreview || 'No preview'}
+                          `;
+
                     const propActive =
                       entity === entityKey &&
                       entry === entryKey &&
@@ -250,12 +255,7 @@ export default function Tree() {
                         // href={`/${key}/${eKey}/${ppKey}`}
                       >
                         <div className="file-title">
-                          <Tooltip
-                            label={
-                              filePreview ? `${filePreview}` : 'No preview'
-                            }
-                            placement="right"
-                          >
+                          <Tooltip label={fileInfo} placement="right">
                             <span className="file-infos trigger">
                               <Icon
                                 icon={icon ?? ''}

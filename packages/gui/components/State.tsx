@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 /* —————————————————————————————————————————————————————————————————————————— */
 import useAppStore from '../store';
-import { log } from '../utils';
+import { log } from '../logger';
 /* ·········································································· */
 
 export default function State() {

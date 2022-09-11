@@ -3,16 +3,18 @@
 
 import yaml from 'yaml';
 import { useEffect, useState } from 'react';
+import 'github-markdown-css';
 /* ·········································································· */
 import type { Fake } from '@astro-content/types/dto';
 import { actions } from '@astro-content/server/state';
-import { log, put } from '../utils';
+import { log } from '../logger';
 import TabBar, { Tabs } from './TabBar';
 import Editor from './Editor';
 // import Metas from './Metas'
 /* ·········································································· */
 import useAppStore from '../store';
 import './Assistant.scss';
+import { post } from '../store/helpers';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 export default function Preview() {
@@ -145,17 +147,18 @@ export {}`;
         },
       };
 
-      put(actions.fake.endpoint, dto)
-        .then((r) =>
-          r
-            .json()
-            .then((j: unknown) => {
-              log(j, 'absurd');
-              setFakeEntriesObj(j);
-            })
-            .catch(() => null),
-        )
-        .catch((e) => log(e));
+      // TODO: Extract to a `store` action
+      // post(actions.fake.endpoint, dto)
+      //   .then((r) =>
+      //     r
+      //       .json()
+      //       .then((j: unknown) => {
+      //         log(j, 'absurd');
+      //         setFakeEntriesObj(j);
+      //       })
+      //       .catch(() => null),
+      //   )
+      //   .catch((e) => log(e));
     }
   }, [schemas.content]);
 

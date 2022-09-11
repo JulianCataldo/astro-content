@@ -1,6 +1,6 @@
 import type { AppState, Part, UiState } from '@astro-content/types/gui-state';
 import type { StoreApi } from 'zustand';
-import { log } from '../utils';
+import { log } from '../logger';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 const uiState = (set: StoreApi<AppState>['setState']): UiState => ({

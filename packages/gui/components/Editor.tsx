@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from 'react';
 /* ·········································································· */
 import type { EditorLanguage } from '@astro-content/types/gui-state';
 import useAppStore from '../store';
-import { log } from '../utils';
+import { log } from '../logger';
 /* ·········································································· */
 // import dracula from '../layouts/themes/dracula.json';
 // import cobalt2 from '../layouts/themes/cobalt2.json';

@@ -1,3 +1,5 @@
+// TODO: Rehaul file types: align Astro <=> JSONSchema <=> Astro Content
+
 import type { MarkdownHeading, MarkdownInstance } from 'astro';
 
 export type FileInstance =

@@ -2,7 +2,7 @@ import { kebabCase } from 'lodash-es';
 import type { StoreApi } from 'zustand';
 import type { JSONSchema7 } from 'json-schema';
 /* ·········································································· */
-import { actions, apiBase } from '@astro-content/server/state';
+import { actions } from '@astro-content/server/state';
 import type {
   AppState,
   Language,
@@ -11,7 +11,8 @@ import type {
 } from '@astro-content/types/gui-state';
 import type { PropertyReport } from '@astro-content/types/reports';
 import type { Save, Validate } from '@astro-content/types/dto';
-import { log, put } from '../utils';
+import { log } from '../logger';
+import { post } from './helpers';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 const editor = (set: StoreApi<AppState>['setState']): EditorState => ({
@@ -63,9 +64,10 @@ const editor = (set: StoreApi<AppState>['setState']): EditorState => ({
       // TODO: Add notification
       // await Notification.requestPermission();
       // new Notification('');
-      put(actions.save.endpoint, dto)
+      post(actions.save.endpoint, dto)
         .then(
           // async
+          // TODO: Handle success / failure
           (e) => {
             log(e);
           },
@@ -102,7 +104,7 @@ const editor = (set: StoreApi<AppState>['setState']): EditorState => ({
       language,
     } as Validate;
 
-    const reports = await put(actions.validate.endpoint, dto)
+    const reports = await post(actions.validate.endpoint, dto)
       .then((r) =>
         r
           .json()

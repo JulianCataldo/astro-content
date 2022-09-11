@@ -6,7 +6,7 @@ import type { Reports } from '@astro-content/types/reports';
 import useAppStore from '../store';
 import TabBar, { Tabs } from './TabBar';
 import Tooltip from './Tooltip';
-import { log } from '../utils';
+import { log } from '../logger';
 import './Inspector.scss';
 /* —————————————————————————————————————————————————————————————————————————— */
 

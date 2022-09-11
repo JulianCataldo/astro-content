@@ -10,7 +10,6 @@ export interface Content {
     | {
         [entry: string]:
           | {
-              //
               [property: string]: FileInstance | undefined;
             }
           | undefined;

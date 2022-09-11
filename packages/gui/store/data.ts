@@ -4,7 +4,7 @@ import type { Endpoint, ServerState } from '@astro-content/types/server-state';
 import type { AppState, DataState } from '@astro-content/types/gui-state';
 import { apiBase, endpoints, getEmptyState } from '@astro-content/server/state';
 /* ·········································································· */
-import { log } from '../utils';
+import { log } from '../logger';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 export async function fetchData() {
