@@ -4,7 +4,7 @@
 import { remark } from 'remark';
 import remarkFrontmatter from 'remark-frontmatter';
 import rlFmSchema from '@julian_cataldo/remark-lint-frontmatter-schema';
-import retextCasePolice from '@julian_cataldo/retext-case-police/index';
+import retextCasePolice from '@julian_cataldo/retext-case-police';
 import remarkPresetLintRecommended from 'remark-preset-lint-recommended';
 import remarkPresetLintMarkdownStyleGuide from 'remark-preset-lint-markdown-style-guide';
 import remarkPresetLintConsistent from 'remark-preset-lint-consistent';
@@ -28,14 +28,16 @@ import { toHtml } from 'hast-util-to-html';
 /* ·········································································· */
 import type { JSONSchema7 } from 'json-schema';
 
+// import type { FrontmatterSchemaMessage } from '@julian_cataldo/remark-lint-frontmatter-schema';
 import type {
   ErrorLint,
-  ErrorSchema,
+  MdErrorSchema,
   PropertyReport,
   ReportFootnote,
   ReportLink,
-} from '@astro-content/types/server-state';
+} from '@astro-content/types/reports';
 /* ·········································································· */
+import type { FrontmatterSchemaMessage } from '@julian_cataldo/remark-lint-frontmatter-schema';
 import { log } from './logger';
 /* —————————————————————————————————————————————————————————————————————————— */
 
@@ -56,7 +58,7 @@ export async function handleMd(content: string, schema?: JSONSchema7) {
   };
   const links: ReportLink[] = [];
   const lint: ErrorLint[] = [];
-  const schemaErrs: ErrorSchema[] = [];
+  const schemaErrs: MdErrorSchema[] = [];
 
   const lintingAndSchema = await remark()
     .use(remarkFrontmatter)
@@ -73,9 +75,14 @@ export async function handleMd(content: string, schema?: JSONSchema7) {
             log(node, 'absurd');
 
             const html = toHtml(toHast(node.children[0]));
-            links.push({ url: node.url, position: node.position, html });
+            links.push({
+              url: node.url,
+              position: node.position,
+              html,
+              title: node.title,
+            });
           } else if (node.type === 'footnoteDefinition') {
-            log(node, 'absurd');
+            log({ value: node, level: 'absurd' });
 
             let html = '';
             if (node.children.length) {
@@ -111,12 +118,13 @@ export async function handleMd(content: string, schema?: JSONSchema7) {
 
   lintingAndSchema.messages.forEach((error) => {
     if (error.ruleId === 'frontmatter-schema') {
-      log({ error });
-      // FIXME:
-      // IDEA: Map AJV properties to `remark-lint-frontmatter-schema` output?
-      // Actually parsing the note, not ideal at all
-      // schemaErrs.push({ message: yaml.parse(error.note). });
-      schemaErrs.push({ message: error.note });
+      const rlFlSchemaError = error as FrontmatterSchemaMessage;
+      const schemaErr = rlFlSchemaError.schema as MdErrorSchema;
+
+      schemaErr.position = rlFlSchemaError.position;
+      log(error);
+
+      schemaErrs.push(schemaErr);
     } else {
       lint.push(error);
     }
