@@ -3,7 +3,6 @@ import cx from 'classnames';
 import { sentenceCase } from 'change-case';
 /* ·········································································· */
 import type { Content } from '@astro-content/types/server-state';
-import type { PropertyReport } from '@astro-content/types/reports';
 import type { FileInstance } from '@astro-content/types/file';
 import { Icon } from '@iconify/react';
 import MiniReport from './MiniReport';
@@ -24,15 +23,12 @@ export default function Property({
   entryKey,
   content,
 }: Props) {
-  const { reports } = useAppStore((state) => state.data_server);
   const { entity, entry, property } = useAppStore((state) => state.ui_route);
   const setRoute = useAppStore((state) => state.ui_setRoute);
 
   return (
     <>
       {Object.entries(entryTree).map(([propKey, propTree]) => {
-        const errorsReport = reports[entityKey]?.[entryKey]?.[propKey];
-
         const realPath = content[entityKey]?.[entryKey]?.[propKey]?.file;
         // REFACTOR: To JSX
         function toPretty({
@@ -89,11 +85,6 @@ export default function Property({
         const propActive =
           entity === entityKey && entry === entryKey && property === propKey;
 
-        const hasErrors =
-          (errorsReport?.schema?.length || 0) +
-          (errorsReport?.lint?.length || 0) +
-          (errorsReport?.prose?.length || 0);
-
         let icon;
 
         if (propTree) {
@@ -144,35 +135,11 @@ export default function Property({
 
               <span className="spacer" />
 
-              {errorsReport && hasErrors > 0 && (
-                <div className={`${hasErrors ? 'errors' : ''}`}>
-                  {(
-                    [
-                      { title: 'Schema', reportType: 'schema' },
-                      { title: 'Linting', reportType: 'lint' },
-                      { title: 'Prose', reportType: 'prose' },
-                    ] as {
-                      title: string;
-                      reportType: 'schema' | 'lint' | 'prose';
-                    }[]
-                  ).map(({ title, reportType }) =>
-                    reportType in errorsReport &&
-                    errorsReport[reportType]?.length &&
-                    // FIXME:
-                    errorsReport[reportType].length > 0 ? (
-                      <MiniReport
-                        // FIXME:
-                        errors={errorsReport[reportType]}
-                        type={reportType}
-                        title={title}
-                        route={[entityKey, entryKey, propKey]}
-                      />
-                    ) : (
-                      ''
-                    ),
-                  )}
-                </div>
-              )}
+              <MiniReport
+                entityKey={entityKey}
+                entryKey={entryKey}
+                propKey={propKey}
+              />
             </div>
           </div>
         );

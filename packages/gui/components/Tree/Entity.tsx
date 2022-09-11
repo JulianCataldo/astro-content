@@ -1,7 +1,9 @@
 import yaml from 'yaml';
 import { sentenceCase } from 'change-case';
 import cx from 'classnames';
+/* ·········································································· */
 import { Icon } from '@iconify/react';
+import { FloatingDelayGroup } from '@floating-ui/react-dom-interactions';
 /* ·········································································· */
 import type { Content, Schemas } from '@astro-content/types/server-state';
 import Tooltip from '../Tooltip';
@@ -22,7 +24,7 @@ export default function Entity({ content }: { content: Content }) {
       : '';
 
   return (
-    <>
+    <FloatingDelayGroup delay={{ open: 200, close: 10 }}>
       {Object.entries(content).map(([entityKey, entityTree]) => (
         <div key={entityKey} className="leaf entity">
           <Tooltip label={entityLabel(entityKey)} placement="right">
@@ -78,6 +80,6 @@ export default function Entity({ content }: { content: Content }) {
             ))}
         </div>
       ))}
-    </>
+    </FloatingDelayGroup>
   );
 }
