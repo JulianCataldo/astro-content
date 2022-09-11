@@ -3,7 +3,7 @@ import SplitPane from 'react-split-pane';
 /* ·········································································· */
 import Tree from './Tree';
 import File from './File';
-import Preview from './Preview';
+import Assistant from './Assistant';
 import Inspector from './Inspector';
 import State from './State';
 import Toolbar from './Toolbar';
@@ -18,10 +18,8 @@ interface Props {
   isValidContentBase: boolean;
 }
 export default function Gui({ isValidContentBase }: Props) {
-  const { entity, entry, property } = useAppStore(
-    (state) => state.uiState.route,
-  );
-  const save = useAppStore((state) => state.save);
+  const { entity, entry, property } = useAppStore((state) => state.ui_route);
+  const save = useAppStore((state) => state.editor_save);
 
   const [didMount, setDidMount] = useState(false);
   useEffect(() => {
@@ -44,7 +42,7 @@ export default function Gui({ isValidContentBase }: Props) {
 
       {didMount && (
         <main>
-          {/* @ts-expect-error `SplitPane` JSX typings buggy with React 18 */}
+          {/* Types problem: https://github.com/tomkp/react-split-pane/pull/819/commits/4795430f4cb6cb9b07b7ba93018ce46dd20a1ca0 */}
           <SplitPane split="vertical" defaultSize={260} minSize={200}>
             {/* LEFT-SIDEBAR */}
 
@@ -76,7 +74,7 @@ export default function Gui({ isValidContentBase }: Props) {
                   </div>
                 )}
                 <File />
-                <Preview />
+                <Assistant />
               </SplitPane>
               {/* LOWER SIDE-BAR INSPECTOR */}
               <Inspector />
