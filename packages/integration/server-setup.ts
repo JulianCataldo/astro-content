@@ -5,7 +5,7 @@ import type { AstroIntegration } from 'astro';
 import { log } from '@astro-content/server/logger';
 /* ·········································································· */
 import { actions } from '@astro-content/server/state';
-import { save } from '@astro-content/server/save';
+import { saveFile } from '@astro-content/server/save-file';
 
 import { handleYaml } from '@astro-content/server/handle-yaml';
 import { handleMd } from '@astro-content/server/handle-md';
@@ -41,7 +41,7 @@ const serverSetup: AstroIntegration['hooks']['astro:server:setup'] = ({
         ) {
           const body = req.body as Save;
 
-          await save(body);
+          await saveFile(body);
 
           res.end(JSON.stringify({ success: true }));
         } else if (
