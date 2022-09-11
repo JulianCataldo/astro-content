@@ -95,10 +95,10 @@ const editor = (set: StoreApi<AppState>['setState']): EditorState => ({
     } as Validate;
 
     const reports = await put(actions.validate.endpoint, dto)
-      .then((e) =>
-        e
+      .then((r) =>
+        r
           .json()
-          .then(({ errors: j }) => j as PropertyReport)
+          .then(({ reports: j }) => j as PropertyReport)
           .catch((err) => log(err)),
       )
       .catch((err) => {

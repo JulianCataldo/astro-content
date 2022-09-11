@@ -36,8 +36,8 @@ const serverSetup: AstroIntegration['hooks']['astro:server:setup'] = ({
 
       if (req.body) {
         if (
-          // —————————————————————————————————————————————————————— SAVE ———————
           req.url === actions.save.endpoint
+          // —————————————————————————————————————————————————— SAVE ———————————
         ) {
           const body = req.body as Save;
 
@@ -45,20 +45,20 @@ const serverSetup: AstroIntegration['hooks']['astro:server:setup'] = ({
 
           res.end(JSON.stringify({ success: true }));
         } else if (
-          // —————————————————————————————————————————————————— VALIDATE ———————
           req.url === actions.validate.endpoint
+          // —————————————————————————————————————————————————— VALIDATE ———————
         ) {
           const body = req.body as Validate;
 
           log(`Validating ${body.language ?? 'unknown'}`, 'debug', 'pretty');
 
-          let errors: PropertyReport | false = {};
+          let reports: PropertyReport | false = {};
 
           if (
             //
             body.language === 'markdown'
           ) {
-            errors = await handleMd(body.value, body.schema);
+            reports = await handleMd(body.value, body.schema);
           } else if (
             //
             body.language === 'yaml'
@@ -70,15 +70,14 @@ const serverSetup: AstroIntegration['hooks']['astro:server:setup'] = ({
               body.value,
             );
             if (result) {
-              errors = result;
+              reports = result;
             }
           }
-          res.end(JSON.stringify({ success: true, errors }));
-        } else if (req.url === actions.fake.endpoint) {
-          /**
-           *  ——————————————————————————————————————————————————— FAKE ———————
-           * */
-
+          res.end(JSON.stringify({ success: true, reports }));
+        } else if (
+          req.url === actions.fake.endpoint
+          // —————————————————————————————————————————————————— FAKE ———————————
+        ) {
           const body = req.body as Fake;
 
           log('Generating fake entries');
