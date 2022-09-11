@@ -1,12 +1,9 @@
 @use 'sass:color' as color;
 
-@import './colors.scss';
-@import './scrollbars.scss';
-
-$black: rgb(44, 51, 51);
-$dark: rgb(57, 91, 100);
-$light: rgb(165, 201, 202);
-$white: rgb(231, 246, 242);
+// @import './themes/dracula';
+// @import './themes/cobalt2';
+@import './themes/vs-dark';
+@import './scrollbars';
 
 *,
 *::before,

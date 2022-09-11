@@ -9,6 +9,9 @@ import { useEffect, useRef, useState } from 'react';
 import type { EditorLanguage } from '@astro-content/types/gui-state';
 import useAppStore from '../store';
 import { log } from '../utils';
+/* ·········································································· */
+// import dracula from '../layouts/themes/dracula.json';
+// import cobalt2 from '../layouts/themes/cobalt2.json';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 export default function Editor({
@@ -152,6 +155,9 @@ export default function Editor({
       importsNotUsedAsValues: 'error',
       // allowSyntheticDefaultImports: true,
     });
+
+    // IDEA: Implement this globally, synced with CSS
+    // monaco.editor.defineTheme('Dracula', cobalt2 as nsEd.IStandaloneThemeData);
 
     if (types.browser) {
       const global = `${types.common}\n\n${types.browser}`;
