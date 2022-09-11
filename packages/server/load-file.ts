@@ -45,6 +45,7 @@ export async function loadFile(
     if (filePath.endsWith('md')) {
       const mdFile = file as MarkdownInstance<Record<string, unknown>>;
 
+      // FIXME:
       collected = {
         ...mdFile,
         // For YAML, remove this
@@ -83,18 +84,21 @@ export async function loadFile(
 
           handleMd(rawMd, frontmatterSchema || {})
             .then((report) => {
-              if (state.errors[entity] === undefined) {
-                state.errors[entity] = {};
+              if (state.reports[entity] === undefined) {
+                state.reports[entity] = {};
               }
 
-              if (state.errors[entity]?.[entry] === undefined) {
-                state.errors[entity] = { ...state.errors[entity], [entry]: {} };
+              if (state.reports[entity]?.[entry] === undefined) {
+                state.reports[entity] = {
+                  ...state.reports[entity],
+                  [entry]: {},
+                };
               }
-              if (state.errors[entity]?.[entry]?.[property] === undefined) {
-                state.errors[entity] = {
-                  ...state.errors[entity],
+              if (state.reports[entity]?.[entry]?.[property] === undefined) {
+                state.reports[entity] = {
+                  ...state.reports[entity],
                   [entry]: {
-                    ...state.errors[entity][entry],
+                    ...state.reports[entity][entry],
                     [property]: {
                       schema: [],
                       lint: [],
@@ -105,7 +109,7 @@ export async function loadFile(
                   },
                 };
               }
-              state.errors[entity][entry][property] = report;
+              state.reports[entity][entry][property] = report;
             })
             .then(() => null)
             .catch(() => null);
@@ -130,4 +134,5 @@ export async function loadFile(
       state.content[entity][entry][property] = collected;
     }
   }
+  return null;
 }

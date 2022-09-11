@@ -56,20 +56,20 @@ export function handleYaml(
       log(e);
       return false;
     }
-    log(validate.errors, 'absurd');
+    log({ value: validate.errors, level: 'absurd' });
 
-    if (state.errors[entity] === undefined) {
-      state.errors[entity] = {};
+    if (state.reports[entity] === undefined) {
+      state.reports[entity] = {};
     }
-    if (state.errors[entity]?.[entry] === undefined) {
-      state.errors[entity] = { ...state.errors[entity], [entry]: {} };
+    if (state.reports[entity]?.[entry] === undefined) {
+      state.reports[entity] = { ...state.reports[entity], [entry]: {} };
     }
-    if (state.errors[entity]?.[entry]?.[property] === undefined) {
-      state.errors[entity] = {
-        ...state.errors[entity],
+    if (state.reports[entity]?.[entry]?.[property] === undefined) {
+      state.reports[entity] = {
+        ...state.reports[entity],
         [entry]: {
-          ...state.errors[entity]?.[entry],
-          [property]: { ...state.errors[entity]?.[entry]?.lint, schema: [] },
+          ...state.reports[entity]?.[entry],
+          [property]: { ...state.reports[entity]?.[entry]?.lint, schema: [] },
         },
       };
     }
@@ -82,9 +82,9 @@ export function handleYaml(
 
       validate(yamlJS);
 
-      if (Array.isArray(state.errors[entity]?.[entry]?.[property]?.schema))
+      if (Array.isArray(state.reports[entity]?.[entry]?.[property]?.schema))
         // FIXME: (possibly undefined)
-        state.errors[entity][entry][property].schema = validate.errors?.map(
+        state.reports[entity][entry][property].schema = validate.errors?.map(
           (error) => {
             const ajvPath = error.instancePath.substring(1).split('/');
             const node = yamlDoc.getIn(ajvPath, true);
@@ -102,7 +102,7 @@ export function handleYaml(
         );
     }
 
-    return state.errors[entity]?.[entry]?.[property];
+    return state.reports[entity]?.[entry]?.[property];
   }
   return false;
 }
