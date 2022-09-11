@@ -1,21 +1,24 @@
 /* eslint-disable max-lines */
 /* ·········································································· */
-import type { ServerState } from '@astro-content/types/server-state';
+import type { JSONSchema7 } from 'json-schema';
+import type { Endpoint, ServerState } from '@astro-content/types/server-state';
 import markdownFile from './schemas/MarkdownFile.json' assert { type: 'json' };
 /* —————————————————————————————————————————————————————————————————————————— */
 
-const emptyState = {
+const apiBase = '/__content/api';
+
+const emptyState: ServerState = {
   content: {},
 
   schemas: {
     content: {},
     raw: {},
     internals: {
-      MarkdownFile: markdownFile,
+      MarkdownFile: markdownFile as JSONSchema7,
     },
   },
 
-  errors: {},
+  reports: {},
 
   types: {
     common: '',
@@ -26,7 +29,7 @@ const emptyState = {
   config: {
     previewUrl: '/',
     // TODO: auto-detection + injection for GUI command hints for example
-    packageManager: 'pnpm',
+    // packageManager: 'pnpm',
   },
 };
 
@@ -35,13 +38,19 @@ const getEmptyState = () =>
 
 const state = getEmptyState();
 
-const endpoints = [
+const data: Endpoint[] = [
   'schemas',
   'types',
   'config',
   'content',
-  'errors',
+  'reports',
   //
 ];
 
-export { state, endpoints, getEmptyState };
+const actions = {
+  save: { endpoint: `${apiBase}/~save` },
+  fake: { endpoint: `${apiBase}/~fake` },
+  validate: { endpoint: `${apiBase}/~validate` },
+};
+
+export { state, data as endpoints, actions, getEmptyState, apiBase };

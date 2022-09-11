@@ -1,76 +1,52 @@
 import type { StoreApi } from 'zustand';
 /* ·········································································· */
-import type { ServerState } from '@astro-content/types/server-state';
-import type { AppState } from '@astro-content/types/gui-state';
-import { endpoints } from '@astro-content/server/state';
+import type { Endpoint, ServerState } from '@astro-content/types/server-state';
+import type { AppState, DataState } from '@astro-content/types/gui-state';
+import { apiBase, endpoints, getEmptyState } from '@astro-content/server/state';
 /* ·········································································· */
 import { log } from '../utils';
 /* —————————————————————————————————————————————————————————————————————————— */
 
-const emptyDataSate: ServerState = {
-  content: {},
-
-  schemas: {
-    content: {},
-    raw: {},
-    internals: {},
-  },
-
-  errors: {},
-
-  types: {
-    common: '',
-    ide: '',
-    browser: '',
-  },
-
-  config: {
-    previewUrl: '/',
-  },
-};
-
-const apiBase = '/__content/api';
-
 export async function fetchData() {
-  // log('Fetching…');
+  log('Fetching…');
 
-  const data: ServerState = { ...emptyDataSate };
+  const data: ServerState = getEmptyState();
+
+  function setData<T extends Endpoint>(endpoint: T, newData: unknown) {
+    data[endpoint] = newData as ServerState[T];
+  }
+
   await Promise.all(
-    endpoints.map(async (key: keyof ServerState) =>
-      fetch(`${apiBase}/${key}`).then((r) =>
-        r
+    endpoints.map(async (endpoint: keyof ServerState) =>
+      fetch(`${apiBase}/${endpoint}`).then((response) =>
+        response
           .json()
-          .then((j) => {
-            // FIXME:
-            data[key] = j;
-          })
-          .catch((e) => {
-            log(e);
-          }),
+          .then((newData) => setData(endpoint, newData))
+          .catch((error) => log(error, 'info')),
       ),
     ),
   );
   return data;
 }
 
-const data = (set: StoreApi<AppState>['setState']) => ({
-  data: emptyDataSate,
+const data = (set: StoreApi<AppState>['setState']): DataState => ({
+  data_server: getEmptyState(),
 
   /* ········································································ */
 
-  fetchData: async () => {
-    const res = await fetchData()
-      .then((s: ServerState) => s)
+  data_fetchServerData: async () => {
+    const result = await fetchData()
+      .then((ss: ServerState) => ss)
       .catch(() => null);
 
-    if (typeof res === 'object' && res) {
+    if (result) {
       set((state) => {
         // IDEA: default route if no previous file selected?
         // const newUiSate = { ...state.uiState };
-        if (!state.uiState.route.entity) {
+        if (!state.ui_route.entity) {
           // newUiSate.route.entity = '__previous-file__';
         }
-        return { data: res };
+        return { data_server: result };
       });
     }
   },

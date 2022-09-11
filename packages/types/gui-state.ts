@@ -14,27 +14,52 @@ export type Language = 'yaml' | 'markdown';
 
 export type EditorLanguage = Language | ('typescript' | 'json' | 'html');
 
+/* —————————————————————————————————————————————————————————————————————————— */
+
+interface PaneDimensions {
+  height: number | null;
+  width: number | null;
+}
 export interface UiState {
-  route: Route;
-  inspectorPane: string;
-  previewPane: string;
-  language: Language | null;
+  ui_route: Route;
+  ui_inspectorPane: string;
+  ui_assistantPane: string;
+  ui_splitPanes: {
+    tree: PaneDimensions;
+    file: PaneDimensions;
+    assistant: PaneDimensions;
+    inspector: PaneDimensions;
+  };
+  /* ········································································ */
+  ui_save: (newState: Partial<UiState>) => void;
+  ui_fetchSaved: () => void;
+  /* ········································································ */
+  ui_setRoute: (entity: Part, entry: Part, property: Part) => void;
+  ui_setInspectorPane: (name: string) => void;
+  ui_setAssistantPane: (name: string) => void;
+  ui_setSplitPanesDimensions: (
+    pane: keyof UiState['ui_splitPanes'],
+    width?: number | null,
+    height?: number | null,
+  ) => void;
 }
 
-export interface AppState {
-  uiState: UiState;
-  saveUiState: (newState: UiState) => void;
-  fetchSavedUiState: () => void;
+/* —————————————————————————————————————————————————————————————————————————— */
+
+export interface DataState {
+  data_server: ServerState;
+  data_fetchServerData: () => Promise<void>;
+}
+
+/* —————————————————————————————————————————————————————————————————————————— */
+
+export interface EditorState {
+  editor_default: null | nsEd.IStandaloneCodeEditor;
+  editor_language: Language | null;
   /* ········································································ */
-  setRoute: (entity: Part, entry: Part, property: Part) => void;
-  setInspectorPane: (name: string) => void;
-  setPreviewPane: (name: string) => void;
-  setCurrentLanguage: (name: EditorLanguage) => void;
-  /* ········································································ */
-  data: ServerState;
-  fetchData: () => Promise<void>;
-  /* ········································································ */
-  updateContentForValidation: (
+  editor_save: () => void;
+  editor_setDefault: (ref: nsEd.IStandaloneCodeEditor) => void;
+  editor_updateContentForValidation: (
     entity: Part,
     entry: Part,
     property: Part,
@@ -42,7 +67,9 @@ export interface AppState {
     value: string,
     schema: unknown,
   ) => Promise<void>;
-  save: () => void;
-  defaultEditor: null | nsEd.IStandaloneCodeEditor;
-  setDefaultEditor: (ref: nsEd.IStandaloneCodeEditor) => void;
+  editor_setCurrentLanguage: (name: EditorLanguage) => void;
 }
+
+/* —————————————————————————————————————————————————————————————————————————— */
+
+export type AppState = UiState & DataState & EditorState;

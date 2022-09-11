@@ -2,66 +2,75 @@ import { kebabCase } from 'lodash-es';
 import type { StoreApi } from 'zustand';
 import type { JSONSchema7 } from 'json-schema';
 /* ·········································································· */
-import type { AppState, Language, Part } from '@astro-content/types/gui-state';
-import type { PropertyReport } from '@astro-content/types/server-state';
+import { actions, apiBase } from '@astro-content/server/state';
+import type {
+  AppState,
+  Language,
+  Part,
+  EditorState,
+} from '@astro-content/types/gui-state';
+import type { PropertyReport } from '@astro-content/types/reports';
 import type { Save, Validate } from '@astro-content/types/dto';
-import { log } from '../utils';
-// import { $log } from '../utils';
+import { log, put } from '../utils';
 /* —————————————————————————————————————————————————————————————————————————— */
 
-const apiBase = '/__content/api';
+const editor = (set: StoreApi<AppState>['setState']): EditorState => ({
+  editor_default: null,
+  editor_language: null,
 
-const editor = (set: StoreApi<AppState>['setState']) => ({
-  defaultEditor: null,
-
-  setDefaultEditor: (ref: AppState['defaultEditor']) => {
-    set(() => ({ defaultEditor: ref }));
+  editor_setDefault: (ref: AppState['editor_default']) => {
+    set(() => ({ editor_default: ref }));
   },
 
   /* ········································································ */
 
-  save: () => {
-    const url = [apiBase, '~save'].join('/');
-
+  editor_save: () => {
     set((state) => {
       let value;
-      if (state.defaultEditor !== null) {
-        value = state.defaultEditor.getValue();
+      if (state.editor_default !== null) {
+        value = state.editor_default.getValue();
       } else {
         /* Abandon further actions */
         value = '…';
         log('Empty');
         return {};
       }
+      const { entity, entry, property } = state.ui_route;
 
-      // FIXME:
-      const singular = kebabCase(
-        state.data.schemas.content[state.uiState.route.entity].title,
-      );
-      const { entity, entry, property } = state.uiState.route;
-      const DTO: Save = {
-        // ...state.uiState.route,
-        // FIXME:
-        file: state.data.content[entity][entry][property].file,
-        language: state.uiState.language,
+      let singular = '';
+      if (state.ui_route.entity) {
+        singular = kebabCase(
+          state.data_server.schemas.content[state.ui_route.entity].title,
+        );
+      }
+      let file = '';
+      if (
+        entity &&
+        entry &&
+        property &&
+        state.data_server.content[entity]?.[entry]?.[property]?.file
+      ) {
+        file =
+          state.data_server.content[entity]?.[entry]?.[property]?.file ?? '';
+      }
+      const dto: Save = {
+        file,
+        language: state.editor_language,
         singular,
         value,
       };
 
-      fetch(url, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(DTO),
-      })
+      put(actions.save.endpoint, dto)
         .then((e) => log(e))
-        .catch((e) => log(e));
+        .catch((e) => log(e, 'info'));
+
       return {};
     });
   },
 
   /* ········································································ */
 
-  updateContentForValidation: async (
+  editor_updateContentForValidation: async (
     entity: Part,
     entry: Part,
     property: Part,
@@ -76,9 +85,7 @@ const editor = (set: StoreApi<AppState>['setState']) => ({
       'debug',
     );
 
-    const url = [apiBase, '~validate'].join('/');
-
-    const Dto = {
+    const dto = {
       entity,
       entry,
       property,
@@ -87,11 +94,7 @@ const editor = (set: StoreApi<AppState>['setState']) => ({
       language,
     } as Validate;
 
-    const errors = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(Dto),
-    })
+    const reports = await put(actions.validate.endpoint, dto)
       .then((e) =>
         e
           .json()
@@ -104,24 +107,32 @@ const editor = (set: StoreApi<AppState>['setState']) => ({
       });
 
     set((state) => {
-      const newStateErrors = state.data.errors;
-
+      const newStateErrors = state.data_server.reports;
       if (
         entity &&
         entry &&
         property &&
-        errors &&
+        reports &&
         newStateErrors[entity]?.[entry]?.[property]
       ) {
-        newStateErrors[entity][entry][property] = {
-          ...state.data.errors[entity][entry][property],
-          ...errors,
-        };
-
-        log({ new: newStateErrors[entity][entry][property] });
+        // FIXME:
+        newStateErrors[entity][entry][property] = reports;
+        //   log({ new: newStateErrors[entity][entry][property] });
       }
 
-      return { data: { ...state.data, errors: newStateErrors } };
+      return { data: { ...state.data_server, reports: newStateErrors } };
+    });
+  },
+
+  /* ········································································ */
+
+  editor_setCurrentLanguage: (id: Language) => {
+    set((state) => {
+      const newUiState: Partial<AppState> = {
+        editor_language: id,
+      };
+      state.ui_save(newUiState);
+      return newUiState;
     });
   },
 });

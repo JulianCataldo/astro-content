@@ -1,92 +1,103 @@
-import type {
-  AppState,
-  Language,
-  Part,
-  UiState,
-} from '@astro-content/types/gui-state';
+import type { AppState, Part, UiState } from '@astro-content/types/gui-state';
 import type { StoreApi } from 'zustand';
 import { log } from '../utils';
 /* —————————————————————————————————————————————————————————————————————————— */
 
-const uiState = (set: StoreApi<AppState>['setState']) => ({
-  uiState: {
-    route: { entity: null, entry: null, property: null },
-    language: null,
-    inspectorPane: 'schema',
-    previewPane: 'preview',
+const uiState = (set: StoreApi<AppState>['setState']): UiState => ({
+  ui_route: { entity: null, entry: null, property: null },
+  ui_inspectorPane: 'schema',
+  ui_assistantPane: 'preview',
+  ui_splitPanes: {
+    tree: { width: 0, height: 0 },
+    file: { width: 0, height: 0 },
+    assistant: { width: 0, height: 0 },
+    inspector: { width: 0, height: 0 },
   },
 
   /* ········································································ */
 
-  saveUiState(newState: UiState) {
-    localStorage.setItem('uiState', JSON.stringify(newState));
+  ui_save(newState) {
+    set((state) => {
+      const loadedState = {
+        ui_route: newState.ui_route ?? state.ui_route,
+        ui_inspectorPane: newState.ui_inspectorPane ?? state.ui_inspectorPane,
+        ui_assistantPane: newState.ui_assistantPane ?? state.ui_assistantPane,
+        ui_splitPanes: newState.ui_splitPanes ?? state.ui_splitPanes,
+      };
+      localStorage.setItem('uiState', JSON.stringify(loadedState));
+      return {};
+    });
   },
 
   /* ········································································ */
 
-  fetchSavedUiState: () => {
+  ui_fetchSaved: () => {
     const storage = localStorage.getItem('uiState');
     if (storage) {
-      const savedState = JSON.parse(storage) as AppState['uiState'];
+      const savedState = JSON.parse(storage) as Partial<UiState>;
       log({ fromLocal: uiState });
-      set(() => ({ uiState: savedState }));
+      set((state) => ({
+        ui_route: savedState.ui_route ?? state.ui_route,
+        ui_inspectorPane: savedState.ui_inspectorPane ?? state.ui_inspectorPane,
+        ui_assistantPane: savedState.ui_assistantPane ?? state.ui_assistantPane,
+        ui_splitPanes: savedState.ui_splitPanes ?? state.ui_splitPanes,
+      }));
     }
   },
 
   /* ········································································ */
 
-  setRoute: (entity: Part, entry: Part, property: Part) => {
+  ui_setRoute: (entity, entry, property) => {
     // const newRoute = [route.entity, route.entry, route.property].join('/');
     // window.history.pushState(null, '', `/${newRoute}`);
     log({ entity, entry, property });
 
     set((state) => {
-      log(state.data.errors['invoices']['amdPortal']['contract']);
-      const newUiState: AppState['uiState'] = {
-        ...state.uiState,
-        route: { entity, entry, property },
+      const newUiState: Partial<UiState> = {
+        ui_route: { entity, entry, property },
       };
-      state.saveUiState(newUiState);
-      return { uiState: newUiState };
+      state.ui_save(newUiState);
+      return newUiState;
     });
   },
 
   /* ········································································ */
 
-  setInspectorPane: (name: string) => {
+  ui_setInspectorPane: (name) => {
     set((state) => {
-      const newUiState: AppState['uiState'] = {
-        ...state.uiState,
-        inspectorPane: name,
+      const newUiState: Partial<UiState> = {
+        ui_inspectorPane: name || '',
       };
-      state.saveUiState(newUiState);
-      return { uiState: newUiState };
+      state.ui_save(newUiState);
+      return newUiState;
     });
   },
 
   /* ········································································ */
 
-  setPreviewPane: (name: string) => {
+  ui_setSplitPanesDimensions: (pane, width = null, height = null) => {
+    // console.log({ newWidth });
     set((state) => {
-      const newUiState: AppState['uiState'] = {
-        ...state.uiState,
-        previewPane: name || 'preview',
+      const newUiState: Partial<UiState> = {
+        ui_splitPanes: {
+          ...state.ui_splitPanes,
+          [pane]: { width, height },
+        },
       };
-      state.saveUiState(newUiState);
-      return { uiState: newUiState };
+      // state.saveUi(newUiState);
+      return newUiState;
     });
   },
 
   /* ········································································ */
 
-  setCurrentLanguage: (id: Language) => {
+  ui_setAssistantPane: (name: string) => {
     set((state) => {
-      const newUiState: AppState['uiState'] = {
-        ...state.uiState,
-        language: id,
+      const newUiState: Partial<UiState> = {
+        ui_assistantPane: name || 'preview',
       };
-      state.saveUiState(newUiState);
-      return { uiState: newUiState };
+      state.ui_save(newUiState);
+      return newUiState;
     });
   },
 });
