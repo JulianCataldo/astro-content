@@ -22,7 +22,6 @@
     "serve": "^14.0.1"
   },
   "devDependencies": {
-    "@astro-content/demo": "workspace:*",
     "@astrojs/mdx": "^0.11.1",
     "@astrojs/react": "^1.1.2",
     "astro-content": "workspace:*",
