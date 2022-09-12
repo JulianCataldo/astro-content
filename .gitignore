@@ -1,23 +1,28 @@
-# .vscode/*
+# NOTE: This could be interesting to keep this for CI/CD workflow
+pnpm-publish-summary.json
 
-.re-integrate
-
+# Build artefacts + cache
 .turbo
 dist
 .build
 .parcel-cache
 
+# Generated code
+**/.astro-content
+**/docs/content/index.ts
 
+# Local stuff
+.re-integrate
 .dev*
 *.dev.*
 .old*
-
+# .vscode/*
 **/.vscode/settings.json
-**/.astro-content
 design
 # **/content*
-**/docs/get.ts
 
+
+############################################
 
 
 # dependencies
