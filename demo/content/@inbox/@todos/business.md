@@ -4,7 +4,7 @@
 
 - Clinton Boyer: Call
 - Dillon Bowers: Call
-- Whoopi Holland: Call
+- Whoopi Holland: Call[^peek_this]
 - Gay Rivers, <vulputate@google.couk>
 
 ### Longing
@@ -23,4 +23,9 @@
 
 ---
 
+[Some serious work](https://broken-link-its-not-even-possible.bizarro).
+Some work serious.
+
 ![](https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/ERP_Modules.png/1280px-ERP_Modules.png)
+
+[^peek_this]: Call it, fast.

@@ -5,23 +5,31 @@ properties:
       - properties:
           frontmatter:
             properties:
+              title:
+                type: string
               legalReferences:
-                description: Entry title
+                description: Legal references
                 type: array
                 items:
                   - type: string
-              contactLink:
+              contractLink:
                 description: Entry title
                 type: string
+              clientType:
+                type: string
+                enum:
+                  - ACorporate
+                  - aNon-profit
+                  - sIndividual
+
             required:
+              - title
               - legalReferences
+              - clientType
         required:
           - frontmatter
   footnotes:
     allOf:
       - $ref: '#/definitions/MarkdownFile'
 required:
-  - content
-  - meta
-  - gallery
-  - footnotes
+  - contract

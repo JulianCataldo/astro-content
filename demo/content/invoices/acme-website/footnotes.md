@@ -8,7 +8,9 @@ for download and includes these sections.
 ---
 
 Make your Terms of Service agreement enforceable by having your
-users click an unticked checkbox next to a statement that
+users click an unticked checkbox[^peek_this] next to a statement that
 says something similar to:
 
 > _"I have **read** and **agree** to the **Terms of Service** agreement."_
+
+[^peek_this]: You're reading between the lines.

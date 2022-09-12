@@ -1,5 +1,5 @@
 ---
-title: Food Corp®™©
+title: [Soap Shop — Popup Website]
 
 legalReferences:
   - https://naver.com
@@ -13,7 +13,7 @@ legalReferences:
   - http://guardian.co.uk
   - https://baidu.com
 
-contractLink: https://perdu.com
+clientType: Individuals
 ---
 
 # Appropriate needed former longer hurry
@@ -90,7 +90,6 @@ says something similar to:
 
 A note you have to read, you have to[^peek_this]
 
-[^peek_this]:
-    You're reading between the lines.
-    [^peek_this_also]: You're reading between the lines, again.
-    [^peek_this_finally]: No comment here, just playing.
+[^peek_this]: You're reading between the lines.
+[^peek_this_also]: You're reading between the lines, again.
+[^peek_this_finally]: No comment here, just playing.

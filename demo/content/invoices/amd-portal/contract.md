@@ -1,6 +1,8 @@
 ---
+title: Announce AMD Athlon XP 1800+
+
 legalReferences: '1405'
-contractLink: 125
+contractLink: [125]
 ---
 
 # Appropriate needed former longer hurry on Github
@@ -10,6 +12,9 @@ A Terms of Service agreement is a legal document that helps you set out the rule
 In this article, we're going to talk you through everything you need to know about Terms of Service agreements. We've also put together a Sample Terms of Service Template that you can use to help you write your own.
 
 ---
+
+[Heads up!](http://perdu.com)
+[Here!](http://example.com)
 
 ## 1. Do I need to have a Terms of Service agreement?
 

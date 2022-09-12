@@ -18,14 +18,19 @@
 
 ## Random notes:
 
-We need to index the cross-platform AGP port!
+> We need to index the cross-platform AGP port!
 
 ---
 
-I'll navigate the redundant ADP driver, that should bus the SQL array!
+> I'll navigate the redundant ADP driver, that should bus the SQL array!
 
 ---
 
 **Motivational quote, in pseudo-latin**  🤜:
 
 > Omnis at excepturi saepe ut ut voluptatum.
+
+# Ok… let's go!
+
+> Might be cool to map this:  
+> [Internal link](../../invoices/acme-website/contract.md) (DON'T CLICK!).

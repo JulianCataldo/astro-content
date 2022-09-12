@@ -64,13 +64,13 @@ Yes. All of these agreements serve the same purpose. They just have different na
 
 These are the most common clauses that every Terms of Service agreement should include:
 
-- User guidelines (rules, restrictions on use)
+- User guidelines (rules, restrictions on use)[^peek_this]
 - Your right to terminate abusive accounts
 - How users can terminate accounts
-- Warranty disclaimer
+- Warranty disclaimer[^peek_this]
 - Limitation of liability
 - Governing law and legal disputes
-- Contact information
+- Contact information[^peek_this]
 - Intellectual property and copyrights
 
 Here are some additional clauses that are more business-specific:
@@ -78,3 +78,5 @@ Here are some additional clauses that are more business-specific:
 - User-generated content
 - Payments and subscriptions
 - Third party rights
+
+[^peek_this]: You're reading between the lines.
