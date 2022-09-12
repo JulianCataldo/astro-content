@@ -2,6 +2,7 @@
 
 .re-integrate
 
+.turbo
 dist
 .build
 .parcel-cache

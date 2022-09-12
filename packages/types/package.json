@@ -3,11 +3,17 @@
   "version": "0.0.0-alpha.0",
   "description": "",
   "type": "module",
-  "private": "true",
+  "private": true,
+  "exports": {
+    ".": "./dist",
+    "./*": "./dist/*.js"
+  },
   "scripts": {
+    "build": "tsc",
+    "dev": "tsc -w",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Julian Cataldo",
   "license": "ISC"
 }

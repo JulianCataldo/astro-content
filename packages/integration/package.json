@@ -1,19 +1,21 @@
 {
   "name": "astro-content",
-  "version": "0.0.0-alpha.0",
+  "version": "0.0.0-alpha.2",
   "description": "",
-  "// source": "astro-integration.ts",
-  "main": "astro-integration.ts",
+  "// source": "./astro-integration.ts",
+  "main": "./dist/astro-integration.js",
   "type": "module",
+  "files": [
+    "dist/*"
+  ],
   "scripts": {
+    "build": "tsc",
+    "dev": "tsc -w",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
     "content": "./node_modules/@astro-content/cli/dist/index.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
     "astro": "1.2.1"
   },
@@ -31,5 +33,11 @@
     "mkdirp": "^1.0.4",
     "tosource": "2.0.0-alpha.3",
     "yaml": "^2.1.1"
+  },
+  "keywords": [],
+  "author": "Julian Cataldo",
+  "license": "ISC",
+  "publishConfig": {
+    "access": "public"
   }
 }
