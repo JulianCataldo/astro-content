@@ -36,7 +36,7 @@ export default function Inspector() {
   }
 
   // eslint-disable-next-line react/no-unstable-nested-components
-  function ErrorPane({ reps = [] }: { reps: Reports | undefined }) {
+  function ProblemPane({ problems = [] }: { problems: Reports | undefined }) {
     return (
       <div className="reports-pane">
         <div className="row header">
@@ -76,18 +76,20 @@ export default function Inspector() {
             </>
           )}
         </div>
-        {Array.isArray(reps) &&
-          reps.map((error, key) => (
+        {Array.isArray(problems) &&
+          problems.map((problem, key) => (
             // FIXME: JSX Ally
             // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
             <div
+              // FIXME: Proper unique key
+              // eslint-disable-next-line react/no-array-index-key
               key={key}
-              className={`row ${error.position?.start.line ? 'jumper' : ''}`}
+              className={`row ${problem.position?.start.line ? 'jumper' : ''}`}
               onClick={() =>
-                error.position ? jumpToCode(error.position) : null
+                problem.position ? jumpToCode(problem.position) : null
               }
             >
-              {error.position?.start.line ? (
+              {problem.position?.start.line ? (
                 <Icon
                   icon="system-uicons:arrow-top-right"
                   width="1em"
@@ -97,84 +99,84 @@ export default function Inspector() {
                 <div />
               )}
 
-              {inspectorPane === 'schema' && 'schemaPath' in error && (
+              {inspectorPane === 'schema' && 'schemaPath' in problem && (
                 <>
-                  {typeof error.schemaPath === 'string' && (
-                    <div>{error.schemaPath}</div>
+                  {typeof problem.schemaPath === 'string' && (
+                    <div>{problem.schemaPath}</div>
                   )}
-                  {typeof error.keyword === 'string' && (
-                    <div>{error.keyword}</div>
+                  {typeof problem.keyword === 'string' && (
+                    <div>{problem.keyword}</div>
                   )}
-                  {typeof error.params === 'object' &&
-                    typeof error.params.missingProperty === 'string' && (
-                      <div>{error.params.missingProperty}</div>
+                  {typeof problem.params === 'object' &&
+                    typeof problem.params.missingProperty === 'string' && (
+                      <div>{problem.params.missingProperty}</div>
                     )}
                 </>
               )}
 
-              {'message' in error && <div>{error.message}</div>}
-              {'note' in error && <div>{error.note}</div>}
+              {'message' in problem && <div>{problem.message}</div>}
+              {'note' in problem && <div>{problem.note}</div>}
 
-              {'html' in error &&
-                'label' in error &&
+              {'html' in problem &&
+                'label' in problem &&
                 inspectorPane === 'footnotes' && (
                   <>
                     <div>Definition</div>
-                    {error.label && <div>{error.label}</div>}
-                    {error.html && (
+                    {problem.label && <div>{problem.label}</div>}
+                    {problem.html && (
                       // eslint-disable-next-line react/no-danger
-                      <div dangerouslySetInnerHTML={{ __html: error.html }} />
+                      <div dangerouslySetInnerHTML={{ __html: problem.html }} />
                     )}
                   </>
                 )}
-              {'label' in error &&
-                !('html' in error) &&
+              {'label' in problem &&
+                !('html' in problem) &&
                 inspectorPane === 'footnotes' && (
                   <>
                     <div>Reference</div>
-                    {error.label && <div>{error.label}</div>}
+                    {problem.label && <div>{problem.label}</div>}
                   </>
                 )}
 
-              {'url' in error && inspectorPane === 'links' && (
+              {'url' in problem && inspectorPane === 'links' && (
                 <>
                   <div>
                     <Tooltip label="Open URL in new window">
                       <a
-                        href={error.url ?? ''}
+                        href={problem.url ?? ''}
                         target="_blank"
                         rel="noreferrer noopener nofollow"
                       >
-                        {error.url}
+                        {problem.url}
                       </a>
                     </Tooltip>
                   </div>
                   <div>
-                    {'html' in error && error.html && (
+                    {'html' in problem && problem.html && (
                       // eslint-disable-next-line react/no-danger
-                      <div dangerouslySetInnerHTML={{ __html: error.html }} />
+                      <div dangerouslySetInnerHTML={{ __html: problem.html }} />
                     )}
                   </div>
-                  {'title' in error && <div>{error.title}</div>}
+                  {'title' in problem && <div>{problem.title}</div>}
                 </>
               )}
               {(inspectorPane === 'lint' || inspectorPane === 'prose') && (
                 <div>
-                  {'url' in error && typeof error.url === 'string' ? (
-                    <Tooltip label={error.url} placement="top">
+                  {'url' in problem && typeof problem.url === 'string' ? (
+                    <Tooltip label={problem.url} placement="top">
                       <a
-                        href={error.url}
+                        href={problem.url}
                         target="_blank"
                         rel="noreferrer noopener nofollow"
                       >
-                        {('source' in error && error.source) ||
-                          ('ruleId' in error && error.ruleId)}
+                        {('source' in problem && problem.source) ||
+                          ('ruleId' in problem && problem.ruleId)}
                       </a>
                     </Tooltip>
                   ) : (
                     <div>
-                      {('source' in error && error.source) ||
-                        ('ruleId' in error && error.ruleId)}
+                      {('source' in problem && problem.source) ||
+                        ('ruleId' in problem && problem.ruleId)}
                     </div>
                   )}
                 </div>
@@ -195,7 +197,7 @@ export default function Inspector() {
   const hasAll = entity && entry && property;
 
   const tabs: Tabs = {};
-  const reps = (entity &&
+  const problems = (entity &&
     entry &&
     property &&
     reports[entity]?.[entry]?.[property]) || {
@@ -205,7 +207,9 @@ export default function Inspector() {
   };
 
   tabs.schema = {
-    title: `Schema ${reps.schema?.length ? `(${reps.schema.length})` : ''}`,
+    title: `Schema ${
+      problems.schema?.length ? `(${problems.schema.length})` : ''
+    }`,
   };
 
   if (isEntity) {
@@ -217,10 +221,12 @@ export default function Inspector() {
 
   if (language === 'markdown' && entity && entry && property) {
     tabs.lint = {
-      title: `Lint ${reps.lint?.length ? `(${reps.lint.length})` : ''}`,
+      title: `Lint ${problems.lint?.length ? `(${problems.lint.length})` : ''}`,
     };
     tabs.prose = {
-      title: `Prose ${reps.prose?.length ? `(${reps.prose.length})` : ''}`,
+      title: `Prose ${
+        problems.prose?.length ? `(${problems.prose.length})` : ''
+      }`,
     };
     tabs.links = {
       title: `Links ${
@@ -254,35 +260,35 @@ export default function Inspector() {
       <div className="reports">
         {inspectorPane === 'schema' && (
           <div>
-            <ErrorPane reps={reps.schema} />
+            <ProblemPane problems={problems.schema} />
           </div>
         )}
         {/* <pre>
-        <code>{JSON.stringify(reps.schema, null, 2)}</code>
+        <code>{JSON.stringify(problems.schema, null, 2)}</code>
       </pre> */}
         {entity && entry && property && content[entity]?.[entry]?.[property] && (
           <>
             {hasAll && inspectorPane === 'lint' && (
               <div>
-                <ErrorPane reps={reps.lint} />
+                <ProblemPane problems={problems.lint} />
               </div>
             )}
             {hasAll && inspectorPane === 'prose' && (
               <div>
-                <ErrorPane reps={reps.prose} />
+                <ProblemPane problems={problems.prose} />
               </div>
             )}
             {hasAll && inspectorPane === 'links' && (
               <div>
-                <ErrorPane reps={reps.links} />
+                <ProblemPane problems={problems.links} />
               </div>
             )}
             {hasAll && inspectorPane === 'footnotes' && (
               <div>
-                <ErrorPane
-                  reps={[
-                    ...(reps.footnotes?.references ?? []),
-                    ...(reps.footnotes?.definitions ?? []),
+                <ProblemPane
+                  problems={[
+                    ...(problems.footnotes?.references ?? []),
+                    ...(problems.footnotes?.definitions ?? []),
                   ]}
                 />
               </div>
