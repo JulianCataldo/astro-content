@@ -18,7 +18,7 @@
     height: 100%;
   }
 
-  // TODO: Set min and max sizes for all panes
+  // IDEA: Set min and max sizes for all panes?
   .component-tree {
     // min-width: 200px;
     // width: 260px;
@@ -37,6 +37,8 @@
 
   .gutter {
     --color: var(--vscode-inputOption-activeBackground);
+
+    background-color: var(--vscode-input-background);
     background-repeat: no-repeat;
     background-position: 50%;
     opacity: 0.15;

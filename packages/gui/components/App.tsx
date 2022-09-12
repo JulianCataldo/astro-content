@@ -57,7 +57,9 @@ export default function Gui({ isValidContentBase }: Props) {
             sizes={[15, 85]}
             direction="horizontal"
             className="split-h"
-            gutterSize={7}
+            gutterSize={9}
+            // minSize={[200, 200]}
+            minSize={[0, 0]}
           >
             {/* LEFT-SIDEBAR */}
             <Tree />
@@ -68,14 +70,19 @@ export default function Gui({ isValidContentBase }: Props) {
               sizes={[70, 30]}
               direction="vertical"
               className="split-v"
-              gutterSize={7}
+              gutterSize={9}
+              // minSize={[200, 200]}
+              minSize={[0, 0]}
             >
               {/* SIDE BY SIDE */}
               <Split
                 sizes={[50, 50]}
                 direction="horizontal"
                 className="split-h"
-                gutterSize={7}
+                gutterSize={9}
+                // FIXME: Not working?
+                // minSize={[500, 200]}
+                minSize={[0, 0]}
               >
                 {/* FILE EDITOR */}
                 <div>
