@@ -3,8 +3,8 @@ import { defineConfig } from 'astro/config';
 /* ·········································································· */
 import react from '@astrojs/react';
 import mdx from '@astrojs/mdx';
+import image from '@astrojs/image';
 import content from 'astro-content';
-
 /* —————————————————————————————————————————————————————————————————————————— */
 
 // https://astro.build/config
@@ -14,21 +14,24 @@ export default defineConfig({
     port: 9054,
     host: true,
   },
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   integrations: [
-    // v————— Base: CLI + Server
-    content(),
-    // v————— (Optional) For GUI
+    content({
+      //
+      logLevel: 'debug',
+    }),
     react(),
     mdx(),
+    // ——————————————————————————————————————
+    image(),
   ],
 
   vite: {
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: `
-          @use "./src/vars" as *;
-        `,
+          // TODO: add sass:colors and vars (not working 'cause dup. bug)
+          // additionalData: `@use "./src/vars" as *;`,
         },
       },
     },
