@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 /* ·········································································· */
 import useAppStore from '../store';
-import Editor from './Editor';
+import Editor from './Editor/Editor';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 export default function File() {

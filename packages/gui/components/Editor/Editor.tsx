@@ -1,95 +1,36 @@
-// REFACTOR: Split into sub-components
-/* eslint-disable max-lines */
-
 import Monaco from '@monaco-editor/react';
 import type { Monaco as MonacoType } from '@monaco-editor/react';
-import type { editor as nsEd, editor, languages } from 'monaco-editor';
+import type { editor as nsEd } from 'monaco-editor';
 import { useEffect, useRef, useState } from 'react';
 /* ·········································································· */
 import type { EditorLanguage } from '@astro-content/types/gui-state';
-import useAppStore from '../store';
-import { log } from '../logger';
+import { validate } from './validation';
+import useAppStore from '../../store';
+import { log } from '../../logger';
 /* ·········································································· */
 // import dracula from '../layouts/themes/dracula.json';
 // import cobalt2 from '../layouts/themes/cobalt2.json';
 /* —————————————————————————————————————————————————————————————————————————— */
 
-export default function Editor({
-  value,
-  language,
-  readOnly,
-  isMain,
-}: {
+interface Props {
   value: string;
   language: EditorLanguage;
   readOnly?: boolean;
   isMain?: boolean;
-}) {
+}
+export default function Editor({ value, language, readOnly, isMain }: Props) {
   const { schemas, reports, types } = useAppStore((state) => state.data_server);
   const { entity, entry, property } = useAppStore((state) => state.ui_route);
   const updateContentForValidation = useAppStore(
     (state) => state.editor_updateContentForValidation,
   );
-
   const setDefaultEditor = useAppStore((state) => state.editor_setDefault);
 
   const editorRef = useRef<nsEd.IStandaloneCodeEditor | null>(null);
   const [monacoInst, setMonaco] = useState<MonacoType | null>(null);
 
-  function validate(model: nsEd.ITextModel, monaco: MonacoType) {
-    const errorMessages: languages.ProviderResult<editor.IMarkerData[]> = [];
-
-    if (entity && entry && property) {
-      let positions = {
-        startLineNumber: 0,
-        startColumn: 0,
-        endLineNumber: 0,
-        endColumn: 0,
-      };
-      // TODO: Refactor all
-
-      const propertyReport = reports[entity]?.[entry]?.[property];
-
-      if (
-        propertyReport?.schema?.length ||
-        propertyReport?.lint?.length ||
-        propertyReport?.prose?.length
-      ) {
-        [
-          ...(propertyReport.schema ?? []),
-          ...(propertyReport.lint ?? []),
-          ...(propertyReport.prose ?? []),
-        ].forEach((err) => {
-          if (err.position) {
-            positions = {
-              startLineNumber: err.position.start.line,
-              startColumn: err.position.start.column,
-              endLineNumber: err.position.end.line || err.position.start.line,
-              endColumn: err.position.end.column || err.position.start.column,
-            };
-          }
-          let severity = 8;
-          if ('ruleId' in err) {
-            if (err.ruleId !== 'frontmatter-schema') {
-              severity = 4;
-            }
-            if (err.ruleId?.startsWith('retext-')) {
-              severity = 2;
-            }
-          }
-          errorMessages.push({
-            message: err.message ?? '',
-            severity,
-            code: 'ruleId' in err ? String(err.ruleId) : undefined,
-            source: 'source' in err ? String(err.source) : 'Root',
-            ...positions,
-          });
-        });
-      }
-    }
-
-    monaco.editor.setModelMarkers(model, 'owner', errorMessages);
-  }
+  // const propertyReport =
+  //   entity && entry && property && reports[entity]?.[entry]?.[property];
 
   async function handleChange() {
     const model = editorRef.current?.getModel();
@@ -118,9 +59,14 @@ export default function Editor({
         model.getValue(),
         frontmatterSchema,
       );
-      validate(model, monacoInst);
+      const propertyReport =
+        entity && entry && property && reports[entity]?.[entry]?.[property];
+      if (propertyReport) {
+        validate(propertyReport, model, monacoInst);
+      }
     }
   }
+
   const handleEditorDidMount = (
     passedEd: nsEd.IStandaloneCodeEditor,
     monaco: MonacoType,
@@ -130,8 +76,10 @@ export default function Editor({
       setDefaultEditor(passedEd);
 
       const model = editorRef.current.getModel();
-      if (model) {
-        validate(model, monaco);
+      const propertyReport =
+        entity && entry && property && reports[entity]?.[entry]?.[property];
+      if (model && propertyReport) {
+        validate(propertyReport, model, monaco);
       }
     }
   };

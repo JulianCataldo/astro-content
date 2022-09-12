@@ -9,7 +9,7 @@ import type { Fake } from '@astro-content/types/dto';
 import { actions } from '@astro-content/server/state';
 import { log } from '../logger';
 import TabBar, { Tabs } from './TabBar';
-import Editor from './Editor';
+import Editor from './Editor/Editor';
 // import Metas from './Metas'
 /* ·········································································· */
 import useAppStore from '../store';
