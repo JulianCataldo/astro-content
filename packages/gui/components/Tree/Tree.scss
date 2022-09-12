@@ -114,6 +114,10 @@
 
     .property-link {
       &.active {
+        .trigger {
+          opacity: 1;
+        }
+
         background: var(--vscode-list-dropBackground);
       }
     }
