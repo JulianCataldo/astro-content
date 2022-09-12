@@ -9,7 +9,7 @@ dist
 
 # Generated code
 **/.astro-content
-**/docs/content/index.ts
+**/*/content/index.ts
 
 # Local stuff
 .re-integrate
