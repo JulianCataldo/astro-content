@@ -148,17 +148,17 @@ export {}`;
       };
 
       // TODO: Extract to a `store` action
-      // post(actions.fake.endpoint, dto)
-      //   .then((r) =>
-      //     r
-      //       .json()
-      //       .then((j: unknown) => {
-      //         log(j, 'absurd');
-      //         setFakeEntriesObj(j);
-      //       })
-      //       .catch(() => null),
-      //   )
-      //   .catch((e) => log(e));
+      post(actions.fake.endpoint, dto)
+        .then((r) =>
+          r
+            .json()
+            .then((j: unknown) => {
+              log(j, 'absurd');
+              setFakeEntriesObj(j);
+            })
+            .catch(() => null),
+        )
+        .catch((e) => log(e));
     }
   }, [schemas.content]);
 
@@ -178,7 +178,7 @@ export {}`;
       />
       <div className="component-assistant">
         {/* {assistantPane} */}
-        {entity && entry && !content[entity]?.[entry] && (
+        {entity && !entry && (
           <>
             {assistantPane === 'ts' && (
               <div className="editor">
