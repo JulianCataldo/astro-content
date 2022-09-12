@@ -13,13 +13,24 @@
     // Astro will directly run your TypeScript code, no transpilation needed.
     "noEmit": true,
 
+    "skipLibCheck": true,
+
+    "strict": false,
+
+    "strictNullChecks": true,
+
     // "types": [],
     "paths": {
-      // Make TS Happy with absolute paths
-      "/*": ["./*"]
+      // Make TS/ESLint happy with absolute paths
+      // TODO: Add to workspace setup?
+      // "/*": ["./*"]
       // Or just
-      // "/content": ["./content"]
+      // "@content": ["./content"]
+      // Or
+      "/content": ["./content"]
     },
+
+    "outDir": "./dist",
 
     "allowSyntheticDefaultImports": true
   }
