@@ -107,7 +107,6 @@ importers:
 
   docs:
     specifiers:
-      '@astro-content/demo': workspace:*
       '@astrojs/image': ^0.7.0
       '@astrojs/mdx': ^0.11.1
       '@astrojs/react': ^1.1.2
@@ -132,7 +131,6 @@ importers:
       astro: 1.2.1
       serve: 14.0.1
     devDependencies:
-      '@astro-content/demo': link:../demo
       '@astrojs/mdx': 0.11.1
       '@astrojs/react': 1.1.2_biqbaboplfbrettd7655fr4n2y
       astro-content: link:../packages/integration
