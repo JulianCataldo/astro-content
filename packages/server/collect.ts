@@ -7,6 +7,7 @@ import addFormats from 'ajv-formats';
 // import draft7MetaSchema from 'ajv/dist/refs/json-schema-draft-07.json';
 /* ·········································································· */
 import type { FileInstance, YamlInstance } from '@astro-content/types/file';
+import type { Options } from '@astro-content/types/integration';
 import type { JSONSchema7 } from 'json-schema';
 import type { ServerState } from '@astro-content/types/server-state';
 import { state } from './state';
@@ -64,10 +65,15 @@ function saveContentState() {
   fs.writeFile(fPath, fState).catch((e) => log(e));
 }
 
-const ide = `import { collect } from 'astro-content';
-import type { Entities } from './../.astro-content/types';
+const ide = `// eslint-disable-next-line import/no-extraneous-dependencies
+import { collect } from 'astro-content';
+import type { FileInstance, Options } from 'astro-content';
+import type { Entities } from '../.astro-content/types';
 
-const get = collect as (files: unknown) => Promise<Entities>;
+const get = collect as (
+  pFiles: Promise<FileInstance[]>,
+  options?: Options,
+) => Promise<Entities>;
 
 export { get };
 export * from "../.astro-content/types";
@@ -88,9 +94,6 @@ export async function saveTsTypes() {
 
 /* ·········································································· */
 
-interface Options {
-  editMode?: boolean;
-}
 const collect = async (
   pFiles: Promise<FileInstance[]>,
   options?: Options,
@@ -125,17 +128,16 @@ const collect = async (
   /* Clean-up */
   state.content = {};
 
-  const promises = files?.map(async (inputFile: FileInstance) => {
+  const promises = files.map(async (inputFile: FileInstance) => {
     const filePath = inputFile.file;
 
     if (filePath && !filePath.endsWith('.schema.yaml')) {
       await loadFile(filePath, inputFile, options?.editMode);
     }
   });
-  if (promises) {
-    await Promise.all(promises);
-    // TODO: Sort entities / entries / properties after everything is collected
-  }
+
+  // TODO: Sort entities / entries / properties after everything is collected
+  await Promise.all(promises);
 
   state.types = await generateTypes(state.content, state.schemas);
 

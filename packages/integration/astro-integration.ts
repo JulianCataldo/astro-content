@@ -38,4 +38,8 @@ const astroContent = (settings?: Settings): AstroIntegration => {
 };
 
 export default astroContent;
+
 export { collect };
+
+export type { Options } from '@astro-content/types/integration';
+export type { FileInstance } from '@astro-content/types/file';
