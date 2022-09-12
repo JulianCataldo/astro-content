@@ -1,7 +1,7 @@
 import type { Placement } from '@floating-ui/react-dom-interactions';
 import cx from 'classnames';
 import { useState } from 'react';
-import Tooltip from './Tooltip';
+// import Tooltip from './Tooltip';
 import './CopyInlineCode.scss';
 
 interface Props {
@@ -22,21 +22,22 @@ export default function CopyInlineCode({ text, placement }: Props) {
   };
 
   return (
-    <Tooltip label="Copy to clipboard" placement={placement}>
-      <div
-        role="button"
-        tabIndex={0}
-        onClick={copy}
-        onKeyPress={copy}
-        className="component-copy-inline-code"
-      >
-        <pre>
-          <div className={cx('overlay', { visible })}>Copied!</div>
-          <span className="prefix">&gt; </span>
-          <code>{text}</code>
-        </pre>
-      </div>
-    </Tooltip>
+    // TODO: Make a Tooltip hover group
+    // <Tooltip label="Copy to clipboard" placement={placement}>
+    <div
+      role="button"
+      tabIndex={0}
+      onClick={copy}
+      onKeyPress={copy}
+      className="component-copy-inline-code"
+    >
+      <div className={cx('overlay', { visible })}>Copied to clipboard</div>
+      <pre>
+        <span className="prefix">&gt; </span>
+        <code>{text}</code>
+      </pre>
+    </div>
+    // </Tooltip>
   );
 }
 
