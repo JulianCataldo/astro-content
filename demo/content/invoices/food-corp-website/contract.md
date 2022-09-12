@@ -80,7 +80,7 @@ Here are some additional clauses that are more business-specific:
 - Payments and subscriptions
 - Third party rights
 
-A note you have to read[^peek_this]
+A note you have to read[^peek_this_also]
 
 Make your Terms of Service agreement enforceable by having your
 users click an unticked checkbox next to a statement that
@@ -88,9 +88,8 @@ says something similar to:
 
 > _"I have **read** and **agree** to the **Terms of Service** agreement."_
 
-A note you have to read, you have to[^peek_this]
+A note you have to read, you have to[^peek_this_finally]
 
-[^peek_this]:
-    You're reading between the lines.
-    [^peek_this_also]: You're reading between the lines, again.
-    [^peek_this_finally]: No comment here, just playing.
+[^peek_this]: You're reading between the lines.
+[^peek_this_also]: You're reading between the lines, again.
+[^peek_this_finally]: No comment here, just playing.
