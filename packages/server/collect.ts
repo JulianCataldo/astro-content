@@ -55,6 +55,7 @@ function handleSchema(filePath: string, unknownYaml: YamlInstance<unknown>) {
     ...file.data,
   };
   state.schemas.raw[entity] = file.rawYaml;
+  state.schemas.file[entity] = filePath;
 }
 
 /* ·········································································· */

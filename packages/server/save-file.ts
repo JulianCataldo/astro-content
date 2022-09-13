@@ -5,6 +5,14 @@ import { log } from './logger';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 export async function saveFile(object: Save) {
-  const dest = object.file;
-  await fs.writeFile(dest, object.value).catch((e) => log(e));
+  const { file: dest, value } = object;
+
+  const isSuccess = await fs
+    .writeFile(dest, value)
+    .then(() => true)
+    .catch((e) => {
+      log(e, 'info');
+      return false;
+    });
+  return isSuccess;
 }

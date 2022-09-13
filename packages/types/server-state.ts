@@ -21,6 +21,7 @@ export interface Schemas {
   internals: { [schemaName: string]: JSONSchema7 };
   content: { [schemaName: string]: JSONSchema7 };
   raw: { [schemaName: string]: string };
+  file: { [schemaName: string]: string };
 }
 
 export interface Reports {

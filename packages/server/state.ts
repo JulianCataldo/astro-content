@@ -5,8 +5,6 @@ import type { Endpoint, ServerState } from '@astro-content/types/server-state';
 import markdownFile from './schemas/MarkdownFile.json' assert { type: 'json' };
 /* —————————————————————————————————————————————————————————————————————————— */
 
-const apiBase = '/__content/api';
-
 const emptyState: ServerState = {
   content: {},
 
@@ -16,6 +14,7 @@ const emptyState: ServerState = {
     internals: {
       MarkdownFile: markdownFile as JSONSchema7,
     },
+    file: {},
   },
 
   reports: {},
