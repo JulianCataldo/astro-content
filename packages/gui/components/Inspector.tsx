@@ -90,13 +90,15 @@ export default function Inspector() {
               }
             >
               {problem.position?.start.line ? (
-                <Icon
-                  icon="system-uicons:arrow-top-right"
-                  width="1em"
-                  height="1em"
-                />
+                <div>
+                  <Icon
+                    icon="system-uicons:arrow-top-right"
+                    width="1em"
+                    height="1em"
+                  />
+                </div>
               ) : (
-                <div />
+                <div>&nbsp;</div>
               )}
 
               {inspectorPane === 'schema' && 'schemaPath' in problem && (
@@ -108,9 +110,11 @@ export default function Inspector() {
                     <div>{problem.keyword}</div>
                   )}
                   {typeof problem.params === 'object' &&
-                    typeof problem.params.missingProperty === 'string' && (
-                      <div>{problem.params.missingProperty}</div>
-                    )}
+                  typeof problem.params.missingProperty === 'string' ? (
+                    <div>{problem.params.missingProperty}</div>
+                  ) : (
+                    <div></div>
+                  )}
                 </>
               )}
 

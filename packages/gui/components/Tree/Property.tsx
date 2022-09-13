@@ -120,8 +120,8 @@ export default function Property({
                 <span className="file-infos trigger">
                   <Icon
                     icon={icon ?? ''}
-                    width="1.15rem"
-                    height="1.15rem"
+                    width="0.75rem"
+                    height="0.75rem"
                     className={cx(
                       propTree && 'headingsCompiled' in propTree
                         ? 'icon-md'
