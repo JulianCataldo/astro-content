@@ -8,7 +8,8 @@ import type { EditorLanguage } from '@astro-content/types/gui-state';
 /* ·········································································· */
 import { validate } from './validation';
 import useAppStore from '../../store';
-import { log } from '../../logger';
+// import { log } from '../../logger';
+import { handleEditorWillMount } from './handlers';
 /* ·········································································· */
 // import dracula from '../layouts/themes/dracula.json';
 // import cobalt2 from '../layouts/themes/cobalt2.json';
@@ -35,9 +36,6 @@ export default function Editor({ value, language, readOnly, isMain }: Props) {
 
   const editorRef = useRef<nsEd.IStandaloneCodeEditor | null>(null);
   const [monacoInst, setMonaco] = useState<MonacoType | null>(null);
-
-  // const propertyReport =
-  //   entity && entry && property && reports[entity]?.[entry]?.[property];
 
   async function handleChange() {
     const model = editorRef.current?.getModel();
@@ -104,8 +102,6 @@ export default function Editor({ value, language, readOnly, isMain }: Props) {
       if (model && propertyReport) {
         validate(propertyReport, model, monaco);
       }
-    }
-  };
 
       editorRef.current.onDidScrollChange(({ scrollTop }) =>
         setCurrentScroll(scrollTop),
@@ -129,9 +125,16 @@ export default function Editor({ value, language, readOnly, isMain }: Props) {
     // TODO: Map `language` to correct file extensions
     path = `./${pathParts.join('/')}.${language}`;
   }
+
   return (
-    <div style={{ height: '100%' }} id={isMain ? 'main-editor' : 's'}>
+    <div
+      id={isMain ? 'main-editor' : ''}
+      ref={editorWrapper}
+      className="component-editor"
+    >
       <Monaco
+        language={language}
+        value={value}
         options={{
           tabSize: 2,
           automaticLayout: true,
@@ -141,12 +144,14 @@ export default function Editor({ value, language, readOnly, isMain }: Props) {
           scrollBeyondLastLine: false,
           smoothScrolling: true,
         }}
-        theme="vs-dark"
-        language={language}
-        value={value}
-        beforeMount={handleEditorWillMount}
-        onMount={handleEditorDidMount}
         path={path}
+        theme="vs-dark"
+        // TODO: Extract all handlers
+        beforeMount={(monaco) => {
+          handleEditorWillMount(monaco, types);
+          setMonaco(monaco);
+        }}
+        onMount={handleEditorDidMount}
         onChange={() => {
           handleChange().catch(() => null);
         }}
@@ -155,7 +160,4 @@ export default function Editor({ value, language, readOnly, isMain }: Props) {
   );
 }
 
-Editor.defaultProps = {
-  readOnly: false,
-  isMain: false,
-};
+Editor.defaultProps = { readOnly: false, isMain: false };
