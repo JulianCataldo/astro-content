@@ -1,4 +1,6 @@
+import { existsSync } from 'fs';
 import type { AstroIntegration } from 'astro';
+// import Inspect from 'vite-plugin-inspect';
 /* ·········································································· */
 import { log } from '@astro-content/server/logger';
 /* ·········································································· */
@@ -8,7 +10,7 @@ import ViteYaml from './load-yaml-plugin';
 /* —————————————————————————————————————————————————————————————————————————— */
 // FIXME: Find a more elegant way to import than a sub `node_modules`
 // It crash if put in `gui` package (deps. resolution probably)
-const guiPath = './node_modules/astro-content/node_modules/@astro-content/gui';
+const guiPath = './node_modules/@astro-content/gui';
 
 const configSetup: AstroIntegration['hooks']['astro:config:setup'] = ({
   injectRoute,
@@ -27,7 +29,15 @@ const configSetup: AstroIntegration['hooks']['astro:config:setup'] = ({
   /* Inject YAML import + metadata within `Astro.glob()` */
   updateConfig({
     vite: {
-      plugins: [ViteYaml()],
+      plugins: [
+        //
+        ViteYaml(),
+        // TODO: Try it (not working)
+        // Inspect({
+        //   // build: true,
+        //   outputDir: '.vite-inspect',
+        // }),
+      ],
       server: {
         watch: {
           ignored: [
@@ -42,6 +52,9 @@ const configSetup: AstroIntegration['hooks']['astro:config:setup'] = ({
   });
 
   /* Inject stateful routes (share same state as all Astro SSR pages) */
+
+  /* Check if `@astro-content/gui` is properly installed */
+  if (existsSync(`${guiPath}/package.json`)) {
     injectRoute({
       pattern: `${endpoints.apiBase}/[endpoint]`,
       entryPoint: `${guiPath}/server-bridge.json.ts`,
