@@ -3,7 +3,10 @@
   "version": "0.0.0-alpha.0",
   "description": "",
   "type": "module",
-  "private": true,
+  "files": [
+    "dist/*.d.ts",
+    "*.ts"
+  ],
   "exports": {
     ".": "./dist",
     "./*": "./dist/*.js"
@@ -11,9 +14,13 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc -w",
+    "clean": "rm -rf dist .turbo",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "Julian Cataldo",
-  "license": "ISC"
+  "license": "ISC",
+  "publishConfig": {
+    "access": "public"
+  }
 }

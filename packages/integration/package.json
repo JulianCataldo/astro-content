@@ -11,20 +11,21 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc -w",
+    "clean": "rm -rf dist .turbo",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
     "content": "./node_modules/@astro-content/cli/dist/index.js"
   },
   "devDependencies": {
-    "astro": "1.2.1"
+    "astro": "1.2.1",
+    "vite-plugin-inspect": "^0.7.1"
   },
   "dependencies": {
     "@astro-content/cli": "workspace:*",
     "@astro-content/gui": "workspace:*",
     "@astro-content/server": "workspace:*",
     "@astro-content/types": "workspace:*",
-    "@modyfi/vite-plugin-yaml": "^1.0.3",
     "@rollup/pluginutils": "^4.2.1",
     "@types/body-parser": "^1.19.2",
     "@types/js-yaml": "^4.0.5",

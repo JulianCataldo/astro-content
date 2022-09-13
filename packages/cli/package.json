@@ -12,15 +12,13 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc -w",
+    "clean": "rm -rf dist .turbo",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "devDependencies": {
-    "@types/inquirer": "^9.0.1"
-  },
+  "devDependencies": {},
   "dependencies": {
     "@astro-content/server": "workspace:*",
     "commander": "^9.4.0",
-    "inquirer": "^9.1.1",
     "typescript": "^4.8.3"
   },
   "keywords": [],

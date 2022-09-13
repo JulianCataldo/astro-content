@@ -6,6 +6,7 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc -w",
+    "clean": "rm -rf dist .turbo",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "exports": {

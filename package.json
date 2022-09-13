@@ -6,8 +6,8 @@
   "main": "build.ts",
   "scripts": {
     "build": "turbo run build --filter=!@astro-content/demo",
-    "clean": "# TODO",
-    "dev": "turbo run dev --filter=!@astro-content/demo",
+    "clean": "turbo run clean",
+    "dev": "turbo run dev --filter=!@astro-content/demo --filter=!@astro-content/docs",
     "demo": "cd demo pnpm run dev",
     "// ci:version": "pnpm changeset version && pnpm install --no-frozen-lockfile && git add .",
     "// ci:publish": "git status && pnpm -r publish && pnpm changeset tag",

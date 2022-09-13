@@ -1,6 +1,8 @@
 # NOTE: This could be interesting to keep this for CI/CD workflow
 pnpm-publish-summary.json
 
+*.log
+
 # Build artefacts + cache
 .turbo
 dist
