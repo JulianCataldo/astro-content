@@ -27,6 +27,11 @@ export default function Editor({ value, language, readOnly, isMain }: Props) {
     (state) => state.editor_updateContentForValidation,
   );
   const setDefaultEditor = useAppStore((state) => state.editor_setDefault);
+  // IDEA: Sync. position both way with assistant? Or provide some lock / unlock
+  // const scrollPosition = useAppStore((state) => state.editor_scrollPosition);
+  const setScrollPosition = useAppStore(
+    (state) => state.editor_setScrollPosition,
+  );
 
   const editorRef = useRef<nsEd.IStandaloneCodeEditor | null>(null);
   const [monacoInst, setMonaco] = useState<MonacoType | null>(null);
@@ -69,6 +74,16 @@ export default function Editor({ value, language, readOnly, isMain }: Props) {
     }
   }
 
+  const [currentScroll, setCurrentScroll] = useState<number>(0);
+  const editorWrapper = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const wrapperHeight = editorWrapper.current?.clientHeight ?? 0;
+    const scrollableHeight = editorRef.current?.getScrollHeight() ?? 0;
+
+    setScrollPosition(wrapperHeight, scrollableHeight, currentScroll);
+  }, [currentScroll]);
+
   const handleEditorDidMount = (
     passedEd: nsEd.IStandaloneCodeEditor,
     monaco: MonacoType,
@@ -86,32 +101,8 @@ export default function Editor({ value, language, readOnly, isMain }: Props) {
     }
   };
 
-  const handleEditorWillMount = (monaco: MonacoType) => {
-    log(['Monaco instance:', monaco]);
-    setMonaco(monaco);
-
-    monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
-      target: monaco.languages.typescript.ScriptTarget.Latest,
-      allowNonTsExtensions: true,
-      moduleResolution: monaco.languages.typescript.ModuleResolutionKind.NodeJs,
-      module: monaco.languages.typescript.ModuleKind.ESNext,
-      noEmit: true,
-      reactNamespace: 'React',
-      isolatedModules: true,
-      noImplicitAny: true,
-      strictNullChecks: true,
-      importsNotUsedAsValues: 'error',
-      // allowSyntheticDefaultImports: true,
-    });
-
-    // IDEA: Implement this globally, synced with CSS
-    // monaco.editor.defineTheme('Dracula', cobalt2 as nsEd.IStandaloneThemeData);
-
-    if (types.browser) {
-      const global = `${types.common}\n\n${types.browser}`;
-      monaco.languages.typescript.typescriptDefaults.addExtraLib(
-        global,
-        'global.d.ts',
+      editorRef.current.onDidScrollChange(({ scrollTop }) =>
+        setCurrentScroll(scrollTop),
       );
     }
   };

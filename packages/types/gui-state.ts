@@ -1,3 +1,4 @@
+import type { JSONSchema7 } from 'json-schema';
 import type { editor as nsEd } from 'monaco-editor';
 /* ·········································································· */
 import type { ServerState } from './server-state';
@@ -55,19 +56,26 @@ export interface DataState {
 
 export interface EditorState {
   editor_default: null | nsEd.IStandaloneCodeEditor;
-  editor_language: Language | null;
+  editor_language: EditorLanguage | null;
+  editor_scrollPosition: number;
+  editor_savingState: 'idle' | 'busy' | 'success' | 'failure';
   /* ········································································ */
   editor_save: () => void;
-  editor_setDefault: (ref: nsEd.IStandaloneCodeEditor) => void;
+  editor_setDefault: (ref: AppState['editor_default']) => void;
   editor_updateContentForValidation: (
     entity: Part,
     entry: Part,
     property: Part,
     language: Language,
     value: string,
-    schema: unknown,
+    schema: JSONSchema7,
   ) => Promise<void>;
   editor_setCurrentLanguage: (name: EditorLanguage) => void;
+  editor_setScrollPosition: (
+    wrapperHeight: number,
+    scrollableHeight: number,
+    currentScroll: number,
+  ) => void;
 }
 
 /* —————————————————————————————————————————————————————————————————————————— */

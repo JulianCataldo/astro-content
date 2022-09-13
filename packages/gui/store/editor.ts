@@ -18,6 +18,7 @@ import { post } from './helpers';
 const editor = (set: StoreApi<AppState>['setState']): EditorState => ({
   editor_default: null,
   editor_language: null,
+  editor_scrollPosition: 0,
   editor_savingState: 'idle',
 
   editor_setDefault: (ref: AppState['editor_default']) => {
@@ -169,6 +170,28 @@ const editor = (set: StoreApi<AppState>['setState']): EditorState => ({
     set((state) => {
       const newUiState: Partial<AppState> = {
         editor_language: id,
+      };
+      state.ui_save(newUiState);
+      return newUiState;
+    });
+  },
+
+  /* ········································································ */
+
+  editor_setScrollPosition: (
+    wrapperHeight,
+    scrollableHeight,
+    currentScroll,
+  ) => {
+    log({ wrapperHeight, scrollableHeight, currentScroll });
+    set((state) => {
+      const percentage = currentScroll / (scrollableHeight - wrapperHeight);
+
+      const accuracy = 10000;
+      const pRounded = Math.round(percentage * accuracy) / accuracy;
+
+      const newUiState: Partial<AppState> = {
+        editor_scrollPosition: pRounded,
       };
       state.ui_save(newUiState);
       return newUiState;

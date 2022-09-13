@@ -2,7 +2,7 @@
 /* eslint-disable max-lines */
 
 import yaml from 'yaml';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 // import 'github-markdown-css';
 /* ·········································································· */
 import type { Fake } from '@astro-content/types/dto';
@@ -23,6 +23,7 @@ export default function Preview() {
   const language = useAppStore((state) => state.editor_language);
   const assistantPane = useAppStore((state) => state.ui_assistantPane);
   const setAssistantPane = useAppStore((state) => state.ui_setAssistantPane);
+  const scrollPosition = useAppStore((state) => state.editor_scrollPosition);
 
   const contentProp = property === 'content' ? 'contentProp' : property;
 
@@ -168,6 +169,18 @@ export {}`;
   // const schemaErrors = errors?.[entity]?.[entry]?.[property]?.schema;
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+
+  const previewWrapper = useRef<HTMLDivElement>(null);
+
+  /* Sync. scroll position from editor (one-way) */
+  useEffect(() => {
+    const wrapperHeight = previewWrapper.current?.clientHeight;
+    const scrollableHeight = previewWrapper.current?.scrollHeight;
+    const top =
+      ((scrollableHeight ?? 0) - (wrapperHeight ?? 0)) * scrollPosition;
+    previewWrapper.current?.scrollTo({ top });
+  }, [scrollPosition]);
+
   return (
     <>
       <TabBar
