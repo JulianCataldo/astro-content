@@ -72,11 +72,13 @@ const serverSetup: AstroIntegration['hooks']['astro:server:setup'] = ({
               body.entry,
               body.property,
               body.value,
+              body.schema,
             );
             if (result) {
               reports = result;
             }
           }
+          // TODO: Handle success / failure
           res.end(JSON.stringify({ success: true, reports }));
         } else if (
           req.url === endpoints.actions.fake

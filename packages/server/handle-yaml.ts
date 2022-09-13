@@ -10,7 +10,7 @@ import { log } from './logger';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 const ajv = new Ajv({
-  allErrors: false,
+  allErrors: true,
   strict: false,
   logger: false,
   strictSchema: false,
@@ -26,6 +26,7 @@ export function handleYaml(
   entry: Part,
   property: Part,
   rawYaml: string,
+  schema: JSONSchema7,
 ) {
   log({ rawYaml }, 'absurd', 'table');
 
@@ -35,14 +36,15 @@ export function handleYaml(
 
   let schemaForAjv: JSONSchema7 | null = null;
 
-  // FIXME: ——————————————————————————————————————v
+  // FIXME: No unnecessary
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  const yamlSchema = state.schemas.content[entity]?.properties?.[property];
+  const yamlSchema =
+    state.schemas.content[entity]?.properties?.[property] || schema;
   log(yamlSchema, 'absurd');
 
   if (typeof yamlSchema === 'object') {
     schemaForAjv = {
-      definitions: { ...state.schemas.internals },
+      // definitions: { ...state.schemas.internals },
       ...yamlSchema,
     };
   }
@@ -84,6 +86,7 @@ export function handleYaml(
 
       if (Array.isArray(state.reports[entity]?.[entry]?.[property]?.schema))
         // FIXME: (possibly undefined)
+        // @ts-ignore
         state.reports[entity][entry][property].schema = validate.errors?.map(
           (error) => {
             const ajvPath = error.instancePath.substring(1).split('/');

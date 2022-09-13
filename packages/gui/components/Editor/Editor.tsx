@@ -49,14 +49,20 @@ export default function Editor({ value, language, readOnly, isMain }: Props) {
       property &&
       (language === 'markdown' || language === 'yaml')
     ) {
-      const propSchema =
-        typeof schemas.content[entity] === 'object' &&
-        schemas.content[entity].properties?.[property];
+      // NOTE: Might move this to store
+      const propSchema = schemas.content[entity].properties?.[property];
 
       const frontmatterSchema =
         typeof propSchema === 'object' &&
         typeof propSchema.allOf?.[1] === 'object' &&
         propSchema.allOf[1]?.properties?.frontmatter;
+
+      const schema =
+        typeof frontmatterSchema === 'object'
+          ? frontmatterSchema
+          : typeof propSchema === 'object'
+          ? propSchema
+          : {};
 
       await updateContentForValidation(
         entity,
@@ -64,7 +70,7 @@ export default function Editor({ value, language, readOnly, isMain }: Props) {
         property,
         language,
         model.getValue(),
-        frontmatterSchema,
+        schema,
       );
       const propertyReport =
         entity && entry && property && reports[entity]?.[entry]?.[property];
