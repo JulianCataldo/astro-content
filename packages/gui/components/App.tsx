@@ -17,7 +17,7 @@ import { log } from '../logger';
 interface Props {
   isValidContentBase: boolean;
 }
-export default function Gui({ isValidContentBase }: Props) {
+export default function Gui({ isValidContentBase, children }: Props) {
   const { entity, entry, property } = useAppStore((state) => state.ui_route);
   const save = useAppStore((state) => state.editor_save);
 
@@ -34,6 +34,10 @@ export default function Gui({ isValidContentBase }: Props) {
 
     /* For client-only stuffs (`SplitPane` for ex.) */
     setDidMount(true);
+
+    // HACK: For ssr-entrypoint first load
+    // @ts-ignore
+    window.loaded = true;
   });
 
   return (
@@ -51,7 +55,7 @@ export default function Gui({ isValidContentBase }: Props) {
         </div>
       )}
 
-      {didMount && (
+      {didMount ? (
         <main>
           <Split
             sizes={[15, 85]}
@@ -108,6 +112,11 @@ export default function Gui({ isValidContentBase }: Props) {
             </Split>
           </Split>
         </main>
+      ) : (
+        <div className="message-loading-database">
+          Loading content base…
+          {children}
+        </div>
       )}
     </div>
   );

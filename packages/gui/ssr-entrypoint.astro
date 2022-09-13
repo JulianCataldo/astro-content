@@ -30,10 +30,23 @@ if (isValid) {
   //   { editMode: true },
   // );
 }
+
+// HACK: For ssr-entrypoint first load
+// Tried pre-triggering inside hooks etc. didn't worked
+const firstLoad = `
+window.loaded = false;
+setTimeout(() => {
+  if (globalThis.loaded === false) {
+    location.reload();
+    console.log('Reloading…');
+  }
+}, 1000);`;
 ---
 
 <Layout>
-  <App client:load isValidContentBase={isValid} />
+  <App client:load isValidContentBase={isValid}>
+    <script set:html={firstLoad}></script>
+  </App>
 </Layout>
 
 <script>

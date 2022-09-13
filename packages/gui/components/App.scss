@@ -61,4 +61,16 @@
     cursor: row-resize;
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAFAQMAAABo7865AAAABlBMVEVHcEzMzMzyAv2sAAAAAXRSTlMAQObYZgAAABBJREFUeF5jOAMEEAIEEFwAn3kMwcB6I2AAAAAASUVORK5CYII=');
   }
+
+  .message-no-database {
+    padding: 1.5rem;
+  }
+
+  .message-please-select-file {
+    padding: 1rem;
+  }
+
+  .message-loading-database {
+    padding: 1.5rem;
+  }
 }
