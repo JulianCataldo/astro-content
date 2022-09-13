@@ -11,6 +11,17 @@ import Base from './Base.astro';
 
 <Base>
   <Fragment slot="head">
+    <script is:inline>
+      const socket = new WebSocket('ws://localhost:9054', 'vite-hmr');
+      socket.addEventListener(
+        'open',
+        () => {
+          // eslint-disable-next-line no-console
+          console.log('open');
+        },
+        { once: true },
+      );
+    </script>
 
     <!-- HACK: Bypass Astro (S)CSS handling -->
     <style set:html={css}>
