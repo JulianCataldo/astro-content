@@ -12,7 +12,7 @@ import { handleMd } from '@astro-content/server/handle-md';
 import { generateFakeEntries } from '@astro-content/server/generate-fake-data';
 
 import type { PropertyReport } from '@astro-content/types/reports';
-import type { Save, Validate, Fake } from '@astro-content/types/dto';
+import type { Save, Validate, Fake, Response } from '@astro-content/types/dto';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 const serverSetup: AstroIntegration['hooks']['astro:server:setup'] = ({
@@ -41,9 +41,13 @@ const serverSetup: AstroIntegration['hooks']['astro:server:setup'] = ({
         ) {
           const body = req.body as Save;
 
-          await saveFile(body);
+          // NOTE: For debugging only, add some fake I/O delay
+          // await new Promise((resolve) => setTimeout(() => resolve(''), 2000));
 
-          res.end(JSON.stringify({ success: true }));
+          const success = await saveFile(body);
+          const response: Response = { success };
+
+          res.end(JSON.stringify(response));
         } else if (
           req.url === endpoints.actions.validate
           // —————————————————————————————————————————————————— VALIDATE ———————

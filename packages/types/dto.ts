@@ -8,6 +8,10 @@ export interface Save {
   language: string | null;
 }
 
+export interface Response {
+  success: boolean;
+}
+
 export interface Validate {
   entity: Part;
   entry: Part;

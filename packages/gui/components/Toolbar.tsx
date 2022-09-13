@@ -24,6 +24,7 @@ export default function Toolbar() {
 
   const setRoute = useAppStore((state) => state.ui_setRoute);
   const save = useAppStore((state) => state.editor_save);
+  const savingState = useAppStore((state) => state.editor_savingState);
 
   const isMd = language === 'markdown';
   const fullPath =
@@ -84,10 +85,45 @@ export default function Toolbar() {
         {entity && (
           // FIXME: JSX A11y
           // eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events
-          <div className="action" onClick={save}>
-            <Icon icon="system-uicons:floppy" width="2em" />
-            <span className="label">Save</span>
-          </div>
+          <Tooltip
+            label={
+              import.meta.env.DEV ? (
+                <span>
+                  <code>Ctrl/Cmd</code> +{' '}
+                  <strong>
+                    <code>S</code>
+                  </strong>
+                </span>
+              ) : (
+                <span>Saving is disabled in demo mode</span>
+              )
+            }
+            jsx
+          >
+            <div className="action save" onClick={save}>
+              <Icon
+                icon="system-uicons:floppy"
+                width="2em"
+                className={savingState === 'idle' ? 'visible' : ''}
+              />
+              <Icon
+                icon="system-uicons:clock"
+                width="2em"
+                className={savingState === 'busy' ? 'visible' : ''}
+              />
+              <Icon
+                icon="system-uicons:check"
+                width="2em"
+                className={savingState === 'success' ? 'visible' : ''}
+              />
+              <Icon
+                icon="system-uicons:cross"
+                width="2em"
+                className={savingState === 'failure' ? 'visible' : ''}
+              />
+              <span className="label">Save</span>
+            </div>
+          </Tooltip>
         )}
 
         <div className="breadcrumb">

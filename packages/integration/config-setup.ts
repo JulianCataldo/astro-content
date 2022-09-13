@@ -49,6 +49,11 @@ const configSetup: AstroIntegration['hooks']['astro:config:setup'] = ({
       pattern: endpoints.contentBase,
       entryPoint: `${guiPath}/ssr-entrypoint.astro`,
     });
+  }
+
+  injectRoute({
+    pattern: endpoints.actions.refresh,
+    entryPoint: `./node_modules/astro-content/trigger-transform.astro`,
   });
 
   /* Init minimal import helper */

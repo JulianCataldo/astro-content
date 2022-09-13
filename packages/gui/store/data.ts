@@ -40,6 +40,7 @@ const data = (set: StoreApi<AppState>['setState']): DataState => ({
       .catch(() => null);
 
     if (result) {
+      log({ result });
       set((state) => {
         // IDEA: default route if no previous file selected?
         // const newUiSate = { ...state.uiState };

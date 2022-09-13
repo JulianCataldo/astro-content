@@ -18,6 +18,7 @@ import { post } from './helpers';
 const editor = (set: StoreApi<AppState>['setState']): EditorState => ({
   editor_default: null,
   editor_language: null,
+  editor_savingState: 'idle',
 
   editor_setDefault: (ref: AppState['editor_default']) => {
     set(() => ({ editor_default: ref }));
@@ -25,7 +26,9 @@ const editor = (set: StoreApi<AppState>['setState']): EditorState => ({
 
   /* ········································································ */
 
-  editor_save: () => {
+  editor_save: async () => {
+    // if (import.meta.env.PROD) return false;
+
     set((state) => {
       let value;
       if (state.editor_default !== null) {
@@ -38,12 +41,6 @@ const editor = (set: StoreApi<AppState>['setState']): EditorState => ({
       }
       const { entity, entry, property } = state.ui_route;
 
-      let singular = '';
-      if (state.ui_route.entity) {
-        singular = kebabCase(
-          state.data_server.schemas.content[state.ui_route.entity].title,
-        );
-      }
       let file = '';
       if (
         entity &&
@@ -53,19 +50,60 @@ const editor = (set: StoreApi<AppState>['setState']): EditorState => ({
       ) {
         file =
           state.data_server.content[entity]?.[entry]?.[property]?.file ?? '';
+      } else if (entity && state.data_server.schemas.file[entity]) {
+        file = state.data_server.schemas.file[entity];
       }
+
+      // let singular = '';
       const dto: Save = {
         file,
         language: state.editor_language,
-        singular,
+        singular: '',
         value,
       };
 
+      if (state.editor_savingState === 'idle') {
+        set(() => ({ editor_savingState: 'busy' }));
+      }
+
       const result = post(endpoints.actions.save, dto)
+        .then(async (stream) => {
+          // TODO: Extract JSON parsing to `post` helper
+          await stream.json().then(async ({ success }: Response) => {
+            log({ success });
+            if (success) {
+              /* Trigger `Astro.glob` + `collect`, so Astro transform updates */
               await fetch(endpoints.actions.refresh);
+
+              /* Refresh local data */
+              // FIXME: Adding delay to prevent jerkyness with empty data,
+              // but should really find a better signal to hook on when ready
+              await new Promise((resolve) =>
+                setTimeout(
+                  async () =>
+                    await state.data_fetchServerData().then(() => resolve('')),
+                  200,
+                ),
+              );
+
+              log("Fetching new data after save…'");
+            }
+            set(() => ({
+              editor_savingState: success ? 'success' : 'failure',
+            }));
+
+            setTimeout(
+              () =>
+                set(() => ({
+                  editor_savingState: 'idle',
+                })),
+              2500,
+            );
+          });
+        })
         .catch((e) => log(e, 'info'));
 
-      return {};
+      return result;
     });
   },
 
