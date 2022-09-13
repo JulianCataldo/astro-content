@@ -3,6 +3,7 @@ import type { AstroIntegration } from 'astro';
 import { log } from '@astro-content/server/logger';
 /* ·········································································· */
 import { saveTsHelper } from '@astro-content/server/collect';
+import { endpoints } from '@astro-content/server/state';
 import ViteYaml from './load-yaml-plugin';
 /* —————————————————————————————————————————————————————————————————————————— */
 // FIXME: Find a more elegant way to import than a sub `node_modules`
