@@ -78,9 +78,9 @@ export default function Property({
               'rawYaml' in propTree &&
               toPretty({ literal: propTree.rawYaml });
 
-        const fileInfo = `
-                          ${realPath ?? ''}<hr />${filePreview || 'No preview'}
-                          `;
+        const fileInfo = `${realPath ?? ''}<hr />${
+          filePreview || 'No preview'
+        }`;
 
         const propActive =
           entity === entityKey && entry === entryKey && property === propKey;

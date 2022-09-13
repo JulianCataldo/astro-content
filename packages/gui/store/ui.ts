@@ -1,4 +1,4 @@
-import type { AppState, Part, UiState } from '@astro-content/types/gui-state';
+import type { AppState, UiState } from '@astro-content/types/gui-state';
 import type { StoreApi } from 'zustand';
 import { log } from '../logger';
 /* —————————————————————————————————————————————————————————————————————————— */
@@ -91,7 +91,7 @@ const uiState = (set: StoreApi<AppState>['setState']): UiState => ({
 
   /* ········································································ */
 
-  ui_setAssistantPane: (name: string) => {
+  ui_setAssistantPane: (name) => {
     set((state) => {
       const newUiState: Partial<UiState> = {
         ui_assistantPane: name || 'preview',

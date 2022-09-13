@@ -20,9 +20,7 @@ const serverSetup: AstroIntegration['hooks']['astro:server:setup'] = ({
 }) => {
   server.watcher.on('all', (event, wPath) => {
     log({ event, wPath }, 'absurd');
-  });
-  server.ws.on('vite:beforeFullReload', () => {
-    log('Full reload…', 'absurd', 'pretty');
+    server.ws.send('content-reload');
   });
 
   // FIXME: bodyParser typings

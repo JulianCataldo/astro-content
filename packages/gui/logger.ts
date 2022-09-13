@@ -32,7 +32,6 @@ export function log(
       const time = new Date().toLocaleTimeString();
 
       console.log(
-        // TODO: Time
         `${time} ` +
           // —————————————————————————————————————————————————
           `${'[content]'} ${literal}`,

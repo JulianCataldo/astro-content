@@ -2,3 +2,5 @@
 // Might be useful for distributable
 
 // export { collect } from './collect';
+
+export {};

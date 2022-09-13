@@ -24,7 +24,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 interface Props {
-  label: string;
+  label: string | JSX.Element;
   placement?: Placement;
   children: JSX.Element;
   jsx?: boolean;

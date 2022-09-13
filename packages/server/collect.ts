@@ -2,8 +2,6 @@
 import path from 'node:path';
 import { sentenceCase } from 'change-case';
 import fs from 'node:fs/promises';
-import Ajv from 'ajv';
-import addFormats from 'ajv-formats';
 // import draft7MetaSchema from 'ajv/dist/refs/json-schema-draft-07.json';
 /* ·········································································· */
 import type { FileInstance, YamlInstance } from '@astro-content/types/file';
@@ -17,18 +15,6 @@ import { getTrio } from './utils';
 import { log } from './logger';
 // import coreSchemaValidation from './core-schema-validation';
 /* —————————————————————————————————————————————————————————————————————————— */
-
-const ajv = new Ajv({
-  allErrors: false,
-  strict: false,
-  logger: false,
-  strictSchema: false,
-  strictNumbers: false,
-  strictTypes: false,
-  strictTuples: false,
-  strictRequired: false,
-});
-addFormats(ajv);
 
 // FIXME: This prevents "duplicate key" error with AJV schema compiler
 // delete draft7MetaSchema.$id;

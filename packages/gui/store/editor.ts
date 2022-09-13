@@ -1,16 +1,9 @@
-import { kebabCase } from 'lodash-es';
 import type { StoreApi } from 'zustand';
-import type { JSONSchema7 } from 'json-schema';
 /* ·········································································· */
 import { endpoints } from '@astro-content/server/state';
-import type {
-  AppState,
-  Language,
-  Part,
-  EditorState,
-} from '@astro-content/types/gui-state';
+import type { AppState, EditorState } from '@astro-content/types/gui-state';
 import type { PropertyReport } from '@astro-content/types/reports';
-import type { Save, Validate } from '@astro-content/types/dto';
+import type { Save, Validate, Response } from '@astro-content/types/dto';
 import { log } from '../logger';
 import { post } from './helpers';
 /* —————————————————————————————————————————————————————————————————————————— */
@@ -21,7 +14,9 @@ const editor = (set: StoreApi<AppState>['setState']): EditorState => ({
   editor_scrollPosition: 0,
   editor_savingState: 'idle',
 
-  editor_setDefault: (ref: AppState['editor_default']) => {
+  /* ········································································ */
+
+  editor_setDefault: (ref) => {
     set(() => ({ editor_default: ref }));
   },
 
@@ -111,12 +106,12 @@ const editor = (set: StoreApi<AppState>['setState']): EditorState => ({
   /* ········································································ */
 
   editor_updateContentForValidation: async (
-    entity: Part,
-    entry: Part,
-    property: Part,
-    language: Language,
-    value: string,
-    schema: JSONSchema7,
+    entity,
+    entry,
+    property,
+    language,
+    value,
+    schema,
   ) => {
     log(
       {
@@ -139,7 +134,7 @@ const editor = (set: StoreApi<AppState>['setState']): EditorState => ({
         r
           .json()
           .then(({ reports: j }) => j as PropertyReport)
-          .catch((err) => log(err)),
+          .catch((err) => log({ err })),
       )
       .catch((err) => {
         log(err);
@@ -157,7 +152,6 @@ const editor = (set: StoreApi<AppState>['setState']): EditorState => ({
       ) {
         // FIXME: Possibly undefined
         newStateErrors[entity][entry][property] = reports;
-        //   log({ new: newStateErrors[entity][entry][property] });
       }
 
       return { data: { ...state.data_server, reports: newStateErrors } };
@@ -166,7 +160,7 @@ const editor = (set: StoreApi<AppState>['setState']): EditorState => ({
 
   /* ········································································ */
 
-  editor_setCurrentLanguage: (id: Language) => {
+  editor_setCurrentLanguage: (id) => {
     set((state) => {
       const newUiState: Partial<AppState> = {
         editor_language: id,
