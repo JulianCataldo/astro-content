@@ -119,6 +119,8 @@ const collect = async (
         filePath.endsWith('.schema.yaml') &&
         !filePath.endsWith('default.schema.yaml')
       ) {
+        // FIXME: Argument of type 'FileInstance' is not assignable
+        // @ts-ignore
         handleSchema(filePath, inputFile);
       }
     }

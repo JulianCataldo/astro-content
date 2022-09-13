@@ -57,7 +57,6 @@ const serverSetup: AstroIntegration['hooks']['astro:server:setup'] = ({
           log(`Validating ${body.language ?? 'unknown'}`, 'debug', 'pretty');
 
           let reports: PropertyReport | false = {};
-
           if (
             //
             body.language === 'markdown'

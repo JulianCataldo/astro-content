@@ -30,7 +30,8 @@ export async function generateTypes(
 
     const entryNames =
       typeof content[key] === 'object' &&
-      // FIXME:
+      // FIXME: No overload match
+      // @ts-ignore
       Object.entries(content[key])
         .map(([k]) => `'${k || 'none'}'`)
         .join(' | ');

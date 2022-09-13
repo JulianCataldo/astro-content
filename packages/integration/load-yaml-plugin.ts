@@ -1,5 +1,5 @@
 // Based on: https://github.com/Modyfi/vite-plugin-yaml
-// IDEA: could make this an independent package / plugin?
+// IDEA: Could make this an independent package / plugin?
 // TODO: Refactor / simplify: remove unused stuff, like YAML schema handling?
 
 import { load, DEFAULT_SCHEMA } from 'js-yaml';

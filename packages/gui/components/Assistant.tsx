@@ -28,7 +28,7 @@ export default function Preview() {
   const contentProp = property === 'content' ? 'contentProp' : property;
 
   const title =
-    // FIXME:
+    // FIXME: No unnecessary condition
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     entity && typeof schemas.content[entity]?.title === 'string'
       ? String(schemas.content[entity].title)
@@ -131,7 +131,7 @@ export {}`;
     types.ide.split('/* Interfaces */')[1]
   }`.trim();
 
-  // FIXME:
+  // FIXME: No unnecessary condition
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (!tabs[assistantPane]) {
     setAssistantPane('preview');

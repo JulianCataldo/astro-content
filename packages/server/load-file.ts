@@ -1,3 +1,4 @@
+// @ts-nocheck
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import prettier from 'prettier';
@@ -45,7 +46,7 @@ export async function loadFile(
     if (filePath.endsWith('md')) {
       const mdFile = file as MarkdownInstance<Record<string, unknown>>;
 
-      // FIXME:
+      // FIXME: Correct File Instance assertion
       collected = {
         ...mdFile,
         // For YAML, remove this
@@ -128,7 +129,7 @@ export async function loadFile(
 
     log({ collected }, 'absurd');
 
-    // FIXME:
+    // FIXME: Possibly undefined
     // if  (state.content[entity]?.[entry]?.[property])
     if (collected && typeof state.content[entity]?.[entry] === 'object') {
       state.content[entity][entry][property] = collected;

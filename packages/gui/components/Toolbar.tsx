@@ -171,9 +171,10 @@ export default function Toolbar() {
                 <ModalPopover
                   render={({ close, labelId, descriptionId }) => (
                     <div className="headings-details">
-                      {/* FIXME: */}
                       <Headings
+                        // FIXME: Prop. does not exist
                         items={
+                          // @ts-ignore
                           content[entity]?.[entry]?.[property]?.headingsCompiled
                         }
                       />

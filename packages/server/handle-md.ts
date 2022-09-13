@@ -74,6 +74,8 @@ export async function handleMd(content: string, schema?: JSONSchema7) {
           if (node.type === 'link') {
             log(node, 'absurd');
 
+            // FIXME: weird typings shifting in IDE
+            // @ts-ignore
             const html = toHtml(toHast(node.children[0]));
             links.push({
               url: node.url,
@@ -87,6 +89,7 @@ export async function handleMd(content: string, schema?: JSONSchema7) {
             let html = '';
             if (node.children.length) {
               // FIXME: weird typings shifting in IDE
+              // @ts-ignore
               html = toHtml(toHast(node.children[0]));
             }
 

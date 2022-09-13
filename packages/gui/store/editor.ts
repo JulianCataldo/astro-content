@@ -155,7 +155,7 @@ const editor = (set: StoreApi<AppState>['setState']): EditorState => ({
         reports &&
         newStateErrors[entity]?.[entry]?.[property]
       ) {
-        // FIXME:
+        // FIXME: Possibly undefined
         newStateErrors[entity][entry][property] = reports;
         //   log({ new: newStateErrors[entity][entry][property] });
       }

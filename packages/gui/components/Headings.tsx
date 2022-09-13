@@ -12,7 +12,7 @@ export default function Headings({ items }: Props) {
     // window.location.hash = 'the_hash;
     const heading = document.getElementById(id);
     const preview = document.querySelector('.preview');
-    // FIXME:
+    // FIXME: Possibly undefined
     preview?.scrollTo({
       top:
         heading?.getBoundingClientRect().top +
@@ -26,13 +26,13 @@ export default function Headings({ items }: Props) {
   };
   return items?.map((h, key) => {
     // NOTE: use `h` tag?
+    // FIXME: Correct generic tag typings
     // const Tag = `h${h.depth}`;
     const level = h.depth;
     return (
       // FIXME: JSX A11y
       // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
       <div key={key} onClick={() => jumpToHeading(h.slug)}>
-        {/* FIXME: Correct generic tag typings */}
         <div className={`h-level-${level}`}>
           {/* {JSON.stringify(h)} */}
           {/* TODO: Sync scrollbars: https://stackoverflow.com/a/69113028/2890472 */}

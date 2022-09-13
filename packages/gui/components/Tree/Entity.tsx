@@ -28,9 +28,9 @@ export default function Entity({ content }: { content: Content }) {
       {Object.entries(content).map(([entityKey, entityTree]) => (
         <div key={entityKey} className="leaf entity">
           <Tooltip label={entityLabel(entityKey)} placement="right">
-            {/* FIXME: JSX A11y */}
             {/*  eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events */}
             <div
+              // FIXME: JSX A11y
               // href={`/${key}`}
               onClick={() => setRoute(entityKey, false, false)}
               className={cx(
@@ -51,9 +51,9 @@ export default function Entity({ content }: { content: Content }) {
           {entityTree &&
             Object.entries(entityTree).map(([entryKey, entryTree]) => (
               <div key={entryKey} className="leaf child entry">
-                {/* FIXME: JSX A11y */}
                 {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
                 <div
+                  // FIXME: JSX A11y
                   onClick={() =>
                     setRoute(entityKey, property ? entryKey : entry, property)
                   }

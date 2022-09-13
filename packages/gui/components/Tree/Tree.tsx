@@ -26,7 +26,7 @@ export default function Tree() {
       if (eVal) {
         Object.entries(eVal).forEach(([rKey, rVal]) => {
           if (rKey.toLowerCase().match(searchInput.toLowerCase())) {
-            // FIXME: (possibly undefined)
+            // FIXME: Possibly undefined
             filtered[eKey][rKey] = rVal;
           } else {
             Object.entries(rVal).forEach(([pKey, pVal]) => {
