@@ -2,7 +2,7 @@ import type { StoreApi } from 'zustand';
 /* ·········································································· */
 import type { Endpoint, ServerState } from '@astro-content/types/server-state';
 import type { AppState, DataState } from '@astro-content/types/gui-state';
-import { apiBase, endpoints, getEmptyState } from '@astro-content/server/state';
+import { endpoints, getEmptyState } from '@astro-content/server/state';
 /* ·········································································· */
 import { log } from '../logger';
 /* —————————————————————————————————————————————————————————————————————————— */
@@ -17,8 +17,8 @@ export async function fetchData() {
   }
 
   await Promise.all(
-    endpoints.map(async (endpoint: keyof ServerState) =>
-      fetch(`${apiBase}/${endpoint}`).then((response) =>
+    endpoints.data.map(async (endpoint: keyof ServerState) =>
+      fetch(`${endpoints.apiBase}/${endpoint}`).then((response) =>
         response
           .json()
           .then((newData) => setData(endpoint, newData))

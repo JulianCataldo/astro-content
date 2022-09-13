@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 // import 'github-markdown-css';
 /* ·········································································· */
 import type { Fake } from '@astro-content/types/dto';
-import { actions } from '@astro-content/server/state';
+import { endpoints } from '@astro-content/server/state';
 import { log } from '../logger';
 import TabBar, { Tabs } from './TabBar';
 import Editor from './Editor/Editor';
@@ -148,7 +148,7 @@ export {}`;
       };
 
       // TODO: Extract to a `store` action
-      post(actions.fake.endpoint, dto)
+      post(endpoints.actions.fake, dto)
         .then((r) =>
           r
             .json()

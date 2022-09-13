@@ -4,7 +4,7 @@ import type { AstroIntegration } from 'astro';
 /* ·········································································· */
 import { log } from '@astro-content/server/logger';
 /* ·········································································· */
-import { actions } from '@astro-content/server/state';
+import { endpoints } from '@astro-content/server/state';
 import { saveFile } from '@astro-content/server/save-file';
 
 import { handleYaml } from '@astro-content/server/handle-yaml';
@@ -36,7 +36,7 @@ const serverSetup: AstroIntegration['hooks']['astro:server:setup'] = ({
 
       if (req.body) {
         if (
-          req.url === actions.save.endpoint
+          req.url === endpoints.actions.save
           // —————————————————————————————————————————————————— SAVE ———————————
         ) {
           const body = req.body as Save;
@@ -45,7 +45,7 @@ const serverSetup: AstroIntegration['hooks']['astro:server:setup'] = ({
 
           res.end(JSON.stringify({ success: true }));
         } else if (
-          req.url === actions.validate.endpoint
+          req.url === endpoints.actions.validate
           // —————————————————————————————————————————————————— VALIDATE ———————
         ) {
           const body = req.body as Validate;
@@ -75,7 +75,7 @@ const serverSetup: AstroIntegration['hooks']['astro:server:setup'] = ({
           }
           res.end(JSON.stringify({ success: true, reports }));
         } else if (
-          req.url === actions.fake.endpoint
+          req.url === endpoints.actions.fake
           // —————————————————————————————————————————————————— FAKE ———————————
         ) {
           const body = req.body as Fake;

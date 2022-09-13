@@ -3,7 +3,7 @@ import mkdirp from 'mkdirp';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 /* ·········································································· */
-import { apiBase } from '@astro-content/server/state';
+import { endpoints } from '@astro-content/server/state';
 import { log } from '@astro-content/server/logger';
 import type { ServerState, Endpoint } from '@astro-content/types/server-state';
 /* —————————————————————————————————————————————————————————————————————————— */
@@ -27,7 +27,10 @@ const buildDone: AstroIntegration['hooks']['astro:build:done'] = async () => {
         if (typeof obj === 'object') {
           return Promise.all(
             Object.entries(obj).map(async ([key]) => {
-              const dest = path.join(process.cwd(), `dist${apiBase}/${key}`);
+              const dest = path.join(
+                process.cwd(),
+                `dist${endpoints.apiBase}/${key}`,
+              );
 
               return fs
                 .writeFile(dest, JSON.stringify(obj[key as Endpoint]))

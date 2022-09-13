@@ -2,7 +2,7 @@ import { kebabCase } from 'lodash-es';
 import type { StoreApi } from 'zustand';
 import type { JSONSchema7 } from 'json-schema';
 /* ·········································································· */
-import { actions } from '@astro-content/server/state';
+import { endpoints } from '@astro-content/server/state';
 import type {
   AppState,
   Language,
@@ -61,17 +61,8 @@ const editor = (set: StoreApi<AppState>['setState']): EditorState => ({
         value,
       };
 
-      // TODO: Add notification
-      // await Notification.requestPermission();
-      // new Notification('');
-      post(actions.save.endpoint, dto)
-        .then(
-          // async
-          // TODO: Handle success / failure
-          (e) => {
-            log(e);
-          },
-        )
+      const result = post(endpoints.actions.save, dto)
+              await fetch(endpoints.actions.refresh);
         .catch((e) => log(e, 'info'));
 
       return {};
@@ -104,7 +95,7 @@ const editor = (set: StoreApi<AppState>['setState']): EditorState => ({
       language,
     } as Validate;
 
-    const reports = await post(actions.validate.endpoint, dto)
+    const reports = await post(endpoints.actions.validate, dto)
       .then((r) =>
         r
           .json()

@@ -41,14 +41,14 @@ const configSetup: AstroIntegration['hooks']['astro:config:setup'] = ({
   });
 
   /* Inject stateful routes (share same state as all Astro SSR pages) */
-  injectRoute({
-    pattern: '__content/api/[endpoint]',
-    entryPoint: `${guiPath}/server-bridge.json.ts`,
-  });
-  injectRoute({
-    pattern: '/__content',
-    // IDEA: Could be optional (install GUI / CLI as separate package?)
-    entryPoint: `${guiPath}/ssr-entrypoint.astro`,
+    injectRoute({
+      pattern: `${endpoints.apiBase}/[endpoint]`,
+      entryPoint: `${guiPath}/server-bridge.json.ts`,
+    });
+    injectRoute({
+      pattern: endpoints.contentBase,
+      entryPoint: `${guiPath}/ssr-entrypoint.astro`,
+    });
   });
 
   /* Init minimal import helper */

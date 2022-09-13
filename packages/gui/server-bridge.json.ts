@@ -6,7 +6,7 @@ import { log } from '@astro-content/server/logger';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 export function getStaticPaths() {
-  return endpoints.map((endpoint) => ({ params: { endpoint } }));
+  return endpoints.data.map((endpoint) => ({ params: { endpoint } }));
 }
 
 export const get: APIRoute = ({ params, request }) => {
@@ -18,7 +18,7 @@ export const get: APIRoute = ({ params, request }) => {
   if (
     request.method === 'GET' &&
     typeof params.endpoint === 'string' &&
-    endpoints.includes(endpoint)
+    endpoints.data.includes(endpoint)
   ) {
     log({ params, method: request.method });
     return {

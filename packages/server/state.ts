@@ -47,10 +47,23 @@ const data: Endpoint[] = [
   //
 ];
 
-const actions = {
-  save: { endpoint: `${apiBase}/~save` },
-  fake: { endpoint: `${apiBase}/~fake` },
-  validate: { endpoint: `${apiBase}/~validate` },
+const contentBase = '/__content';
+const apiBase = `${contentBase}/api`;
+const endpoints = {
+  data,
+  contentBase,
+  apiBase,
+  actions: {
+    save: `${apiBase}/~save`,
+    fake: `${apiBase}/~fake`,
+    validate: `${apiBase}/~validate`,
+    refresh: `${apiBase}/~refresh`,
+  },
 };
 
-export { state, data as endpoints, actions, getEmptyState, apiBase };
+export {
+  //
+  state,
+  endpoints,
+  getEmptyState,
+};
