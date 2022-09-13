@@ -1,41 +1,28 @@
 #! /usr/bin/env node --no-warnings
 
-/* eslint-disable import/no-relative-packages */
 // NOTE: WORK IN PROGRESS
-import { program } from 'commander';
-import inquirer from 'inquirer';
-import pkg from './package.json' assert { type: 'json' };
-/* ·········································································· */
-
-// IDEA: Force embedding in dist. with Parcel?
 /* `bin` is forwarded from `/packages/integration/package.json`,
    so we're using sub `node_modules` import  */
-import { add } from '@astro-content/server/add';
-import {
-  // setupRemark,
-  setupContentBase,
-  setupUnifiedVsCode,
-  isValidContentBase,
-} from '@astro-content/server/setup';
 
+import { program } from 'commander';
+import inquirer from 'inquirer';
+import fs from 'fs/promises';
 /* —————————————————————————————————————————————————————————————————————————— */
+import { add } from '@astro-content/server/add';
+import * as setup from '@astro-content/server/setup';
+// NOTE: `.js` extensions are needed with CLI, why?
+import { addHelp } from './help.js';
+/* —————————————————————————————————————————————————————————————————————————— */
+
+const pkg = await fs
+  .readFile('./package.json', 'utf-8')
+  .then((r) => JSON.parse(r) as { version: string })
+  .catch(() => ({ version: '' }));
 
 // eslint-disable-next-line no-console
 console.log(`Astro Content — CLI — ${pkg.version}\n`);
 
-const addHelp = `
-Usage examples
-
-pnpm content add zebras zebra
-=> New entity "zebras" with the singular name of "zebra"
-
-Note: An entity act as collection of entries or singletons
-Entry have common schema, singletons have their own schemas
-It's up to user to decorrelate singletons in their schema
-
-pnpm content add zebras doody
-=> Add a "zebra" entry with an unique name "doody" in "zebras" entity
-`;
+/* ·········································································· */
 
 program
   .command('add')
@@ -53,58 +40,60 @@ program
   });
 
 const contentInfos = {
-  contentFilesExist: isValidContentBase(),
+  contentFilesExist: setup.isValidContentBase(),
 };
-
-// console.log({ contentInfos });
-
+/* —————————————————————————————————————————————————————————————————————————— */
 program
   .command('setup')
   .description('Setup Astro Content for your project')
-  .action(async (str: string, options: string) => {
-    // const limit = options.first ? 1 : undefined;
-    // console.log({ str, options });
-    // console.log(str.split(options.separator, limit));
-    const response = await inquirer.prompt({
+  .action(async () => {
+    const response = await inquirer.prompt<{ installations: string[] }>({
       type: 'checkbox',
       name: 'installations',
       message: 'Choose setup(s):',
       choices: [
+        /* —————————————————————————————————————————————————————————————————— */
         new inquirer.Separator('\n Adds `./content` folder + default schema'),
         {
           name: 'Minimal content base',
           value: 'content-base',
           checked: !contentInfos.contentFilesExist,
           disabled: contentInfos.contentFilesExist && 'already exist',
-          // description: ,
+          // description: '',
         },
+        /* —————————————————————————————————————————————————————————————————— */
         // new inquirer.Separator('Adds `remark` + CLI + base configuration'),
         // {
         //   name: 'Markdown linter: CLI',
-        //   value: 'remark',
+        //   value: 'remark-lint',
         //   checked: true,
         //   disabled: false,
         // },
+        /* —————————————————————————————————————————————————————————————————— */
         // new inquirer.Separator('Adds `unified` VS Code extension for `remark`'),
         // {
-        //   name: 'Markdown linter: IDE',
+        //   name: 'Markdown linter: IDE (VS Code ext.)',
         //   value: 'unified-vscode',
         //   checked: true,
         //   disabled: false,
         // },
+        /* —————————————————————————————————————————————————————————————————— */
         // TODO: `yaml-language-server` bridge. Or make it available in integration options
         // TODO: retext (not used with remark ide/cli because it breaks some stuff)
       ],
     });
-    // console.log({ response });
+
     if (response.installations.some((i) => i === 'content-base')) {
-      // console.log('add');
-      await setupContentBase();
+      await setup.contentBase();
     }
-    if (response.installations.some((i) => i === 'unified-vscode')) {
-      // console.log('add');
-      await setupUnifiedVsCode();
-    }
+    // if (response.installations.some((i) => i === 'unified-vscode')) {
+    //   await setup.unifiedVsCode();
+    // }
+    // if (response.installations.some((i) => i === 'remark-lint')) {
+    //   await setup.remarkLint();
+    // }
+    // if (response.installations.some((i) => i === 'yaml-vscode')) {
+    // }
   });
 
 program.parse();
