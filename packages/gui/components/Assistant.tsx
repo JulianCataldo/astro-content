@@ -226,6 +226,7 @@ export {}`;
                   dangerouslySetInnerHTML={{
                     __html: value.bodyCompiled,
                   }}
+                  ref={previewWrapper}
                 />
               )}
             {/* {assistantPane === 'meta' && (
