@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react';
 import cx from 'classnames';
 /* ·········································································· */
-import './TabBar.scss';
+// import './TabBar.scss';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 export type Tabs = Record<string, { icon?: string; title: string }>;

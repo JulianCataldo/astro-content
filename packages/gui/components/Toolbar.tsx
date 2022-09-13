@@ -7,7 +7,7 @@ import cx from 'classnames';
 /* ·········································································· */
 import Headings from './Headings';
 import ModalPopover from './ModalPopover';
-import './Toolbar.scss';
+// import './Toolbar.scss';
 import Tooltip from './Tooltip';
 /* ·········································································· */
 import useAppStore from '../store';

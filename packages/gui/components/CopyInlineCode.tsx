@@ -2,7 +2,7 @@ import type { Placement } from '@floating-ui/react-dom-interactions';
 import cx from 'classnames';
 import { useState } from 'react';
 // import Tooltip from './Tooltip';
-import './CopyInlineCode.scss';
+// import './CopyInlineCode.scss';
 
 interface Props {
   text: string;

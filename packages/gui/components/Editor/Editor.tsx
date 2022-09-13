@@ -4,6 +4,8 @@ import type { editor as nsEd } from 'monaco-editor';
 import { useEffect, useRef, useState } from 'react';
 /* ·········································································· */
 import type { EditorLanguage } from '@astro-content/types/gui-state';
+// import './Editor.scss';
+/* ·········································································· */
 import { validate } from './validation';
 import useAppStore from '../../store';
 import { log } from '../../logger';

@@ -1,6 +1,6 @@
 /* ·········································································· */
 import type { ExtraMd } from '@astro-content/types/file';
-import './Headings.scss';
+// import './Headings.scss';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 interface Props {

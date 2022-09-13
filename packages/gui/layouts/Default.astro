@@ -1,5 +1,9 @@
 ---
-import './Default.scss';
+// import './Default.scss';
+
+// NOTE: We're opting out of HMR totally when treating CSS separately
+import css from '../dist/styles.css?raw';
+
 /* —————————————————————————————————————————————————————————————————————————— */
 
 import Base from './Base.astro';
@@ -7,6 +11,12 @@ import Base from './Base.astro';
 
 <Base>
   <Fragment slot="head">
+
+    <!-- HACK: Bypass Astro (S)CSS handling -->
+    <style set:html={css}>
+
+    </style>
+
     <!-- _ -->
   </Fragment>
   <Fragment slot="body">

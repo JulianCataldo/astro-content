@@ -7,7 +7,7 @@ import useAppStore from '../store';
 import TabBar, { Tabs } from './TabBar';
 import Tooltip from './Tooltip';
 import { log } from '../logger';
-import './Inspector.scss';
+// import './Inspector.scss';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 export default function Inspector() {

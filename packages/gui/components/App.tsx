@@ -8,7 +8,7 @@ import Inspector from './Inspector';
 import State from './State';
 import Toolbar from './Toolbar';
 import CopyInlineCode from './CopyInlineCode';
-import './App.scss';
+// import './App.scss';
 /* ·········································································· */
 import useAppStore from '../store';
 import { log } from '../logger';

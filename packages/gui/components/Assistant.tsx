@@ -3,7 +3,7 @@
 
 import yaml from 'yaml';
 import { useEffect, useState } from 'react';
-import 'github-markdown-css';
+// import 'github-markdown-css';
 /* ·········································································· */
 import type { Fake } from '@astro-content/types/dto';
 import { actions } from '@astro-content/server/state';
@@ -13,7 +13,7 @@ import Editor from './Editor/Editor';
 // import Metas from './Metas'
 /* ·········································································· */
 import useAppStore from '../store';
-import './Assistant.scss';
+// import './Assistant.scss';
 import { post } from '../store/helpers';
 /* —————————————————————————————————————————————————————————————————————————— */
 

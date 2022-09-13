@@ -1,0 +1,22 @@
+// NOTE: (important)
+// We are not using SASS with Vite Astro, it's totally separated. Old fashioned.
+// Why?
+// 1: Prevent very weird and uncontrolable Vite Dev Server refresh behavior.
+// 2: So user doesn't have to compile the SASS when using this integration GUI
+//    (IDK what kind of performance gain you get, though).
+// 3: We don't have access to `import.meta.hot` with Astro it seems.
+// 4: Actually, using `injectRoute` seems to break JSX and Astro HMR, only
+//    (S)CSS is working, with undesirable full page reload.
+// Conclusion: investigate more all these behaviors to suit our uses cases.
+// —————————————————————————————————————————————————————————————————————————————
+
+@import './layouts/Default.scss';
+@import './components/Toolbar.scss';
+@import './components/TabBar.scss';
+@import './components/Inspector.scss';
+@import './components/Headings.scss';
+@import './components/CopyInlineCode.scss';
+@import './components/Assistant.scss';
+@import './components/App.scss';
+@import './components/Tree/Tree.scss';
+@import './components/Editor/Editor.scss';
