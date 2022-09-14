@@ -1,4 +1,5 @@
-#! /usr/bin/env node --no-warnings
+#! /usr/bin/env node --no-warnings --experimental-specifier-resolution=node --experimental-json-modules
+// NOTE: So `.js` extensions are not needed with CLI ————————————^?
 
 // NOTE: WORK IN PROGRESS
 /* `bin` is forwarded from `/packages/integration/package.json`,
@@ -6,18 +7,13 @@
 
 import { program } from 'commander';
 import inquirer from 'inquirer';
-import fs from 'fs/promises';
+
 /* —————————————————————————————————————————————————————————————————————————— */
 import { add } from '@astro-content/server/add';
 import * as setup from '@astro-content/server/setup';
-// NOTE: `.js` extensions are needed with CLI, why?
+import pkg from './package.json' assert { type: 'json' };
 import { addHelp } from './help.js';
 /* —————————————————————————————————————————————————————————————————————————— */
-
-const pkg = await fs
-  .readFile('./package.json', 'utf-8')
-  .then((r) => JSON.parse(r) as { version: string })
-  .catch(() => ({ version: '' }));
 
 // eslint-disable-next-line no-console
 console.log(`Astro Content — CLI — ${pkg.version}\n`);
