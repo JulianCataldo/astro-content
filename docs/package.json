@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "buildd": "astro build",
+    "build": "astro build",
+    "clean": "rm -rf dist .turbo .astro-content",
     "start": "pnpm serve dist",
     "build:start": "pnpm run build ; pnpm run start",
     "preview": "astro preview",
