@@ -2,23 +2,18 @@
 import path from 'node:path';
 import { sentenceCase } from 'change-case';
 import fs from 'node:fs/promises';
-// import draft7MetaSchema from 'ajv/dist/refs/json-schema-draft-07.json';
 /* ·········································································· */
 import type { FileInstance, YamlInstance } from '@astro-content/types/file';
 import type { Options } from '@astro-content/types/integration';
 import type { JSONSchema7 } from 'json-schema';
 import type { ServerState } from '@astro-content/types/server-state';
 import { state } from './state';
-import { generateTypes } from './generate-types';
+import { generateTypes, importHelper } from './generate-types';
 import { loadFile } from './load-file';
 import { getTrio } from './utils';
 import { log } from './logger';
 // import coreSchemaValidation from './core-schema-validation';
 /* —————————————————————————————————————————————————————————————————————————— */
-
-// FIXME: This prevents "duplicate key" error with AJV schema compiler
-// delete draft7MetaSchema.$id;
-// ajv.addMetaSchema(draft7MetaSchema);
 
 const tempDir = path.join(process.cwd(), '.astro-content');
 
@@ -46,30 +41,18 @@ function handleSchema(filePath: string, unknownYaml: YamlInstance<unknown>) {
 
 /* ·········································································· */
 
-function saveContentState() {
+function saveContentStateForBuild() {
   const fState = JSON.stringify(state);
   const fPath = path.join(tempDir, 'state.json');
   fs.writeFile(fPath, fState).catch((e) => log(e));
 }
 
-const ide = `// eslint-disable-next-line import/no-extraneous-dependencies
-import { collect } from 'astro-content';
-import type { FileInstance, Options } from 'astro-content';
-import type { Entities } from '../.astro-content/types';
-
-const get = collect as (
-  pFiles: Promise<FileInstance[]>,
-  options?: Options,
-) => Promise<Entities>;
-
-export { get };
-export * from "../.astro-content/types";
-`;
 export async function saveTsHelper() {
   await fs
-    .writeFile(path.join(process.cwd(), 'content', 'index.ts'), ide)
+    .writeFile(path.join(process.cwd(), 'content', 'index.ts'), importHelper)
     .catch((e) => log(e));
 }
+
 export async function saveTsTypes() {
   await fs
     .writeFile(
@@ -103,10 +86,9 @@ const collect = async (
     if (filePath) {
       if (
         filePath.endsWith('.schema.yaml') &&
-        !filePath.endsWith('default.schema.yaml')
+        !filePath.endsWith('default.schema.yaml') &&
+        'data' in inputFile
       ) {
-        // FIXME: Argument of type 'FileInstance' is not assignable
-        // @ts-ignore
         handleSchema(filePath, inputFile);
       }
     }
@@ -130,10 +112,11 @@ const collect = async (
 
   state.types = await generateTypes(state.content, state.schemas);
 
-  // // Build mode
-  // if (import.meta.env.PROD) {
-  saveContentState();
-  // }
+  /* Build mode */
+  // IDEA: Try editMode condition to rule out regular content
+  if (import.meta.env.PROD) {
+    saveContentStateForBuild();
+  }
   saveTsTypes().catch((e) => log(e));
 
   return state.content;

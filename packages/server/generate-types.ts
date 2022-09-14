@@ -83,7 +83,7 @@ async function get(files: unknown) {
   return files as Entities;
 }
 /**
-* Global Astro utilities
+* Global Astro utilities (stub)
 * */
 declare namespace Astro {
  const glob = (pattern: string) => {return []};
@@ -96,3 +96,19 @@ declare namespace Astro {
   // TODO: Re-organize types object ——v
   return { common: '', browser, ide: common };
 }
+
+const importHelper = `// eslint-disable-next-line import/no-extraneous-dependencies
+import { collect } from 'astro-content';
+import type { FileInstance, Options } from 'astro-content';
+import type { Entities } from '../.astro-content/types';
+
+const get = collect as (
+  pFiles: Promise<FileInstance[]>,
+  options?: Options,
+) => Promise<Entities>;
+
+export { get };
+export * from "../.astro-content/types";
+`;
+
+export { importHelper };

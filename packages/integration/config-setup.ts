@@ -1,4 +1,5 @@
 import { existsSync } from 'fs';
+import { bold, green } from 'kleur/colors';
 import type { AstroIntegration } from 'astro';
 // import Inspect from 'vite-plugin-inspect';
 /* ·········································································· */
@@ -70,8 +71,18 @@ const configSetup: AstroIntegration['hooks']['astro:config:setup'] = ({
     entryPoint: `./node_modules/astro-content/trigger-transform.astro`,
   });
 
-  /* Init minimal import helper */
-  saveTsHelper().catch(() => null);
+  if (existsSync(`${process.cwd()}/content`)) {
+    /* Init minimal import helper */
+    saveTsHelper().catch(() => null);
+  } else {
+    const setupCommand = bold(green('pnpm content setup'));
+    log(
+      `Content base does not exist!\n` +
+        `         ℹ️  Please run \`${setupCommand}\` in project root.\n`,
+      'info',
+      'pretty',
+    );
+  }
 };
 
 export { configSetup };

@@ -194,6 +194,7 @@ importers:
       astro: 1.2.1
       body-parser: ^1.20.0
       js-yaml: ^4.1.0
+      kleur: ^4.1.5
       mkdirp: ^1.0.4
       tosource: 2.0.0-alpha.3
       vite-plugin-inspect: ^0.7.1
@@ -208,6 +209,7 @@ importers:
       '@types/js-yaml': 4.0.5
       body-parser: 1.20.0
       js-yaml: 4.1.0
+      kleur: 4.1.5
       mkdirp: 1.0.4
       tosource: 2.0.0-alpha.3
       yaml: 2.1.1

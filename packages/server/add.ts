@@ -24,7 +24,7 @@ export async function add(
   collectionOrSingletonName: string,
   singleName: string | null,
 ) {
-  console.log({ collectionOrSingletonName, singleName });
+  log({ collectionOrSingletonName, singleName });
   // const base = `${}${endpoints.apiBase}`;
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   // const userSchemas = await fetch(`${base}/schemas`)
@@ -35,7 +35,6 @@ export async function add(
   //     process.exit();
   //   });
   // console.log({ userSchemas });
-  log({ collectionOrSingletonName, singleName });
 
   const baseDest = path.join(
     process.cwd(),
