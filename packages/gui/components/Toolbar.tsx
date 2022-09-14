@@ -146,9 +146,9 @@ export default function Toolbar() {
             </div>
           )}
           {entry && (
-            <div>
+            <div className="entry">
               <Icon icon="system-uicons:chevron-right" width="2em" />
-              {sentenceCase(entry)}
+              <span>{sentenceCase(entry)}</span>
             </div>
           )}
           {property && (

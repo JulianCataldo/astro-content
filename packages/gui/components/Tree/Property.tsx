@@ -131,7 +131,9 @@ export default function Property({
                 </span>
               </Tooltip>
 
-              <span className="tree-label">{sentenceCase(propKey)}</span>
+              <div className="tree-label">
+                <span>{sentenceCase(propKey)}</span>
+              </div>
 
               <span className="spacer" />
 

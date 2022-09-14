@@ -40,6 +40,13 @@
       }
     }
 
+    .tree-label,
+    .tree-label span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
     .file-title {
       .component-tooltip {
         * {
@@ -100,12 +107,6 @@
 
     .spacer {
       flex-grow: 1;
-    }
-
-    .tree-label {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
     }
 
     .property-link {
