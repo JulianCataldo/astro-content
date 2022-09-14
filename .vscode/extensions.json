@@ -10,7 +10,6 @@
     "mrmlnc.vscode-scss",
     "pranaygp.vscode-css-peek",
     "aaron-bond.better-comments",
-    "Gruntfuggly.todo-tree",
-    "wayou.vscode-todo-highlight"
+    "Gruntfuggly.todo-tree"
   ]
 }

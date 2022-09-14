@@ -1,4 +1,42 @@
 {
+  "todo-tree.general.tags": [
+    "BUG",
+    "HACK",
+    "FIXME",
+    "TODO",
+    "NOTE",
+    "IDEA",
+    "REFACTOR",
+    "XXX",
+    "[ ]",
+    "[x]"
+  ],
+  "todo-tree.highlights.defaultHighlight": {
+    "background": "rgba(0, 0, 0, 0.5)",
+    "type": "tag-and-comment"
+  },
+  "todo-tree.highlights.customHighlight": {
+    "NOTE": {
+      "foreground": "cyan"
+    },
+    "TODO": {
+      "foreground": "lightgreen"
+    },
+    "FIXME": {
+      "foreground": "red"
+    },
+    "IDEA": {
+      "foreground": "magenta"
+    },
+    "HACK": {
+      "foreground": "orange"
+    },
+    "REFACTOR": {
+      "foreground": "orange"
+    }
+  },
+
+  // NOTE: UNUSED
   "yaml.schemas": {
     "http://json-schema.org/draft-07/schema#": ["**/*.schema.yaml"]
   }
