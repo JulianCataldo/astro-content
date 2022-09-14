@@ -22,7 +22,7 @@ const editor = (set: StoreApi<AppState>['setState']): EditorState => ({
 
   /* ········································································ */
 
-  editor_save: async () => {
+  editor_save: () => {
     // if (import.meta.env.PROD) return false;
 
     set((state) => {
@@ -74,13 +74,14 @@ const editor = (set: StoreApi<AppState>['setState']): EditorState => ({
               /* Refresh local data */
               // FIXME: Adding delay to prevent jerkyness with empty data,
               // but should really find a better signal to hook on when ready
-              await new Promise((resolve) =>
-                setTimeout(
-                  async () =>
-                    await state.data_fetchServerData().then(() => resolve('')),
-                  200,
-                ),
-              );
+              await new Promise((resolve) => {
+                setTimeout(() => {
+                  state
+                    .data_fetchServerData()
+                    .then(() => resolve(''))
+                    .catch(() => null);
+                }, 200);
+              });
 
               log("Fetching new data after save…'");
             }
@@ -134,13 +135,14 @@ const editor = (set: StoreApi<AppState>['setState']): EditorState => ({
         r
           .json()
           .then(({ reports: j }) => j as PropertyReport)
-          .catch((err) => log({ err })),
+          .catch((err) => log(err)),
       )
       .catch((err) => {
         log(err);
         return null;
       });
 
+    // FIXME:
     set((state) => {
       const newStateErrors = state.data_server.reports;
       if (
@@ -151,6 +153,7 @@ const editor = (set: StoreApi<AppState>['setState']): EditorState => ({
         newStateErrors[entity]?.[entry]?.[property]
       ) {
         // FIXME: Possibly undefined
+        // @ts-ignore
         newStateErrors[entity][entry][property] = reports;
       }
 
