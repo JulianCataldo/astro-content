@@ -1,9 +1,13 @@
 /* eslint-disable max-lines */
-/* ·········································································· */
+// import path from 'node:path';
 import type { JSONSchema7 } from 'json-schema';
+/* ·········································································· */
 import type { Endpoint, ServerState } from '@astro-content/types/server-state';
 import markdownFile from './schemas/MarkdownFile.json' assert { type: 'json' };
 /* —————————————————————————————————————————————————————————————————————————— */
+
+// TODO: Take this from user config / Vite
+// const contentDir = path.join(process.cwd(), 'content');
 
 const emptyState: ServerState = {
   content: {},
@@ -65,4 +69,5 @@ export {
   state,
   endpoints,
   getEmptyState,
+  // contentDir,
 };
