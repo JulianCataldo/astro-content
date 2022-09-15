@@ -57,7 +57,7 @@ export type Reports =
   | ReportLink[];
 
 export interface PropertyReport {
-  schema?: YamlErrorSchema[];
+  schema?: YamlErrorSchema[] | MdErrorSchema[];
   lint?: ErrorLint[];
   prose?: ErrorProse[];
 
