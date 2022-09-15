@@ -1,5 +1,4 @@
 import type { AstroIntegration } from 'astro';
-import mkdirp from 'mkdirp';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 /* ·········································································· */
@@ -10,10 +9,8 @@ import type { ServerState, Endpoint } from '@astro-content/types/server-state';
 
 const tempDir = path.join(process.cwd(), '.astro-content');
 
-const buildStart: AstroIntegration['hooks']['astro:build:start'] = async () => {
-  log(tempDir);
-  await mkdirp(tempDir);
-};
+const buildStart: AstroIntegration['hooks']['astro:build:start'] =
+  async () => {};
 
 const buildDone: AstroIntegration['hooks']['astro:build:done'] = async () => {
   log(`Build done`);

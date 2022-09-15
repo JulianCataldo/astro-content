@@ -33,6 +33,7 @@
     "@astrojs/react": "^1.1.2",
     "@rollup/pluginutils": "^4.2.1",
     "body-parser": "^1.20.0",
+    "import-meta-resolve": "^2.1.0",
     "js-yaml": "^4.1.0",
     "kleur": "^4.1.5",
     "mkdirp": "^1.0.4",

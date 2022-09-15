@@ -1,6 +1,11 @@
+import fs from 'fs/promises';
 import { existsSync } from 'fs';
 import { bold, green } from 'kleur/colors';
 import type { AstroIntegration } from 'astro';
+import mkdirp from 'mkdirp';
+import path from 'node:path';
+import { resolve } from 'import-meta-resolve';
+import { fileURLToPath } from 'node:url';
 // import Inspect from 'vite-plugin-inspect';
 /* ·········································································· */
 import { log } from '@astro-content/server/logger';
@@ -9,12 +14,20 @@ import { saveTsHelper } from '@astro-content/server/collect';
 import { endpoints } from '@astro-content/server/state';
 import ViteYaml from './load-yaml-plugin.js';
 /* —————————————————————————————————————————————————————————————————————————— */
-// FIXME: Find a more elegant way to import than a sub `node_modules`
-// It crash if put in `gui` package (deps. resolution probably)
-const guiPath = './node_modules/@astro-content/gui';
-const integrationPath = './node_modules/astro-content';
 
-const configSetup: AstroIntegration['hooks']['astro:config:setup'] = ({
+const guiPath = path.dirname(
+  fileURLToPath(
+    await resolve('@astro-content/gui/package.json', import.meta.url),
+  ),
+);
+// NOTE: One level above `dist`. The `astro-content/package.json`
+//  trick is just working with `require.resolve`, unfortunately —————v
+const integrationPath = fileURLToPath(await resolve('../', import.meta.url));
+const tempDir = path.join(process.cwd(), '.astro-content');
+
+/* ·········································································· */
+
+const configSetup: AstroIntegration['hooks']['astro:config:setup'] = async ({
   injectRoute,
   updateConfig,
   config,
@@ -23,10 +36,10 @@ const configSetup: AstroIntegration['hooks']['astro:config:setup'] = ({
   // This means that it can be wrong if port is already used and incremented.
   log(
     `
-📚  astro-content — ⚠️ ALPHA PREVIEW ⚠️
-
-┃ Local    http://localhost:${config.server.port}/__content
-┃ Network  http://0.0.0.0:${config.server.port}/__content
+  📚  astro-content — ⚠️ ALPHA PREVIEW ⚠️
+  
+  ┃ Local    http://localhost:${config.server.port}/__content
+  ┃ Network  http://0.0.0.0:${config.server.port}/__content
   `,
     'info',
   );
@@ -58,9 +71,10 @@ const configSetup: AstroIntegration['hooks']['astro:config:setup'] = ({
       // NOTE: I've fiddled a good amount of time to find this,
       // and I still don't know why this works.
       // > When package is distributed (not in workspace),
-      // Vite was prefixing modules + loading them as CJS.
+      // Vite was prefixing modules + loading them as CJS,
+      // maybe because of some nested peer, loaded with a wrong old CJS version.
       // Adding this force 'untouched' module resolution.
-      // Might monitor side-effects.
+      // > Might monitor side-effects.
       // https://vitejs.dev/config/dep-optimization-options.html#optimizedeps-exclude
       optimizeDeps: {
         include: ['react-split', 'zustand', 'classnames', 'prop-types'],
@@ -73,19 +87,26 @@ const configSetup: AstroIntegration['hooks']['astro:config:setup'] = ({
   /* Check if `@astro-content/gui` is properly installed */
   // if (existsSync(`${guiPath}/package.json`)) {
   injectRoute({
-    pattern: `${endpoints.apiBase}/[endpoint]`,
-    entryPoint: `${integrationPath}/server-bridge.json.ts`,
+    pattern: path.join(endpoints.apiBase, '[endpoint]'),
+    entryPoint: path.join(integrationPath, 'server-bridge.json.ts'),
   });
   injectRoute({
     pattern: endpoints.contentBase,
-    entryPoint: `${guiPath}/ssr-entrypoint.astro`,
+    entryPoint: path.join(guiPath, 'ssr-entrypoint.astro'),
   });
   // }
 
   injectRoute({
     pattern: endpoints.actions.refresh,
-    entryPoint: `${integrationPath}/trigger-transform.astro`,
+    entryPoint: path.join(integrationPath, 'trigger-transform.astro'),
   });
+
+  /* Setup project */
+  log(tempDir);
+  await mkdirp(tempDir);
+
+  const minimalTypes = `export interface Entities {}`;
+  await fs.writeFile(path.join(tempDir, 'types.ts'), minimalTypes);
 
   if (existsSync(`${process.cwd()}/content`)) {
     /* Init minimal import helper */
