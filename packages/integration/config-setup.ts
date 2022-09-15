@@ -19,6 +19,8 @@ const configSetup: AstroIntegration['hooks']['astro:config:setup'] = ({
   updateConfig,
   config,
 }) => {
+  // FIX: Server port is from user config, not actual dev. server
+  // This means that it can be wrong if port is already used and incremented.
   log(`
 📚  astro-content — ⚠️ ALPHA PREVIEW ⚠️
 
@@ -68,20 +70,20 @@ const configSetup: AstroIntegration['hooks']['astro:config:setup'] = ({
   /* Inject stateful routes (share same state as all Astro SSR pages) */
 
   /* Check if `@astro-content/gui` is properly installed */
-  if (existsSync(`${guiPath}/package.json`)) {
+  // if (existsSync(`${guiPath}/package.json`)) {
   injectRoute({
     pattern: `${endpoints.apiBase}/[endpoint]`,
     entryPoint: `${integrationPath}/server-bridge.json.ts`,
   });
-    injectRoute({
-      pattern: endpoints.contentBase,
-      entryPoint: `${guiPath}/ssr-entrypoint.astro`,
-    });
-  }
+  injectRoute({
+    pattern: endpoints.contentBase,
+    entryPoint: `${guiPath}/ssr-entrypoint.astro`,
+  });
+  // }
 
   injectRoute({
     pattern: endpoints.actions.refresh,
-    entryPoint: `./node_modules/astro-content/trigger-transform.astro`,
+    entryPoint: `${integrationPath}/trigger-transform.astro`,
   });
 
   if (existsSync(`${process.cwd()}/content`)) {
