@@ -4,7 +4,7 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "build": "pnpm sass styles.scss dist/styles.css",
+    "build": "pnpm sass --embed-source-map styles.scss dist/styles.css",
     "dev": "pnpm sass -w styles.scss dist/styles.css",
     "clean": "rm -rf dist .turbo",
     "test": "echo \"Error: no test specified\" && exit 1"

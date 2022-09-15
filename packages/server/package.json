@@ -4,7 +4,8 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "build": "tsc",
+    "// copy-files": "",
+    "build": "tsc && cp -r ./schemas/*.yaml ./dist/schemas",
     "dev": "tsc -w",
     "clean": "rm -rf dist .turbo",
     "test": "echo \"Error: no test specified\" && exit 1"

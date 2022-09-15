@@ -6,7 +6,9 @@
   "main": "./dist/astro-integration.js",
   "type": "module",
   "files": [
-    "dist/*"
+    "dist/*",
+    "*.astro",
+    "*.json.ts"
   ],
   "scripts": {
     "build": "tsc",
