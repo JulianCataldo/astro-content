@@ -1,4 +1,6 @@
 import type { AstroIntegration } from 'astro';
+import react from '@astrojs/react';
+// import mdx from '@astrojs/mdx';
 /* ·········································································· */
 import {
   log,
@@ -37,9 +39,23 @@ const astroContent = (settings?: Settings): AstroIntegration => {
   };
 };
 
-export default astroContent;
+/* ·········································································· */
+export default function preset(settings: Settings = {}) {
+  const userSettings = settings;
 
+  const integrations = [
+    // TODO: Fit MDX here (is it headless)?
+    // mdx(),
+    astroContent(userSettings),
+  ];
+  if (userSettings.gui === true) {
+    // NOTE: Monitor for side-effects when user already use `@astrojs/react`.
+    // If so, a `settings.includeReact` might be added.
+    integrations.push(react());
+  }
+  return integrations;
+}
 export { collect };
-
+/* ·········································································· */
 export type { Options } from '@astro-content/types/integration';
 export type { FileInstance } from '@astro-content/types/file';
