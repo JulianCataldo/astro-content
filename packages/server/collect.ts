@@ -120,7 +120,7 @@ const collect = async (
   // }
   saveTsTypes().catch((e) => log(e));
 
-  log('Collecting content', 'info');
+  log('Collecting content', 'info', 'pretty');
 
   return state.content;
 };
