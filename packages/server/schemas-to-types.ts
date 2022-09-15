@@ -1,7 +1,7 @@
 import { compile, JSONSchema } from 'json-schema-to-typescript';
 import { log } from './logger';
 /* ·········································································· */
-import markdownFile from './schemas/MarkdownFile.json' assert { type: 'json' };
+import markdownFile from './schemas/MarkdownFile.js';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 export default async function schemaToTypes(schema: JSONSchema) {

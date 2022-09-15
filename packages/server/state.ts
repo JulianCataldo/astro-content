@@ -3,7 +3,7 @@
 import type { JSONSchema7 } from 'json-schema';
 /* ·········································································· */
 import type { Endpoint, ServerState } from '@astro-content/types/server-state';
-import markdownFile from './schemas/MarkdownFile.json' assert { type: 'json' };
+import markdownFile from './schemas/MarkdownFile.js';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 // TODO: Take this from user config / Vite
