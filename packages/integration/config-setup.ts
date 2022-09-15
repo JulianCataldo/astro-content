@@ -50,6 +50,18 @@ const configSetup: AstroIntegration['hooks']['astro:config:setup'] = ({
           ],
         },
       },
+      vite: {
+        // NOTE: I've fiddled a good amount of time to find this,
+        // and I still don't know why this works.
+        // > When package is distributed (not in workspace),
+        // Vite was prefixing modules + loading them as CJS.
+        // Adding this force 'untouched' module resolution.
+        // Might monitor side-effects.
+        // https://vitejs.dev/config/dep-optimization-options.html#optimizedeps-exclude
+        optimizeDeps: {
+          include: ['react-split', 'zustand', 'classnames', 'prop-types'],
+        },
+      },
     },
   });
 
