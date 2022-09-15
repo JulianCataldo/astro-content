@@ -4,6 +4,7 @@ import fs from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import mkdirp from 'mkdirp';
+import { fileURLToPath } from 'node:url';
 // /* ·········································································· */
 // import { spawn } from 'node:child_process';
 // import hjson from 'hjson';
@@ -66,9 +67,9 @@ export async function contentBase() {
   await mkdirp(contentDir);
 
   // REFACTOR: Nicer file resolution
-  const src = path.join(
-    process.cwd(),
-    'node_modules/astro-content/node_modules/@astro-content/server/schemas/default.schema.yaml',
+  const src = path.resolve(
+    fileURLToPath(import.meta.url),
+    '../schemas/default.schema.yaml',
   );
   const dest = path.join(contentDir, 'default.schema.yaml');
   log({ src, dest });
