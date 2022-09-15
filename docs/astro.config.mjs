@@ -2,7 +2,7 @@
 import { defineConfig } from 'astro/config';
 /* ·········································································· */
 import react from '@astrojs/react';
-import mdx from '@astrojs/mdx';
+// import mdx from '@astrojs/mdx';
 import image from '@astrojs/image';
 import content from 'astro-content';
 /* —————————————————————————————————————————————————————————————————————————— */
@@ -16,12 +16,13 @@ export default defineConfig({
   },
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   integrations: [
+    react(),
+    // mdx(),
     content({
       //
-      logLevel: 'debug',
+      // logLevel: 'debug',
+      // gui: false,
     }),
-    react(),
-    mdx(),
     // ——————————————————————————————————————
     image(),
   ],
