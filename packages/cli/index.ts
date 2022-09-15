@@ -1,4 +1,5 @@
-#! /usr/bin/env node --no-warnings --experimental-specifier-resolution=node --experimental-json-modules
+// NOTE: Shebang disabled here (using it in integration/cli-bridge.ts).
+// #! /usr/bin/env node --no-warnings --experimental-specifier-resolution=node --experimental-json-modules
 // NOTE: So `.js` extensions are not needed with CLI ————————————^?
 
 // NOTE: WORK IN PROGRESS
