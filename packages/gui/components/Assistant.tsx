@@ -43,7 +43,7 @@ export default function Preview() {
 // import type { ${title}, Entities } from '/content';
 
 // Fetch everything
-const allContent = await get(Astro.glob('/**/*.{md,mdx,yaml}'));
+const allContent = await get(Astro.glob('/content/**/*.{md,mdx,yaml}'));
 
 // Start typing a '.' ——————————————v
 const tryAutoCompletion = allContent ;
