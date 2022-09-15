@@ -18,9 +18,9 @@ properties:
               clientType:
                 type: string
                 enum:
-                  - ACorporate
-                  - aNon-profit
-                  - sIndividual
+                  - Corporate
+                  - Non-profit
+                  - Individual
 
             required:
               - title
