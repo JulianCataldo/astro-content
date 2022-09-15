@@ -12,6 +12,7 @@ import ViteYaml from './load-yaml-plugin.js';
 // FIXME: Find a more elegant way to import than a sub `node_modules`
 // It crash if put in `gui` package (deps. resolution probably)
 const guiPath = './node_modules/@astro-content/gui';
+const integrationPath = './node_modules/astro-content';
 
 const configSetup: AstroIntegration['hooks']['astro:config:setup'] = ({
   injectRoute,
@@ -56,10 +57,10 @@ const configSetup: AstroIntegration['hooks']['astro:config:setup'] = ({
 
   /* Check if `@astro-content/gui` is properly installed */
   if (existsSync(`${guiPath}/package.json`)) {
-    injectRoute({
-      pattern: `${endpoints.apiBase}/[endpoint]`,
-      entryPoint: `${guiPath}/server-bridge.json.ts`,
-    });
+  injectRoute({
+    pattern: `${endpoints.apiBase}/[endpoint]`,
+    entryPoint: `${integrationPath}/server-bridge.json.ts`,
+  });
     injectRoute({
       pattern: endpoints.contentBase,
       entryPoint: `${guiPath}/ssr-entrypoint.astro`,
