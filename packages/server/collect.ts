@@ -114,10 +114,13 @@ const collect = async (
 
   /* Build mode */
   // IDEA: Try editMode condition to rule out regular content
-  if (import.meta.env.PROD) {
-    saveContentStateForBuild();
-  }
+  // FIXME!!!: Make function arg. or from Vite / Astro, NOT import.meta (not working after compilation).
+  // if (import.meta.env.PROD) {
+  saveContentStateForBuild();
+  // }
   saveTsTypes().catch((e) => log(e));
+
+  log('Collecting content', 'info');
 
   return state.content;
 };
