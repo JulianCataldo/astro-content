@@ -42,6 +42,9 @@ const astroContent = (settings?: Settings): AstroIntegration => {
 /* ·········································································· */
 export default function preset(settings: Settings = {}) {
   const userSettings = settings;
+  if (settings.gui === undefined) {
+    userSettings.gui = true;
+  }
 
   const integrations = [
     // TODO: Fit MDX here (is it headless)?

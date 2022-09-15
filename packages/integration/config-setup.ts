@@ -21,12 +21,15 @@ const configSetup: AstroIntegration['hooks']['astro:config:setup'] = ({
 }) => {
   // FIX: Server port is from user config, not actual dev. server
   // This means that it can be wrong if port is already used and incremented.
-  log(`
+  log(
+    `
 📚  astro-content — ⚠️ ALPHA PREVIEW ⚠️
 
 ┃ Local    http://localhost:${config.server.port}/__content
 ┃ Network  http://0.0.0.0:${config.server.port}/__content
-  `);
+  `,
+    'info',
+  );
 
   log(config, 'absurd');
 
@@ -52,17 +55,15 @@ const configSetup: AstroIntegration['hooks']['astro:config:setup'] = ({
           ],
         },
       },
-      vite: {
-        // NOTE: I've fiddled a good amount of time to find this,
-        // and I still don't know why this works.
-        // > When package is distributed (not in workspace),
-        // Vite was prefixing modules + loading them as CJS.
-        // Adding this force 'untouched' module resolution.
-        // Might monitor side-effects.
-        // https://vitejs.dev/config/dep-optimization-options.html#optimizedeps-exclude
-        optimizeDeps: {
-          include: ['react-split', 'zustand', 'classnames', 'prop-types'],
-        },
+      // NOTE: I've fiddled a good amount of time to find this,
+      // and I still don't know why this works.
+      // > When package is distributed (not in workspace),
+      // Vite was prefixing modules + loading them as CJS.
+      // Adding this force 'untouched' module resolution.
+      // Might monitor side-effects.
+      // https://vitejs.dev/config/dep-optimization-options.html#optimizedeps-exclude
+      optimizeDeps: {
+        include: ['react-split', 'zustand', 'classnames', 'prop-types'],
       },
     },
   });
