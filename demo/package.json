@@ -6,20 +6,14 @@
     "dev": "astro dev",
     "build": "astro build",
     "start": "pnpm serve dist",
+    "reset": "rm -rf node_modules pnpm-lock.yaml .astro-content package-lock.json",
     "build:serve": "pnpm run build && pnpm run start",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
     "astro": "1.2.1",
+    "astro-content": "0.0.0-alpha.5.1",
     "serve": "^14.0.1"
-  },
-  "devDependencies": {
-    "@astrojs/mdx": "^0.11.1",
-    "@astrojs/react": "^1.1.2",
-    "astro-content": "workspace:*",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "typescript": "^4.8.3"
   }
 }
