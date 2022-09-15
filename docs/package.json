@@ -1,12 +1,12 @@
 {
   "name": "@astro-content/docs",
-  "version": "0.0.0",
+  "version": "0.0.0-alpha.5",
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "clean": "rm -rf dist .turbo .astro-content",
+    "reset": "rm -rf dist .turbo .astro-content",
     "start": "pnpm serve dist",
     "build:start": "pnpm run build ; pnpm run start",
     "preview": "astro preview",
