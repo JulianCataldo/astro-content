@@ -13,7 +13,7 @@ import App from './components/App';
 
 setLogLevel(import.meta.env.PUBLIC_LOG_LEVEL || 'info');
 log(`Log level: ${import.meta.env.PUBLIC_LOG_LEVEL}`);
-log('SSR Entrypoint loaded', 'info', 'pretty');
+log('SSR entrypoint loaded', 'info', 'pretty');
 
 const isValid = isValidContentBase();
 // NOTE: Check is done once, not updating (yet)
@@ -35,12 +35,12 @@ if (isValid) {
 // Tried pre-triggering inside hooks etc. didn't worked
 const firstLoad = `
 window.loaded = false;
-setTimeout(() => {
-  if (globalThis.loaded === false) {
-    location.reload();
-    console.log('Reloading…');
-  }
-}, 1000);`;
+// setTimeout(() => {
+//   if (globalThis.loaded === false) {
+//     location.reload();
+//     console.log('Reloading…');
+//   }
+// }, 1000);`;
 ---
 
 <Layout>
