@@ -1,7 +1,7 @@
 import fs from 'node:fs/promises';
 /* ·········································································· */
 import type { Save } from '@astro-content/types/dto';
-import { log } from './logger';
+import { log } from './logger.js';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 export async function saveFile(object: Save) {

@@ -14,8 +14,8 @@ import type { JSONSchema7 } from 'json-schema';
 // import fetch from 'node-fetch';
 import Jabber from 'jabber';
 /* ·········································································· */
-// import { endpoints } from './state';
-import { log } from './logger';
+// import { endpoints } from './state.js';
+import { log } from './logger.js';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 const jabber = new Jabber();

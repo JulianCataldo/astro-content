@@ -1,7 +1,7 @@
 import jsf from 'json-schema-faker';
 import type { JSONSchema7 } from 'json-schema';
 /* ·········································································· */
-import { log } from './logger';
+import { log } from './logger.js';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 export async function generateFakeEntries(schema: JSONSchema7) {

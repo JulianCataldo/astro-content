@@ -8,9 +8,9 @@ import {
 import { collect } from '@astro-content/server/collect';
 import type { Settings } from '@astro-content/types/integration';
 /* ·········································································· */
-import { serverSetup } from './server-setup';
-import { configSetup } from './config-setup';
-import { buildDone, buildStart } from './build';
+import { serverSetup } from './server-setup.js';
+import { configSetup } from './config-setup.js';
+import { buildDone, buildStart } from './build.js';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 const astroContent = (settings?: Settings): AstroIntegration => {

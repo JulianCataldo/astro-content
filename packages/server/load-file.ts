@@ -5,12 +5,12 @@ import prettier from 'prettier';
 /* ·········································································· */
 import type { MarkdownInstance } from 'astro';
 import type { FileInstance, YamlInstance } from '@astro-content/types/file';
-import { state } from './state';
-import { handleYaml } from './handle-yaml';
-import { handleMd } from './handle-md';
-import { getTrio } from './utils';
-import generateExcerpt from './generate-excerpt';
-import { log } from './logger';
+import { state } from './state.js';
+import { handleYaml } from './handle-yaml.js';
+import { handleMd } from './handle-md.js';
+import { getTrio } from './utils.js';
+import generateExcerpt from './generate-excerpt.js';
+import { log } from './logger.js';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 export async function loadFile(

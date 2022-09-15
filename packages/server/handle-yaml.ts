@@ -5,8 +5,8 @@ import Ajv from 'ajv';
 import addFormats from 'ajv-formats';
 import type { JSONSchema7 } from 'json-schema';
 /* ·········································································· */
-import { state } from './state';
-import { log } from './logger';
+import { state } from './state.js';
+import { log } from './logger.js';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 const ajv = new Ajv({

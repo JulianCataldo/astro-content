@@ -1,5 +1,5 @@
 import { compile, JSONSchema } from 'json-schema-to-typescript';
-import { log } from './logger';
+import { log } from './logger.js';
 /* ·········································································· */
 import markdownFile from './schemas/MarkdownFile.js';
 /* —————————————————————————————————————————————————————————————————————————— */

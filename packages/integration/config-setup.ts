@@ -7,7 +7,7 @@ import { log } from '@astro-content/server/logger';
 /* ·········································································· */
 import { saveTsHelper } from '@astro-content/server/collect';
 import { endpoints } from '@astro-content/server/state';
-import ViteYaml from './load-yaml-plugin';
+import ViteYaml from './load-yaml-plugin.js';
 /* —————————————————————————————————————————————————————————————————————————— */
 // FIXME: Find a more elegant way to import than a sub `node_modules`
 // It crash if put in `gui` package (deps. resolution probably)

@@ -7,9 +7,9 @@ import mkdirp from 'mkdirp';
 // /* ·········································································· */
 // import { spawn } from 'node:child_process';
 // import hjson from 'hjson';
-import { add } from './add';
-import { log } from './logger';
-// import { contentDir } from './state';
+import { add } from './add.js';
+import { log } from './logger.js';
+// import { contentDir } from './state.js';
 // /* —————————————————————————————————————————————————————————————————————————— */
 
 const contentDir = path.join(process.cwd(), 'content');

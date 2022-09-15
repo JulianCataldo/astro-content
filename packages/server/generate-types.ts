@@ -6,7 +6,7 @@ import type {
   Types,
   // Content,
 } from '@astro-content/types/server-state';
-import schemaToTypes from './schemas-to-types';
+import schemaToTypes from './schemas-to-types.js';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 export async function generateTypes(

@@ -7,12 +7,12 @@ import type { FileInstance, YamlInstance } from '@astro-content/types/file';
 import type { Options } from '@astro-content/types/integration';
 import type { JSONSchema7 } from 'json-schema';
 import type { ServerState } from '@astro-content/types/server-state';
-import { state } from './state';
-import { generateTypes, importHelper } from './generate-types';
-import { loadFile } from './load-file';
-import { getTrio } from './utils';
-import { log } from './logger';
-// import coreSchemaValidation from './core-schema-validation';
+import { state } from './state.js';
+import { generateTypes, importHelper } from './generate-types.js';
+import { loadFile } from './load-file.js';
+import { getTrio } from './utils.js';
+import { log } from './logger.js';
+// import coreSchemaValidation from './core-schema-validation.js';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 const tempDir = path.join(process.cwd(), '.astro-content');

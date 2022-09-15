@@ -38,7 +38,7 @@ import type {
 } from '@astro-content/types/reports';
 /* ·········································································· */
 import type { FrontmatterSchemaMessage } from '@julian_cataldo/remark-lint-frontmatter-schema';
-import { log } from './logger';
+import { log } from './logger.js';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 export async function handleMd(content: string, schema?: JSONSchema7) {

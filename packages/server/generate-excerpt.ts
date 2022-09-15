@@ -7,10 +7,9 @@ import rehypeParse from 'rehype-parse';
 import remarkRehype from 'remark-rehype';
 import remarkGfm from 'remark-gfm';
 import remarkFrontmatter from 'remark-frontmatter';
-import { log } from './logger';
 // import { visit } from 'unist-util-visit';
 /* ·········································································· */
-// import { $log } from './utils';
+import { log } from './logger.js';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 // TODO: Fallback for comment-defined excerpt splitting
