@@ -1,3 +1,5 @@
+# NOTE: Unused for now — Manual process during early development (too fast)
+
 name: Release — [Packages]
 
 on:
