@@ -115,6 +115,8 @@ export default function Gui({ isValidContentBase, children }: Props) {
       ) : (
         <div className="message-loading-database">
           Loading content base…
+          <br />
+          You might need to reload the page.
           {children}
         </div>
       )}
