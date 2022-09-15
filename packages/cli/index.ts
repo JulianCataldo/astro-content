@@ -12,12 +12,12 @@ import inquirer from 'inquirer';
 /* —————————————————————————————————————————————————————————————————————————— */
 import { add } from '@astro-content/server/add';
 import * as setup from '@astro-content/server/setup';
-import pkg from './package.json' assert { type: 'json' };
+// import { version } from './package.json' assert { type: 'json' };
 import { addHelp } from './help.js';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 // eslint-disable-next-line no-console
-console.log(`Astro Content — CLI — ${pkg.version}\n`);
+console.log(`Astro Content — CLI — ${'ALPHA'}\n`);
 
 /* ·········································································· */
 
