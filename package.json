@@ -1,6 +1,6 @@
 {
   "name": "@astro-content/root",
-  "version": "0.0.1-alpha.19",
+  "version": "0.0.0-alpha.4",
   "private": true,
   "description": "A text based, structured content framework, for edition and consumption.",
   "main": "build.ts",
@@ -13,7 +13,7 @@
     "// ci:publish": "git status && pnpm -r publish && pnpm changeset tag",
     "test": "echo \"Error: no test specified\" && exit 1",
     "release:dry": "pnpm -r publish --dry-run --report-summary --no-git-checks",
-    "release": "pnpm -r publish --report-summary"
+    "release": "pnpm -r publish --report-summary --no-git-checks"
   },
   "type": "module",
   "devDependencies": {

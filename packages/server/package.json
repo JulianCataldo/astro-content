@@ -1,6 +1,6 @@
 {
   "name": "@astro-content/server",
-  "version": "0.0.0-alpha.1",
+  "version": "0.0.0-alpha.5",
   "description": "",
   "type": "module",
   "scripts": {

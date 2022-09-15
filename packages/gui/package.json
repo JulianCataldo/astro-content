@@ -1,6 +1,6 @@
 {
   "name": "@astro-content/gui",
-  "version": "0.0.0-alpha.0",
+  "version": "0.0.0-alpha.5",
   "description": "",
   "type": "module",
   "scripts": {
@@ -19,10 +19,14 @@
   ],
   "devDependencies": {
     "@astro-content/types": "workspace:*",
-    "@types/react": "^18.0.19"
+    "@types/react": "^18.0.19",
+    "github-markdown-css": "^5.1.0",
+    "sass": "^1.54.9"
   },
   "dependencies": {
     "@astro-content/server": "workspace:*",
+    "@astrojs/mdx": "^0.11.1",
+    "@astrojs/react": "^1.1.2",
     "@floating-ui/react-dom-interactions": "^0.9.3",
     "@iconify/react": "^4.0.0",
     "@monaco-editor/react": "^4.4.5",
@@ -32,14 +36,12 @@
     "change-case": "^4.1.2",
     "classnames": "^2.3.1",
     "framer-motion": "^7.3.2",
-    "github-markdown-css": "^5.1.0",
     "lodash-es": "^4.17.21",
     "monaco-editor": "^0.34.0",
     "react": "18.2.0",
     "react-dom": "^18.2.0",
     "react-merge-refs": "^2.0.1",
     "react-split": "^2.0.14",
-    "sass": "^1.54.9",
     "yaml": "^2.1.1",
     "zustand": "^4.1.1"
   },

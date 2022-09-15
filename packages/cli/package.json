@@ -1,6 +1,6 @@
 {
   "name": "@astro-content/cli",
-  "version": "0.0.0-alpha.0",
+  "version": "0.0.0-alpha.5",
   "description": "",
   "type": "module",
   "// source": "./index.ts",
@@ -19,7 +19,9 @@
     "@astro-content/server": "workspace:*",
     "@types/inquirer": "^9.0.1",
     "commander": "^9.4.0",
-    "inquirer": "^9.1.1",
+    "inquirer": "^9.1.1"
+  },
+  "devDependencies": {
     "typescript": "^4.8.3"
   },
   "keywords": [],
