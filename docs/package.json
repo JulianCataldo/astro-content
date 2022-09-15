@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@astrojs/image": "^0.7.0",
+    "@astrojs/react": "^1.1.2",
     "@julian_cataldo/astro-base": "^0.13.6",
     "@julian_cataldo/astro-link": "^0.12.5",
     "@julian_cataldo/astro-seo": "^0.13.2",
@@ -23,13 +24,7 @@
     "serve": "^14.0.1"
   },
   "devDependencies": {
-    "@astro-content/gui": "workspace:*",
-    "@astrojs/mdx": "^0.11.1",
-    "@astrojs/react": "^1.1.2",
-    "astro-content": "workspace:*",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "typescript": "^4.8.3"
+    "astro-content": "workspace:*"
   },
   "keywords": [],
   "author": "Julian Cataldo",
