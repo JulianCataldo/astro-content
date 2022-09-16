@@ -5,6 +5,7 @@
 *::before,
 *::after {
   box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -29,7 +30,7 @@ a {
 }
 
 .link,
-.article-body a {
+.article-body a:not(.button) {
   font-weight: bold;
   color: $ca-white;
   border-bottom: 1px solid color.adjust($ca-accent, $alpha: -0.6);

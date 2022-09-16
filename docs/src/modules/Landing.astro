@@ -10,6 +10,16 @@ const { data } = Astro.props; // as { data: Demo };
   <div class="hero">
     <article class="hero-body article-body">
       <data.text.Content />
+      <Link
+        class="button"
+        href="https://github.com/JulianCataldo/astro-content"
+        title="GitHub repository"
+        data-tooltip-placement="top"
+      >
+        <Icon icon="simple-icons:github" client:load />
+        <span>Open Source</span>
+      </Link>
+      <!-- {JSON.stringify(data)} -->
     </article>
 
     <div class="try">
@@ -34,7 +44,9 @@ const { data } = Astro.props; // as { data: Demo };
             </div>
           </a>
           <div class="sub-desc">
-            <strong>Pre-loaded</strong> with data - <strong>read-only</strong>
+            <strong>Pre-loaded</strong> with dummy data — Static<strong
+              >, no updates</strong
+            >
             editor
           </div>
         </div>
