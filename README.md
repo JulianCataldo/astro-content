@@ -74,6 +74,9 @@ Being content centric, this set of tools will give you:
 With `yarn`, `npm` or `pnpm`, run this in your **existing** Astro project:
 
 ```sh
+# If you want a fresh start ——v
+# pnpm create astro && cd ./my-astro-site
+
 pnpm astro add astro-content
 pnpm content setup
 ```
@@ -93,6 +96,8 @@ pnpx degit JulianCataldo/astro-content/demo ./ac-demo
 cd ./ac-demo && pnpm install
 code .
 ```
+
+> **Warning**: Only **Node 17** or higher is actually supported by Astro Content.
 
 ---
 
