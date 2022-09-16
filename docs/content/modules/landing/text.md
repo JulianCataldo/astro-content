@@ -24,7 +24,7 @@ with a focus on **editor** and **integrator** experience.
 
 - Generate type-safe **import helpers**.
 - **Future-proof**: seeks standards, idioms and popular tools.
-- **Agnostic** API: [target](https://eee.fr) any consumer type.
+- **Agnostic** API: target any consumer type.
 
 ---
 
