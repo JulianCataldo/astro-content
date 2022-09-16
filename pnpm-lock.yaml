@@ -107,9 +107,8 @@ importers:
       '@julian_cataldo/astro-tooltips': 0.11.0
       asciinema-player: 3.0.1
       astro: 1.2.1
-      serve: 14.0.1
-    devDependencies:
       astro-content: link:../packages/integration
+      serve: 14.0.1
 
   packages/cli:
     specifiers:
