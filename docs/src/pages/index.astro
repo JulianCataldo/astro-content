@@ -1,5 +1,5 @@
 ---
-import get from '/get';
+import { get } from '/content';
 // import { collect } from 'astro-content';
 // import Gui from 'astro-content/node_modules/@astro-content/gui/app.astro';
 /* ·········································································· */
@@ -9,14 +9,25 @@ import Demo from '../modules/Demo.astro';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 /* Docs content */
+// TODO: Find a nice and bug-free way to merge `docs` and `demo` content bases
 // const content =
-await get(
-  Astro.glob('/node_modules/@astro-content/demo/content/**/*.{md,mdx,yaml}'),
-);
+// await get(
+//   Astro.glob(
+//     '/Volumes/n_1024a-Projects/Repositories/apps/content-maestro/demo/content/**/*.{md,mdx,yaml}',
+//   ),
+//   { editMode: import.meta.env.PROD },
+// );
 
 /* Demo content */
-
-const content = await get(Astro.glob('/content/**/*.{md,mdx,yaml}'));
+const content = await get(
+  Astro.glob('/content/**/*.{md,mdx,yaml}'),
+  // NOTE: this will force trigger `__content` data fetching,
+  // for demo purposes only, for this docs.
+  // Might be better to ensure `__content` doesn't get overwritten during build.
+  {
+    editMode: import.meta.env.PROD,
+  },
+);
 
 const demos = content.demos;
 const landing = content.modules.landing;
