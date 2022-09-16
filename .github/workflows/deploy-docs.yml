@@ -48,13 +48,17 @@ jobs:
         # `NODE_ENV=production` to exclude dev. dependencies
         run: pnpm --recursive install --frozen-lockfile
 
-      - name: Build Astro Website
-        # working-directory: ./docs
-        run: cd ./docs && pnpm run build
+      # NOTE: It's all built together now (see below).
+      # - name: Build Astro Website
+      #   # working-directory: ./docs
+      #   run: cd ./docs && pnpm run build
+
+      - name: Build the whole mono-repository
+        run: pnpm run build
 
       # ————————————————————————————————————————————————————————————————————————
 
-      - name: Deploy to Netlify
+      - name: Deploy [Docs] to Netlify
         uses: nwtgck/actions-netlify@v1.2.3
         with:
           publish-dir: './docs/dist'

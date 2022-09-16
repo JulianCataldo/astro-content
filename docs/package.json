@@ -14,6 +14,7 @@
   },
   "// NOTE": "@astro-content/gui should not be needed! It's a module resolution issue with pnpm workspace only, not for end-user artefacts.",
   "dependencies": {
+    "astro-content": "workspace:*",
     "@astro-content/gui": "workspace:*",
     "@astrojs/image": "^0.7.0",
     "@astrojs/react": "^1.1.2",
@@ -25,9 +26,7 @@
     "astro": "1.2.1",
     "serve": "^14.0.1"
   },
-  "devDependencies": {
-    "astro-content": "workspace:*"
-  },
+  "devDependencies": {},
   "keywords": [],
   "author": "Julian Cataldo",
   "license": "ISC"
