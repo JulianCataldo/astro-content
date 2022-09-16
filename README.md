@@ -58,6 +58,7 @@ Being content centric, this set of tools will give you:
   - [Hierarchy](#hierarchy)
   - [Directory structure](#directory-structure)
   - [Naming conventions](#naming-conventions)
+- [Reports](#reports)
 - [Tips and tricks](#tips-and-tricks)
 - [Development](#development)
   - [Setup](#setup)
@@ -311,6 +312,14 @@ Naming can be done inside JSON Schemas themselves with `title`, or if not set, w
 
 **`my-blog-post.md`** automatically becomes **"My blog post"** for display and **`myBlogPost`** for JavaScript object paths.
 
+# Reports
+
+You can benefit from these three levels of content checks:
+
+1. **Schema** structure
+2. File **language syntax** linting
+3. **Natural language** linting
+
 # Tips and tricks
 
 - Symbolic links are working, useful for gathering markdown from relative folder in the same mono-repo., for example here, in [`docs` content](https://github.com/JulianCataldo/astro-content/tree/master/docs/content).
@@ -364,6 +373,7 @@ Web GUI can be opted out by user settings.
   - `Content` Astro component especially, is not propertly typed.
 - [ ] Same for `YamlInstance`, which need some love, generally.
 - [ ] Actual runtime JSON Schema validation, not just _reporting_ errors, but pro-actively preventing them to occur, with opt-out capabilities.
+- [ ] Custom Markdown linting rules -> Should hook up with `.remarkrc.mjs`, so user benefit from both IDE and Web app custom rules.
 - [ ] …
 
 <div class="git-only">
