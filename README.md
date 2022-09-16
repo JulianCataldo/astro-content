@@ -89,8 +89,9 @@ _**— Or —**_
 Another method is to shallow **clone** this minimal Astro **starter**, which comes with dummy **content** for you to play with:
 
 ```sh
-pnpx degit JulianCataldo/astro-content/demo ./demo
-cd ./demo && pnpm install
+pnpx degit JulianCataldo/astro-content/demo ./ac-demo
+cd ./ac-demo && pnpm install
+code .
 ```
 
 ---
@@ -101,7 +102,6 @@ OK, **project is ready**. It's time to:
 pnpm run dev
 ```
 
-That's all!  
 Now head over to [http://localhost:3000/**\_\_content**](http://localhost:9054/__content) to take a deep dive in Astro Content.
 
 ## Template usage
@@ -181,7 +181,7 @@ A very simple fix is adding this to your `tsconfig.json` > `compilerOptions.path
       // Make TS happy with all absolute paths
       // "/*": ["./*"]
 
-      // Or more specifically for your Astro Content base
+      // Or more specifically for your Astro Content base helpers
       "/content": ["./content"]
     }
   }
