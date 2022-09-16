@@ -14,9 +14,9 @@
 
 - **nuxt/content**, Docus
 - Gatsby, Nuxt, Gridsome
-- **tRPC**, GraphQL, Mongo
+- **tRPC**, GraphQL, Mongo API
+- Dendron, Obsidian, Ulysses
 - Strapi, Postman
-- Dendrion, Obsidian
 
 </div>
 
