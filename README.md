@@ -125,7 +125,9 @@ const allContent = await get(Astro.glob('/content/**/*.{md,mdx,yaml}'));
 const tryAutoCompletion = allContent ;  
 
 // Narrow fetching to some entities, for performance
-const content = await get(Astro.glob('/{robots}/**/*.{md,mdx,yaml}'));
+const content = await get(
+  Astro.glob('/content/{robots,people}/**/*.{md,mdx,yaml}'),
+);
 
 // Let's be more specific
 const bigGrumpy = content?.robots?.bigGrumpy;
