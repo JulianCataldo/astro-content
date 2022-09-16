@@ -24,13 +24,14 @@ export default function Gui({ isValidContentBase, children }: Props) {
   const [didMount, setDidMount] = useState(false);
   useEffect(() => {
     /* Save — Keyboard shortcut */
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 's' && (e.metaKey || e.ctrlKey)) {
-        e.preventDefault();
-        save();
-        log('Keyboard: Meta+S fired!');
-      }
-    });
+    // FIXME: Disabled for now, it fires multiple time. Use button instead.
+    // document.addEventListener('keydown', (e) => {
+    //   if (e.key === 's' && (e.metaKey || e.ctrlKey)) {
+    //     e.preventDefault();
+    //     save();
+    //     log('Keyboard: Meta+S fired!');
+    //   }
+    // });
 
     /* For client-only stuffs (`SplitPane` for ex.) */
     setDidMount(true);
