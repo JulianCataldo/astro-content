@@ -12,7 +12,7 @@ Suggestions are welcome
 
 ❀✿❀
 
-<a href="https://astro-content.netlify.app">
+<a href="https://astro-content.netlify.app" target="_blank">
 
 <img src="https://astro.build/favicon.svg" height="25" />
 
@@ -62,6 +62,7 @@ Being content centric, this set of tools will give you:
 - [Development](#development)
   - [Setup](#setup)
   - [Packages](#packages)
+- [Work in progress](#work-in-progress)
 
 </div>
 
@@ -217,16 +218,16 @@ Why this 3-levels nesting? Here is the logic behind this:
 
 - Mimic a relational database design as: **Table** > **Row** > **Column**.
 - …or a document based DB (as Mongo) like: **Collection** > **Document** > **Field**.
-- Encourage cross-referencing documents and re-usability, over brittle, overly specific deep nesting.
 - Reduce mental load, too many levels makes thing exponentially harder to track.
-- 1 level = 1 business concern = 1 physical "role", mirroring paths structure.
+- Encourage cross-referencing documents and re-usability, over brittle, overly specific deep nesting.
+- 1 level = 1 business concern = 1 physical "role", mirrored in paths structure.
 - With CMS, like Wordpress or Strapi, you typically get "post types" and "pages" with their own "fields", all of which are mapped to the RDBMS.
 
-Please note that a property (file) itself, like a `<person>`/`bio.{md,mdx,yaml}` can host as many levels as you need.  
+Please note that a property (file) itself, like a `<person>/contact.{md,mdx,yaml}` can host as many levels as you need.  
 It's JSON, in the end, even if it is expressed in pure YAML or YAML in Markdown front matter.
 
 > **Note**: Astro Content might support content base switching in the future, that means one more level, if you really need it.  
-> In the meanwhile, you can merge entities, while glob-importing, or with symbolic links (see _Tips and Tricks_ section),
+> In the meanwhile, you can merge entities, when glob-importing, with symbolic links (see _Tips and Tricks_ section),
 > or simply using different Astro projects, if it's OK for you.
 
 It should be possible to make Astro Content support indefinite levels of nesting,  
@@ -280,7 +281,7 @@ content
 ├── ...
 │   └── ...
 │
-└── index.ts                      # Import helper. You can ignore it.
+└── index.ts                      # <- Import helper. You can ignore it.
 ```
 
 Entries can share the same features, can have some of their own, or even be totally independent.  
@@ -288,6 +289,12 @@ That's it: an entry can be part of a collection like "My vacation" in "Blog post
 
 An entry is a flexible concept. As a part of an entity, you could make it relaxed, or very strict.  
 Astro Content doesn't care on how you design your content base, it's up to you.
+
+<div align="center">
+
+**Entries** singularity spectrum:
+
+</div>
 
 ```mermaid
 flowchart LR
@@ -300,9 +307,9 @@ Records<-->Polymorphs<-->Singletons
 
 ## Naming conventions
 
-Naming can be done inside JSON Schemas themselves with `title`, or if no set, will be inferred from your file paths.
+Naming can be done inside JSON Schemas themselves with `title`, or if not set, will be inferred from your file paths.
 
-**`my-blog-post.md`** becomes **"My blog post"** for display and **`myBlogPost`** for JavaScript object paths.
+**`my-blog-post.md`** automatically becomes **"My blog post"** for display and **`myBlogPost`** for JavaScript object paths.
 
 # Tips and tricks
 
@@ -338,18 +345,26 @@ cd docs && pnpm run dev
 
 <!-- Man, this table is horribly long -->
 
-| Role                                                                                                               | Notes                                                | Name                    | Artefact                                                                                                    |
-| ------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------- | ----------------------- | ----------------------------------------------------------------------------------------------------------- |
-| [**Integration** ](https://github.com/JulianCataldo/astro-content/tree/master/packages/integration)                | Unique entrypoint, extends Astro / Vite capabilities | `astro-content`         | [![NPM](https://img.shields.io/npm/v/astro-content)](https://www.npmjs.com/package/@astro-content/gui)      |
-| [**Server**](https://github.com/JulianCataldo/astro-content/tree/master/packages/server)                           | Data handlers, API provider, helpers generator       | `@astro-content/server` | [![NPM](https://img.shields.io/npm/v/@astro-content/gui)](https://www.npmjs.com/package/@astro-content/gui) |
-| [**Command line**](https://github.com/JulianCataldo/astro-content/tree/master/packages/cli)                        | Project setup and content manipulation               | `@astro-content/cli`    | [![NPM](https://img.shields.io/npm/v/@astro-content/gui)](https://www.npmjs.com/package/@astro-content/gui) |
-| [**Web app**](https://github.com/JulianCataldo/astro-content/tree/master/packages/gui) <small>_(Optional)_</small> | Full-fledge content editor / monitor                 | `@astro-content/gui`    | [![NPM](https://img.shields.io/npm/v/@astro-content/gui)](https://www.npmjs.com/package/@astro-content/gui) |
-| [TypeScript **typings**](https://github.com/JulianCataldo/astro-content/tree/master/packages/types)                | Internal types for development use                   | `@astro-content/types`  | [![NPM](https://img.shields.io/npm/v/@astro-content/gui)](https://www.npmjs.com/package/@astro-content/gui) |
-| [**Docs**](https://github.com/JulianCataldo/astro-content/tree/master/docs) <small>_(Private)_</small>             | Using and demonstrating all tools above              |                         | [`astro-content.netlify.app`](https://astro-content.netlify.app/)                                           |
-| [**Demo**](https://github.com/JulianCataldo/astro-content/tree/master/demo) <small>_(Clonable)_</small>            | Minimal boilerplate                                  |                         | [./demo](https://github.com/JulianCataldo/astro-content/tree/master/demo)                                   |
+| Role                                                                                                                              | Notes                                          | Name                    | Artefact                                                                                                    |
+| --------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- | ----------------------- | ----------------------------------------------------------------------------------------------------------- |
+| [**Integration** ](https://github.com/JulianCataldo/astro-content/tree/master/packages/integration) <small>_(Entrypoint)_</small> | Extends Astro / Vite capabilities              | `astro-content`         | [![NPM](https://img.shields.io/npm/v/astro-content)](https://www.npmjs.com/package/@astro-content/gui)      |
+| [**Server**](https://github.com/JulianCataldo/astro-content/tree/master/packages/server)                                          | Data handlers, API provider, helpers generator | `@astro-content/server` | [![NPM](https://img.shields.io/npm/v/@astro-content/gui)](https://www.npmjs.com/package/@astro-content/gui) |
+| [**Command line**](https://github.com/JulianCataldo/astro-content/tree/master/packages/cli)                                       | Project setups and content manipulation        | `@astro-content/cli`    | [![NPM](https://img.shields.io/npm/v/@astro-content/gui)](https://www.npmjs.com/package/@astro-content/gui) |
+| [**Web app**](https://github.com/JulianCataldo/astro-content/tree/master/packages/gui) <small>_(Optional)_</small>                | Full-fledge content editor / monitor           | `@astro-content/gui`    | [![NPM](https://img.shields.io/npm/v/@astro-content/gui)](https://www.npmjs.com/package/@astro-content/gui) |
+| [TypeScript **typings**](https://github.com/JulianCataldo/astro-content/tree/master/packages/types)                               | Internal types for development use             | `@astro-content/types`  | [![NPM](https://img.shields.io/npm/v/@astro-content/gui)](https://www.npmjs.com/package/@astro-content/gui) |
+| [**Docs**](https://github.com/JulianCataldo/astro-content/tree/master/docs) <small>_(Private)_</small>                            | Using and demonstrating all tools above        |                         | [`astro-content.netlify.app`](https://astro-content.netlify.app/)                                           |
+| [**Demo**](https://github.com/JulianCataldo/astro-content/tree/master/demo) <small>_(Clonable)_</small>                           | Minimal boilerplate                            |                         | [./demo](https://github.com/JulianCataldo/astro-content/tree/master/demo)                                   |
 
 `@astro-content/*` are all internal dependencies of the main `astro-content` integration package, which act as a bridge for them.  
 Web GUI can be opted out by user settings.
+
+# Work in progress
+
+- [ ] Rehaul Astro `MarkdownInstance` <=> `MardownFile` schema definition <=> `MarkdownFile` TS interface.
+  - `Content` Astro component especially, is not propertly typed.
+- [ ] Same for `YamlInstance`, which need some love, generally.
+- [ ] Actual runtime JSON Schema validation, not just _reporting_ errors, but pro-actively preventing them to occur, with opt-out capabilities.
+- [ ] …
 
 <div class="git-only">
 
