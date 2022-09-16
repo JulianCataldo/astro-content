@@ -86,6 +86,7 @@ importers:
 
   docs:
     specifiers:
+      '@astro-content/gui': workspace:0.0.0-alpha.5.1
       '@astrojs/image': ^0.7.0
       '@astrojs/react': ^1.1.2
       '@julian_cataldo/astro-base': ^0.13.6
@@ -97,6 +98,7 @@ importers:
       astro-content: workspace:*
       serve: ^14.0.1
     dependencies:
+      '@astro-content/gui': link:../packages/gui
       '@astrojs/image': 0.7.0
       '@astrojs/react': 1.1.2_biqbaboplfbrettd7655fr4n2y
       '@julian_cataldo/astro-base': 0.13.6

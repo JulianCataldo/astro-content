@@ -1,6 +1,6 @@
 {
   "name": "@astro-content/docs",
-  "version": "0.0.0-alpha.5",
+  "version": "0.0.0-alpha.6",
   "private": true,
   "type": "module",
   "scripts": {
@@ -12,7 +12,9 @@
     "preview": "astro preview",
     "astro": "astro"
   },
+  "// NOTE": "@astro-content/gui should not be needed! It's a module resolution issue with pnpm workspace only, not for end-user artefacts.",
   "dependencies": {
+    "@astro-content/gui": "workspace:*",
     "@astrojs/image": "^0.7.0",
     "@astrojs/react": "^1.1.2",
     "@julian_cataldo/astro-base": "^0.13.6",
