@@ -317,7 +317,7 @@ Records<-->Polymorphs<-->Singletons
 
 Naming can be done inside JSON Schemas themselves with `title`, or if not set, will be inferred from your file paths.
 
-**`my-blog-post.md`** automatically becomes **"My blog post"** for display and **`myBlogPost`** for JavaScript object paths.
+**`my-blog-post/foot-notes.md`** automatically becomes **"My blog post > Foot notes"** for display and **`myBlogPost.footNotes`** for JavaScript object notation.
 
 # Reports
 
