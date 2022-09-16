@@ -86,7 +86,7 @@ importers:
 
   docs:
     specifiers:
-      '@astro-content/gui': workspace:0.0.0-alpha.5.1
+      '@astro-content/gui': workspace:*
       '@astrojs/image': ^0.7.0
       '@astrojs/react': ^1.1.2
       '@julian_cataldo/astro-base': ^0.13.6
@@ -281,7 +281,7 @@ importers:
       '@julian_cataldo/remark-lint-frontmatter-schema': 3.7.2
       '@julian_cataldo/retext-case-police': 1.1.4
       ajv: 8.11.0
-      ajv-formats: 2.1.1
+      ajv-formats: 2.1.1_ajv@8.11.0
       chalk: 5.0.1
       change-case: 4.1.2
       chokidar: 3.5.3
@@ -1105,7 +1105,7 @@ packages:
     resolution: {integrity: sha512-sgGt85CnH3B2gmQxwoOwSY4JJ3Ey69cd4zmlz33AjOThQ52Cww8cxDame4RQParcY7gfmMuybNf3F7CA5MCtrw==}
     dependencies:
       ajv: 8.11.0
-      ajv-formats: 2.1.1
+      ajv-formats: 2.1.1_ajv@8.11.0
       unified-lint-rule: 2.1.1
       yaml: 2.1.1
     dev: false
@@ -1789,8 +1789,10 @@ packages:
     engines: {node: '>=0.4.0'}
     hasBin: true
 
-  /ajv-formats/2.1.1:
+  /ajv-formats/2.1.1_ajv@8.11.0:
     resolution: {integrity: sha512-Wx0Kx52hxE7C18hkMEggYlEifqWZtYaRgouJor+WMdPnQyEK13vgEWyVNup7SoeeoLMsr4kf5h6dOW11I15MUA==}
+    peerDependencies:
+      ajv: ^8.0.0
     peerDependenciesMeta:
       ajv:
         optional: true
