@@ -39,7 +39,9 @@ export default function Preview() {
     entry &&
     property &&
     contentProp &&
-    `// import { get } from '/content';
+    `/* 🔽 Copy paste what you need in Astro templates of yours 🔽 */
+
+// import { get } from '/content';
 // import type { ${title}, Entities } from '/content';
 
 // Fetch everything
@@ -48,8 +50,8 @@ const allContent = await get(Astro.glob('/content/**/*.{md,mdx,yaml}'));
 // Start typing a '.' ——————————————v
 const tryAutoCompletion = allContent ;
 
-// Narrow to some entities, for performance
-const content = await get(Astro.glob('/{${entity}}/**/*.{md,mdx,yaml}'));
+// Narrow to \`${entity}\` entity, for performance
+const content = await get(Astro.glob('/content/${entity}/**/*.{md,mdx,yaml}'));
 
 // Get entity
 const ${entity} = content?.${entity};
@@ -89,7 +91,7 @@ import { get } from '/content';
 
 relatively, from your \`./src/pages\` folder:
 
-import { get } from '../../content/get';
+import { get } from '../../content';
 
 */
 
