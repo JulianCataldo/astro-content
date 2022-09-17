@@ -29,10 +29,15 @@ const astroContent = (settings?: Settings): AstroIntegration => {
     name: 'astro-content',
 
     hooks: {
+      /* Stateful routes + Project setup */
       'astro:config:setup': configSetup,
 
+      /* Stateless functions for web API */
       'astro:server:setup': serverSetup,
 
+      // NOTE: Statically building the editor is a funny way to demonstrate it,
+      // it is NOT supposed to be used in production by end-user.
+      // NO GUARANTEE ABOUT LOCAL DATA BEING LEAKED (e.g. Absolute local paths).
       'astro:build:start': buildStart,
       'astro:build:done': buildDone,
     },
@@ -53,7 +58,7 @@ export default function preset(settings: Settings = {}) {
   ];
   if (userSettings.gui === true) {
     // NOTE: Monitor for side-effects when user already use `@astrojs/react`.
-    // If so, a `settings.includeReact` might be added.
+    // If so, a `settings.includeReact` boolean might be added.
     integrations.push(react());
   }
   return integrations;

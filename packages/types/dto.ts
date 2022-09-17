@@ -8,8 +8,8 @@ export interface Save {
   language: string | null;
 }
 
-export interface Response {
-  success: boolean;
+export interface Fake {
+  schema: JSONSchema7;
 }
 
 export interface Validate {
@@ -21,6 +21,6 @@ export interface Validate {
   language: string | null;
 }
 
-export interface Fake {
-  schema: JSONSchema7;
+export interface Response {
+  success: boolean;
 }

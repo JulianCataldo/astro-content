@@ -7,6 +7,7 @@ import { log } from '@astro-content/server/logger';
 import type { ServerState, Endpoint } from '@astro-content/types/server-state';
 /* —————————————————————————————————————————————————————————————————————————— */
 
+// TODO: Centralize `tempDir`
 const tempDir = path.join(process.cwd(), '.astro-content');
 
 const buildStart: AstroIntegration['hooks']['astro:build:start'] =
@@ -15,6 +16,7 @@ const buildStart: AstroIntegration['hooks']['astro:build:start'] =
 const buildDone: AstroIntegration['hooks']['astro:build:done'] = async () => {
   log(`Build done`);
 
+  // REFACTOR: Even if it's not supposed to be used by end user (yet?)
   await fs
     .readFile(path.join(tempDir, 'state.json'), 'utf-8')
     .then(async (data: unknown) => {

@@ -4,6 +4,7 @@ import { bold, green } from 'kleur/colors';
 import type { AstroIntegration } from 'astro';
 import mkdirp from 'mkdirp';
 import path from 'node:path';
+// NOTE: This is a ponyfill for `import.meta.resolve`, `require.resolve` equiv.
 import { resolve } from 'import-meta-resolve';
 import { fileURLToPath } from 'node:url';
 // import Inspect from 'vite-plugin-inspect';
@@ -103,7 +104,7 @@ const configSetup: AstroIntegration['hooks']['astro:config:setup'] = async ({
 
   /* Setup project */
   log(tempDir);
-  await mkdirp(tempDir);
+  await mkdirp(tempDir).catch(() => null);
 
   const minimalTypes = `export interface Entities {}`;
   await fs.writeFile(path.join(tempDir, 'types.ts'), minimalTypes);
