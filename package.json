@@ -5,7 +5,7 @@
   "description": "A text based, structured content framework, for edition and consumption.",
   "main": "build.ts",
   "scripts": {
-    "build": "turbo run build --filter=!@astro-content/demo",
+    "build": "turbo run build --filter=!@astro-content/demo --cache-dir='.turbo'",
     "clean": "turbo run clean",
     "dev": "turbo run dev --filter=!@astro-content/demo --filter=!@astro-content/docs",
     "demo": "cd demo pnpm run dev",
