@@ -4,7 +4,11 @@ module.exports = {
   // Prevent cascading
   // root: true,
 
-  // References:
-  // https://github.com/JulianCataldo/web-garden/blob/develop/configs/eslint-all.cjs
+  /**
+   * Reference:
+   *
+   * https://github.com/JulianCataldo/web-garden/blob/develop/configs/eslint-all.cjs
+   *
+   * */
   extends: ['./node_modules/@julian_cataldo/astro-configs/eslint-all.cjs'],
 };
