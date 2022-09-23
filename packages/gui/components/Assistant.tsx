@@ -17,7 +17,7 @@ import useAppStore from '../store';
 import { post } from '../store/helpers';
 /* —————————————————————————————————————————————————————————————————————————— */
 
-export default function Preview() {
+export default function Assistant() {
   const { content, schemas, types } = useAppStore((state) => state.data_server);
   const { entity, entry, property } = useAppStore((state) => state.ui_route);
   const language = useAppStore((state) => state.editor_language);
