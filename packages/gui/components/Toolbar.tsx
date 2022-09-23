@@ -33,52 +33,58 @@ export default function Toolbar() {
   return (
     <div className="component-toolbar">
       <div className="actions">
-        <ModalPopover
-          render={({ close, labelId, descriptionId }) => (
-            <>
+        {Object.entries(content).length > 0 && (
+          <ModalPopover
+            render={({ close, labelId, descriptionId }) => (
+              <>
+                {/* 
               {/* 
+                {/* 
               <div>
                 <p id={descriptionId}>Keep the name short!</p>
                 <input placeholder="Name" autoFocus />
                 <button onClick={close}>Create</button>
               </div>
               */}
-              <h3 id={labelId}>From command line</h3>
+                <h3 id={labelId}>From command line</h3>
 
-              <h4>Define a new collection</h4>
+                <h4>
+                  Define a new <strong>entity</strong>
+                </h4>
 
-              <CopyInlineCode
-                text="pnpm content add people person"
-                placement="top-end"
-              />
+                <CopyInlineCode
+                  text="pnpm content add people person"
+                  placement="top-end"
+                />
 
-              {/*
+                {/*
                 <h4>New singleton</h4>
                 <code>&gt; pnpm content add contact-page</code>
               */}
 
-              <h4>-or- for an existing collection</h4>
-              <h5>Add an entry</h5>
+                <h4>-or- for an existing collection</h4>
+                <h5>Add an entry</h5>
 
-              <CopyInlineCode
-                text="pnpm content add people jane"
-                placement="top-end"
-              />
+                <CopyInlineCode
+                  text="pnpm content add people jane"
+                  placement="top-end"
+                />
 
-              <h5>Add an entry with a random name</h5>
+                <h5>Add an entry with a random name</h5>
 
-              <CopyInlineCode
-                text="pnpm content add people"
-                placement="top-end"
-              />
-            </>
-          )}
-        >
-          <div className="action">
-            <Icon icon="system-uicons:create" width="2em" />
-            <span className="label">Create</span>
-          </div>
-        </ModalPopover>
+                <CopyInlineCode
+                  text="pnpm content add people"
+                  placement="top-end"
+                />
+              </>
+            )}
+          >
+            <div className="action">
+              <Icon icon="system-uicons:create" width="2em" />
+              <span className="label">Create</span>
+            </div>
+          </ModalPopover>
+        )}
       </div>
 
       <div className="actions file">
@@ -228,15 +234,13 @@ export default function Toolbar() {
                 </div>
               )}
             >
-              <div>
-                <div className="action">
-                  <Icon
-                    icon="system-uicons:info-circle"
-                    width="2em"
-                    height="1.5em"
-                  />
-                  <span className="label">Infos</span>
-                </div>
+              <div className="action">
+                <Icon
+                  icon="system-uicons:info-circle"
+                  width="2em"
+                  height="1.5em"
+                />
+                <span className="label">Infos</span>
               </div>
             </ModalPopover>
 

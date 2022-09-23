@@ -55,8 +55,7 @@ export default function Gui({ isValidContentBase, children }: Props) {
           <CopyInlineCode text="pnpm content setup" />
         </div>
       )}
-
-      {didMount ? (
+      {isValidContentBase && didMount ? (
         <main>
           <Split
             sizes={[15, 85]}
