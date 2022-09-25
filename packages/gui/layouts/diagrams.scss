@@ -1,0 +1,48 @@
+// NOTE: Work in progress
+// This does a basic dark mermaid diagram styling override.
+
+#diagram {
+  color: #fff !important;
+
+  .edgeLabel {
+    color: #fff !important;
+    background-color: #333 !important;
+  }
+
+  .label {
+    color: #fff !important;
+    background-color: #333 !important;
+  }
+
+  .arrowheadPath {
+    fill: #ddd !important;
+    stroke: #ddd !important;
+  }
+
+  .path {
+    stroke: #ddd !important;
+  }
+
+  .cluster rect,
+  .node rect,
+  .node circle,
+  .node ellipse,
+  .node polygon,
+  .node path {
+    // fill: #333 !important;
+    stroke: #aaa !important;
+  }
+
+  .marker {
+    fill: #ddd !important;
+    stroke: #ddd !important;
+  }
+
+  .marker.cross {
+    stroke: #ddd !important;
+  }
+
+  .flowchart-link {
+    stroke: #ddd !important;
+  }
+}
