@@ -125,6 +125,32 @@ const collect = async (
 
   log('Collecting content', 'info', 'pretty');
 
+  // NOTE: Do performance checks for this algorithm
+  const sortedContent: Content = {};
+  Object.keys(state.content)
+    // NOTE: We keep file-system natural sorting for top level objects
+    // .sort()
+    .forEach((entity) => {
+      sortedContent[entity] = {};
+
+      Object.keys(state.content[entity] ?? {})
+        // .sort()
+        .forEach((entry) => {
+          // FIXME:
+          (sortedContent[entity] ?? {})[entry] = {};
+
+          Object.keys(state.content[entity]?.[entry] ?? {})
+            // NOTE: Without it, property are "jumping" in random order
+            .sort()
+            .forEach((property) => {
+              ((sortedContent[entity] ?? {})[entry] || {})[property] =
+                state.content[entity]?.[entry]?.[property];
+            });
+        });
+    });
+
+  state.content = sortedContent;
+
   return state.content;
 };
 
