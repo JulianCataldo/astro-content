@@ -12,14 +12,22 @@ import CopyInlineCode from './CopyInlineCode';
 /* ·········································································· */
 import useAppStore from '../store';
 import { log } from '../logger';
+// import CommandPalette from './Modal';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 interface Props {
   isValidContentBase: boolean;
+  children: JSX.Element;
 }
 export default function Gui({ isValidContentBase, children }: Props) {
   const { entity, entry, property } = useAppStore((state) => state.ui_route);
   const save = useAppStore((state) => state.editor_save);
+  // const commandPaletteVisibility = useAppStore(
+  //   (state) => state.ui_commandPaletteVisibility,
+  // );
+  // const showCommandPalette = useAppStore(
+  //   (state) => state.ui_showCommandPalette,
+  // );
 
   const [didMount, setDidMount] = useState(false);
   useEffect(() => {
@@ -44,6 +52,23 @@ export default function Gui({ isValidContentBase, children }: Props) {
   return (
     <div className="component-app">
       <State />
+
+      {/* <CommandPalette
+        render={({ close, labelId, descriptionId }) => (
+          <>
+            <h1 id={labelId}>This is a dialog!</h1>
+            <p id={descriptionId}>
+              Now that we've got your attention, you can close this.
+            </p>
+            <button onClick={close}>Close</button>
+          </>
+        )}
+        open={commandPaletteVisibility}
+      >
+        <button>Open dialog</button>
+      </CommandPalette>
+      
+      */}
 
       <Toolbar />
 

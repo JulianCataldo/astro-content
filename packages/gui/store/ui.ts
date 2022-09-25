@@ -13,6 +13,7 @@ const uiState = (set: StoreApi<AppState>['setState']): UiState => ({
     assistant: { width: 0, height: 0 },
     inspector: { width: 0, height: 0 },
   },
+  ui_commandPaletteVisibility: false,
 
   /* ········································································ */
 
@@ -103,14 +104,15 @@ const uiState = (set: StoreApi<AppState>['setState']): UiState => ({
 
   /* ········································································ */
 
-  ui_setAssistantPane: (name) => {
-    set((state) => {
-      const newUiState: Partial<UiState> = {
-        ui_assistantPane: name || 'preview',
-      };
-      state.ui_save(newUiState);
-      return newUiState;
-    });
+  ui_showCommandPalette: () => {
+    // log({ newWidth });
+    // set((state) => {
+    //   const newUiState: Partial<UiState> = {
+    //     ui_commandPaletteVisibility: !state.ui_commandPaletteVisibility,
+    //   };
+    //   // state.saveUi(newUiState);
+    //   return newUiState;
+    // });
   },
 });
 

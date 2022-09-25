@@ -30,6 +30,7 @@ export interface UiState {
     assistant: PaneDimensions;
     inspector: PaneDimensions;
   };
+  ui_commandPaletteVisibility: boolean;
   /* ········································································ */
   ui_save: (newState: Partial<UiState>) => void;
   ui_fetchSaved: () => void;
@@ -42,6 +43,7 @@ export interface UiState {
     width?: number | null,
     height?: number | null,
   ) => void;
+  ui_showCommandPalette: () => void;
 }
 
 /* —————————————————————————————————————————————————————————————————————————— */
