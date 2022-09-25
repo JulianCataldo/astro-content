@@ -27,11 +27,15 @@ export default function Tree() {
         Object.entries(eVal).forEach(([rKey, rVal]) => {
           if (rKey.toLowerCase().match(searchInput.toLowerCase())) {
             // FIXME: Possibly undefined
+            // @ts-expect-error
             filtered[eKey][rKey] = rVal;
           } else {
             Object.entries(rVal).forEach(([pKey, pVal]) => {
               if (pKey.toLowerCase().match(searchInput.toLowerCase())) {
+                // FIXME: Possibly undefined
+                // @ts-expect-error
                 filtered[eKey][rKey] = {};
+                // @ts-expect-error
                 filtered[eKey][rKey][pKey] = pVal;
               }
             });
