@@ -19,10 +19,13 @@ const isValid = isValidContentBase();
 // NOTE: Check is done once, not updating (yet)
 if (isValid) {
   await collect(
+    // TODO: Add jsonc/json
     Astro.glob('/content/**/*.{md,mdx,yaml}'),
     // IDEA: `editMode` could be `mode: 'default' | 'edit' | 'api'`…?
     { editMode: true },
-  );
+  ).then((instances) => {
+    log(instances, 'absurd');
+  });
 
   // TODO: Find a pretty and handy way to handle multiple content bases
   // await collect(

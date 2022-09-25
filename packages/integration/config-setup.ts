@@ -14,6 +14,7 @@ import { log } from '@astro-content/server/logger';
 import { saveTsHelper } from '@astro-content/server/collect';
 import { endpoints } from '@astro-content/server/state';
 import ViteYaml from './load-yaml-plugin.js';
+// import ViteJsonc from './load-jsonc-plugin.js';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 const guiPath = path.dirname(
@@ -53,6 +54,8 @@ const configSetup: AstroIntegration['hooks']['astro:config:setup'] = async ({
       plugins: [
         //
         ViteYaml(),
+        // TODO: Align JSON with MD and YAML: override default loader
+        // ViteJsonc(),
         // TODO: Try it (not working)
         // Inspect({
         //   // build: true,
