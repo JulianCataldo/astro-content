@@ -30,6 +30,8 @@ export default function Tree() {
             // @ts-expect-error
             filtered[eKey][rKey] = rVal;
           } else {
+            // FIXME: No overload matches this call
+            // @ts-expect-error
             Object.entries(rVal).forEach(([pKey, pVal]) => {
               if (pKey.toLowerCase().match(searchInput.toLowerCase())) {
                 // FIXME: Possibly undefined

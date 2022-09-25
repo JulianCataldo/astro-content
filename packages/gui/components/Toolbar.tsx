@@ -12,7 +12,6 @@ import Tooltip from './Tooltip';
 /* ·········································································· */
 import useAppStore from '../store';
 import CopyInlineCode from './CopyInlineCode';
-
 /* —————————————————————————————————————————————————————————————————————————— */
 
 export default function Toolbar() {
@@ -29,6 +28,9 @@ export default function Toolbar() {
   const isMd = language === 'markdown' || language === 'mdx';
   const fullPath =
     entity && entry && property && content[entity]?.[entry]?.[property]?.file;
+
+  const extension =
+    language === 'markdown' ? 'MD' : language && language.toUpperCase();
 
   return (
     <div className="component-toolbar">
@@ -159,9 +161,11 @@ export default function Toolbar() {
             <div className={cx('chevron-property', isMd ? 'md' : 'yaml')}>
               <Icon icon="system-uicons:chevron-right" width="2em" />
               <span>{sentenceCase(property)}</span>
+              <span className={cx('extension-label', language)}>
+                {extension}
+              </span>
             </div>
           )}
-          {/* ({language}) */}
         </div>
       </div>
 

@@ -100,6 +100,26 @@
     }
   }
 
+  .extension-label {
+    padding: 0.25rem 0.5rem;
+    margin: 0rem 1rem;
+    font-size: 80%;
+    border-radius: 0.5rem;
+    opacity: 0.8;
+
+    &.markdown {
+      border: 1px solid var(--vscode-charts-purple);
+    }
+
+    &.mdx {
+      border: 1px solid var(--vscode-charts-orange);
+    }
+
+    &.yaml {
+      border: 1px solid var(--vscode-charts-green);
+    }
+  }
+
   .infos-tooltip {
     display: flex;
     flex-direction: column;
