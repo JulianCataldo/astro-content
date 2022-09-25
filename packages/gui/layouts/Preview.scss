@@ -1,0 +1,13 @@
+#preview {
+  .markdown-body {
+    padding: 1rem 5vw;
+
+    & > *:first-child {
+      margin-top: 1rem;
+    }
+  }
+}
+
+body {
+  margin: 0;
+}

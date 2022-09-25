@@ -1,6 +1,8 @@
 import type { AstroIntegration } from 'astro';
 import react from '@astrojs/react';
-// import mdx from '@astrojs/mdx';
+import mdx from '@astrojs/mdx';
+import remarkEmbed, { Settings as RemarkEmbedSettings } from 'remark-embed';
+import remarkGfm from 'remark-gfm';
 /* ·········································································· */
 import {
   log,
@@ -52,8 +54,13 @@ export default function preset(settings: Settings = {}) {
   }
 
   const integrations = [
-    // TODO: Fit MDX here (is it headless)?
-    // mdx(),
+    // NOTE: Monitor for side-effects when user already use `@astrojs/mdx`.
+    mdx({
+      remarkPlugins: [
+        [remarkEmbed, { logLevel: 'info' } as RemarkEmbedSettings],
+        remarkGfm,
+      ],
+    }),
     astroContent(userSettings),
   ];
   if (userSettings.gui === true) {

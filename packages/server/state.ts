@@ -61,6 +61,7 @@ const endpoints = {
     fake: `${apiBase}/~fake`,
     validate: `${apiBase}/~validate`,
     refresh: `${apiBase}/~refresh`,
+    render: `${apiBase}/~render`,
   },
 };
 

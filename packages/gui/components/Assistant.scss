@@ -10,11 +10,23 @@
     max-width: 100%;
   }
 
-  .markdown,
+  // NOTE: In-document rendering is disabled.
+  // .markdown,
   .meta {
     height: 100%;
     padding: 0.5rem 2rem 2rem 2rem;
     overflow-y: auto;
+  }
+
+  .markdown {
+    // width: 100%;
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      margin: 0;
+    }
   }
 
   & > * {

@@ -85,8 +85,8 @@ const configSetup: AstroIntegration['hooks']['astro:config:setup'] = async ({
 
   /* Inject stateful routes (share same state as all Astro SSR pages) */
 
-  /* Check if `@astro-content/gui` is properly installed */
-  // if (existsSync(`${guiPath}/package.json`)) {
+  // TODO: Apply option to omit all GUI-related stuff
+  // if () {
   injectRoute({
     pattern: path.join(endpoints.apiBase, '[endpoint]'),
     entryPoint: path.join(integrationPath, 'server-bridge.json.ts'),
@@ -95,12 +95,15 @@ const configSetup: AstroIntegration['hooks']['astro:config:setup'] = async ({
     pattern: endpoints.contentBase,
     entryPoint: path.join(guiPath, 'ssr-entrypoint.astro'),
   });
-  // }
-
+  injectRoute({
+    pattern: path.join(endpoints.actions.render, '[file]'),
+    entryPoint: path.join(guiPath, 'preview-markdown.astro'),
+  });
   injectRoute({
     pattern: endpoints.actions.refresh,
     entryPoint: path.join(integrationPath, 'trigger-transform.astro'),
   });
+  // }
 
   /* Setup project */
   log(tempDir);

@@ -117,7 +117,7 @@ export {}`;
       tabs.html = { icon: 'system-uicons:code', title: 'HTML' };
     }
     tabs.ts = { icon: 'simple-icons:typescript', title: 'Import' };
-    tabs.api = { icon: 'mdi:code-json', title: 'API response' };
+    tabs.api = { icon: 'mdi:code-json', title: 'Object' };
   } else if (entity && !entry) {
     tabs.preview = {
       icon: 'ion:dice',
@@ -172,7 +172,7 @@ export {}`;
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
 
-  const previewWrapper = useRef<HTMLDivElement>(null);
+  const previewWrapper = useRef<HTMLIFrameElement>(null);
 
   /* Sync. scroll position from editor (one-way) */
   useEffect(() => {
@@ -221,6 +221,27 @@ export {}`;
           <>
             {assistantPane === 'preview' &&
               (value.language === 'markdown' || value.language === 'mdx') && (
+                <div className="markdown markdown-preview">
+                  <iframe
+                    title="Embedded preview"
+                    src={`${endpoints.actions.render}/${encodeURIComponent(
+                      value.file,
+                    )}`}
+                    frameBorder="none"
+                    // FIXME: Scrollbar bi-directional sync.
+                    // ref={previewWrapper}
+                  />
+                </div>
+                // NOTE: Disabled. In-document MD rendering.
+                // Might be useful to re-use this for MD only?
+                // <div
+                //   className="markdown markdown-preview"
+                //   // eslint-disable-next-line react/no-danger
+                //   dangerouslySetInnerHTML={{
+                //     __html: value.bodyCompiled,
+                //   }}
+                //   ref={previewWrapper}
+                // />
               )}
             {/* {assistantPane === 'meta' && (
                 <Metas

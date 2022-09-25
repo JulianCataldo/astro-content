@@ -69,18 +69,23 @@ const editor = (set: StoreApi<AppState>['setState']): EditorState => ({
             log({ success });
             if (success) {
               /* Trigger `Astro.glob` + `collect`, so Astro transform updates */
-              await fetch(endpoints.actions.refresh);
+              // await fetch(endpoints.actions.refresh);
+              // await fetch(endpoints.actions.refresh);
 
               /* Refresh local data */
               // FIXME: Adding delay to prevent jerkyness with empty data,
               // but should really find a better signal to hook on when ready
+              // await state
+              //   .data_fetchServerData()
+              //   .then(() => null)
+              //   .catch(() => null);
               await new Promise((resolve) => {
                 setTimeout(() => {
                   state
                     .data_fetchServerData()
                     .then(() => resolve(''))
                     .catch(() => null);
-                }, 200);
+                }, 100);
               });
 
               log("Fetching new data after save…'");

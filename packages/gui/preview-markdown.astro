@@ -1,0 +1,53 @@
+---
+import type { MarkdownInstance } from 'astro';
+import { Debug } from 'astro/components';
+// import path from 'path';
+import Layout from './layouts/Preview.astro';
+import { log } from './logger';
+/* —————————————————————————————————————————————————————————————————————————— */
+
+// NOTE: Using `import.meta.glob` instead of Astro.glob so we can import
+// just what we need, on-time, for a huge speed boost.
+//  IDEA: Generalize this behavior? Would solve some general performance issues.
+// During file collection, could cherry pick data depending on user intent.
+const imports = import.meta.glob('/content/**/*.{md,mdx}');
+
+log({ imports });
+
+// NOTE: Doing mumbo jumbo because you can't fetch with
+// `Astro.url.searchParams.get('file')` in SSG mode (intended).
+// Instead using file path encoded as one URL segment.
+export function getStaticPaths() {
+  const imports = import.meta.glob('/content/**/*.{md,mdx}');
+
+  const paths: { params: { file: string } }[] = [];
+
+  Object.entries(imports).map(([rawPath]) => {
+    log({ rawPath });
+    paths.push({
+      params: {
+        file: rawPath.substring(1),
+      },
+    });
+    log({ t: imports[rawPath] });
+  });
+
+  return paths;
+}
+const { file } = Astro.params;
+
+const comp = (await imports[`/${file}`]()) as MarkdownInstance<
+  Record<string, unknown>
+>;
+---
+
+<Layout>
+  <Fragment slot="body">
+    <!-- <Debug {imports} {file} /> -->
+    <div id="preview">
+      <div class="markdown-body">
+        <comp.Content />
+      </div>
+    </div>
+  </Fragment>
+</Layout>
