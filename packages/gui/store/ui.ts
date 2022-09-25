@@ -75,6 +75,18 @@ const uiState = (set: StoreApi<AppState>['setState']): UiState => ({
 
   /* ········································································ */
 
+  ui_setAssistantPane: (name) => {
+    set((state) => {
+      const newUiState: Partial<UiState> = {
+        ui_assistantPane: name || 'preview',
+      };
+      state.ui_save(newUiState);
+      return newUiState;
+    });
+  },
+
+  /* ········································································ */
+
   ui_setSplitPanesDimensions: (pane, width = null, height = null) => {
     // console.log({ newWidth });
     set((state) => {
