@@ -3,6 +3,7 @@ import useAppStore from '../store';
 import TabBar, { Tabs } from './TabBar';
 import ProblemPanes from './ProblemPanes';
 import { log } from '../logger';
+// import EntriesTable from './EntriesTable';
 // import './Inspector.scss';
 /* —————————————————————————————————————————————————————————————————————————— */
 
@@ -126,18 +127,20 @@ export default function Inspector() {
             )}
           </>
         )}
+
+        {isEntity && (
+          // eslint-disable-next-line react/jsx-no-useless-fragment
+          <>
+            {inspectorPane === 'entries' && (
+              <div>
+                {/* <EntriesTable /> */}
+                {/* Entries… */}
+                {/* <ErrorPane reps={content[entity][entry][property].references} /> */}
+              </div>
+            )}
+          </>
+        )}
       </div>
-      {isEntity && (
-        // eslint-disable-next-line react/jsx-no-useless-fragment
-        <>
-          {inspectorPane === 'entries' && (
-            <div>
-              {/* Entries… */}
-              {/* <ErrorPane reps={content[entity][entry][property].references} /> */}
-            </div>
-          )}
-        </>
-      )}
     </div>
   );
 }
