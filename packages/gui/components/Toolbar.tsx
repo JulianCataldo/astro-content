@@ -258,6 +258,17 @@ export default function Toolbar() {
                 </a>
               </Tooltip>
             )}
+
+            {/* <div className="action">
+              <Icon
+                icon="system-uicons:question-circle"
+                width="2em"
+                height="1.5em"
+              />
+            </div>
+            <div className="action">
+              <Icon icon="system-uicons:settings" width="2em" height="1.5em" />
+            </div> */}
           </div>
         )}
     </div>
