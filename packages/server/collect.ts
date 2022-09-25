@@ -3,10 +3,13 @@ import path from 'node:path';
 import { sentenceCase } from 'change-case';
 import fs from 'node:fs/promises';
 /* ·········································································· */
-import type { FileInstance, YamlInstance } from '@astro-content/types/file';
+import type {
+  FileInstanceExtended,
+  YamlInstance,
+} from '@astro-content/types/file';
 import type { Options } from '@astro-content/types/integration';
 import type { JSONSchema7 } from 'json-schema';
-import type { ServerState } from '@astro-content/types/server-state';
+import type { Content, ServerState } from '@astro-content/types/server-state';
 import { state } from './state.js';
 import { generateTypes, importHelper } from './generate-types.js';
 import { loadFile } from './load-file.js';
@@ -35,7 +38,7 @@ function handleSchema(filePath: string, unknownYaml: YamlInstance<unknown>) {
     title: typeName,
     ...file.data,
   };
-  state.schemas.raw[entity] = file.rawYaml;
+  state.schemas.raw[entity] = file.raw;
   state.schemas.file[entity] = filePath;
 }
 
@@ -65,7 +68,7 @@ export async function saveTsTypes() {
 /* ·········································································· */
 
 const collect = async (
-  pFiles: Promise<FileInstance[]>,
+  pFiles: Promise<FileInstanceExtended[]>,
   options?: Options,
 ): Promise<ServerState['content']> => {
   const files = await pFiles.then((p) => p).catch(() => null);
@@ -99,7 +102,7 @@ const collect = async (
   /* Clean-up */
   state.content = {};
 
-  const promises = files.map(async (inputFile: FileInstance) => {
+  const promises = files.map(async (inputFile: FileInstanceExtended) => {
     const filePath = inputFile.file;
 
     if (filePath && !filePath.endsWith('.schema.yaml')) {

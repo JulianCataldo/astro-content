@@ -223,7 +223,12 @@ export default function Inspector() {
     };
   }
 
-  if (language === 'markdown' && entity && entry && property) {
+  if (
+    (language === 'markdown' || language === 'mdx') &&
+    entity &&
+    entry &&
+    property
+  ) {
     tabs.lint = {
       title: `Lint ${problems.lint?.length ? `(${problems.lint.length})` : ''}`,
     };

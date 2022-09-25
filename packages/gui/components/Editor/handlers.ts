@@ -3,11 +3,13 @@ import type { Monaco as MonacoType } from '@monaco-editor/react';
 import type { Types } from '@astro-content/types/server-state';
 /* ·········································································· */
 import { log } from '../../logger';
+import { conf, language as mdx } from './mdx-language';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 const handleEditorWillMount = (monaco: MonacoType, types: Types) => {
   log(['Monaco instance:', monaco]);
 
+  /* Setup TypeScript */
   monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
     target: monaco.languages.typescript.ScriptTarget.Latest,
     allowNonTsExtensions: true,
@@ -22,6 +24,13 @@ const handleEditorWillMount = (monaco: MonacoType, types: Types) => {
     // allowSyntheticDefaultImports: true,
   });
 
+  /* Setup MDX */
+
+  monaco.languages.register({ id: 'mdx' });
+  monaco.languages.setMonarchTokensProvider('mdx', mdx);
+  monaco.languages.setLanguageConfiguration('mdx', conf(monaco.languages));
+
+  /* Setup Themes */
   // IDEA: Implement this globally, synced with CSS
   // monaco.editor.defineTheme('Dracula', cobalt2 as nsEd.IStandaloneThemeData);
 

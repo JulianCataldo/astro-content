@@ -3,7 +3,7 @@ import cx from 'classnames';
 import { sentenceCase } from 'change-case';
 /* ·········································································· */
 import type { Content } from '@astro-content/types/server-state';
-import type { FileInstance } from '@astro-content/types/file';
+import type { FileInstanceExtended } from '@astro-content/types/file';
 import { Icon } from '@iconify/react';
 import MiniReport from './MiniReport';
 import Tooltip from '../Tooltip';
@@ -12,7 +12,7 @@ import useAppStore from '../../store';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 interface Props {
-  entryTree: Record<string, FileInstance | undefined>;
+  entryTree: Record<string, FileInstanceExtended | undefined>;
   entityKey: string;
   entryKey: string;
   content: Content;
@@ -74,9 +74,8 @@ export default function Property({
         const filePreview =
           propTree && 'frontmatter' in propTree
             ? mdPreview
-            : propTree &&
-              'rawYaml' in propTree &&
-              toPretty({ literal: propTree.rawYaml });
+            : propTree?.language === 'yaml' &&
+              toPretty({ literal: propTree.raw });
 
         const fileInfo = `${realPath ?? ''}<hr />${
           filePreview || 'No preview'
@@ -88,14 +87,14 @@ export default function Property({
         let icon;
 
         if (propTree) {
-          if ('rawMd' in propTree) {
+          if (propTree?.language === 'yaml') {
+            icon = 'bi:circle-fill';
+          } else {
             if (Object.entries(propTree.frontmatter).length) {
               icon = 'bi:circle-square';
             } else {
               icon = 'bi:square-fill';
             }
-          } else {
-            icon = 'bi:circle-fill';
           }
         }
 
@@ -122,11 +121,7 @@ export default function Property({
                     icon={icon ?? ''}
                     width="0.75rem"
                     height="0.75rem"
-                    className={cx(
-                      propTree && 'headingsCompiled' in propTree
-                        ? 'icon-md'
-                        : 'icon-yaml',
-                    )}
+                    className={`icon-${propTree?.language}`}
                   />
                 </span>
               </Tooltip>

@@ -9,6 +9,7 @@ import remarkPresetLintRecommended from 'remark-preset-lint-recommended';
 import remarkPresetLintMarkdownStyleGuide from 'remark-preset-lint-markdown-style-guide';
 import remarkPresetLintConsistent from 'remark-preset-lint-consistent';
 /* ·········································································· */
+import remarkMdx from 'remark-mdx';
 import remarkRetext from 'remark-retext';
 import remarkGfm from 'remark-gfm';
 import retextStringify from 'retext-stringify';
@@ -63,6 +64,7 @@ export async function handleMd(content: string, schema?: JSONSchema7) {
   const lintingAndSchema = await remark()
     .use(remarkFrontmatter)
     .use(rlFmSchema, { embed: schema })
+    .use(remarkMdx)
     .use(remarkGfm)
     // TODO: extract "validate" to general "handle"?
     .use(() => (tree, file) => {
@@ -135,6 +137,7 @@ export async function handleMd(content: string, schema?: JSONSchema7) {
 
   const naturalLanguage = await remark()
     .use(remarkFrontmatter)
+    .use(remarkMdx)
     .use(remarkRetext, Parser)
     .use(retextCasePolice, { ignore: ['HTTPS', 'HTTP'] })
     .use(retextReadability, { age: 26 })

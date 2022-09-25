@@ -99,7 +99,7 @@ export {}`;
 
   const value =
     entity && entry && property && content[entity]?.[entry]?.[property];
-  const isMd = language === 'markdown';
+  const isMd = language === 'markdown' || language === 'mdx';
 
   const tabs: Tabs = {};
 
@@ -220,16 +220,7 @@ export {}`;
         {value && isMd && (
           <>
             {assistantPane === 'preview' &&
-              'bodyCompiled' in value &&
-              value.bodyCompiled && (
-                <div
-                  className="markdown markdown-preview"
-                  // eslint-disable-next-line react/no-danger
-                  dangerouslySetInnerHTML={{
-                    __html: value.bodyCompiled,
-                  }}
-                  ref={previewWrapper}
-                />
+              (value.language === 'markdown' || value.language === 'mdx') && (
               )}
             {/* {assistantPane === 'meta' && (
                 <Metas
@@ -240,10 +231,9 @@ export {}`;
               )} */}
 
             {assistantPane === 'html' &&
-              'bodyCompiled' in value &&
-              value.bodyCompiled && (
+              (value.language === 'markdown' || value.language === 'mdx') && (
                 <div className="editor">
-                  <Editor language="html" value={value.bodyCompiled} readOnly />
+                  <Editor language="html" value={value.raw} readOnly />
                 </div>
               )}
             {/* {assistantPane === 'api' && <div className="editor"></div>} */}
@@ -251,7 +241,7 @@ export {}`;
         )}
         {value && (
           <>
-            {assistantPane === 'preview' && 'data' in value && (
+            {assistantPane === 'preview' && value.language === 'yaml' && (
               <div className="editor">
                 <Editor
                   language="json"

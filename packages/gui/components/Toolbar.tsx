@@ -26,7 +26,7 @@ export default function Toolbar() {
   const save = useAppStore((state) => state.editor_save);
   const savingState = useAppStore((state) => state.editor_savingState);
 
-  const isMd = language === 'markdown';
+  const isMd = language === 'markdown' || language === 'mdx';
   const fullPath =
     entity && entry && property && content[entity]?.[entry]?.[property]?.file;
 
@@ -37,8 +37,6 @@ export default function Toolbar() {
           <ModalPopover
             render={({ close, labelId, descriptionId }) => (
               <>
-                {/* 
-              {/* 
                 {/* 
               <div>
                 <p id={descriptionId}>Keep the name short!</p>

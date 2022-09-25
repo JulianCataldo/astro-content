@@ -1,3 +1,4 @@
+import type { FileLanguage } from './file';
 import type { JSONSchema7 } from 'json-schema';
 import type { editor as nsEd } from 'monaco-editor';
 /* ·········································································· */
@@ -11,9 +12,7 @@ export interface Route {
   property: Part;
 }
 
-export type Language = 'yaml' | 'markdown';
-
-export type EditorLanguage = Language | ('typescript' | 'json' | 'html');
+export type EditorLanguage = FileLanguage | ('typescript' | 'json' | 'html');
 
 /* —————————————————————————————————————————————————————————————————————————— */
 
@@ -66,7 +65,7 @@ export interface EditorState {
     entity: Part,
     entry: Part,
     property: Part,
-    language: Language,
+    language: FileLanguage,
     value: string,
     schema: JSONSchema7,
   ) => Promise<void>;

@@ -16,29 +16,22 @@ export default function File() {
     entity && entry && property && content[entity]?.[entry]?.[property];
 
   useEffect(() => {
-    let isMd = false;
-    if (prop && 'rawMd' in prop) {
-      isMd = true;
+    if (prop) {
+      setCurrentLanguage(prop.language);
     }
-
-    setCurrentLanguage(isMd ? 'markdown' : 'yaml');
   }, [content, entry, entity, property]);
 
   return (
     <div className="file-entity">
       {prop && (
         <>
-          {'rawMd' in prop && (
-            <Editor language="markdown" value={prop.rawMd} isMain />
-          )}
-          {'rawYaml' in prop && (
-            <Editor language="yaml" value={prop.rawYaml} isMain />
-          )}
+          <Editor language={prop.language} value={prop.raw} isMain />
         </>
       )}
-      {entity && content[entity] && !entry && language === 'yaml' && (
+      {/* Schema Editor */}
+      {/* {entity && content[entity] && !entry && language === 'yaml' && (
         <Editor language="yaml" value={schemas.raw[entity]} isMain />
-      )}
+      )} */}
     </div>
   );
 }

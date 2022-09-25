@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/consistent-indexed-object-style */
 import type { JSONSchema7 } from 'json-schema';
 /* ·········································································· */
-import type { FileInstance } from './file';
+import type { FileInstanceExtended } from './file';
 import type { PropertyReport } from './reports';
 /* —————————————————————————————————————————————————————————————————————————— */
 
@@ -10,7 +10,7 @@ export interface Content {
     | {
         [entry: string]:
           | {
-              [property: string]: FileInstance | undefined;
+              [property: string]: FileInstanceExtended | undefined;
             }
           | undefined;
       }

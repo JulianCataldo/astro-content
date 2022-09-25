@@ -4,7 +4,7 @@ import path from 'node:path';
 import prettier from 'prettier';
 /* ·········································································· */
 import type { MarkdownInstance } from 'astro';
-import type { FileInstance, YamlInstance } from '@astro-content/types/file';
+import type { OriginalInstance, YamlInstance } from '@astro-content/types/file';
 import { state } from './state.js';
 import { handleYaml } from './handle-yaml.js';
 import { handleMd } from './handle-md.js';
@@ -15,13 +15,13 @@ import { log } from './logger.js';
 
 export async function loadFile(
   filePath: string,
-  file: FileInstance,
+  file: OriginalInstance,
   editMode = false,
 ) {
   const { first: entity, second: entry, third: property } = getTrio(filePath);
 
   if (property && state.schemas.content[entity].properties?.[property]) {
-    let collected: FileInstance | null = null;
+    let collected: OriginalInstance | null = null;
 
     if (state.content[entity] === undefined) {
       state.content[entity] = {};
@@ -36,33 +36,34 @@ export async function loadFile(
     if (filePath.endsWith('yaml') || filePath.endsWith('yml')) {
       const yamlFile = file as YamlInstance<unknown>;
       collected = {
-        data: yamlFile.data,
-        rawYaml: yamlFile.rawYaml,
-        file: path.relative(process.cwd(), filePath),
+        language: 'yaml',
+        ...yamlFile,
+        file: editMode ? path.relative(process.cwd(), filePath) : yamlFile.file,
       };
 
-      handleYaml(entity, entry, property, collected.rawYaml);
+      handleYaml(entity, entry, property, collected.raw);
     }
-    if (filePath.endsWith('md')) {
+    if (filePath.endsWith('md') || filePath.endsWith('mdx')) {
       const mdFile = file as MarkdownInstance<Record<string, unknown>>;
 
-      // FIXME: Correct File Instance assertion
       collected = {
+        language: filePath.endsWith('md') ? 'markdown' : 'mdx',
         ...mdFile,
-        // For YAML, remove this
-        file: path.relative(process.cwd(), filePath),
+        file: editMode ? path.relative(process.cwd(), filePath) : mdFile.file,
       };
 
       // collected.Content = file?.Content;
 
       if (editMode) {
-        const rawMd = await fs.readFile(filePath, 'utf8');
+        const raw = await fs.readFile(filePath, 'utf8');
         collected.headingsCompiled = mdFile.getHeadings();
-        collected.rawMd = rawMd;
-        collected.bodyCompiled = prettier.format(mdFile.compiledContent(), {
-          parser: 'html',
-        });
-        collected.excerpt = await generateExcerpt(rawMd);
+        collected.raw = raw;
+        // NOTE: Disabled for now, using the separate renderer in iframe.
+        // collected.bodyCompiled = 'NONE';
+        // prettier.format(mdFile.compiledContent(), {
+        //   parser: 'html',
+        // });
+        collected.excerpt = await generateExcerpt(raw);
 
         log({ file, collected }, 'absurd');
 
@@ -83,7 +84,7 @@ export async function loadFile(
 
           log(frontmatterSchema);
 
-          handleMd(rawMd, frontmatterSchema || {})
+          handleMd(raw, frontmatterSchema || {})
             .then((report) => {
               if (state.reports[entity] === undefined) {
                 state.reports[entity] = {};
@@ -115,15 +116,6 @@ export async function loadFile(
             .then(() => null)
             .catch(() => null);
         }
-        // if (filePath.endsWith('mdx')) {
-        //   const rawMd = await fs.readFile(filePath, 'utf8');
-        //   collected = {
-        //     ...file,
-        //     file: undefined,
-        //     headings: file.getHeadings(),
-        //     rawMd,
-        //   };
-        // }
       }
     }
 

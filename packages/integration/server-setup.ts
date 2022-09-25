@@ -57,7 +57,8 @@ const serverSetup: AstroIntegration['hooks']['astro:server:setup'] = ({
           let reports: PropertyReport | false = {};
           if (
             //
-            body.language === 'markdown'
+            body.language === 'markdown' ||
+            body.language === 'mdx'
           ) {
             reports = await handleMd(body.value, body.schema);
           } else if (
