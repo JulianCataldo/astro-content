@@ -5,9 +5,8 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "start": "serve dist",
-    "reset": "rm -rf node_modules pnpm-lock.yaml .astro-content package-lock.json",
     "preview": "astro preview",
+    "reset": "rm -rf node_modules pnpm-lock.yaml .astro-content package-lock.json",
     "astro": "astro"
   },
   "dependencies": {
