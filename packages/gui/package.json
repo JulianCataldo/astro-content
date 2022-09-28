@@ -23,7 +23,6 @@
     "sass": "^1.54.9"
   },
   "dependencies": {
-    "github-markdown-css": "^5.1.0",
     "@astro-content/server": "workspace:*",
     "@astrojs/mdx": "^0.11.1",
     "@astrojs/react": "^1.1.2",
@@ -33,11 +32,15 @@
     "@rjsf/core": "5.0.0-beta.6",
     "@rjsf/utils": "5.0.0-beta.6",
     "@rjsf/validator-ajv6": "5.0.0-beta.6",
+    "@tanstack/react-location": "^3.7.4",
+    "@tanstack/react-table": "^8.5.13",
     "change-case": "^4.1.2",
     "classnames": "^2.3.1",
     "framer-motion": "^7.3.2",
+    "github-markdown-css": "^5.1.0",
     "lodash-es": "^4.17.21",
     "monaco-editor": "^0.34.0",
+    "prettier": "2.7.1",
     "react": "18.2.0",
     "react-dom": "^18.2.0",
     "react-merge-refs": "^2.0.1",
