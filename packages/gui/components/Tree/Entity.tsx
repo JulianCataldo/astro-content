@@ -7,7 +7,7 @@ import { FloatingDelayGroup } from '@floating-ui/react-dom-interactions';
 /* ·········································································· */
 import type { Content, Schemas } from '@astro-content/types/server-state';
 import Tooltip from '../Tooltip';
-import useAppStore from '../../store';
+import { useAppStore } from '../../store';
 import Property from './Property';
 /* —————————————————————————————————————————————————————————————————————————— */
 

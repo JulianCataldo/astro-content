@@ -7,7 +7,7 @@ import type { EditorLanguage } from '@astro-content/types/gui-state';
 // import './Editor.scss';
 /* ·········································································· */
 import { validate } from './validation';
-import useAppStore from '../../store';
+import { useAppStore } from '../../store';
 // import { log } from '../../logger';
 import { handleEditorWillMount } from './handlers';
 /* ·········································································· */

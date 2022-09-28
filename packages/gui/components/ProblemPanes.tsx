@@ -3,7 +3,7 @@ import type { Reports } from '@astro-content/types/reports';
 /* ·········································································· */
 import Tooltip from './Tooltip';
 import { Icon } from '@iconify/react';
-import useAppStore from '../store';
+import { useAppStore } from '../store';
 import { log } from '../logger';
 /* —————————————————————————————————————————————————————————————————————————— */
 

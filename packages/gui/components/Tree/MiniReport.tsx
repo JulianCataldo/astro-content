@@ -1,6 +1,6 @@
 /* ·········································································· */
 import Tooltip from '../Tooltip';
-import useAppStore from '../../store';
+import { useAppStore } from '../../store';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 export default function MiniReport({

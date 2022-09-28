@@ -8,7 +8,7 @@ import { Icon } from '@iconify/react';
 import MiniReport from './MiniReport';
 import Tooltip from '../Tooltip';
 /* ·········································································· */
-import useAppStore from '../../store';
+import { useAppStore } from '../../store';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 interface Props {

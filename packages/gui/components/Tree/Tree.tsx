@@ -5,7 +5,7 @@ import type { ServerState } from '@astro-content/types/server-state';
 import Entity from './Entity';
 // import './Tree.scss';
 /* ·········································································· */
-import useAppStore from '../../store';
+import { useAppStore } from '../../store';
 import { log } from '../../logger';
 /* —————————————————————————————————————————————————————————————————————————— */
 

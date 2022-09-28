@@ -12,7 +12,7 @@ import TabBar, { Tabs } from './TabBar';
 import Editor from './Editor/Editor';
 // import Metas from './Metas'
 /* ·········································································· */
-import useAppStore from '../store';
+import { useAppStore } from '../store';
 // import './Assistant.scss';
 import { post } from '../store/helpers';
 /* —————————————————————————————————————————————————————————————————————————— */

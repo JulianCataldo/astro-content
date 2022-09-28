@@ -14,7 +14,7 @@ import {
   FloatingFocusManager,
 } from '@floating-ui/react-dom-interactions';
 import { mergeRefs } from 'react-merge-refs';
-import useAppStore from '../store';
+import { useAppStore } from '../store';
 
 interface Props {
   open?: boolean;

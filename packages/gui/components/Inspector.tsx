@@ -1,5 +1,5 @@
 /* ·········································································· */
-import useAppStore from '../store';
+import { useAppStore } from '../store';
 import TabBar, { Tabs } from './TabBar';
 import ProblemPanes from './ProblemPanes';
 import { log } from '../logger';

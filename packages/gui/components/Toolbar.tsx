@@ -10,7 +10,7 @@ import ModalPopover from './ModalPopover';
 // import './Toolbar.scss';
 import Tooltip from './Tooltip';
 /* ·········································································· */
-import useAppStore from '../store';
+import { useAppStore } from '../store';
 import CopyInlineCode from './CopyInlineCode';
 /* —————————————————————————————————————————————————————————————————————————— */
 
