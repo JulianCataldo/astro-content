@@ -99,7 +99,7 @@ const configSetup: AstroIntegration['hooks']['astro:config:setup'] = async ({
     entryPoint: path.join(guiPath, 'ssr-entrypoint.astro'),
   });
   injectRoute({
-    pattern: path.join(endpoints.actions.render, '[file]'),
+    pattern: path.join(endpoints.actions.render, '[...file]'),
     entryPoint: path.join(guiPath, 'preview-markdown.astro'),
   });
   injectRoute({
