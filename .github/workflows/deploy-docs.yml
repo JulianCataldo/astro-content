@@ -2,7 +2,7 @@ name: Deploy — [Docs]
 
 on:
   push:
-    branches: [master]
+    branches: [master, develop]
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
@@ -68,14 +68,45 @@ jobs:
         run: pnpm run build
 
       # ————————————————————————————————————————————————————————————————————————
+      # BRANCH
 
-      - name: Deploy [Docs] to Netlify
+      - name: Generate Netlify alias
+        if: contains(github.ref, "master") == false
+        shell: bash
+        run: ruby -e 'puts "::set-output name=netlify_alias::#{`git branch --show-current`.chomp.gsub(/[^a-zA-Z\d]/){"-"}.downcase}"'
+        id: get_netlify_alias
+
+      - name: Deploy to Netlify (branch)
+        if: contains(github.ref, "master") == false
         uses: nwtgck/actions-netlify@v1.2.3
         with:
+          alias: ${{ steps.get_netlify_alias.outputs.netlify_alias }}
+          github-deployment-environment: ${{ steps.get_netlify_alias.outputs.netlify_alias }}
+
           publish-dir: './docs/dist'
-          production-branch: master
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          deploy-message: 'Deploy from GitHub Actions'
+          deploy-message: 'Deploy [branch] from GitHub Actions'
+          enable-pull-request-comment: false
+          enable-commit-comment: false
+          enable-commit-status: false
+          overwrites-pull-request-comment: false
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        timeout-minutes: 1
+
+      # ————————————————————————————————————————————————————————————————————————
+      # PRODUCTION
+
+      - name: Deploy [Docs] to Netlify
+        if: contains(github.ref, "master")
+        uses: nwtgck/actions-netlify@v1.2.3
+        with:
+          production-branch: master
+
+          publish-dir: './docs/dist'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          deploy-message: 'Deploy [master] from GitHub Actions'
           enable-pull-request-comment: false
           enable-commit-comment: false
           enable-commit-status: false
