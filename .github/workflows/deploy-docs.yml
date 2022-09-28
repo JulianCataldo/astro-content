@@ -16,7 +16,7 @@ jobs:
 
       # ————————————————————————————————————————————————————————————————————————
 
-      - name: Use Node.js 'lts/gallium'
+      - name: Use Node.js 18
         uses: actions/setup-node@v3
         with:
           node-version: 18
