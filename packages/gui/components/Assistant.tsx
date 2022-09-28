@@ -7,6 +7,8 @@ import { useEffect, useRef, useState } from 'react';
 /* ·········································································· */
 import type { Fake } from '@astro-content/types/dto';
 import { endpoints } from '@astro-content/server/state';
+import prettier from 'prettier';
+import parserHtml from 'prettier/parser-html';
 import { log } from '../logger';
 import TabBar, { Tabs } from './TabBar';
 import Editor from './Editor/Editor';
@@ -183,6 +185,20 @@ export {}`;
     previewWrapper.current?.scrollTo({ top });
   }, [scrollPosition]);
 
+  const [rawHtml, setRawHtml] = useState<string>('');
+
+  function handleIframeLoad(e: React.SyntheticEvent<HTMLIFrameElement>) {
+    const input =
+      e.currentTarget.contentWindow?.document.body.querySelector(
+        '.markdown-body',
+      )?.innerHTML ?? '';
+    const result = prettier.format(input, {
+      parser: 'html',
+      plugins: [parserHtml],
+    });
+    setRawHtml(result);
+  }
+
   return (
     <>
       <TabBar
@@ -224,10 +240,14 @@ export {}`;
                 <div className="markdown markdown-preview">
                   <iframe
                     title="Embedded preview"
-                    src={`${endpoints.actions.render}/${encodeURIComponent(
-                      value.file,
-                    )}`}
+                    src={
+                      // value.file
+                      `${endpoints.actions.render}/${encodeURIComponent(
+                        value.file,
+                      )}`
+                    }
                     frameBorder="none"
+                    onLoad={(e) => handleIframeLoad(e)}
                     // FIXME: Scrollbar bi-directional sync.
                     // ref={previewWrapper}
                   />
@@ -254,7 +274,7 @@ export {}`;
             {assistantPane === 'html' &&
               (value.language === 'markdown' || value.language === 'mdx') && (
                 <div className="editor">
-                  <Editor language="html" value={value.raw} readOnly />
+                  <Editor language="html" value={rawHtml} readOnly />
                 </div>
               )}
             {/* {assistantPane === 'api' && <div className="editor"></div>} */}
