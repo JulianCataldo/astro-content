@@ -158,7 +158,8 @@ const editor = (set: StoreApi<AppState>['setState']): EditorState => ({
         newStateErrors[entity]?.[entry]?.[property]
       ) {
         // FIXME: Possibly undefined
-        // @ts-ignore
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
         newStateErrors[entity][entry][property] = reports;
       }
 
@@ -185,7 +186,7 @@ const editor = (set: StoreApi<AppState>['setState']): EditorState => ({
     scrollableHeight,
     currentScroll,
   ) => {
-    log({ wrapperHeight, scrollableHeight, currentScroll });
+    log({ wrapperHeight, scrollableHeight, currentScroll }, 'absurd');
     set((state) => {
       const percentage = currentScroll / (scrollableHeight - wrapperHeight);
 
