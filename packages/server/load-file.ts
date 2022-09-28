@@ -1,7 +1,6 @@
-// @ts-nocheck
 import fs from 'node:fs/promises';
-import path from 'node:path';
-import prettier from 'prettier';
+// import path from 'node:path';
+// import prettier from 'prettier';
 /* ·········································································· */
 import type { MarkdownInstance } from 'astro';
 import type { OriginalInstance, YamlInstance } from '@astro-content/types/file';
@@ -38,9 +37,10 @@ export async function loadFile(
       collected = {
         language: 'yaml',
         ...yamlFile,
-        file: editMode ? path.relative(process.cwd(), filePath) : yamlFile.file,
+        // file: editMode ? path.relative(process.cwd(), filePath) : yamlFile.file,
       };
 
+      // FIXME:
       handleYaml(entity, entry, property, collected.raw);
     }
     if (filePath.endsWith('md') || filePath.endsWith('mdx')) {
@@ -49,7 +49,7 @@ export async function loadFile(
       collected = {
         language: filePath.endsWith('md') ? 'markdown' : 'mdx',
         ...mdFile,
-        file: editMode ? path.relative(process.cwd(), filePath) : mdFile.file,
+        // file: editMode ? path.relative(process.cwd(), filePath) : mdFile.file,
       };
 
       // collected.Content = file?.Content;
@@ -84,7 +84,7 @@ export async function loadFile(
 
           log(frontmatterSchema);
 
-          handleMd(raw, frontmatterSchema || {})
+          handleMd(raw, frontmatterSchema || {}, collected.language === 'mdx')
             .then((report) => {
               if (state.reports[entity] === undefined) {
                 state.reports[entity] = {};
