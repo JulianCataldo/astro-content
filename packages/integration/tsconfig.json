@@ -18,7 +18,8 @@
 
     "baseUrl": ".",
 
-    // "jsx": "react-jsxdev",
+    // Mandatory MDX integration, for tsc to build
+    "jsx": "react-jsx",
 
     "allowSyntheticDefaultImports": true,
 

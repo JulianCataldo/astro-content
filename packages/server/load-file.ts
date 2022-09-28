@@ -1,9 +1,16 @@
+// FIXME:
+// @ts-nocheck
+
 import fs from 'node:fs/promises';
 // import path from 'node:path';
 // import prettier from 'prettier';
 /* ·········································································· */
 import type { MarkdownInstance } from 'astro';
-import type { OriginalInstance, YamlInstance } from '@astro-content/types/file';
+import type {
+  FileInstanceExtended,
+  OriginalInstance,
+  YamlInstance,
+} from '@astro-content/types/file';
 import { state } from './state.js';
 import { handleYaml } from './handle-yaml.js';
 import { handleMd } from './handle-md.js';
@@ -20,7 +27,7 @@ export async function loadFile(
   const { first: entity, second: entry, third: property } = getTrio(filePath);
 
   if (property && state.schemas.content[entity].properties?.[property]) {
-    let collected: OriginalInstance | null = null;
+    let collected: FileInstanceExtended | null = null;
 
     if (state.content[entity] === undefined) {
       state.content[entity] = {};
@@ -40,12 +47,13 @@ export async function loadFile(
         // file: editMode ? path.relative(process.cwd(), filePath) : yamlFile.file,
       };
 
-      // FIXME:
       handleYaml(entity, entry, property, collected.raw);
     }
     if (filePath.endsWith('md') || filePath.endsWith('mdx')) {
       const mdFile = file as MarkdownInstance<Record<string, unknown>>;
 
+      // FIXME:
+      // @ts-expect-error
       collected = {
         language: filePath.endsWith('md') ? 'markdown' : 'mdx',
         ...mdFile,
@@ -55,17 +63,19 @@ export async function loadFile(
       // collected.Content = file?.Content;
 
       if (editMode) {
-        const raw = await fs.readFile(filePath, 'utf8');
-        collected.headingsCompiled = mdFile.getHeadings();
-        collected.raw = raw;
-        // NOTE: Disabled for now, using the separate renderer in iframe.
-        // collected.bodyCompiled = 'NONE';
-        // prettier.format(mdFile.compiledContent(), {
-        //   parser: 'html',
-        // });
-        collected.excerpt = await generateExcerpt(raw);
+        if (collected.language !== 'yaml') {
+          const raw = await fs.readFile(filePath, 'utf8');
+          collected.headingsCompiled = mdFile.getHeadings();
+          collected.raw = raw;
+          // NOTE: Disabled for now, using the separate renderer in iframe.
+          // collected.bodyCompiled = 'NONE';
+          // prettier.format(mdFile.compiledContent(), {
+          //   parser: 'html',
+          // });
+          collected.excerpt = await generateExcerpt(raw);
 
-        log({ file, collected }, 'absurd');
+          log({ file, collected }, 'absurd');
+        }
 
         // NO VALIDATION outside edit-mode for now
         const propSchema =
@@ -84,7 +94,11 @@ export async function loadFile(
 
           log(frontmatterSchema);
 
-          handleMd(raw, frontmatterSchema || {}, collected.language === 'mdx')
+          handleMd(
+            collected.raw,
+            frontmatterSchema || {},
+            collected.language === 'mdx',
+          )
             .then((report) => {
               if (state.reports[entity] === undefined) {
                 state.reports[entity] = {};
