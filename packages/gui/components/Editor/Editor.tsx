@@ -45,7 +45,7 @@ export default function Editor({ value, language, readOnly, isMain }: Props) {
       entity &&
       entry &&
       property &&
-      (language === 'markdown' || language === 'yaml')
+      (language === 'markdown' || language === 'mdx' || language === 'yaml')
     ) {
       // NOTE: Might move this to store
       const propSchema = schemas.content[entity].properties?.[property];
