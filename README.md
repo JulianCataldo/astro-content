@@ -94,6 +94,13 @@ Another method is to shallow **clone** this minimal Astro **starter**, which com
 ```sh
 pnpx degit JulianCataldo/astro-content/demo ./ac-demo
 cd ./ac-demo && pnpm install
+
+# Clone dummy content
+pnpx degit JulianCataldo/astro-content/docs/content/@dummy ./content
+# —OR— setup a minimal content base with Astro Content CLI
+pnpm content setup
+
+# Open project in VS Code
 code .
 ```
 
