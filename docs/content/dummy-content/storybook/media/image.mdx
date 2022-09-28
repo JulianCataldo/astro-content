@@ -1,0 +1,10 @@
+import { Picture } from '@astrojs/image/components';
+
+<Picture
+  src={import('./landing.png')}
+  widths={[400, 800, 1000, 1200, 1920]}
+  sizes="calc(13em + 38vw)"
+  alt="A landscape image"
+  aspectRatio={'16:9'}
+  class="lazy"
+/>
