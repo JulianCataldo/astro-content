@@ -1,0 +1,22 @@
+---
+// _
+import 'asciinema-player/dist/bundle/asciinema-player.css';
+
+const props = Astro.props;
+---
+
+<div id="demo" data-ascii-url={props.url} data-autoplay="true"></div>
+
+<script>
+  import * as AsciinemaPlayer from 'asciinema-player';
+
+  const containerElement = document.getElementById('demo');
+
+  if (containerElement) {
+    const url = containerElement.getAttribute('data-ascii-url');
+    AsciinemaPlayer.create(url, containerElement, {
+      autoplay: true,
+      loop: true,
+    });
+  }
+</script>
