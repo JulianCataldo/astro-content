@@ -28,6 +28,17 @@ properties:
               - clientType
         required:
           - frontmatter
+        additionalProperties: false
+
+  informations:
+    properties:
+      invoiceId:
+        type: string
+      pricePerDay:
+        type: number
+      numberOfDays:
+        type: number
+
   footnotes:
     allOf:
       - $ref: '#/definitions/MarkdownFile'

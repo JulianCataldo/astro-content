@@ -1,6 +1,7 @@
-invoiceId: 12345-ABC
-
 pricePerDay: 10000000
+
+invoiceId: 12345
+
 numberOfDays: 50
 
 dateStart: 2022-12-11
