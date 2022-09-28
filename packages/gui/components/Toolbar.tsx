@@ -182,9 +182,12 @@ export default function Toolbar() {
                       <Headings
                         // FIXME: Prop. does not exist
                         items={
-                          // @ts-ignore
+                          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                          // @ts-expect-error
+                          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
                           content[entity]?.[entry]?.[property]?.headingsCompiled
                         }
+                        close={close}
                       />
                     </div>
                   )}
