@@ -7,7 +7,9 @@ import image from '@astrojs/image';
 import content from 'astro-content';
 import mdxMermaidPlugin from '@julian_cataldo/astro-diagram';
 /* —————————————————————————————————————————————————————————————————————————— */
-import remarkEmbed, { Settings as RemarkEmbedSettings } from 'remark-embed';
+import remarkEmbed, {
+  type Settings as RemarkEmbedSettings,
+} from 'remark-embed';
 import remarkGfm from 'remark-gfm';
 // import remarkMermaid from 'remark-mermaidjs';
 
