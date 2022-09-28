@@ -1,10 +1,17 @@
-import { Picture } from '@astrojs/image/components';
+import { Picture, Image } from '@astrojs/image/components';
+
+export const pictures = {
+  landing: 'https://res.cloudinary.com/dzfylx93l/landing_on89qr.png',
+  takeOff: 'https://res.cloudinary.com/dzfylx93l/astro-takeoff-1_ecdfxf.gif',
+};
 
 <Picture
-  src={import('./landing.png')}
+  src={pictures.landing}
   widths={[400, 800, 1000, 1200, 1920]}
   sizes="calc(13em + 38vw)"
   alt="A landscape image"
   aspectRatio={'16:9'}
   class="lazy"
 />
+
+<img src={pictures.takeOff} alt="Let's get ready to rumble!" />
