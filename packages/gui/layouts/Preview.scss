@@ -5,6 +5,10 @@
     & > *:first-child {
       margin-top: 1rem;
     }
+
+    img {
+      max-width: 100%;
+    }
   }
 }
 
