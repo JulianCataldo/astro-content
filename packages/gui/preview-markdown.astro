@@ -1,7 +1,8 @@
 ---
 import type { MarkdownInstance } from 'astro';
 import { Debug } from 'astro/components';
-// import path from 'path';
+import path from 'path';
+import fs from 'fs/promises';
 import Layout from './layouts/Preview.astro';
 import { log } from './logger';
 /* —————————————————————————————————————————————————————————————————————————— */
@@ -10,40 +11,51 @@ import { log } from './logger';
 // just what we need, on-time, for a huge speed boost.
 //  IDEA: Generalize this behavior? Would solve some general performance issues.
 // During file collection, could cherry pick data depending on user intent.
-const imports = import.meta.glob('/content/**/*.{md,mdx}');
 
+const imports = import.meta.glob('/content/**/*.{md,mdx}');
 log({ imports });
 
 // NOTE: Doing mumbo jumbo because you can't fetch with
 // `Astro.url.searchParams.get('file')` in SSG mode (intended).
-// Instead using file path encoded as one URL segment.
-export function getStaticPaths() {
-  const imports = import.meta.glob('/content/**/*.{md,mdx}');
+// Instead using file path encoded as one URL segment (bit dirty).
+export async function getStaticPaths() {
+  const impts = import.meta.glob('/content/**/*.{md,mdx}');
 
   const paths: { params: { file: string } }[] = [];
 
-  Object.entries(imports).map(([rawPath]) => {
-    log({ rawPath });
-    paths.push({
-      params: {
-        file: rawPath.substring(1),
-      },
-    });
-    log({ t: imports[rawPath] });
-  });
+  await Promise.all(
+    Object.entries(impts).map(async ([rawPath]) => {
+      const file = await fs.realpath(path.join(process.cwd(), rawPath));
+      log({ rawPath, file });
+
+      paths.push({
+        params: { file },
+      });
+      // log({ t: impts[rawPath] });
+    }),
+  );
+  //
 
   return paths;
 }
 const { file } = Astro.params;
 
-const comp = (await imports[`/${file}`]()) as MarkdownInstance<
+log({ sFile: file });
+
+// NOTE: Discrepancy between Astro and Vite file resolution through
+// symbolic links folders. Astro keeps the virtual path.
+// Not Vite which gives the real path.
+// So for now we can't use symbolic links anymore (maybe for the good?).
+const relFile = path.relative(process.cwd(), String(file));
+
+const comp = (await imports[`/${relFile}`]()) as MarkdownInstance<
   Record<string, unknown>
 >;
 ---
 
 <Layout>
   <Fragment slot="body">
-    <!-- <Debug {imports} {file} /> -->
+    <!-- <Debug {{comp, file, relFile}} /> -->
     <div id="preview">
       <div class="markdown-body">
         <comp.Content />
