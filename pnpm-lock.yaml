@@ -87,6 +87,7 @@ importers:
       '@astro-content/gui': workspace:*
       '@astrojs/image': ^0.7.0
       '@astrojs/react': ^1.1.2
+      '@iconify/react': ^4.0.0
       '@julian_cataldo/astro-base': ^0.13.6
       '@julian_cataldo/astro-diagram': ^0.12.1
       '@julian_cataldo/astro-link': ^0.12.5
@@ -99,6 +100,7 @@ importers:
       asciinema-player: ^3.0.1
       astro: 1.2.1
       astro-content: workspace:*
+      bulma: ^0.9.4
       mermaid: ^9.1.7
       react: 18.2.0
       react-dom: ^18.2.0
@@ -110,6 +112,7 @@ importers:
       '@astro-content/gui': link:../packages/gui
       '@astrojs/image': 0.7.0
       '@astrojs/react': 1.1.2_biqbaboplfbrettd7655fr4n2y
+      '@iconify/react': 4.0.0_react@18.2.0
       '@julian_cataldo/astro-base': 0.13.6
       '@julian_cataldo/astro-diagram': 0.12.1_mermaid@9.1.7
       '@julian_cataldo/astro-link': 0.12.5
@@ -122,6 +125,7 @@ importers:
       asciinema-player: 3.0.1
       astro: 1.2.1
       astro-content: link:../packages/integration
+      bulma: 0.9.4
       mermaid: 9.1.7
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
@@ -157,6 +161,8 @@ importers:
       '@rjsf/core': 5.0.0-beta.6
       '@rjsf/utils': 5.0.0-beta.6
       '@rjsf/validator-ajv6': 5.0.0-beta.6
+      '@tanstack/react-location': ^3.7.4
+      '@tanstack/react-table': ^8.5.13
       '@types/react': ^18.0.19
       change-case: ^4.1.2
       classnames: ^2.3.1
@@ -164,6 +170,7 @@ importers:
       github-markdown-css: ^5.1.0
       lodash-es: ^4.17.21
       monaco-editor: ^0.34.0
+      prettier: 2.7.1
       react: 18.2.0
       react-dom: ^18.2.0
       react-merge-refs: ^2.0.1
@@ -181,12 +188,15 @@ importers:
       '@rjsf/core': 5.0.0-beta.6_u3hmpwbyvil3cetisvolofbyre
       '@rjsf/utils': 5.0.0-beta.6_react@18.2.0
       '@rjsf/validator-ajv6': 5.0.0-beta.6_@rjsf+utils@5.0.0-beta.6
+      '@tanstack/react-location': 3.7.4_biqbaboplfbrettd7655fr4n2y
+      '@tanstack/react-table': 8.5.13_biqbaboplfbrettd7655fr4n2y
       change-case: 4.1.2
       classnames: 2.3.1
       framer-motion: 7.3.2_biqbaboplfbrettd7655fr4n2y
       github-markdown-css: 5.1.0
       lodash-es: 4.17.21
       monaco-editor: 0.34.0
+      prettier: 2.7.1
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-merge-refs: 2.0.1
@@ -1594,6 +1604,36 @@ packages:
       estree-walker: 2.0.2
       picomatch: 2.3.1
 
+  /@tanstack/react-location/3.7.4_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-6rH2vNHGr0uyeUz5ZHvWMYjeYKGgIKFzvs5749QtnS9f+FU7t7fQE0hKZAzltBZk82LT7iYbcHBRyUg2lW13VA==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      react: '>=16'
+      react-dom: '>=16'
+    dependencies:
+      '@babel/runtime': 7.19.0
+      history: 5.3.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    dev: false
+
+  /@tanstack/react-table/8.5.13_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-k52HsnonKwDZMCIy59HfehTnkJYlqkqyvC+BAV0DyWdN9WmSbVq+Kf+luJVENQnXcnEX47dBHiHAjqZu592ZLQ==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      react: '>=16'
+      react-dom: '>=16'
+    dependencies:
+      '@tanstack/table-core': 8.5.13
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    dev: false
+
+  /@tanstack/table-core/8.5.13:
+    resolution: {integrity: sha512-kvDRjC7LrLNNNgUMfsBz3nHOwbBLFdosWQ16dfbD9D/OJrvFHRXoUIPzF0MNqqSPghaj7/18fnwXHGypvzoh9Q==}
+    engines: {node: '>=12'}
+    dev: false
+
   /@trysound/sax/0.2.0:
     resolution: {integrity: sha512-L7z9BgrNEcYyUYtF+HaEfiS5ebkh9jXqbszz7pC0hRBPaatV0XjSD3+eHrpqFemQfgwiFF0QPIarnIihIDn7OA==}
     engines: {node: '>=10.13.0'}
@@ -2510,6 +2550,10 @@ packages:
     dependencies:
       base64-js: 1.5.1
       ieee754: 1.2.1
+
+  /bulma/0.9.4:
+    resolution: {integrity: sha512-86FlT5+1GrsgKbPLRRY7cGDg8fsJiP/jzTqXXVqiUZZ2aZT8uemEOHlU1CDU+TxklPEZ11HZNNWclRBBecP4CQ==}
+    dev: false
 
   /bytes/3.0.0:
     resolution: {integrity: sha1-0ygVQE1olpn4Wk6k+odV3ROpYEg=}
@@ -5199,6 +5243,12 @@ packages:
 
   /hey-listen/1.0.8:
     resolution: {integrity: sha512-COpmrF2NOg4TBWUJ5UVyaCU2A88wEMkUPK4hNqyCkqHbxT92BbvfjoSozkAIIm6XhicGlJHhFdullInrdhwU8Q==}
+    dev: false
+
+  /history/5.3.0:
+    resolution: {integrity: sha512-ZqaKwjjrAYUYfLG+htGaIIZ4nioX2L70ZUMIFysS3xvBsSG4x/n1V6TXV3N8ZYNuFGlDirFg32T7B6WOUPDYcQ==}
+    dependencies:
+      '@babel/runtime': 7.19.0
     dev: false
 
   /hjson/3.2.2:
