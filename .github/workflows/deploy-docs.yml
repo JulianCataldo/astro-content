@@ -71,13 +71,13 @@ jobs:
       # BRANCH
 
       - name: Generate Netlify alias
-        if: contains(github.ref, "master") == false
+        if: contains(github.ref, 'master') == false
         shell: bash
         run: ruby -e 'puts "::set-output name=netlify_alias::#{`git branch --show-current`.chomp.gsub(/[^a-zA-Z\d]/){"-"}.downcase}"'
         id: get_netlify_alias
 
       - name: Deploy to Netlify (branch)
-        if: contains(github.ref, "master") == false
+        if: contains(github.ref, 'master') == false
         uses: nwtgck/actions-netlify@v1.2.3
         with:
           alias: ${{ steps.get_netlify_alias.outputs.netlify_alias }}
@@ -99,7 +99,7 @@ jobs:
       # PRODUCTION
 
       - name: Deploy [Docs] to Netlify
-        if: contains(github.ref, "master")
+        if: contains(github.ref, 'master')
         uses: nwtgck/actions-netlify@v1.2.3
         with:
           production-branch: master
