@@ -26,7 +26,7 @@ export function handleYaml(
   entry: Part,
   property: Part,
   raw: string,
-  schema: JSONSchema7,
+  schema?: JSONSchema7,
 ) {
   log({ raw }, 'absurd', 'table');
 
