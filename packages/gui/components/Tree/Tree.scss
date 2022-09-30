@@ -233,16 +233,16 @@
 
   .icon-markdown {
     color: var(--vscode-charts-purple);
-    opacity: 0.7;
+    opacity: 0.9;
   }
 
   .icon-mdx {
-    color: var(--vscode-charts-orange);
-    opacity: 0.7;
+    color: var(--vscode-errorForeground);
+    opacity: 0.9;
   }
 
   .icon-yaml {
     color: var(--vscode-charts-green);
-    opacity: 0.8;
+    opacity: 0.9;
   }
 }
