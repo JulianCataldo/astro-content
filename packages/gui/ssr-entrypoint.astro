@@ -48,7 +48,7 @@ window.loaded = false;
 // }, 1000);`;
 
 export async function getStaticPaths() {
-  const contentFiles = import.meta.glob('/content/**/*.{md,mdx}');
+  const contentFiles = import.meta.glob('/content/**/*.{md,mdx,yaml}');
 
   const paths: { params: { path: string } }[] = [{ params: { path: 'test' } }];
 

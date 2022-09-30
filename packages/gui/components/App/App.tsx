@@ -49,6 +49,8 @@ export default function App({ isValidContentBase, children }: Props) {
             console.log({ route });
             return {};
           },
+          // NOTE: Could use kebab-case instead.
+          caseSensitive: true,
         },
         {
           path: '__content/:entity',
@@ -57,6 +59,7 @@ export default function App({ isValidContentBase, children }: Props) {
             setRoute(params.entity, false, false);
             return {};
           },
+          caseSensitive: true,
         },
       ]}
     >
