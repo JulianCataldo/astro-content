@@ -61,6 +61,10 @@ Being content centric, this set of tools will give you:
 - [Reports](#reports)
 - [Tips and tricks](#tips-and-tricks)
 - [Development](#development)
+  - [Deployment environments](#deployment-environments)
+    - [Production (`master`)](#production-master)
+    - [🆕  Next! (`develop`)](#next-develop)
+    - [Feature (`[feat-branch]`)](#feature-feat-branch)
   - [Setup](#setup)
   - [Packages](#packages)
 - [Work in progress](#work-in-progress)
@@ -343,7 +347,32 @@ You can benefit from these three levels of content checks:
 
 Some of these tips here are experiments, or found by accident. They might explode in your hands. It's an alpha version after all 🤫.
 
+
 # Development
+
+## Deployment environments
+
+
+### Production (`master`)
+
+[`astro-content.netlify.app/__content`](https://astro-content.netlify.app/__content/)
+
+### 🆕  Next! (`develop`)
+
+You like living on the bleeding edge 🤘😎.  
+
+[`develop--astro-content.netlify.app/__content`](https://develop--astro-content.netlify.app/__content/)
+
+<small>*Les **bugs** glissent sur vous comme les gouttes d'eau sur le plumage d'un canard. 💦🦆*</small>
+
+### Feature (`[feat-branch]`)
+
+Preview experiments or future additions in isolation.
+
+`[branch]--astro-content.netlify.app/__content`
+
+
+## Setup
 
 > **Note**: `pnpm` is the package manager of choice for developing this mono-repo.  
 > macOS / Node >= 17 is the most tested environment.
@@ -397,6 +426,7 @@ Web GUI can be opted out by user settings.
 - [ ] MDX support [ **gui** ]
   - [x] Syntax highlighting + configuration for monaco.
   - [ ] Advanced language features.
+- [ ] Syntax highlight for MD front matters [ **gui** ]
 
 <div class="git-only">
 
