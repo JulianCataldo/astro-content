@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 /* —————————————————————————————————————————————————————————————————————————— */
-import { useAppStore } from '../store';
-import { log } from '../logger';
-/* ·········································································· */
+import { useAppStore } from '../../store';
+import { log } from '../../logger';
+/* ··················../../logger··············································· */
 
-export default function State() {
+export function stateLoader() {
   // const data = useAppStore((state) => state.data_server);
 
   useEffect(() => {
@@ -34,11 +34,5 @@ export default function State() {
     fetchSavedUiState();
   }, []);
 
-  return null;
-  return (
-    <details>
-      <h1>State</h1>
-      <pre>{/* <code>{JSON.stringify(state, null, 2)} </code> */}</pre>
-    </details>
-  );
+  // return null;
 }

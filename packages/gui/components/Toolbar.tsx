@@ -4,6 +4,7 @@
 import { Icon } from '@iconify/react';
 import { sentenceCase } from 'change-case';
 import cx from 'classnames';
+import { Link } from '@tanstack/react-location';
 /* ·········································································· */
 import Headings from './Headings';
 import ModalPopover from './ModalPopover';
@@ -21,7 +22,6 @@ export default function Toolbar() {
   const { entity, entry, property } = useAppStore((state) => state.ui_route);
   const language = useAppStore((state) => state.editor_language);
 
-  const setRoute = useAppStore((state) => state.ui_setRoute);
   const save = useAppStore((state) => state.editor_save);
   const savingState = useAppStore((state) => state.editor_savingState);
 
@@ -136,14 +136,14 @@ export default function Toolbar() {
           {entity && (
             // FIXME: JSX A11y
             // eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events
-            <div
-              onClick={() => setRoute(entity, false, false)}
+            <Link
+              to={`/__content/${entity}`}
               className={cx('entity-link', entry && 'action')}
             >
               <Icon icon="system-uicons:location" width="2em" />
               {typeof schemas.content[entity] === 'object' &&
                 sentenceCase(schemas.content[entity].title ?? '')}
-            </div>
+            </Link>
           )}
           {entity && !entry && (
             <div>

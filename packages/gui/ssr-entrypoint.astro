@@ -2,10 +2,12 @@
 // NOTE: This file might go in ../integration package,
 // so everything purely Astro-related will be in one place,
 // but some deps issues prevent this.
-
+import path from 'path';
+/* ·········································································· */
 import { collect } from '@astro-content/server/collect';
 import { log, setLogLevel } from '@astro-content/server/logger';
 import { isValidContentBase } from '@astro-content/server/setup';
+import { getTrio } from '@astro-content/server/utils';
 /* ·········································································· */
 import Layout from './layouts/Default.astro';
 import App from './components/App/App';
@@ -44,6 +46,33 @@ window.loaded = false;
 //     console.log('Reloading…');
 //   }
 // }, 1000);`;
+
+export async function getStaticPaths() {
+  const contentFiles = import.meta.glob('/content/**/*.{md,mdx}');
+
+  const paths: { params: { path: string } }[] = [{ params: { path: 'test' } }];
+
+  await Promise.all(
+    Object.entries(contentFiles).map(async ([rawPath]) => {
+      const { first, second, third } = getTrio(rawPath);
+      const trioPath = path.join(first, second, third ?? '');
+      log({ trioPath });
+      paths.push({ params: { path: trioPath } });
+    }),
+  );
+
+  const schemas = import.meta.glob('/content/**/*.schema.yaml');
+
+  await Promise.all(
+    Object.entries(schemas).map(async ([rawPath]) => {
+      const { second } = getTrio(rawPath);
+
+      paths.push({ params: { path: second } });
+    }),
+  );
+
+  return paths;
+}
 ---
 
 <Layout>

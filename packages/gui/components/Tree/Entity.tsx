@@ -1,7 +1,7 @@
 import yaml from 'yaml';
 import { sentenceCase } from 'change-case';
 import cx from 'classnames';
-/* ·········································································· */
+import { Link } from '@tanstack/react-location';
 import { Icon } from '@iconify/react';
 import { FloatingDelayGroup } from '@floating-ui/react-dom-interactions';
 /* ·········································································· */
@@ -29,10 +29,8 @@ export default function Entity({ content }: { content: Content }) {
         <div key={entityKey} className="leaf entity">
           <Tooltip label={entityLabel(entityKey)} placement="right">
             {/*  eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events */}
-            <div
-              // FIXME: JSX A11y
-              // href={`/${key}`}
-              onClick={() => setRoute(entityKey, false, false)}
+            <Link
+              to={`/__content/${entityKey}`}
               className={cx(
                 'entity-link route',
                 entity === entityKey && 'active',
@@ -46,17 +44,14 @@ export default function Entity({ content }: { content: Content }) {
               {/* <span onClick={() => createEntity(key)} className="trigger">
               <Icon icon="system-uicons:create" width="1em" />
             </span> */}
-            </div>
+            </Link>
           </Tooltip>
           {entityTree &&
             Object.entries(entityTree).map(([entryKey, entryTree]) => (
               <div key={entryKey} className="leaf child entry">
                 {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
-                <div
-                  // FIXME: JSX A11y
-                  onClick={() =>
-                    setRoute(entityKey, property ? entryKey : entry, property)
-                  }
+                <a
+                  // href={`/__content/${entityKey}/${property ? entryKey : entry}/${property}`}
                   className={cx(
                     'route entry-link',
                     entity === entityKey && entry === entryKey && 'active',
@@ -67,7 +62,7 @@ export default function Entity({ content }: { content: Content }) {
                     <Icon icon="system-uicons:chevron-down" />
                   </div>
                   <span className="tree-label">{sentenceCase(entryKey)}</span>
-                </div>
+                </a>
                 {entryTree && (
                   <Property
                     content={content}

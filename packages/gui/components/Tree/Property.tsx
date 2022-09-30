@@ -1,6 +1,7 @@
 import yaml from 'yaml';
 import cx from 'classnames';
 import { sentenceCase } from 'change-case';
+import { Link } from '@tanstack/react-location';
 /* ·········································································· */
 import type { Content } from '@astro-content/types/server-state';
 import type { FileInstanceExtended } from '@astro-content/types/file';
@@ -24,7 +25,6 @@ export default function Property({
   content,
 }: Props) {
   const { entity, entry, property } = useAppStore((state) => state.ui_route);
-  const setRoute = useAppStore((state) => state.ui_setRoute);
 
   return (
     <>
@@ -99,20 +99,14 @@ export default function Property({
         }
 
         return (
-          // FIXME: JSX A11y
-          // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
-          <div
+          <Link
             key={propKey}
             className={cx(
               'property-link leaf child route',
               propActive && 'active',
             )}
-            onClick={(e) => {
-              e.preventDefault();
-              setRoute(entityKey, entryKey, propKey);
-            }}
             // IDEA: Map route to history + location
-            // href={`/${key}/${eKey}/${ppKey}`}
+            to={`/__content/${entityKey}/${entryKey}/${propKey}`}
           >
             <div className="file-title">
               <Tooltip label={fileInfo} placement="right">
@@ -138,7 +132,7 @@ export default function Property({
                 propKey={propKey}
               />
             </div>
-          </div>
+          </Link>
         );
       })}
     </>
