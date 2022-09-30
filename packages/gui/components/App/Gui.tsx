@@ -44,7 +44,8 @@ export default function Gui({ hasNoRoute }: { hasNoRoute?: boolean }) {
             <div>
               {hasNoRoute && (
                 <div className="message-please-select-file">
-                  ← Please select a schema (entity) or a property (file)…
+                  ← Please select a <strong>schema</strong> (entity) or a{' '}
+                  <strong>property</strong> (file)…
                 </div>
               )}
 

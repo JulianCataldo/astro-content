@@ -28,6 +28,13 @@ export default function File() {
       {entity && !entry && content[entity] && (
         <Editor language="yaml" value={schemas.raw[entity]} isMain />
       )}
+
+      {entity && !content[entity] && (
+        <div className="message-please-select-file">
+          ← Please select a <strong>schema</strong> (entity) or a{' '}
+          <strong>property</strong> (file)…
+        </div>
+      )}
     </div>
   );
 }
