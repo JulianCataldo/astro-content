@@ -6,6 +6,7 @@
 import type { languages as l } from 'monaco-editor';
 
 export const conf = (languages: typeof l) =>
+  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
   <l.LanguageConfiguration>{
     comments: {
       blockComment: ['{/*', '*/}'],
@@ -71,6 +72,7 @@ export const language = <l.IMonarchLanguage>{
 
   tokenizer: {
     root: [
+      // NOTE: Frontmatter interfere with `---`
       [
         /^---$/,
         { token: 'meta.content', next: '@frontmatter', nextEmbedded: 'yaml' },

@@ -137,6 +137,7 @@ const collect = async (
         // .sort()
         .forEach((entry) => {
           // FIXME:
+          // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
           (sortedContent[entity] ?? {})[entry] = {};
 
           Object.keys(state.content[entity]?.[entry] ?? {})

@@ -19,7 +19,7 @@ export async function saveFile(object: Save) {
   }
 
   const isSuccess = await fs
-    .writeFile(dest, formattedValue ? formattedValue : value)
+    .writeFile(dest, formattedValue || value)
     .then(() => true)
     .catch((e) => {
       log(e, 'info');
