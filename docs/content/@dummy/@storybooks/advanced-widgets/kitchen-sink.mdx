@@ -5,10 +5,18 @@ title: ['Kitchen', 'Sink']
 importance: Very much.
 ---
 
+This is a proto-storybook. A live playground.  
+No frills. Just the code, and its living preview.
+
+{/* This is where Astro Content really shines: Rich MDX preview FTW! */}
+
 import ThreeTest from '/src/components/ThreeTest';
 import AsciinemaPlayer from '/src/components/AsciinemaPlayer.astro';
 import MediaMap from '@julian_cataldo/astro-media-map/MediaMap.astro';
 
+{/* Vite can embed arbitrary, relative files in `dist`, */}
+{/* providing URL for you to use in MDX, Astro, JSX… */}
+{/* How cool is that? ———————————v */}
 import asciiCastDemo1 from './demo.cast?url';
 
 ## React — Three

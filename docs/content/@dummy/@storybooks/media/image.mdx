@@ -5,13 +5,25 @@ export const pictures = {
   takeOff: 'https://res.cloudinary.com/dzfylx93l/astro-takeoff-1_ecdfxf.gif',
 };
 
+# Astro — Image integration
+
+## From remote location (Cloudinary)
+
+### Picture element
+
 <Picture
   src={pictures.landing}
   widths={[400, 800, 1000, 1200, 1920]}
   sizes="calc(13em + 38vw)"
   alt="A landscape image"
   aspectRatio={'16:9'}
-  class="lazy"
+  class={'lazy' /* <——— This is an extra feature! */}
 />
 
+## Bare **`<img />`** GIF
+
+No image transformation whatsoever.
+
 <img src={pictures.takeOff} alt="Let's get ready to rumble!" />
+
+Enjoy your **30fps**.

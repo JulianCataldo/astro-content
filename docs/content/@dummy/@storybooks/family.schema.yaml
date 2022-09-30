@@ -2,7 +2,7 @@ properties:
   bulma:
     allOf:
       - $ref: '#/definitions/MarkdownFile'
-  inputText:
+  input:
     allOf:
       - $ref: '#/definitions/MarkdownFile'
       - properties:
