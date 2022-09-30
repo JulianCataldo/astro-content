@@ -23,15 +23,12 @@ export default function File() {
 
   return (
     <div className="file-entity">
-      {prop && (
-        <>
-          <Editor language={prop.language} value={prop.raw} isMain />
-        </>
-      )}
+      {prop && <Editor language={prop.language} value={prop.raw} isMain />}
       {/* Schema Editor */}
-      {/* {entity && content[entity] && !entry && language === 'yaml' && (
+
+      {entity && !entry && (
         <Editor language="yaml" value={schemas.raw[entity]} isMain />
-      )} */}
+      )}
     </div>
   );
 }
