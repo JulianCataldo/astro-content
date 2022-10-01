@@ -23,12 +23,9 @@
 
     // "types": [],
     "paths": {
+      // IDEA: Add to workspace setup?
       // Make TS/ESLint happy with absolute paths
-      // TODO: Add to workspace setup?
-      // "/*": ["./*"]
-      // Or just
-      "/content": ["./content"],
-      "/src/components": ["./src/components"]
+      "/content": ["./content"]
     },
 
     "outDir": "./dist",
