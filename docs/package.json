@@ -8,7 +8,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "reset": "rm -rf dist .turbo .astro-content",
-    "build:start": "pnpm run build ; pnpm run start",
+    "build:start": "pnpm run build ; pnpm run preview",
     "astro": "astro"
   },
   "// NOTE": "@astro-content/gui should not be needed! It's a module resolution issue with pnpm workspace only, not for end-user artefacts.",
