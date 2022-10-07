@@ -1,0 +1,25 @@
+@use 'sass:color';
+@use '../vars' as *;
+
+.component-code-embed {
+  .file {
+    display: inline-block;
+    padding: 0.5rem 1.5rem;
+    margin-top: 1rem;
+    margin-left: 1rem;
+    font-size: 85%;
+    // background-color: $ca-black;
+    border: 1px solid color.adjust($ca-main-3, $alpha: -0.8);
+    border-radius: 0.5rem 0.5rem 0 0;
+
+    & ~ div {
+      margin-top: -2rem;
+    }
+
+    // a code {
+    &:hover {
+      background: color.adjust($ca-main-5, $lightness: -25%);
+    }
+    // }
+  }
+}
