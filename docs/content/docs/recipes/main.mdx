@@ -1,6 +1,6 @@
 ---
 title: Recipes
-order: 8
+order: 6
 ---
 
 {/* FIXME: Global <MdxComp components={{ CodeEmbed }} /> BREAKS build */}
@@ -11,7 +11,7 @@ import CodeEmbed from '/src/components/CodeEmbed.astro';
 This is a collection of Astro Content use cases, which are real world examples
 extracted from this current website.
 
-## Create navigation sidebars for pages and headings sections
+## Create _navigation sidebars_ for pages and headings sections
 
 👈  Here is a walkthrough for creating those handy navigation helpers you can see
 on both sides of the current page.  👉
@@ -20,7 +20,7 @@ This will demonstrate how Astro Content think about **declarative
 content modeling** until its final usage, in your templates,
 where the contextual, **imperative logic** is done.
 
-### Define an entity schema for your pages
+### Define an _entity_ schema for your pages
 
 Entity will be named "**docs**" with entry name "**page**".  
 We will defined two front matter properties for the `main.md` file,  
@@ -28,7 +28,7 @@ We will defined two front matter properties for the `main.md` file,
 
 <CodeEmbed file={'/docs/content/docs/page.schema.yaml'} />
 
-### Create page entries
+### Create page _entries_
 
 For example for one named "**install**", with the previously defined front matter:
 
@@ -56,7 +56,7 @@ interface Page {
 }
 ```
 
-### Create the navigation component
+### Create the _navigation component_
 
 Before we import our sidebar widgets in our pages, let's create an Astro **component**
 for this task.  
@@ -64,8 +64,8 @@ It will show its passed property, either **pages** or current page **headings**,
 
 <CodeEmbed file={'/docs/src/components/TreeNavigation.astro'} />
 
-### Import the component in an Astro page
+### Import the component in an _Astro page_
 
 We can now import our sidebar widgets like this:
 
-<CodeEmbed file={'/docs/src/components/TreeNavigation.astro'} />
+<CodeEmbed file={'/docs/src/pages/docs/[page].astro'} />

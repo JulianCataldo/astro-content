@@ -22,3 +22,7 @@ Being content centric, this set of tools will give you:
 - **Predictability** when integrating 🤝
 - **Certainty** while delivering 💪
 - **Peace** of mind when refactoring 👍
+
+---
+
+> **Warning**: This is an **`alpha`** product — Heavy changes are on-going — [Suggestions are welcome 👐](https://github.com/JulianCataldo/astro-content/issues)

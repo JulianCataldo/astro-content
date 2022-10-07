@@ -5,7 +5,7 @@ order: 4
 
 # Template usage
 
-## In an Astro **page**
+## In an Astro _page_
 
 <!-- prettier-ignore -->
 ```astro
@@ -41,7 +41,7 @@ const BigGrumpyMainContent = content?.robots?.bigGrumpy?.main.Content;
 <Robot feats={bigGrumpy}>
 ```
 
-## In an Astro **component**
+## In an Astro _component_
 
 <!-- prettier-ignore -->
 ```astro

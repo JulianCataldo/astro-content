@@ -3,7 +3,7 @@ title: Installation
 order: 2
 ---
 
-## Method 1: Add to Astro project with CLI
+## Method 1: Add to Astro project with _CLI_
 
 With `yarn`, `npm` or `pnpm`, run this in your **existing** Astro project:
 
@@ -17,7 +17,7 @@ pnpm content setup
 
 Follow the prompts… 🐇
 
-## Method 2: Clone demo project
+## Method 2: Clone _demo project_
 
 Shallow **clone** this minimal Astro **starter**, which comes with dummy **content** for you to play with:
 
@@ -36,7 +36,7 @@ code .
 
 > **Warning**: Only **Node 17** or higher is actually supported by Astro Content.
 
-## Launch project
+## _Launch_ project
 
 OK, **project is ready**. It's time to:
 
@@ -46,7 +46,7 @@ pnpm run dev
 
 Now head over to [http://localhost:3000/**\_\_content**](http://localhost:9054/__content) to take a deep dive in Astro Content.
 
-## TypeScript setup
+## _TypeScript_ setup
 
 It's OK to use an absolute path, so you don't have to do tedious relative imports:
 

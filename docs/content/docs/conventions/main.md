@@ -1,16 +1,16 @@
 ---
 title: Conventions
-order: 5
+order: 4
 ---
 
-Good conventions are preferred over tedious configurations.
+With Astro Content, **good conventions** are preferred **over tedious configurations**.
 
-That's why the Astro Content integration follows Astro own philosophy, which
-promote file based routing.
+That's why this integration follows Astro own philosophy, which
+promote **file based routing**.
 
 Similarly, where other content frameworks have chosen imperative, non-standard, centralized content modeling, A.C. works the opposite way.
-The ubiquitous, declarative JSON schemas are first-class citizen, and are
-placed in the corresponding entity folder, which make it ultimately portable.
+The ubiquitous, declarative **JSON schemas** are first-class citizen, and are
+placed in the **corresponding entity folder**, which make it ultimately **portable**.
 
 # Hierarchy
 
