@@ -56,17 +56,20 @@ body {
 }
 
 a {
+  color: currentColor;
   text-decoration: none;
 }
 
 .link:not(.unstyled),
-.article-body a:not(.button) {
+.article-body a:not(.button, .unstyled) {
   font-weight: bold;
-  color: $ca-white;
-  border-bottom: 1px solid color.adjust($ca-accent, $alpha: -0.6);
+  color: color.adjust($ca-main-4, $lightness: 37%);
+  border-bottom: 1px dashed color.adjust($ca-accent, $alpha: -0.4);
+  // text-decoration-thickness: 2px;
 
   &:hover {
-    border-bottom: 1px solid color.adjust($ca-accent, $alpha: -0.1);
+    color: color.adjust($ca-accent, $lightness: 46%);
+    border-bottom: 1px solid color.adjust($ca-accent, $alpha: -0.2);
   }
 }
 
@@ -150,18 +153,12 @@ pre.astro-code {
     font-size: 2em;
   }
 
-  :not(pre) code {
+  :not(pre) > code {
     display: inline-block;
     padding: 0rem 0.3rem;
     background: $ca-black;
     border: 1px solid color.adjust($ca-main-5, $lightness: -20%);
     border-radius: 0.2rem;
-  }
-
-  a code {
-    &:hover {
-      background: color.adjust($ca-main-5, $lightness: -20%);
-    }
   }
 
   p {
@@ -174,8 +171,26 @@ pre.astro-code {
     margin-bottom: 2em;
 
     li {
+      position: relative;
       margin-top: 1em;
       margin-bottom: 1em;
+      list-style-type: none;
+
+      &::before {
+        position: absolute;
+        top: -0.25em;
+        left: -1.5em;
+        font-size: 1.5em;
+        color: $ca-accent;
+        content: '➤';
+        opacity: 0.85;
+      }
+
+      li {
+        &::before {
+          content: '➭';
+        }
+      }
     }
   }
 }
@@ -375,15 +390,11 @@ pre.astro-code {
     flex-wrap: wrap;
     align-items: flex-start;
     justify-content: space-around;
-    padding: 6rem 5rem 11rem 5rem;
+    padding: 6rem 5rem 16rem 5rem;
     margin-bottom: -4rem;
     overflow: hidden;
 
     .link {
-      &:nth-of-type(2) {
-        margin-top: -1rem;
-      }
-
       position: relative;
       padding: 1rem;
       margin: 2rem 2rem;
@@ -409,6 +420,17 @@ pre.astro-code {
         opacity: 0.2;
         transition: opacity 0.15s;
         transform: translateY(5rem) rotateX(90deg) scaleX(1.2);
+      }
+
+      &:nth-of-type(2) {
+        margin-top: -1.2rem;
+
+        &::before {
+          // margin-top: 4rem;
+          filter: blur(1.2rem);
+          opacity: 0.2;
+          transform: translateY(8.5rem) rotateX(107deg) scaleX(1.2);
+        }
       }
 
       &::after {
@@ -517,5 +539,30 @@ pre.astro-code {
 
   .use-cases {
     padding: 10vw;
+  }
+}
+
+blockquote {
+  padding: 0.5em 1.5em;
+  margin: 2em 1em;
+  background: $ca-black;
+  border: 2px solid color.adjust($ca-accent, $alpha: -0.3);
+  border-radius: 0.5rem;
+}
+
+table {
+  padding: 1em;
+  margin: 2.5em 0;
+  border: 1px solid color.adjust($ca-main-4, $alpha: -0.7);
+  border-radius: 0.5rem;
+
+  td {
+    padding: 0.4em;
+  }
+
+  th {
+    padding: 0.3em 0.3em;
+    background: color.adjust($ca-black, $alpha: -0.4);
+    border: 1px solid color.adjust($ca-main-4, $alpha: -0.7);
   }
 }
