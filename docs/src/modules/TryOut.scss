@@ -1,0 +1,60 @@
+@use 'sass:color';
+@use '../vars' as *;
+
+.component-try-out {
+  padding: 0rem 7rem 7rem 7rem;
+
+  .preview {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      .action {
+        opacity: 1;
+      }
+    }
+  }
+
+  img {
+    width: 70vw;
+    height: calc(70vw / (16 / 9));
+    overflow: hidden;
+    border-radius: 0.3rem;
+    box-shadow: 1rem 1rem 6rem black,
+      0.1rem 0.1rem 1.2rem color.adjust($ca-main-3, $alpha: -0.4);
+    object-fit: contain;
+  }
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    width: 100%;
+    height: 100%;
+    padding: 5rem;
+
+    .action {
+      padding: 1.5rem 2rem;
+      font-family: $font-fancy;
+      font-size: 1.3rem;
+      font-style: italic;
+      font-weight: 700;
+      color: $ca-black;
+      background: $ca-main-6;
+      border: 5px solid $ca-main-3;
+      border-radius: 1rem;
+      opacity: 0;
+      transition: 0.5s opacity;
+      transition-delay: 0.5s;
+
+      &:hover {
+        color: $ca-white;
+        background: $ca-bg-grad-2;
+      }
+    }
+  }
+}

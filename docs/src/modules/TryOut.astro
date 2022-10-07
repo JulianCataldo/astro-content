@@ -1,0 +1,28 @@
+---
+import { Picture } from '@astrojs/image/components';
+import Link from '@julian_cataldo/astro-link/Link.astro';
+import './TryOut.scss';
+---
+
+<div class="component-try-out">
+  <h2 class="section-heading">It's an <em>app</em>,…</h2>
+  <div class="preview">
+    <Picture
+      src={'https://res.cloudinary.com/dzfylx93l/image/upload/v1664344163/landing_pg8uit.png'}
+      widths={[400, 800, 1000, 1200, 1440, 1920]}
+      sizes="70vw"
+      alt="A landscape image"
+      aspectRatio={'16:9'}
+      class="lazy"
+      formats={['png']}
+    />
+    <div class="overlay">
+      <Link
+        href="/__content"
+        target="demo"
+        class="unstyled action image-presentation"
+        title="Pre-loaded with data — Static, no updates">Try me!</Link
+      >
+    </div>
+  </div>
+</div>
