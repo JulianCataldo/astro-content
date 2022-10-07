@@ -25,7 +25,8 @@ const currentPage = Astro.url.pathname.split('/')[2] || 'home';
 
 /* ·········································································· */
 
-const content = await get(Astro.glob('/content/docs/**/*.{md,mdx,yaml}'), {
+// NOTE: Retrigger whole content base collection (not filtering "docs")
+const content = await get(Astro.glob('/content/**/*.{md,mdx,yaml}'), {
   editMode: import.meta.env.PROD,
 });
 
