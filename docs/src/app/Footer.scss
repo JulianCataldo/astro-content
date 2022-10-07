@@ -1,0 +1,36 @@
+@use 'sass:color';
+@use '../vars' as *;
+
+.app-footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding: 10rem 5rem 2rem 2rem;
+  font-family: $font-fancy;
+  font-style: italic;
+
+  .separator {
+    width: 30vw;
+    margin-right: 2vw;
+    opacity: 0.8;
+  }
+
+  .star-me {
+    align-self: flex-start;
+
+    svg {
+      height: 0.7em;
+    }
+
+    font-size: 1.5em;
+  }
+
+  .btt {
+    a {
+      display: block;
+      padding: 1rem;
+    }
+
+    margin-left: auto;
+  }
+}
