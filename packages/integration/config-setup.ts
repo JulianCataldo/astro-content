@@ -108,10 +108,10 @@ const configSetup: AstroIntegration['hooks']['astro:config:setup'] = async ({
     pattern: path.join(endpoints.actions.render, '[...file]'),
     entryPoint: path.join(guiPath, 'preview-markdown.astro'),
   });
-  injectRoute({
-    pattern: endpoints.actions.refresh,
-    entryPoint: path.join(integrationPath, 'trigger-transform.astro'),
-  });
+  // injectRoute({
+  //   pattern: endpoints.actions.refresh,
+  //   entryPoint: path.join(integrationPath, 'trigger-transform.astro'),
+  // });
   // }
 
   /* Setup project */
