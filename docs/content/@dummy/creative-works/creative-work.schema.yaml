@@ -1,12 +1,6 @@
 # NOTE: This will be a test bed for Schema.org vocabularies
 
 properties:
-  gallery:
-    properties:
-      source:
-        type: string
-    required:
-      - source
   meta:
     properties:
       baz:
@@ -19,6 +13,14 @@ properties:
           - das
     required:
       - foo
+  gallery:
+    properties:
+      sources:
+        type: array
+        items:
+          type: string
+        required:
+          - source
   body:
     allOf:
       - $ref: '#/definitions/MarkdownFile'
@@ -31,8 +33,18 @@ properties:
               image:
                 description: Image path
                 type: string
+              category:
+                type: string
+                enum:
+                  - Cuisine
+                  - Music
+                  - Video
+
             required:
               - title
+              - image
+              - category
+
         required:
           - frontmatter
   footnotes:
