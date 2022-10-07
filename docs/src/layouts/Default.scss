@@ -199,11 +199,22 @@ pre.astro-code {
   .article-body {
     width: calc(42rem + 17vw);
     margin-left: 20vw;
+    @media screen and (max-width: 700px) {
+      width: initial;
+      margin: 5vw;
+    }
   }
 
   .navigations {
     h2 {
       padding: 0rem 2.5rem 0rem 2.5rem;
+    }
+
+    @media screen and (max-width: 700px) {
+      position: relative;
+      // display: block;
+      flex-wrap: wrap;
+      height: initial;
     }
 
     position: sticky;
@@ -305,7 +316,7 @@ pre.astro-code {
     max-width: 27rem;
     padding-top: 1rem;
     padding-right: 5vw;
-    padding-bottom: 3rem;
+    padding-bottom: 5rem;
     padding-left: 2vw;
   }
 
@@ -391,7 +402,7 @@ pre.astro-code {
     align-items: flex-start;
     justify-content: space-around;
     padding: 6rem 5rem 16rem 5rem;
-    margin-bottom: -4rem;
+    margin-bottom: -10rem;
     overflow: hidden;
 
     .link {
@@ -513,17 +524,23 @@ pre.astro-code {
 .module-similar-inspired {
   display: flex;
   justify-content: center;
-  margin: calc(2rem + 4vw) 3rem;
+  margin: calc(2rem + 3vw) calc(1.5vw + 1rem);
   text-align: center;
 
   ul {
     display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-evenly;
+    padding: 0;
+    padding-top: 1rem;
     list-style-type: none;
 
     li {
-      padding: 1rem;
-      margin: 2rem;
-      font-size: calc(0.9rem + 0.5vw);
+      max-width: 12em;
+      padding: 1.1vw;
+      margin: 2.5vw 2vw;
+      font-size: calc(0.5rem + 0.6vw);
       border: 1px solid $ca-main-5;
       border-radius: 1rem;
     }

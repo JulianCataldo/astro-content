@@ -2,12 +2,24 @@
 @use '../vars' as *;
 
 .component-navigation-bar {
+  @media screen and (max-width: 700px) {
+    margin-bottom: 4rem;
+  }
+
   ul {
     display: flex;
+    flex-wrap: wrap;
     align-items: flex-start;
-    justify-content: space-between;
+    justify-content: flex-end;
     padding: 1rem 4rem;
     list-style-type: none;
+
+    li:first-of-type {
+      min-width: 34vw;
+      @media screen and (max-width: 700px) {
+        margin-bottom: 4rem;
+      }
+    }
 
     a {
       display: flex;

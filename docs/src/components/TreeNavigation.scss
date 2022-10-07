@@ -3,6 +3,13 @@
 
 .component-tree-navigation {
   max-width: 27rem;
+  height: 80vh;
+  padding: 1rem 0rem 3rem 0rem;
+  overflow-y: auto;
+
+  @media screen and (max-width: 700px) {
+    height: initial;
+  }
 
   ul {
     padding: 0;
@@ -40,8 +47,4 @@
       }
     }
   }
-
-  height: 80vh;
-  padding: 1rem 0rem 3rem 0rem;
-  overflow-y: auto;
 }

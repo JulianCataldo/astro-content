@@ -19,7 +19,7 @@
 
   img {
     width: 70vw;
-    height: calc(70vw / (16 / 9));
+    height: calc(70vw / (1921 / 987));
     overflow: hidden;
     border-radius: 0.3rem;
     box-shadow: 1rem 1rem 6rem black,
@@ -48,8 +48,8 @@
       border: 5px solid $ca-main-3;
       border-radius: 1rem;
       opacity: 0;
-      transition: 0.5s opacity;
-      transition-delay: 0.5s;
+      transition: 0.4s opacity;
+      transition-delay: 0.3s;
 
       &:hover {
         color: $ca-white;

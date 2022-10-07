@@ -3,13 +3,14 @@
 
 .module-landing {
   display: flex;
+  flex-wrap: wrap;
   min-height: 87vh;
   padding-bottom: 3rem;
 
   .presentation {
     display: flex;
-    flex-basis: 44%;
     flex-direction: column;
+    flex-grow: 1;
     align-items: flex-start;
     justify-content: flex-start;
     padding: calc(4vw + 1rem);
@@ -97,11 +98,12 @@
   .scene {
     position: relative;
     display: flex;
-    flex-basis: 56%;
     flex-grow: 1;
     align-items: flex-start;
     justify-content: center;
     padding-top: calc(2.3vw + 0.1rem);
+    padding-right: calc(4.3vw + 1.3rem);
+    padding-left: calc(1.3vw + 1.3rem);
   }
 
   .gui-overlays {
@@ -265,8 +267,10 @@
   .install-commands {
     position: relative;
     width: 34rem;
+    max-width: 75vw;
     padding: 2rem 2rem;
-    font-size: 1.3rem;
+    overflow-x: auto;
+    font-size: calc(0.3vw + 0.9rem);
     color: $ca-main-6;
     border: 3px solid color.adjust($ca-main-4, $alpha: -0.9);
     border-radius: 1rem;
