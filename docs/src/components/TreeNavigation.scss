@@ -1,0 +1,47 @@
+@use 'sass:color';
+@use '../vars' as *;
+
+.component-tree-navigation {
+  max-width: 27rem;
+
+  ul {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+  }
+
+  a {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    padding: 0.6em 2em 0.6em 3vw;
+    color: $ca-white;
+
+    &.current {
+      color: $ca-accent;
+    }
+
+    &::before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      width: 100%;
+      height: 100%;
+      content: '';
+      border-bottom: 1px solid transparent;
+      -webkit-mask-image: linear-gradient(transparent, black 2rem);
+    }
+
+    &:hover {
+      &::before {
+        background-color: color.adjust($ca-black, $alpha: -0.1);
+        border-bottom-color: $ca-main-4;
+      }
+    }
+  }
+
+  height: 80vh;
+  padding: 1rem 0rem 3rem 0rem;
+  overflow-y: auto;
+}

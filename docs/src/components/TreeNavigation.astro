@@ -1,0 +1,47 @@
+---
+import { type MarkdownHeading } from 'astro';
+/* ·········································································· */
+import { type Docs } from '/content';
+import Link from '@julian_cataldo/astro-link/Link.astro';
+import './TreeNavigation.scss';
+/* —————————————————————————————————————————————————————————————————————————— */
+
+interface Props {
+  pages?: Docs;
+  currentPage?: string;
+  headings?: MarkdownHeading[];
+}
+const { pages, headings, currentPage } = Astro.props as Props;
+---
+
+<nav class="component-tree-navigation">
+  <ul>
+    {
+      pages
+        ? Object.entries(pages)
+            ?.sort(([, prev], [, cur]) =>
+              (prev?.main?.frontmatter?.order || 0) <
+              (cur?.main?.frontmatter?.order || 1)
+                ? -1
+                : 1,
+            )
+            .map(([key, page]) => (
+              <li>
+                <Link
+                  class:list={['unstyled', currentPage === key && 'current']}
+                  href={`docs/${key}`}
+                >
+                  {page?.main?.frontmatter?.title}
+                </Link>
+              </li>
+            ))
+        : headings?.map((heading) => (
+            <li>
+              <Link class="unstyled" href={`#${heading.slug}`}>
+                {heading.text}
+              </Link>
+            </li>
+          ))
+    }
+  </ul>
+</nav>
