@@ -104,9 +104,6 @@ a {
   }
 }
 
-// .article-body {
-// }
-
 hr {
   margin: 4rem 0;
   border: 1px solid color.adjust($ca-accent, $alpha: -0.5);
@@ -127,16 +124,7 @@ pre.astro-code {
   background-color: color.adjust($ca-black, $lightness: -6%) !important;
   border-radius: 0.5rem;
   box-shadow: 1px 1px 7px color.adjust($ca-main-3, $alpha: -0.5);
-
-  // code {
-  // }
 }
-
-// .preview {
-//   .component-editor {
-//     height: 60vh;
-//   }
-// }
 
 :is(h1, h2, h3, h4, h5, h6) {
   font-family: $font-fancy;
@@ -177,7 +165,6 @@ pre.astro-code {
   }
 
   p {
-    // backdrop-filter: blur(5px);
     margin-top: 1.25em;
     margin-bottom: 1.25em;
   }
@@ -194,7 +181,6 @@ pre.astro-code {
 }
 
 .page-docs {
-  // display: flex;
   .article-body {
     width: calc(42rem + 17vw);
     margin-left: 20vw;
@@ -217,10 +203,6 @@ pre.astro-code {
   }
 
   .prev-next {
-    & > * {
-      // margin: auto;
-    }
-
     display: flex;
     justify-content: space-between;
     width: 100%;
@@ -253,11 +235,6 @@ pre.astro-code {
 }
 
 .install-cast {
-  // max-width: 40rem;
-  // position: absolute;
-  // bottom: 0;
-  // left: 3vw;
-
   & > * {
     width: 45vw;
   }
@@ -269,9 +246,6 @@ pre.astro-code {
   display: flex;
   justify-content: space-around;
   padding: 2vw;
-
-  // -webkit-mask-image: linear-gradient(transparent 0rem, black 4rem);
-
   padding-bottom: 2rem;
 
   .asciinema-theme-asciinema {
@@ -291,12 +265,7 @@ pre.astro-code {
       cursor: text;
       background-color: transparent;
       filter: drop-shadow(1px 1px 3px color.adjust($ca-main-4, $alpha: -0.3));
-      // border-color: $ca-bg-grad-2;
       border-color: transparent;
-
-      &:hover {
-        // border-color: $ca-accent;
-      }
     }
   }
 }
@@ -319,14 +288,11 @@ pre.astro-code {
   .title-block {
     min-width: 18rem;
     max-width: 27rem;
-    padding-right: 5vw;
-    padding-left: 2vw;
     padding-top: 1rem;
+    padding-right: 5vw;
     padding-bottom: 3rem;
+    padding-left: 2vw;
   }
-  // h1 {
-  //   // padding: 7rem;
-  // }
 
   .article-body {
     display: flex;
@@ -340,15 +306,10 @@ pre.astro-code {
   }
 
   .items {
-    // display: flex;
-    // flex-wrap: wrap;
-    // align-items: flex-end;
-    // justify-content: space-between;
     padding: 4rem;
   }
 
   .list {
-    // width: 100%;
     display: flex;
     flex-basis: 70%;
     flex-grow: 1;
@@ -372,18 +333,12 @@ pre.astro-code {
   }
 
   .bg-shape {
-    // height: 100%;
-    // width: 100%;
     position: absolute;
     z-index: -1;
-    // left: 1rem;
-    // top: 1rem;
-
     width: 11rem;
     height: 11rem;
 
     --fill: #{color.adjust($ca-black, $alpha: -0.4, $lightness: -9%)};
-    // overflow: hidden;
   }
 
   .illustration {
@@ -395,16 +350,12 @@ pre.astro-code {
     height: 9.6rem;
 
     svg {
-      // padding-top: 1.5rem;
-      // padding-left: 3rem;
       width: 5rem;
       height: 5rem;
     }
 
     img {
       -webkit-mask-image: url('../assets/shape-1.svg?raw');
-      // -webkit-mask-size: 100% 100%;
-      // -webkit-mask-repeat: no-repeat;
       object-fit: cover;
       width: 20rem;
       height: 20rem;
@@ -425,7 +376,6 @@ pre.astro-code {
     align-items: flex-start;
     justify-content: space-around;
     padding: 6rem 5rem 11rem 5rem;
-    // overflow-x: hidden;
     margin-bottom: -4rem;
     overflow: hidden;
 
@@ -448,7 +398,6 @@ pre.astro-code {
         0 0 0.7rem color.adjust($ca-main-3, $alpha: -0.1);
       transition: background 0.5s;
       perspective: 120px;
-      // overflow: hidden;
 
       &::before {
         position: absolute;
@@ -458,7 +407,6 @@ pre.astro-code {
         background: $ca-main-4;
         filter: blur(1rem);
         opacity: 0.2;
-        // top: 7rem;
         transition: opacity 0.15s;
         transform: translateY(5rem) rotateX(90deg) scaleX(1.2);
       }
@@ -498,7 +446,6 @@ pre.astro-code {
     left: 8vw;
     z-index: -1;
     width: 26vw;
-    // height: 12vw;
     opacity: 0.3;
   }
 
@@ -538,49 +485,6 @@ pre.astro-code {
 
   svg {
     width: 100%;
-
-    // font-family: CourierNewPSMT, 'Courier New';
-    // font-family: monospace;
-
-    // font-family: CourierNewPS-BoldMT, 'Courier New';
-    // font-family: monospace;
-    // font-weight: bold;
-
-    // ÏÈ
-
-    // 🤨
-    // 🤔
-    // ÈÏ
-    // ÏÈ
-
-    // .cls-1,
-    // .cls-2,
-    // .cls-3,
-    // .cls-7,
-    // .cls-11,
-    // .cls-13,
-    // //
-    // .cls-10, .cls-40 {
-    //   font-family: system-ui;
-    // }
-
-    // .cls-10,
-    // .cls-40,
-    // .cls-17,
-    // .cls-18 {
-    //   font-weight: 700;
-    // }
-
-    // .cls-4,
-    // .cls-5,
-    // .cls-16,
-    // .cls-17,
-    // .cls-18,
-    // .cls-12,
-    // .cls-19,
-    // .cls-20 {
-    //   font-family: monospace;
-    // }
   }
 }
 
