@@ -1,0 +1,61 @@
+---
+import Link from '@julian_cataldo/astro-link/Link.astro';
+/* ·········································································· */
+import { type Docs } from '/content';
+/* —————————————————————————————————————————————————————————————————————————— */
+
+interface Props {
+  pages?: Docs;
+  currentPage: string;
+}
+const { pages, currentPage } = Astro.props as Props;
+
+/* ·········································································· */
+
+const pagesArray =
+  pages &&
+  Object.entries(pages)?.sort(([, prev], [, cur]) =>
+    (prev?.main?.frontmatter?.order || 0) < (cur?.main?.frontmatter?.order || 1)
+      ? -1
+      : 1,
+  );
+
+const siblings = {
+  previous: { href: '', title: '' },
+  next: { href: '', title: '' },
+};
+let previous;
+let catchNext = false;
+
+pagesArray?.forEach(([key, val]) => {
+  if (currentPage === key) {
+    siblings.previous = {
+      title: previous?.[1]?.main?.frontmatter?.title || false,
+      href: previous?.[0] || false,
+    };
+    catchNext = true;
+  }
+  if (currentPage !== key && catchNext) {
+    siblings.next = { title: val.main?.frontmatter?.title ?? '', href: key };
+    catchNext = false;
+  }
+  previous = [key, val];
+});
+---
+
+<nav class="prev-next">
+  {
+    siblings.previous?.href && (
+      <Link href={`docs/${siblings.previous.href}`}>
+        ⬅︎ &nbsp;{siblings.previous.title}
+      </Link>
+    )
+  }
+  {
+    siblings.next?.href && (
+      <Link href={`docs/${siblings.next.href}`}>
+        {siblings.next.title}&nbsp; ➡︎
+      </Link>
+    )
+  }
+</nav>
