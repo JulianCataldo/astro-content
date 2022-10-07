@@ -13,6 +13,7 @@ import { faker } from '@faker-js/faker';
 import type { JSONSchema7 } from 'json-schema';
 // import fetch from 'node-fetch';
 import Jabber from 'jabber';
+import { blue, bold, dim } from 'kleur/colors';
 /* ·········································································· */
 // import { endpoints } from './state.js';
 import { log } from './logger.js';
@@ -24,7 +25,13 @@ export async function add(
   collectionOrSingletonName: string,
   singleName: string | null,
 ) {
-  log({ collectionOrSingletonName, singleName });
+  log(
+    `Creating entity "${blue(
+      bold(collectionOrSingletonName),
+    )}" with entry name of "${blue(singleName ?? '')}".`,
+    'info',
+    'pretty',
+  );
   // const base = `${}${endpoints.apiBase}`;
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   // const userSchemas = await fetch(`${base}/schemas`)

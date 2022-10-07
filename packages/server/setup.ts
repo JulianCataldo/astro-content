@@ -82,4 +82,10 @@ export async function contentBase() {
   await add('articles', 'article');
   await add('people', 'person');
   await add('people', 'person');
+
+  log(
+    'Minimal content base has been successfully generated.',
+    'info',
+    'pretty',
+  );
 }

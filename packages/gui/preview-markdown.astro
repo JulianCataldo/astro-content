@@ -13,7 +13,7 @@ import { log } from './logger';
 // During file collection, could cherry pick data depending on user intent.
 
 const imports = import.meta.glob('/content/**/*.{md,mdx}');
-log({ imports });
+log({ imports }, 'absurd');
 
 // NOTE: Doing mumbo jumbo because you can't fetch with
 // `Astro.url.searchParams.get('file')` in SSG mode (intended).
@@ -38,7 +38,7 @@ export async function getStaticPaths() {
 }
 const { file } = Astro.params;
 
-log({ sFile: file });
+log({ sFile: file }, 'absurd');
 
 // NOTE: Discrepancy between Astro and Vite file resolution through
 // symbolic links folders. Astro keeps the virtual path.
