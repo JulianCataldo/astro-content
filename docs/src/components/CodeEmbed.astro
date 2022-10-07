@@ -1,0 +1,37 @@
+---
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import { Code } from 'astro/components';
+import Link from '@julian_cataldo/astro-link/Link.astro';
+
+const { file, start, end } = Astro.props;
+
+/* From mono-repo root */
+const filePath = path.join(process.cwd(), '..', file);
+const source = await fs
+  .readFile(filePath)
+  .then((s) => {
+    let r = String(s);
+
+    if (end) {
+      r = r.split('\n').slice(0, end).join('\n');
+      r += '\n\n(Truncated…)';
+    }
+    return String(r);
+  })
+  .catch((e) => {
+    console.log(e);
+    return '…';
+  });
+
+const language = path.extname(file).substring(1);
+console.log({ language });
+
+const repoUrl = `https://github.com/JulianCataldo/astro-content/blob/master/${file}`;
+---
+
+<span>
+  From: 📄&nbsp; <Link href={repoUrl}><code>{file}</code></Link>
+</span>
+
+<Code code={source} lang={language} />
