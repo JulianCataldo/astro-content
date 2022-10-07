@@ -1,0 +1,65 @@
+---
+import Link from '@julian_cataldo/astro-link/Link.astro';
+import './NavigationBar.scss';
+import logo from '../assets/astro-content-logo.svg?raw';
+import brain from '../assets/brain-circuit-20-filled.svg?raw';
+import github from '../assets/github.svg?raw';
+import discord from '../assets/discord.svg?raw';
+import controller from '../assets/game-controller-sharp.svg?raw';
+
+const current = Astro.url.pathname.split('/')[1] || 'home';
+---
+
+<nav class="component-navigation-bar">
+  <ul>
+    <li class:list={['btn home']}>
+      <a href="/" class="logo">
+        <div set:html={logo}></div>
+      </a>
+    </li>
+    <li class:list={['btn', current === 'docs' && 'active']}>
+      <Link href="/docs/intro" class="unstyled">
+        <span class="icon enlarge" set:html={brain}></span>
+
+        Docs
+      </Link>
+    </li>
+    <li class="btn">
+      <Link
+        href="https://github.com/JulianCataldo/astro-content"
+        class="unstyled"
+      >
+        <span class="icon" set:html={github}></span>
+
+        Sources
+      </Link>
+    </li>
+
+    <li class="btn">
+      <Link
+        title="Pre-loaded with data — Static, no updates"
+        data-tooltip-placement="bottom"
+        href="/__content"
+        class="unstyled"
+        target="demo"
+      >
+        <span class="icon enlarge" set:html={controller}></span>
+
+        Demo
+      </Link>
+    </li>
+
+    <li class="btn">
+      <Link
+        title="Mention @JulianCataldo (official Astro discord)"
+        data-tooltip-placement="bottom"
+        href="https://discord.gg/grF4GTXXYm"
+        class="unstyled"
+      >
+        <span class="icon" set:html={discord}></span>
+
+        Ping&nbsp;me
+      </Link>
+    </li>
+  </ul>
+</nav>
