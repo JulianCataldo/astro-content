@@ -2,145 +2,312 @@
 @use '../vars' as *;
 
 .module-landing {
-  .hero {
+  display: flex;
+  min-height: 87vh;
+  padding-bottom: 3rem;
+
+  .presentation {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    // min-height: 44rem;
-    padding: 3vw 3vw 2vw 3vw;
-    margin-bottom: 0rem;
-
-    .button {
-      margin-top: 2.5rem;
-      font-size: 2em;
-    }
-
-    .sub-desc {
-      padding: 1rem;
-      color: $ca-white;
-    }
-
-    .article-body {
-      & > * {
-        margin: 1.5em 0;
-      }
-    }
-  }
-
-  .divider {
-    width: 100%;
-  }
-
-  .footnotes {
-    display: flex;
-    flex-wrap: wrap;
+    flex-basis: 44%;
+    flex-direction: column;
     align-items: flex-start;
-    justify-content: space-around;
-    padding: 6vh 2vw;
-    margin-bottom: 6rem;
+    justify-content: flex-start;
+    padding: calc(4vw + 1rem);
+    padding-top: 7rem;
 
-    .button {
-      display: inline-flex;
-      margin: 2rem 2.5rem 4rem 1.5rem;
-      margin-bottom: 4rem;
-      font-size: 1.3rem;
-      background: color.adjust($ca-black, $alpha: -0.1);
+    .catchphrase {
+      margin-bottom: 3.5rem;
+      font-family: $font-fancy;
+      font-style: italic;
+      font-weight: 500;
+      line-height: 1.25;
+      white-space: nowrap;
+
+      .sup {
+        font-size: calc(0.5rem + 0.7vw);
+      }
+
+      .sub {
+        font-size: calc(1rem + 1.1vw);
+      }
+
+      .main {
+        color: $ca-accent;
+      }
+
+      .over {
+        position: relative;
+        top: -0.3em;
+        font-size: calc(0.4rem + 0.7vw);
+        opacity: 0.4;
+
+        $mult: 1.7em;
+
+        & > * {
+          position: absolute;
+
+          &:nth-child(1) {
+            top: calc($mult * -1);
+          }
+
+          &:nth-child(2) {
+            top: calc($mult * -2);
+          }
+
+          &:nth-child(3) {
+            top: calc($mult * -3);
+          }
+
+          &:nth-child(4) {
+            top: calc($mult * -4);
+          }
+
+          &:nth-child(5) {
+            top: calc($mult * -5);
+          }
+
+          &:nth-child(6) {
+            top: calc($mult * -6);
+          }
+
+          &:nth-child(7) {
+            top: calc($mult * -7);
+          }
+
+          &:nth-child(8) {
+            top: calc($mult * -8);
+          }
+
+          &:nth-child(9) {
+            top: calc($mult * -9);
+          }
+
+          &:nth-child(10) {
+            top: calc($mult * -10);
+          }
+        }
+      }
+
+      strong {
+        font-weight: 900;
+      }
+    }
+  }
+
+  .scene {
+    position: relative;
+    display: flex;
+    flex-basis: 56%;
+    flex-grow: 1;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: calc(2.3vw + 0.1rem);
+  }
+
+  .gui-overlays {
+    position: absolute;
+    bottom: -5.8%;
+    left: -20.3%;
+    width: calc(123%);
+    height: calc(123%);
+
+    svg {
+    }
+  }
+
+  .atlantis {
+    position: relative;
+    margin-top: 7rem;
+    user-select: none;
+
+    img {
+      width: var(--width);
+      height: calc(var(--width) / (2455 / 2015));
+      -webkit-mask: url('../assets/atlantis-mask.svg?raw') center center / cover;
+      transition: transform 3s, opacity 3s;
+      transform: translateY(4rem) translateX(-8rem);
+      object-fit: contain;
+      -webkit-mask-size: 100% 100%;
+      -webkit-mask-repeat: no-repeat;
     }
 
-    .related {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-around;
+    .is-loaded img {
+      transform: translateY(0) translateX(0);
+    }
 
-      div {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-around;
-        margin: 2rem 1vw;
+    .is-loaded ~ .placeholders {
+      opacity: 0;
+      transition: opacity 2.5s;
+
+      .p-0,
+      .p-1,
+      .p-2 {
+        animation-iteration-count: 2;
       }
     }
 
-    h1 {
-      margin: 0 0 1em 1.5vw;
+    @keyframes loop {
+      0% {
+        opacity: 0.4;
+        transform: translateY(0);
+      }
+
+      100% {
+        opacity: 0.6;
+        transform: translateY(1rem) translateX(-2rem);
+      }
     }
 
-    ul {
-      margin: 0;
-    }
-  }
-
-  .hero-body {
-    flex-grow: 1;
-    // min-width: 17em;
-    max-width: calc(29em + 7vw);
-    padding: 0 5vw 0 2vw;
-
-    header {
-      margin: 0rem 3rem 3rem 0rem;
-    }
-  }
-
-  .install {
-    padding: 3vw 0;
-
-    & > * {
-      padding: 0 2rem;
-    }
-  }
-
-  .try {
-    height: 100%;
-  }
-
-  .cta {
-    position: relative;
-    z-index: 0;
-  }
-
-  .editor-preview {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    max-width: calc(17em + 38vw);
-    padding: 0 0vw;
-    padding-top: 2rem;
-  }
-
-  // img {
-  //   width: 100%;
-  // }
-  .video {
-    display: block;
-    min-width: 50vw;
-    margin: 2rem 0;
-
-    video {
-      width: 100%;
-    }
-  }
-
-  .overlay {
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-
-    .sub-desc {
-      padding: 1rem;
-      color: $ca-white;
-      background: $ca-black;
-    }
-
-    .link {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .placeholders {
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: none;
       width: 100%;
       height: 100%;
+      filter: drop-shadow(1px 4px 5px $ca-black);
+
+      .js & {
+        display: initial;
+      }
     }
+
+    .placeholder {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      mix-blend-mode: soft-light;
+      -webkit-mask: url('../assets/atlantis-mask.svg?raw') center center / cover;
+      transition: opacity 1s;
+      animation-name: loop;
+      animation-duration: 1s;
+      animation-iteration-count: infinite;
+      animation-direction: alternate;
+      -webkit-mask-size: 100% 100%;
+      -webkit-mask-repeat: no-repeat;
+
+      &.p-0 {
+        top: 0rem;
+        background: $ca-black;
+        animation-delay: 0s;
+      }
+
+      &.p-1 {
+        top: 0rem;
+        background: $ca-main-4;
+        animation-delay: 0.15s;
+      }
+
+      &.p-2 {
+        background: $ca-main-6;
+        animation-delay: 0.3s;
+      }
+    }
+  }
+
+  hr {
+    width: 100%;
+  }
+
+  .highlights {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-around;
+    height: 18rem;
+    padding: 0.5rem 2rem;
+    margin: 7rem 0 4rem 0;
+    font-size: calc(0.4vw + 0.5rem);
+    border: 3px solid color.adjust($ca-main-4, $alpha: -0.9);
+    border-radius: 1rem;
+
+    div {
+      display: flex;
+      align-items: center;
+
+      & > * {
+        margin: 1rem;
+      }
+    }
+
+    &::before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      width: 100%;
+      height: 100%;
+      content: '';
+      background: black;
+      -webkit-mask-image: linear-gradient(
+        rgba(0, 0, 0, 0.1),
+        rgba(0, 0, 0, 0.6),
+        rgba(0, 0, 0, 0.1)
+      );
+    }
+
+    .arrow {
+      color: $ca-main-4;
+    }
+
+    .keyword {
+      font-family: $font-fancy;
+      font-size: 150%;
+      font-style: italic;
+      font-weight: 700;
+      color: $ca-accent;
+    }
+  }
+
+  .install-commands {
+    position: relative;
+    width: 34rem;
+    padding: 2rem 2rem;
+    font-size: 1.3rem;
+    color: $ca-main-6;
+    border: 3px solid color.adjust($ca-main-4, $alpha: -0.9);
+    border-radius: 1rem;
+    box-shadow: none;
+
+    .cmd {
+      color: $ca-white;
+      opacity: 0.8;
+    }
+
+    .accent {
+      color: $ca-accent;
+    }
+
+    &::before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      width: 100%;
+      height: 100%;
+      content: '';
+      background: black;
+      -webkit-mask-image: linear-gradient(
+        rgba(0, 0, 0, 0.1),
+        rgba(0, 0, 0, 0.6),
+        rgba(0, 0, 0, 0.1)
+      );
+    }
+  }
+
+  .install-app {
+    position: relative;
+  }
+
+  .arrow-app {
+    position: absolute;
+    top: 10rem;
+    right: -37vw;
+    width: 36vw;
+    height: 13vw;
+    opacity: 0.3;
   }
 }

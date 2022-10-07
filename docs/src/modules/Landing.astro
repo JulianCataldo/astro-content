@@ -1,73 +1,96 @@
 ---
-import Link from '@julian_cataldo/astro-link/Link.astro';
-import { Icon } from '@iconify/react';
+import { Picture } from '@astrojs/image/components';
 import './Landing.scss';
+// import type { Demo } from '/content';
 
-const { data } = Astro.props; // as { data: Demo };
+import guiOverlay from '../assets/atlantis-1-gui-overlay.svg?raw';
+import arrow1 from '../assets/arrow-1.svg?raw';
+// import mask from '../assets/atlantis-mask.svg?raw';
+
+// const { data } = Astro.props as { data: Demo };
 ---
 
 <div class="module-landing">
-  <div class="hero">
-    <article class="hero-body article-body">
-      <data.text.Content />
-      <Link
-        class="button"
-        href="https://github.com/JulianCataldo/astro-content"
-        title="GitHub repository"
-        data-tooltip-placement="top"
-      >
-        <Icon icon="simple-icons:github" client:load />
-        <span>Open Source</span>
-      </Link>
-      <!-- {JSON.stringify(data)} -->
-    </article>
+  <div class="presentation">
+    <em class="catchphrase">
+      <span class="sup"> A community integration</span>
+      <br />
+      <span class="sub">
+        that makes your <strong class="content">
+          <span class="over">
+            <span>...</span>
+            <span>wiki</span>
+            <span>blog</span>
+            <span>website</span>
+            <span>catalog</span>
+            <span>portfolio</span>
+            <span>storybooks</span>
+            <span>application</span>
+            <span>documentation</span>
+          </span>
 
-    <div class="try">
-      <div class="cta">
-        <div class="editor-preview">
-          <img
-            src="/demos/landing-2-small.png"
-            height="100%"
-            width="100%"
-            alt=""
-          />
-          <!-- <div class="video">
-            <video muted="muted" autoplay controls>
-              <source src="/public/demos/main-demo.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-          </div> -->
-          <a href="/__content" target="_blank">
-            <div class="button main">
-              <Icon icon="system-uicons:create" client:load />
-              <span>Live <strong>demo</strong>&nbsp;&nbsp;🧱</span>
-            </div>
-          </a>
-          <div class="sub-desc">
-            <strong>Pre-loaded</strong> with dummy data — Static<strong
-              >, no updates</strong
-            >
-            editor
-          </div>
-        </div>
-      </div>
+          <span class="main">content</span>
+        </strong>
+        fly!
+      </span>
+    </em>
 
-      <div class="install article-body">
-        <data.install.Content />
+    <div class="highlights">
+      <div>
+        <span class="keyword">Structure</span><span class="arrow">
+          {' '}➠{' '}
+        </span><span
+          >Schema&nbsp;based&nbsp;modeling,<br />
+          with&nbsp;end&#x2011;to&#x2011;end&nbsp;data&nbsp;integrity.</span
+        >
       </div>
+      <div>
+        <span class="keyword">Author</span><span class="arrow">
+          {' '}➠{' '}</span
+        ><span
+          >Input&nbsp;assistance&nbsp;and&nbsp;real-life&nbsp;preview,<br />
+          in&nbsp;a&nbsp;focused&nbsp;environment.</span
+        >
+      </div>
+      <div>
+        <span class="keyword">Provide</span><span class="arrow">
+          {' '}➠{' '}</span
+        ><span
+          >Compose&nbsp;data&nbsp;in&nbsp;your&nbsp;templates,<br />
+          thanks&nbsp;to&nbsp;a&nbsp;versatile&nbsp;toolbox.</span
+        >
+      </div>
+    </div>
+
+    <div class="install-app">
+      <pre
+        class="install-commands"><code><span class="cmd">pnpm</span> astro add <span class="accent">astro-content</span>
+<span class="cmd">pnpm</span> <span class="accent">content setup</span>
+<span class="cmd">pnpm</span> dev
+  
+<span class="cmd">open</span> http://localhost:3000/<span class="accent">__content</span>
+</code></pre>
+      <div set:html={arrow1} class="arrow-app"></div>
     </div>
   </div>
 
-  <Icon
-    height="5rem"
-    icon="system-uicons:chevron-down"
-    client:load
-    className="divider"
-  />
-
-  <article class="footnotes">
-    <div class="related">
-      <data.relations.Content />
+  <div class="scene">
+    <div class="atlantis" style="--width: 40vw;">
+      <Picture
+        src={'https://res.cloudinary.com/dzfylx93l/image/upload/v1664840367/atlantis-1_sycpkr.jpg'}
+        widths={[400, 800, 1000, 1200, 1920, 2560, 3200]}
+        sizes="var(--width)"
+        alt="A landscape image"
+        aspectRatio={2455 / 2015}
+        class="lazy"
+        formats={['jpeg']}
+      />
+      <div class="placeholders">
+        <div class="placeholder p-0"></div>
+        <div class="placeholder p-1"></div>
+        <div class="placeholder p-2"></div>
+      </div>
+      <div class="gui-overlays" set:html={guiOverlay}></div>
     </div>
-  </article>
+  </div>
 </div>
