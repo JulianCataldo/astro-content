@@ -11,9 +11,7 @@
   },
   "// astro-content": "link:../packages/integration",
   "dependencies": {
-    "astro": "1.2.1",
-    "astro-content": "0.0.0-alpha.6",
-    "serve": "^14.0.1"
+    "astro": "1.4.5",
   },
   "engines": {
     "node": ">=17"
