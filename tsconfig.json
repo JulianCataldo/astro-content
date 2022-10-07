@@ -28,10 +28,14 @@
 
     "importsNotUsedAsValues": "error",
 
-    "noEmit": true
+    "noEmit": true,
 
     // "noEmitOnError": false,
     // "outDir": "./dist"
+
+    "paths": {
+      "/content": ["./docs/content"]
+    }
   }
 
   // "include": ["./packages/integration/astro-integration.ts"]
