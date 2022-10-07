@@ -47,7 +47,8 @@ const astroContent = (settings?: Settings): AstroIntegration => {
 };
 
 /* ·········································································· */
-export default function preset(settings: Settings = {}) {
+
+export default function preset(settings: Settings = {}): AstroIntegration[] {
   const userSettings = settings;
   if (settings.gui === undefined) {
     userSettings.gui = true;
@@ -68,6 +69,9 @@ export default function preset(settings: Settings = {}) {
     // If so, a `settings.includeReact` boolean might be added.
     integrations.push(react());
   }
+  // FIXME: Need explicit return type, why?
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
   return integrations;
 }
 export { collect };
