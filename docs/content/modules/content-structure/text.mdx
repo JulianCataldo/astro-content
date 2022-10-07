@@ -1,0 +1,108 @@
+import { Picture } from '@astrojs/image/components';
+
+import astro from '/src/assets/logos/astro-logomark-dark.svg?raw';
+import mdx from '/src/assets/logos/mdx-logo.svg?raw';
+import unified from '/src/assets/logos/unified.svg?raw';
+import vite from '/src/assets/logos/vite.svg?raw';
+import yaml from '/src/assets/logos/yaml.svg?raw';
+import jsonschema from '/src/assets/logos/jsonschema.svg?raw';
+import ts from '/src/assets/logos/ts-logo-round.svg?raw';
+import shape1 from '/src/assets/shape-1.svg?raw';
+
+<div class="title-block">
+
+<Picture
+  src={
+    'https://res.cloudinary.com/dzfylx93l/image/upload/v1665127256/lunar-lander_ugvira.png'
+  }
+  widths={[400, 800, 1000, 1200, 1920, 2560, 3200]}
+  sizes="calc(22rem + 8vw)"
+  alt="A landscape image"
+  aspectRatio={1 / 1}
+  class="lazy role-pic"
+  formats={['png']}
+/>
+
+<h1>
+  _Extensible_, with <br />
+  solid _OSS_ foundations.
+</h1>
+
+{/* <small>In the end, it's about all about authoring experience.</small> */}
+
+</div>
+
+<div class="list">
+      
+<div class="item">
+  <div class="bg-shape" set:html={shape1}></div>
+  <div class="illustration" set:html={astro}></div>
+  <div class="desc">
+    **Astro** provide a framework, conventions and an eco-system of
+    components, themes and integrations.  
+    Astro Content acts in symbiosis.
+  </div>
+</div>
+
+<div class="item">
+  <div class="bg-shape" set:html={shape1}></div>
+  <div class="illustration" set:html={mdx}></div>
+  <div class="desc">
+    After numerous attempts to make **Markdown** flexible, dust settled and
+    **MDX** proved to be the most mature and logical choice. Astro Content is an
+    ideal workbench for it.
+  </div>
+</div>
+
+<div class="item">
+  <div class="bg-shape" set:html={shape1}></div>
+  <div class="illustration" set:html={unified}></div>
+  <div class="desc">
+    **`unified`** is an eco-system of languages processing items. It's so vast
+    that Astro Content took as a mission to curate them for the mass. Get
+    content **insights** without complicated setup!
+  </div>
+</div>
+
+<div class="item">
+  <div class="bg-shape" set:html={shape1}></div>
+  <div class="illustration" set:html={vite}></div>
+  <div class="desc">
+    Vite is an Astro -and modern webdev- essential piece. Need a new file
+    format? Just write a plugin! In fact, it's thanks to this pluggability that
+    Astro Content support YAML out-of-the box!
+  </div>
+</div>
+
+<div class="item">
+  <div class="bg-shape" set:html={shape1}></div>
+  <div class="illustration" set:html={yaml}></div>
+  <div class="desc">
+    **YAML** is what your Markdown(X) <strong>front matter</strong> is made of,
+    yes. But you could also put data-intensive content inside neat, dedicated
+    YAML files. Astro Content treats them as first-class citizen.
+  </div>
+</div>
+
+<div class="item">
+  <div class="bg-shape" set:html={shape1}></div>
+  <div class="illustration" set:html={jsonschema}></div>
+  <div class="desc">
+    Schemas ensures integrity to your data. Astro Content choose an
+    ubiquitous,`` easy to learn declarative vocabulary: **JSON Schema**. Put
+    logic where it belongs (not in your models) and benefit from an immense
+    eco-system!
+  </div>
+</div>
+
+<div class="item">
+  <div class="bg-shape" set:html={shape1}></div>
+  <div class="illustration" set:html={ts}></div>
+  <div class="desc">
+    **Typings** are streamed while you change schemas or content entries. That
+    means instant auto-completion and further command line / continuous
+    integration validation. No more delayed refactoring!
+  </div>
+</div>
+
+</div>

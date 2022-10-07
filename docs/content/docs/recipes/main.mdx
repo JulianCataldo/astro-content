@@ -1,0 +1,71 @@
+---
+title: Recipes
+order: 8
+---
+
+{/* FIXME: Global <MdxComp components={{ CodeEmbed }} /> BREAKS build */}
+import CodeEmbed from '/src/components/CodeEmbed.astro';
+
+# Recipes
+
+This is a collection of Astro Content use cases, which are real world examples
+extracted from this current website.
+
+## Create navigation sidebars for pages and headings sections
+
+👈  Here is a walkthrough for creating those handy navigation helpers you can see
+on both sides of the current page.  👉
+
+This will demonstrate how Astro Content think about **declarative
+content modeling** until its final usage, in your templates,
+where the contextual, **imperative logic** is done.
+
+### Define an entity schema for your pages
+
+Entity will be named "**docs**" with entry name "**page**".  
+We will defined two front matter properties for the `main.md` file,  
+`title` and `order`:
+
+<CodeEmbed file={'/docs/content/docs/page.schema.yaml'} />
+
+### Create page entries
+
+For example for one named "**install**", with the previously defined front matter:
+
+<CodeEmbed file={'/docs/content/docs/install/main.md'} end={15} />
+
+Will all that set, Astro Content will stream these **typings** for you in the background:
+
+```ts
+type Docs = {
+    cli?: Page | undefined;
+    conventions?: Page | undefined;
+    development?: Page | undefined;
+    ... 7 more ...;
+    workInProgress?: Page | undefined;
+}
+
+interface Page {
+  main: MarkdownFile & {
+    frontmatter?: {
+      title?: string;
+      order?: number;
+      [k: string]: unknown;
+    };
+  };
+}
+```
+
+### Create the navigation component
+
+Before we import our sidebar widgets in our pages, let's create an Astro **component**
+for this task.  
+It will show its passed property, either **pages** or current page **headings**, as lists.
+
+<CodeEmbed file={'/docs/src/components/TreeNavigation.astro'} />
+
+### Import the component in an Astro page
+
+We can now import our sidebar widgets like this:
+
+<CodeEmbed file={'/docs/src/components/TreeNavigation.astro'} />

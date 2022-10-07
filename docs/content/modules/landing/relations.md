@@ -1,4 +1,4 @@
-<div>
+<!-- <div>
 
 # Supports
 
@@ -6,21 +6,21 @@
 - TypeScript API + **typings** streaming
 - Medias assets: **images** (WIP)
 
-</div>
+</div> -->
 
 <div>
 
 # Similar / inspired by
 
-- **nuxt/content**, Docus
-- Gatsby, Nuxt, Gridsome
-- **tRPC**, GraphQL, Mongo API
-- Dendron, Obsidian, Ulysses
-- Strapi, Postman
+- **Gatsby**, Nuxt, Gridsome
+- **tRPC**, **GraphQL**, Mongo API
+- **nuxt/content**, Docus, **Contentlayer**
+- Dendron, **Obsidian**, Ulysses
+- **Strapi**, Postman, VS Code
 
 </div>
 
-<div>
+<!-- <div>
 
 # Built with
 
@@ -28,4 +28,4 @@
 - unified ecosystem: remark, retext…
 - JSONSchema, AJV, json-schema-to-ts
 
-</div>
+</div> -->

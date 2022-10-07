@@ -9,12 +9,23 @@ properties:
   text:
     allOf:
       - $ref: '#/definitions/MarkdownFile'
+
   relations:
     allOf:
       - $ref: '#/definitions/MarkdownFile'
   install:
     allOf:
       - $ref: '#/definitions/MarkdownFile'
+      - properties:
+          frontmatter:
+            properties:
+              foo:
+                type: string
+              bar:
+                type: string
+            required:
+              - foo
+              - bar
 
 required:
   - text
