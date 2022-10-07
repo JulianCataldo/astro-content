@@ -1,22 +1,21 @@
 ---
+import { Picture } from '@astrojs/image/components';
+// import Editor from '@astro-content/gui/components/Editor/Editor';
+import Link from '@julian_cataldo/astro-link/Link.astro';
+import AsciinemaPlayer from '../components/AsciinemaPlayer.astro';
+import installationCast from '../assets/installation.cast?url';
+import createEntityCast from '../assets/create-entity.cast?url';
+import terminal from '../assets/terminal.svg?raw';
+import arrow2 from '../assets/arrow-2.svg?raw';
+import arrow3 from '../assets/arrow-3.svg?raw';
 import { get } from '/content';
-// import { collect } from 'astro-content';
-// import Gui from 'astro-content/node_modules/@astro-content/gui/app.astro';
 /* ·········································································· */
 import Layout from '../layouts/Default.astro';
-import Landing from '../modules/Landing.astro';
-import Demo from '../modules/Demo.astro';
-/* —————————————————————————————————————————————————————————————————————————— */
 
-/* Docs content */
-// TODO: Find a nice and bug-free way to merge `docs` and `demo` content bases
-// const content =
-// await get(
-//   Astro.glob(
-//     '/Volumes/n_1024a-Projects/Repositories/apps/content-maestro/demo/content/**/*.{md,mdx,yaml}',
-//   ),
-//   { editMode: import.meta.env.PROD },
-// );
+import Landing from '../modules/Landing.astro';
+import TryOut from '../modules/TryOut.astro';
+// import Demo from '../modules/Demo.astro';
+/* —————————————————————————————————————————————————————————————————————————— */
 
 /* Demo content */
 const content = await get(
@@ -29,27 +28,118 @@ const content = await get(
   },
 );
 
-const demos = content.demos;
-const landing = content.modules.landing;
+const landing = content.modules?.landing;
+const features = content.modules?.features;
+const contentStructure = content.modules?.contentStructure;
+// const demos = content.demos;
+// const authoring = content.modules?.authoringExperience;
+// const makeItYourOwn = content.modules?.makeItYourOwn;
 ---
 
 <Layout>
   <Landing data={landing} />
 
-  <!-- <Demo data={demos.typescriptCompletion} /> -->
+  <TryOut />
 
-  <!-- <Demo data={demos.typescriptCompletion} /> -->
-
-  <!-- <Demo data={demos.typescriptCompletion} /> -->
-
-  <hr />
-
-  <footer class="main-footer">
-    <div>
-      Made by <a class="link" href="https://www.juliancataldo.com">
-        JulianCataldo
-      </a>
+  <div class="module-installation">
+    <div set:html={arrow2} class="arrow-cli"></div>
+    <h2 class="section-heading">
+      <div set:html={terminal} class="icon"></div>it has a <em
+        >command line interface</em
+      >,…
+    </h2>
+    <div class="install-cast">
+      <AsciinemaPlayer url={installationCast} />
+      <hr />
+      <AsciinemaPlayer url={createEntityCast} />
     </div>
-  </footer>
-  <!-- IDEA: Embedded demo GUI preview (for docs) -->
+  </div>
+
+  <div class="module-installation">
+    <h2 class="section-heading">
+      and it plays nice with <em>your IDE</em>, too…
+    </h2>
+    <div class="ide image-presentation">
+      <Picture
+        src={'/src/assets/ide.png?j'}
+        widths={[400, 800, 1000, 1200, 1920, 2560, 3200]}
+        sizes="85vw"
+        alt="A landscape image"
+        aspectRatio={4608 / 2246}
+        class="lazy"
+        formats={['png']}
+      />
+    </div>
+  </div>
+
+  <div class="module-this-is-ac">
+    <div set:html={arrow3} class="arrow-ac"></div>
+    <h2 class="section-heading">
+      it's <em>Astro Content</em>!<br /><br />
+      Here to help you <br />streamline your<em>
+        content pipeline<br />
+      </em> and improve your <em>author experience</em>.
+    </h2>
+  </div>
+
+  <div class="module-features">
+    <div class="items feats">
+      <div class="article-body">
+        <features.text.Content />
+      </div>
+    </div>
+  </div>
+
+  <div class="module-use-cases">
+    <h2 class="section-heading">
+      Special care is given to choose <em>sensible defaults</em>.<br />
+      Still, you have
+      <em>total control</em> to make it your own.<br />
+      <hr />
+      Speaking of ownership… there are no clouds in space.<br /> With Astro Content,
+      <em>you own your data</em>.
+    </h2>
+
+    <div class="uses-cases">Use cases</div>
+
+    <hr />
+  </div>
+
+  <div class="module-structuring">
+    <div class="items under-the-hood">
+      <div class="article-body">
+        <contentStructure.text.Content />
+      </div>
+    </div>
+  </div>
+
+  <div class="module-similar-inspired">
+    <landing.relations.Content />
+  </div>
+
+  <div class="module-actions">
+    <div>
+      <hr />
+      <h2 class="section-heading">
+        Ok, enough talking.<br /><em>Let's get started!</em>
+      </h2>
+    </div>
+    <div class="actions">
+      <Link
+        class="unstyled"
+        target="demo-source"
+        href="https://github.com/JulianCataldo/astro-content/tree/master/demo"
+        >See demo project source</Link
+      >
+      <Link class="unstyled" href="docs/intro">Read the documentation</Link>
+      <Link
+        class="unstyled"
+        href="__content"
+        target="demo"
+        data-tooltip-placement="top"
+        title="Pre-loaded with data — Static, no updates"
+        >Launch the demo editor</Link
+      >
+    </div>
+  </div>
 </Layout>
