@@ -2,8 +2,13 @@
 import Document from '@julian_cataldo/astro-base/Document.astro';
 import Body from '@julian_cataldo/astro-base/Body.astro';
 import SEO from '@julian_cataldo/astro-seo/SEO.astro';
+import Analytics from '@julian_cataldo/astro-analytics/Analytics.astro';
+import Prefetch from '@julian_cataldo/astro-prefetch/Prefetch.astro';
 import Tooltips from '@julian_cataldo/astro-tooltips/Tooltips.astro';
-import NavigationBar from '../components/NavigationBar.astro';
+/* ·········································································· */
+import NavigationBar from '../app/NavigationBar.astro';
+import LazyLoading from '../app/LazyLoading.astro';
+import Footer from '../app/Footer.astro';
 /* ·········································································· */
 import './Default.scss';
 ---
@@ -17,10 +22,24 @@ import './Default.scss';
       siteName={'Astro Content — Structured content framework'}
     />
     <link rel="icon" href="favicon.svg" />
+
+    <meta name="author" content="Julian Cataldo" />
+    <meta name="copyright" content="ISC" />
+
+    <meta name="generator" content={Astro.generator} />
+
+    <Analytics id={'G-ZNVP52N2SF'} />
+
+    {import.meta.env.PROD && <Prefetch />}
+
     <Tooltips />
+
+    <LazyLoading />
   </Fragment>
 
   <Body slot="body">
+    <NavigationBar />
     <slot />
+    <Footer />
   </Body>
 </Document>
