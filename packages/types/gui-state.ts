@@ -1,3 +1,4 @@
+import type { FileLanguage } from './file';
 import type { JSONSchema7 } from 'json-schema';
 import type { editor as nsEd } from 'monaco-editor';
 /* ·········································································· */
@@ -11,9 +12,7 @@ export interface Route {
   property: Part;
 }
 
-export type Language = 'yaml' | 'markdown';
-
-export type EditorLanguage = Language | ('typescript' | 'json' | 'html');
+export type EditorLanguage = FileLanguage | ('typescript' | 'json' | 'html');
 
 /* —————————————————————————————————————————————————————————————————————————— */
 
@@ -31,6 +30,7 @@ export interface UiState {
     assistant: PaneDimensions;
     inspector: PaneDimensions;
   };
+  ui_commandPaletteVisibility: boolean;
   /* ········································································ */
   ui_save: (newState: Partial<UiState>) => void;
   ui_fetchSaved: () => void;
@@ -43,6 +43,7 @@ export interface UiState {
     width?: number | null,
     height?: number | null,
   ) => void;
+  ui_showCommandPalette: () => void;
 }
 
 /* —————————————————————————————————————————————————————————————————————————— */
@@ -66,7 +67,7 @@ export interface EditorState {
     entity: Part,
     entry: Part,
     property: Part,
-    language: Language,
+    language: FileLanguage,
     value: string,
     schema: JSONSchema7,
   ) => Promise<void>;

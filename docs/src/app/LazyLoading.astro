@@ -1,0 +1,28 @@
+---
+// Quick hack 🏴‍☠️
+---
+
+<script>
+  const pics = document.querySelectorAll('.lazy');
+
+  pics.forEach((pic) => {
+    const img = pic.querySelector('img');
+    if (img.complete) {
+      pic.classList.add('is-loaded');
+    } else {
+      img.addEventListener('load', () => {
+        pic.classList.add('is-loaded');
+      });
+    }
+  });
+</script>
+
+<style lang="scss" is:global>
+  .js .lazy {
+    opacity: 0;
+    transition: opacity 1s;
+    &.is-loaded {
+      opacity: 1;
+    }
+  }
+</style>

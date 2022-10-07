@@ -13,6 +13,7 @@ const uiState = (set: StoreApi<AppState>['setState']): UiState => ({
     assistant: { width: 0, height: 0 },
     inspector: { width: 0, height: 0 },
   },
+  ui_commandPaletteVisibility: false,
 
   /* ········································································ */
 
@@ -36,12 +37,17 @@ const uiState = (set: StoreApi<AppState>['setState']): UiState => ({
     if (storage) {
       const savedState = JSON.parse(storage) as Partial<UiState>;
       log({ fromLocal: uiState });
-      set((state) => ({
-        ui_route: savedState.ui_route ?? state.ui_route,
-        ui_inspectorPane: savedState.ui_inspectorPane ?? state.ui_inspectorPane,
-        ui_assistantPane: savedState.ui_assistantPane ?? state.ui_assistantPane,
-        ui_splitPanes: savedState.ui_splitPanes ?? state.ui_splitPanes,
-      }));
+      set(
+        (state) =>
+          ({
+            // ui_route: savedState.ui_route ?? state.ui_route,
+            ui_inspectorPane:
+              savedState.ui_inspectorPane ?? state.ui_inspectorPane,
+            ui_assistantPane:
+              savedState.ui_assistantPane ?? state.ui_assistantPane,
+            ui_splitPanes: savedState.ui_splitPanes ?? state.ui_splitPanes,
+          } as Partial<UiState>),
+      );
     }
   },
 
@@ -75,6 +81,18 @@ const uiState = (set: StoreApi<AppState>['setState']): UiState => ({
 
   /* ········································································ */
 
+  ui_setAssistantPane: (name) => {
+    set((state) => {
+      const newUiState: Partial<UiState> = {
+        ui_assistantPane: name || 'preview',
+      };
+      state.ui_save(newUiState);
+      return newUiState;
+    });
+  },
+
+  /* ········································································ */
+
   ui_setSplitPanesDimensions: (pane, width = null, height = null) => {
     // console.log({ newWidth });
     set((state) => {
@@ -91,14 +109,15 @@ const uiState = (set: StoreApi<AppState>['setState']): UiState => ({
 
   /* ········································································ */
 
-  ui_setAssistantPane: (name) => {
-    set((state) => {
-      const newUiState: Partial<UiState> = {
-        ui_assistantPane: name || 'preview',
-      };
-      state.ui_save(newUiState);
-      return newUiState;
-    });
+  ui_showCommandPalette: () => {
+    // log({ newWidth });
+    // set((state) => {
+    //   const newUiState: Partial<UiState> = {
+    //     ui_commandPaletteVisibility: !state.ui_commandPaletteVisibility,
+    //   };
+    //   // state.saveUi(newUiState);
+    //   return newUiState;
+    // });
   },
 });
 

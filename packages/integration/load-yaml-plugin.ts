@@ -73,12 +73,12 @@ export default (
               console.warn(warning.toString()),
       });
 
-      const keys = `{ file, data, rawYaml }`;
+      const keys = `{ file, data, raw }`;
 
       const data: YamlInstance<unknown> = {
         file: id,
         data: yamlData,
-        rawYaml: code,
+        raw: code,
       };
 
       return {

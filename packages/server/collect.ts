@@ -3,10 +3,13 @@ import path from 'node:path';
 import { sentenceCase } from 'change-case';
 import fs from 'node:fs/promises';
 /* ·········································································· */
-import type { FileInstance, YamlInstance } from '@astro-content/types/file';
+import type {
+  FileInstanceExtended,
+  YamlInstance,
+} from '@astro-content/types/file';
 import type { Options } from '@astro-content/types/integration';
 import type { JSONSchema7 } from 'json-schema';
-import type { ServerState } from '@astro-content/types/server-state';
+import type { Content, ServerState } from '@astro-content/types/server-state';
 import { state } from './state.js';
 import { generateTypes, importHelper } from './generate-types.js';
 import { loadFile } from './load-file.js';
@@ -35,7 +38,7 @@ function handleSchema(filePath: string, unknownYaml: YamlInstance<unknown>) {
     title: typeName,
     ...file.data,
   };
-  state.schemas.raw[entity] = file.rawYaml;
+  state.schemas.raw[entity] = file.raw;
   state.schemas.file[entity] = filePath;
 }
 
@@ -65,7 +68,7 @@ export async function saveTsTypes() {
 /* ·········································································· */
 
 const collect = async (
-  pFiles: Promise<FileInstance[]>,
+  pFiles: Promise<FileInstanceExtended[]>,
   options?: Options,
 ): Promise<ServerState['content']> => {
   const files = await pFiles.then((p) => p).catch(() => null);
@@ -99,7 +102,7 @@ const collect = async (
   /* Clean-up */
   state.content = {};
 
-  const promises = files.map(async (inputFile: FileInstance) => {
+  const promises = files.map(async (inputFile: FileInstanceExtended) => {
     const filePath = inputFile.file;
 
     if (filePath && !filePath.endsWith('.schema.yaml')) {
@@ -121,6 +124,33 @@ const collect = async (
   saveTsTypes().catch((e) => log(e));
 
   log('Collecting content', 'info', 'pretty');
+
+  // NOTE: Do performance checks for this algorithm
+  const sortedContent: Content = {};
+  Object.keys(state.content)
+    // NOTE: We keep file-system natural sorting for top level objects
+    // .sort()
+    .forEach((entity) => {
+      sortedContent[entity] = {};
+
+      Object.keys(state.content[entity] ?? {})
+        // .sort()
+        .forEach((entry) => {
+          // FIXME:
+          // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
+          (sortedContent[entity] ?? {})[entry] = {};
+
+          Object.keys(state.content[entity]?.[entry] ?? {})
+            // NOTE: Without it, property are "jumping" in random order
+            .sort()
+            .forEach((property) => {
+              ((sortedContent[entity] ?? {})[entry] || {})[property] =
+                state.content[entity]?.[entry]?.[property];
+            });
+        });
+    });
+
+  state.content = sortedContent;
 
   return state.content;
 };

@@ -9,6 +9,7 @@ import remarkPresetLintRecommended from 'remark-preset-lint-recommended';
 import remarkPresetLintMarkdownStyleGuide from 'remark-preset-lint-markdown-style-guide';
 import remarkPresetLintConsistent from 'remark-preset-lint-consistent';
 /* ·········································································· */
+import remarkMdx from 'remark-mdx';
 import remarkRetext from 'remark-retext';
 import remarkGfm from 'remark-gfm';
 import retextStringify from 'retext-stringify';
@@ -41,7 +42,11 @@ import type { FrontmatterSchemaMessage } from '@julian_cataldo/remark-lint-front
 import { log } from './logger.js';
 /* —————————————————————————————————————————————————————————————————————————— */
 
-export async function handleMd(content: string, schema?: JSONSchema7) {
+export async function handleMd(
+  content: string,
+  schema?: JSONSchema7,
+  mdx = false,
+) {
   // let frontmatterSchema: JSONSchema7 = {};
   // if (
   //   schema?.allOf?.length &&
@@ -63,6 +68,7 @@ export async function handleMd(content: string, schema?: JSONSchema7) {
   const lintingAndSchema = await remark()
     .use(remarkFrontmatter)
     .use(rlFmSchema, { embed: schema })
+    .use(mdx ? remarkMdx : () => (tree) => tree)
     .use(remarkGfm)
     // TODO: extract "validate" to general "handle"?
     .use(() => (tree, file) => {
@@ -135,6 +141,7 @@ export async function handleMd(content: string, schema?: JSONSchema7) {
 
   const naturalLanguage = await remark()
     .use(remarkFrontmatter)
+    .use(mdx ? remarkMdx : () => (tree) => tree)
     .use(remarkRetext, Parser)
     .use(retextCasePolice, { ignore: ['HTTPS', 'HTTP'] })
     .use(retextReadability, { age: 26 })

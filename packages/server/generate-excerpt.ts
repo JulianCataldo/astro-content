@@ -48,14 +48,14 @@ import { log } from './logger.js';
 //   return transformer;
 // };
 
-export default async function generateExcerpt(rawMd: string) {
+export default async function generateExcerpt(raw: string) {
   // FIXME: Using an hard substring for now, could generate unwanted results
   const mdLiteral = await remark()
     .use(remarkFrontmatter)
     .use(remarkGfm)
     .use(remarkRehype)
     .use(rehypeStringify)
-    .process(rawMd);
+    .process(raw);
 
   // FIXME: Doubling pipeline for now (preserve HTML)
   const result = await unified()

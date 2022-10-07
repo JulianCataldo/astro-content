@@ -4,15 +4,15 @@
 import { Icon } from '@iconify/react';
 import { sentenceCase } from 'change-case';
 import cx from 'classnames';
+import { Link } from '@tanstack/react-location';
 /* ·········································································· */
 import Headings from './Headings';
 import ModalPopover from './ModalPopover';
 // import './Toolbar.scss';
 import Tooltip from './Tooltip';
 /* ·········································································· */
-import useAppStore from '../store';
+import { useAppStore } from '../store';
 import CopyInlineCode from './CopyInlineCode';
-
 /* —————————————————————————————————————————————————————————————————————————— */
 
 export default function Toolbar() {
@@ -22,63 +22,69 @@ export default function Toolbar() {
   const { entity, entry, property } = useAppStore((state) => state.ui_route);
   const language = useAppStore((state) => state.editor_language);
 
-  const setRoute = useAppStore((state) => state.ui_setRoute);
   const save = useAppStore((state) => state.editor_save);
   const savingState = useAppStore((state) => state.editor_savingState);
 
-  const isMd = language === 'markdown';
+  const isMd = language === 'markdown' || language === 'mdx';
   const fullPath =
     entity && entry && property && content[entity]?.[entry]?.[property]?.file;
+
+  const extension =
+    language === 'markdown' ? 'MD' : language && language.toUpperCase();
 
   return (
     <div className="component-toolbar">
       <div className="actions">
-        <ModalPopover
-          render={({ close, labelId, descriptionId }) => (
-            <>
-              {/* 
+        {Object.entries(content).length > 0 && (
+          <ModalPopover
+            render={({ close, labelId, descriptionId }) => (
+              <>
+                {/* 
               <div>
                 <p id={descriptionId}>Keep the name short!</p>
                 <input placeholder="Name" autoFocus />
                 <button onClick={close}>Create</button>
               </div>
               */}
-              <h3 id={labelId}>From command line</h3>
+                <h3 id={labelId}>From command line</h3>
 
-              <h4>Define a new collection</h4>
+                <h4>
+                  Define a new <strong>entity</strong>
+                </h4>
 
-              <CopyInlineCode
-                text="pnpm content add people person"
-                placement="top-end"
-              />
+                <CopyInlineCode
+                  text="pnpm content add people person"
+                  placement="top-end"
+                />
 
-              {/*
+                {/*
                 <h4>New singleton</h4>
                 <code>&gt; pnpm content add contact-page</code>
               */}
 
-              <h4>-or- for an existing collection</h4>
-              <h5>Add an entry</h5>
+                <h4>-or- for an existing collection</h4>
+                <h5>Add an entry</h5>
 
-              <CopyInlineCode
-                text="pnpm content add people jane"
-                placement="top-end"
-              />
+                <CopyInlineCode
+                  text="pnpm content add people jane"
+                  placement="top-end"
+                />
 
-              <h5>Add an entry with a random name</h5>
+                <h5>Add an entry with a random name</h5>
 
-              <CopyInlineCode
-                text="pnpm content add people"
-                placement="top-end"
-              />
-            </>
-          )}
-        >
-          <div className="action">
-            <Icon icon="system-uicons:create" width="2em" />
-            <span className="label">Create</span>
-          </div>
-        </ModalPopover>
+                <CopyInlineCode
+                  text="pnpm content add people"
+                  placement="top-end"
+                />
+              </>
+            )}
+          >
+            <div className="action">
+              <Icon icon="system-uicons:create" width="2em" />
+              <span className="label">Create</span>
+            </div>
+          </ModalPopover>
+        )}
       </div>
 
       <div className="actions file">
@@ -130,14 +136,14 @@ export default function Toolbar() {
           {entity && (
             // FIXME: JSX A11y
             // eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events
-            <div
-              onClick={() => setRoute(entity, false, false)}
+            <Link
+              to={`/__content/${entity}`}
               className={cx('entity-link', entry && 'action')}
             >
               <Icon icon="system-uicons:location" width="2em" />
               {typeof schemas.content[entity] === 'object' &&
                 sentenceCase(schemas.content[entity].title ?? '')}
-            </div>
+            </Link>
           )}
           {entity && !entry && (
             <div>
@@ -155,9 +161,11 @@ export default function Toolbar() {
             <div className={cx('chevron-property', isMd ? 'md' : 'yaml')}>
               <Icon icon="system-uicons:chevron-right" width="2em" />
               <span>{sentenceCase(property)}</span>
+              <span className={cx('extension-label', language)}>
+                {extension}
+              </span>
             </div>
           )}
-          {/* ({language}) */}
         </div>
       </div>
 
@@ -174,9 +182,12 @@ export default function Toolbar() {
                       <Headings
                         // FIXME: Prop. does not exist
                         items={
-                          // @ts-ignore
+                          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                          // @ts-expect-error
+                          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
                           content[entity]?.[entry]?.[property]?.headingsCompiled
                         }
+                        close={close}
                       />
                     </div>
                   )}
@@ -228,15 +239,13 @@ export default function Toolbar() {
                 </div>
               )}
             >
-              <div>
-                <div className="action">
-                  <Icon
-                    icon="system-uicons:info-circle"
-                    width="2em"
-                    height="1.5em"
-                  />
-                  <span className="label">Infos</span>
-                </div>
+              <div className="action">
+                <Icon
+                  icon="system-uicons:info-circle"
+                  width="2em"
+                  height="1.5em"
+                />
+                <span className="label">Infos</span>
               </div>
             </ModalPopover>
 
@@ -256,6 +265,17 @@ export default function Toolbar() {
                 </a>
               </Tooltip>
             )}
+
+            {/* <div className="action">
+              <Icon
+                icon="system-uicons:question-circle"
+                width="2em"
+                height="1.5em"
+              />
+            </div>
+            <div className="action">
+              <Icon icon="system-uicons:settings" width="2em" height="1.5em" />
+            </div> */}
           </div>
         )}
     </div>

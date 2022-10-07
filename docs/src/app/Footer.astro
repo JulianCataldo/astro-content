@@ -1,0 +1,25 @@
+---
+import Link from '@julian_cataldo/astro-link/Link.astro';
+import guiOverlay from '../assets/separator.svg?raw';
+// import github from '../assets/github.svg?raw';
+import './Footer.scss';
+---
+
+<footer class="app-footer">
+  <div>
+    Maintained by <Link class="link" href="https://www.juliancataldo.com">
+      Julian Cataldo
+    </Link>
+  </div>
+  <div class="separator" set:html={guiOverlay}></div>
+  <div class="star-me">
+    Star me on
+    <!-- &nbsp;<span class="icon" set:html={github}></span> -->
+    <Link class="link" href="https://github.com/JulianCataldo/astro-content">
+      GitHub…
+    </Link>
+  </div>
+  <div>— {Astro.generator} —</div>
+
+  <div class="btt"><Link href="#">Back to <strong>TOP</strong> ⬆︎</Link></div>
+</footer>

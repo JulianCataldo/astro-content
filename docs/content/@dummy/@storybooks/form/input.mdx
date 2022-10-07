@@ -1,0 +1,75 @@
+---
+title: 911984489119
+---
+
+Very useful.
+
+{/* ALT + SHIFT + A = JSX style comments! */}
+
+# Sound
+
+<p>Audio settings:</p>
+
+<div>
+  <input type="range" id="volume" name="volume" min="0" max="11" />
+  <label for="volume">Volume</label>
+</div>
+
+<div>
+  <input
+    type="range"
+    id="cowbell"
+    name="cowbell"
+    min="0"
+    max="100"
+    value="90"
+    step="10"
+  />
+  <label for="cowbell">Cowbell</label>
+</div>
+
+# Date
+
+<div>
+  <label for="meeting-time">Choose a time for your appointment:</label> <br />
+  <input
+    type="datetime-local"
+    id="meeting-time"
+    name="meeting-time"
+    value="2018-06-12T19:30"
+    min="2018-06-07T00:00"
+    max="2018-06-14T00:00"
+  />
+</div>
+
+# Monster
+
+<p>Choose your monster's colors:</p>
+
+<div>
+  <input type="color" id="head" name="head" value="#e66465" />
+  <label for="head">~~_Head_~~</label>
+</div>
+
+<div>
+  <input type="color" id="body" name="body" value="#f6b73c" />
+  <label for="body">Body</label>
+</div>
+
+# URL
+
+<label for="url">Enter an https:// URL:</label>
+
+<input
+  type="url"
+  name="url"
+  id="url"
+  placeholder="https://example.com"
+  pattern="https://.*"
+  size="30"
+  required
+/>
+
+---
+
+That's all folks!

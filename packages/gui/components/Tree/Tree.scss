@@ -112,6 +112,9 @@
     }
 
     .property-link {
+      margin-right: 0.25em;
+      border-radius: 0 0.4rem 0.4rem 0;
+
       &.active {
         .trigger {
           opacity: 1;
@@ -123,7 +126,11 @@
 
     .entry-link {
       margin-top: 0.3rem;
+      margin-right: 0.25rem;
       margin-bottom: 0.3rem;
+      font-size: 115%;
+      background: var(--vscode-keybindingLabel-border);
+      border-radius: 0 0.4rem 0.4rem 0;
 
       .tree-label {
         padding: 0.4rem 0.3rem;
@@ -132,9 +139,6 @@
       &.active {
         background: var(--vscode-tree-tableColumnsBorder);
       }
-
-      font-size: 115%;
-      background: var(--vscode-keybindingLabel-border);
     }
 
     .entity-link {
@@ -142,7 +146,9 @@
       top: 0;
       z-index: 5;
       margin-top: 0.5rem;
+      margin-right: 0.25rem;
       background: hsl(0, 0%, 9%);
+      border-radius: 0 0.4rem 0.4rem 0;
 
       .tree-label {
         padding: 0.4rem 0.3rem;
@@ -225,17 +231,18 @@
     padding-right: 0.5em;
   }
 
-  // .icon-md,
-  // .icon-yaml {
-  // }
-
-  .icon-md {
+  .icon-markdown {
     color: var(--vscode-charts-purple);
-    opacity: 0.7;
+    opacity: 0.9;
+  }
+
+  .icon-mdx {
+    color: var(--vscode-errorForeground);
+    opacity: 0.9;
   }
 
   .icon-yaml {
     color: var(--vscode-charts-green);
-    opacity: 0.8;
+    opacity: 0.9;
   }
 }

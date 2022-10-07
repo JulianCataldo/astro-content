@@ -7,17 +7,19 @@ import { useEffect, useRef, useState } from 'react';
 /* ·········································································· */
 import type { Fake } from '@astro-content/types/dto';
 import { endpoints } from '@astro-content/server/state';
+import prettier from 'prettier';
+import parserHtml from 'prettier/parser-html';
 import { log } from '../logger';
 import TabBar, { Tabs } from './TabBar';
 import Editor from './Editor/Editor';
 // import Metas from './Metas'
 /* ·········································································· */
-import useAppStore from '../store';
+import { useAppStore } from '../store';
 // import './Assistant.scss';
 import { post } from '../store/helpers';
 /* —————————————————————————————————————————————————————————————————————————— */
 
-export default function Preview() {
+export default function Assistant() {
   const { content, schemas, types } = useAppStore((state) => state.data_server);
   const { entity, entry, property } = useAppStore((state) => state.ui_route);
   const language = useAppStore((state) => state.editor_language);
@@ -99,7 +101,7 @@ export {}`;
 
   const value =
     entity && entry && property && content[entity]?.[entry]?.[property];
-  const isMd = language === 'markdown';
+  const isMd = language === 'markdown' || language === 'mdx';
 
   const tabs: Tabs = {};
 
@@ -117,7 +119,7 @@ export {}`;
       tabs.html = { icon: 'system-uicons:code', title: 'HTML' };
     }
     tabs.ts = { icon: 'simple-icons:typescript', title: 'Import' };
-    tabs.api = { icon: 'mdi:code-json', title: 'API response' };
+    tabs.api = { icon: 'mdi:code-json', title: 'Object' };
   } else if (entity && !entry) {
     tabs.preview = {
       icon: 'ion:dice',
@@ -172,7 +174,7 @@ export {}`;
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
 
-  const previewWrapper = useRef<HTMLDivElement>(null);
+  const previewWrapper = useRef<HTMLIFrameElement>(null);
 
   /* Sync. scroll position from editor (one-way) */
   useEffect(() => {
@@ -182,6 +184,20 @@ export {}`;
       ((scrollableHeight ?? 0) - (wrapperHeight ?? 0)) * scrollPosition;
     previewWrapper.current?.scrollTo({ top });
   }, [scrollPosition]);
+
+  const [rawHtml, setRawHtml] = useState<string>('');
+
+  function handleIframeLoad(e: React.SyntheticEvent<HTMLIFrameElement>) {
+    const input =
+      e.currentTarget.contentWindow?.document.body.querySelector(
+        '.markdown-body',
+      )?.innerHTML ?? '';
+    const result = prettier.format(input, {
+      parser: 'html',
+      plugins: [parserHtml],
+    });
+    setRawHtml(result);
+  }
 
   return (
     <>
@@ -220,16 +236,32 @@ export {}`;
         {value && isMd && (
           <>
             {assistantPane === 'preview' &&
-              'bodyCompiled' in value &&
-              value.bodyCompiled && (
-                <div
-                  className="markdown markdown-preview"
-                  // eslint-disable-next-line react/no-danger
-                  dangerouslySetInnerHTML={{
-                    __html: value.bodyCompiled,
-                  }}
-                  ref={previewWrapper}
-                />
+              (value.language === 'markdown' || value.language === 'mdx') && (
+                <div className="markdown markdown-preview">
+                  <iframe
+                    title="Embedded preview"
+                    src={
+                      // value.file
+                      `${endpoints.actions.render}/${encodeURIComponent(
+                        value.file,
+                      )}`
+                    }
+                    frameBorder="none"
+                    onLoad={(e) => handleIframeLoad(e)}
+                    // FIXME: Scrollbar bi-directional sync.
+                    // ref={previewWrapper}
+                  />
+                </div>
+                // NOTE: Disabled. In-document MD rendering.
+                // Might be useful to re-use this for MD only?
+                // <div
+                //   className="markdown markdown-preview"
+                //   // eslint-disable-next-line react/no-danger
+                //   dangerouslySetInnerHTML={{
+                //     __html: value.bodyCompiled,
+                //   }}
+                //   ref={previewWrapper}
+                // />
               )}
             {/* {assistantPane === 'meta' && (
                 <Metas
@@ -240,10 +272,9 @@ export {}`;
               )} */}
 
             {assistantPane === 'html' &&
-              'bodyCompiled' in value &&
-              value.bodyCompiled && (
+              (value.language === 'markdown' || value.language === 'mdx') && (
                 <div className="editor">
-                  <Editor language="html" value={value.bodyCompiled} readOnly />
+                  <Editor language="html" value={rawHtml} readOnly />
                 </div>
               )}
             {/* {assistantPane === 'api' && <div className="editor"></div>} */}
@@ -251,7 +282,7 @@ export {}`;
         )}
         {value && (
           <>
-            {assistantPane === 'preview' && 'data' in value && (
+            {assistantPane === 'preview' && value.language === 'yaml' && (
               <div className="editor">
                 <Editor
                   language="json"

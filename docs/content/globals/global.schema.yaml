@@ -1,0 +1,17 @@
+properties:
+  menu:
+    type: array
+    items:
+      - properties:
+          title:
+            type: string
+          href:
+            type: string
+
+  notes:
+    allOf:
+      - $ref: '#/definitions/MarkdownFile'
+
+required:
+  - website
+  # - notes

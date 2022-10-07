@@ -1,0 +1,5 @@
+sources:
+  - ./feats.png
+  - ./demo.png
+  - ./install.png
+  - [wrong-image.png]

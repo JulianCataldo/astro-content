@@ -1,0 +1,46 @@
+properties:
+  contract:
+    allOf:
+      - $ref: '#/definitions/MarkdownFile'
+      - properties:
+          frontmatter:
+            properties:
+              title:
+                type: string
+              legalReferences:
+                description: Legal references
+                type: array
+                items:
+                  - type: string
+              contractLink:
+                description: Entry title
+                type: string
+              clientType:
+                type: string
+                enum:
+                  - Corporate
+                  - Non-profit
+                  - Individual
+
+            required:
+              - title
+              - legalReferences
+              - clientType
+        required:
+          - frontmatter
+        additionalProperties: false
+
+  informations:
+    properties:
+      invoiceId:
+        type: string
+      pricePerDay:
+        type: number
+      numberOfDays:
+        type: number
+
+  footnotes:
+    allOf:
+      - $ref: '#/definitions/MarkdownFile'
+required:
+  - contract

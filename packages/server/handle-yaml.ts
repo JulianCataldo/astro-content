@@ -25,10 +25,10 @@ export function handleYaml(
   entity: Part,
   entry: Part,
   property: Part,
-  rawYaml: string,
-  schema: JSONSchema7,
+  raw: string,
+  schema?: JSONSchema7,
 ) {
-  log({ rawYaml }, 'absurd', 'table');
+  log({ raw }, 'absurd', 'table');
 
   if (!entity || !entry || !property) {
     return false;
@@ -37,8 +37,8 @@ export function handleYaml(
   let schemaForAjv: JSONSchema7 | null = null;
 
   // FIXME: No unnecessary
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   const yamlSchema =
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     state.schemas.content[entity]?.properties?.[property] || schema;
   log(yamlSchema, 'absurd');
 
@@ -76,10 +76,10 @@ export function handleYaml(
       };
     }
 
-    if (rawYaml) {
+    if (raw) {
       const lineCounter = new LineCounter();
 
-      const yamlDoc = yaml.parseDocument(rawYaml, { lineCounter });
+      const yamlDoc = yaml.parseDocument(raw, { lineCounter });
       const yamlJS = yamlDoc.toJS() as unknown;
 
       validate(yamlJS);

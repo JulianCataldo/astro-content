@@ -1,14 +1,22 @@
 ---
+// REFACTOR: When video will be needed, or delete
+
 // import Link from '@julian_cataldo/astro-link/Link.astro';
 // import { Icon } from '@iconify/react';
-import './Landing.scss';
 
-const { data } = Astro.props;
+import './Landing.scss';
+import type { Demo } from '/content';
+
+export interface Props {
+  data: Demo;
+}
+const { data } = Astro.props as Props;
 ---
 
 <div class="demo-content">
   <div>
     <data.text.Content />
+    <!-- {JSON.stringify(data)} -->
   </div>
 
   <div class="editor-preview"></div>
@@ -21,7 +29,7 @@ const { data } = Astro.props;
   /> -->
 
   <video muted="muted" controls class="module-demo-video">
-    <source src="/public/demos/main-demo.mp4" type="video/mp4" />
+    <source src="/demos/ts-issue.mp4" type="video/mp4" />
     Your browser does not support the video tag.
   </video>
   <!-- <data.text.Content /> -->
@@ -48,7 +56,7 @@ const { data } = Astro.props;
   const videos = document.querySelectorAll('.module-demo-video');
 
   videos.forEach((video) => {
-    console.log(video);
+    // console.log(video);
     observer.observe(video);
   });
 </script>

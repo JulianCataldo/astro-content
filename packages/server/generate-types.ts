@@ -39,8 +39,8 @@ export async function generateTypes(
     if (entryNames) {
       const name = pascalCase(schema.title ?? '');
       typesLiteral += `
-type ${schema.title ?? ''}EntryNames = ${entryNames};
-type ${pascalCase(key)} = {
+export type ${pascalCase(schema.title ?? '')}EntryNames = ${entryNames};
+export type ${pascalCase(key)} = {
   [key in ${name}EntryNames]?: ${name};
 };`;
     }

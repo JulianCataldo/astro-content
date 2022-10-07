@@ -30,7 +30,7 @@ interface Props {
   children: JSX.Element;
 }
 
-export default function Popover({ children, render, placement }: Props) {
+export default function ModalPopover({ children, render, placement }: Props) {
   const [open, setOpen] = useState(false);
 
   const { x, y, reference, floating, strategy, context } = useFloating({

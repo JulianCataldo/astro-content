@@ -15,4 +15,4 @@ const useAppStore = create<AppState>()((set) => ({
   ...editor(set),
 }));
 
-export default useAppStore;
+export { useAppStore };

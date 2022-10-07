@@ -11,12 +11,14 @@
 // —————————————————————————————————————————————————————————————————————————————
 
 @import './layouts/Default.scss';
+@import './layouts/Preview.scss';
 @import './components/Toolbar.scss';
 @import './components/TabBar.scss';
 @import './components/Inspector.scss';
 @import './components/Headings.scss';
 @import './components/CopyInlineCode.scss';
 @import './components/Assistant.scss';
-@import './components/App.scss';
+@import './components/App/App.scss';
 @import './components/Tree/Tree.scss';
 @import './components/Editor/Editor.scss';
+@import './components/EntriesTable.scss';

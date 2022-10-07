@@ -1,6 +1,8 @@
 import type { AstroIntegration } from 'astro';
 import react from '@astrojs/react';
-// import mdx from '@astrojs/mdx';
+import mdx from '@astrojs/mdx';
+import remarkEmbed, { Settings as RemarkEmbedSettings } from 'remark-embed';
+import remarkGfm from 'remark-gfm';
 /* ·········································································· */
 import {
   log,
@@ -45,15 +47,21 @@ const astroContent = (settings?: Settings): AstroIntegration => {
 };
 
 /* ·········································································· */
-export default function preset(settings: Settings = {}) {
+
+export default function preset(settings: Settings = {}): AstroIntegration[] {
   const userSettings = settings;
   if (settings.gui === undefined) {
     userSettings.gui = true;
   }
 
   const integrations = [
-    // TODO: Fit MDX here (is it headless)?
-    // mdx(),
+    // NOTE: Monitor for side-effects when user already use `@astrojs/mdx`.
+    mdx({
+      remarkPlugins: [
+        [remarkEmbed, { logLevel: 'info' } as RemarkEmbedSettings],
+        remarkGfm,
+      ],
+    }),
     astroContent(userSettings),
   ];
   if (userSettings.gui === true) {
@@ -61,6 +69,9 @@ export default function preset(settings: Settings = {}) {
     // If so, a `settings.includeReact` boolean might be added.
     integrations.push(react());
   }
+  // FIXME: Need explicit return type, why?
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
   return integrations;
 }
 export { collect };

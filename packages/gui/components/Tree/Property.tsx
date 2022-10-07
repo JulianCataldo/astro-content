@@ -1,18 +1,19 @@
 import yaml from 'yaml';
 import cx from 'classnames';
 import { sentenceCase } from 'change-case';
+import { Link } from '@tanstack/react-location';
 /* ·········································································· */
 import type { Content } from '@astro-content/types/server-state';
-import type { FileInstance } from '@astro-content/types/file';
+import type { FileInstanceExtended } from '@astro-content/types/file';
 import { Icon } from '@iconify/react';
 import MiniReport from './MiniReport';
 import Tooltip from '../Tooltip';
 /* ·········································································· */
-import useAppStore from '../../store';
+import { useAppStore } from '../../store';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 interface Props {
-  entryTree: Record<string, FileInstance | undefined>;
+  entryTree: Record<string, FileInstanceExtended | undefined>;
   entityKey: string;
   entryKey: string;
   content: Content;
@@ -24,7 +25,6 @@ export default function Property({
   content,
 }: Props) {
   const { entity, entry, property } = useAppStore((state) => state.ui_route);
-  const setRoute = useAppStore((state) => state.ui_setRoute);
 
   return (
     <>
@@ -74,9 +74,8 @@ export default function Property({
         const filePreview =
           propTree && 'frontmatter' in propTree
             ? mdPreview
-            : propTree &&
-              'rawYaml' in propTree &&
-              toPretty({ literal: propTree.rawYaml });
+            : propTree?.language === 'yaml' &&
+              toPretty({ literal: propTree.raw });
 
         const fileInfo = `${realPath ?? ''}<hr />${
           filePreview || 'No preview'
@@ -88,32 +87,26 @@ export default function Property({
         let icon;
 
         if (propTree) {
-          if ('rawMd' in propTree) {
+          if (propTree?.language === 'yaml') {
+            icon = 'bi:circle-fill';
+          } else {
             if (Object.entries(propTree.frontmatter).length) {
               icon = 'bi:circle-square';
             } else {
               icon = 'bi:square-fill';
             }
-          } else {
-            icon = 'bi:circle-fill';
           }
         }
 
         return (
-          // FIXME: JSX A11y
-          // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
-          <div
+          <Link
             key={propKey}
             className={cx(
               'property-link leaf child route',
               propActive && 'active',
             )}
-            onClick={(e) => {
-              e.preventDefault();
-              setRoute(entityKey, entryKey, propKey);
-            }}
             // IDEA: Map route to history + location
-            // href={`/${key}/${eKey}/${ppKey}`}
+            to={`/__content/${entityKey}/${entryKey}/${propKey}`}
           >
             <div className="file-title">
               <Tooltip label={fileInfo} placement="right">
@@ -122,11 +115,7 @@ export default function Property({
                     icon={icon ?? ''}
                     width="0.75rem"
                     height="0.75rem"
-                    className={cx(
-                      propTree && 'headingsCompiled' in propTree
-                        ? 'icon-md'
-                        : 'icon-yaml',
-                    )}
+                    className={`icon-${propTree?.language}`}
                   />
                 </span>
               </Tooltip>
@@ -143,7 +132,7 @@ export default function Property({
                 propKey={propKey}
               />
             </div>
-          </div>
+          </Link>
         );
       })}
     </>

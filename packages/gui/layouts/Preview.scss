@@ -1,0 +1,23 @@
+#preview {
+  .markdown-body {
+    padding: 1rem 5vw;
+
+    & > *:first-child {
+      margin-top: 1rem;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  scroll-behavior: smooth;
+  margin: 0;
+}

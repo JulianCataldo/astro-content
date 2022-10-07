@@ -17,6 +17,10 @@ const buildDone: AstroIntegration['hooks']['astro:build:done'] = async () => {
   log(`Build done`);
 
   // REFACTOR: Even if it's not supposed to be used by end user (yet?)
+
+  // NOTE: We are saving / loading current state to files,
+  // otherwise it will get erased.
+  // IDEA: Test the new `astro:build:generated` hook maybe?
   await fs
     .readFile(path.join(tempDir, 'state.json'), 'utf-8')
     .then(async (data: unknown) => {
