@@ -21,12 +21,12 @@ interface Params {
   page: PageEntryNames;
 }
 const { page } = Astro.params as unknown as Params;
-const currentPage = Astro.url.pathname.split('/')[2] || 'home';
+const currentPage = Astro.url.pathname.split('/')[2] ?? '';
 
 /* ·········································································· */
 
-// NOTE: Retrigger whole content base collection (not filtering "docs")
 const content = await get(Astro.glob('/content/**/*.{md,mdx,yaml}'), {
+  // NOTE: Ignore this. Used for collecting + building Web GUI static data.
   editMode: import.meta.env.PROD,
 });
 
