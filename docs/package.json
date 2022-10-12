@@ -20,7 +20,6 @@
     "@astrojs/mdx": "^0.11.4",
     "@astrojs/react": "^1.1.4",
     "@astrojs/sitemap": "^1.0.0",
-    "@iconify/react": "^4.0.0",
     "@julian_cataldo/astro-analytics": "^0.11.6",
     "@julian_cataldo/astro-base": "^0.13.6",
     "@julian_cataldo/astro-breakpoints": "^0.10.7",
@@ -36,16 +35,24 @@
     "asciinema-player": "^3.0.1",
     "astro": "1.4.5",
     "astro-content": "workspace:*",
+    "astro-testbed": "^0.2.1",
     "bulma": "^0.9.4",
     "mermaid": "^9.1.7",
     "react": "18.2.0",
     "react-dom": "^18.2.0",
     "remark-embed": "1.3.1",
-    "remark-mermaidjs": "^3.0.0",
     "sharp": "^0.31.1",
-    "three": "^0.144.0"
+    "three": "^0.144.0",
+    "ts-morph": "^16.0.0"
   },
   "keywords": [],
   "author": "Julian Cataldo",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "json-schema": "^0.4.0",
+    "@julian_cataldo/remark-lint-frontmatter-schema": "^3.7.2",
+    "remark": "^14.0.2",
+    "remark-cli": "^11.0.0",
+    "remark-frontmatter": "^4.0.1"
+  }
 }

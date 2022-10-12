@@ -9,9 +9,9 @@
     "reset": "rm -rf node_modules pnpm-lock.yaml .astro-content package-lock.json",
     "astro": "astro"
   },
-  "// astro-content": "link:../packages/integration",
   "dependencies": {
     "astro": "1.4.5",
+    "astro-content": "0.0.0-alpha.6"
   },
   "engines": {
     "node": ">=17"

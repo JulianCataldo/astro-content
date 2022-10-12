@@ -18,7 +18,7 @@
   "type": "module",
   "devDependencies": {
     "@changesets/cli": "^2.24.4",
-    "@julian_cataldo/astro-configs": "^0.19.1",
+    "@julian_cataldo/astro-configs": "^0.19.2",
     "@types/eslint": "8.4.6",
     "@types/node": "^18.7.16",
     "@types/prettier": "2.7.0",
