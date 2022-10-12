@@ -1,0 +1,18 @@
+---
+import { get } from '/content';
+import Layout from '../layouts/Default.astro';
+
+await get(
+  Astro.glob('/content/**/*.{md,mdx,yaml}'),
+  // NOTE: this will force trigger `__content` data fetching,
+  // for demo purposes only, for this docs.
+  // Might be better to ensure `__content` doesn't get overwritten during build.
+  {
+    editMode: import.meta.env.PROD,
+  },
+);
+---
+
+<Layout>
+  <div>Hello</div>
+</Layout>
