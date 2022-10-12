@@ -1,8 +1,6 @@
 name: Deploy — [Docs]
 
-on:
-  push:
-    branches: [master, develop]
+on: 'push'
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
