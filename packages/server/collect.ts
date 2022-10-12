@@ -110,9 +110,9 @@ const collect = async (
     }
   });
 
-  // TODO: Sort entities / entries / properties after everything is collected
   await Promise.all(promises);
 
+  /* Gen. types */
   state.types = await generateTypes(state.content, state.schemas);
 
   /* Build mode */
