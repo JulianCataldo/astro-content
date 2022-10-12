@@ -1,0 +1,31 @@
+---
+import Link from '@julian_cataldo/astro-link/Link.astro';
+/* ·········································································· */
+import './Actions.scss';
+---
+
+<footer class="module-actions">
+  <div>
+    <hr />
+    <h2 class="section-heading">
+      Ok, enough talking.<br /><em>Let's get started!</em>
+    </h2>
+  </div>
+  <div class="actions">
+    <Link
+      class="unstyled"
+      target="demo-source"
+      href="https://github.com/JulianCataldo/astro-content/tree/master/demo"
+      >See demo project source</Link
+    >
+    <Link class="unstyled" href="docs/intro">Read the documentation</Link>
+    <Link
+      class="unstyled"
+      href="__content"
+      target="demo"
+      data-tooltip-placement="top"
+      title="Pre-loaded with data — Static, no updates"
+      >Launch the demo editor</Link
+    >
+  </div>
+</footer>

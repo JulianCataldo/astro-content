@@ -1,34 +1,36 @@
 @use 'sass:color';
 @use '../vars' as *;
 
-*::-webkit-scrollbar {
-  width: 16px;
-}
+.astro-content-docs.layout-default {
+  *::-webkit-scrollbar {
+    width: 16px;
+  }
 
-*::-webkit-scrollbar-track {
-  background: $ca-black;
-}
+  *::-webkit-scrollbar-track {
+    background: $ca-black;
+  }
 
-*::-webkit-scrollbar-thumb {
-  border-radius: 5px;
-  background-color: color.adjust($ca-main-3, $lightness: -38%);
-  border-top: 3px solid color.adjust($ca-main-3, $lightness: -34%);
-  border-left: 3px solid color.adjust($ca-main-3, $lightness: -36%);
-  border-right: 3px solid color.adjust($ca-main-3, $lightness: -40%);
-  border-bottom: 3px solid color.adjust($ca-main-3, $lightness: -43%);
-}
+  *::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: color.adjust($ca-main-3, $lightness: -38%);
+    border-top: 3px solid color.adjust($ca-main-3, $lightness: -34%);
+    border-left: 3px solid color.adjust($ca-main-3, $lightness: -36%);
+    border-right: 3px solid color.adjust($ca-main-3, $lightness: -40%);
+    border-bottom: 3px solid color.adjust($ca-main-3, $lightness: -43%);
+  }
 
-::-webkit-scrollbar-corner {
-  background-color: transparent;
-}
+  ::-webkit-scrollbar-corner {
+    background-color: transparent;
+  }
 
-::-webkit-scrollbar-thumb:hover {
-  /* hover thumb styles */
-  // background-color: red;
-  cursor: default;
-  background-color: color.adjust($ca-main-3, $lightness: -15%);
+  ::-webkit-scrollbar-thumb:hover {
+    /* hover thumb styles */
+    // background-color: red;
+    cursor: default;
+    background-color: color.adjust($ca-main-3, $lightness: -15%);
+  }
+  // ::-webkit-scrollbar-thumb:horizontal:active,
+  // ::-webkit-scrollbar-thumb:vertical:active {
+  //   /* active thumb styles */
+  // }
 }
-// ::-webkit-scrollbar-thumb:horizontal:active,
-// ::-webkit-scrollbar-thumb:vertical:active {
-//   /* active thumb styles */
-// }

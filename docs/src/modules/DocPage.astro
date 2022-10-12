@@ -1,0 +1,36 @@
+---
+import { get, type Docs, type PageEntryNames } from '/content';
+/* ·········································································· */
+import Link from '@julian_cataldo/astro-link/Link.astro';
+import TreeNavigation from '../components/TreeNavigation.astro';
+import PrevNextNavigation from '../components/PrevNextNavigation.astro';
+import './DocPage.scss';
+/* —————————————————————————————————————————————————————————————————————————— */
+
+const { docs } = Astro.props as { docs: Docs };
+const { page } = Astro.params as unknown as { page: PageEntryNames };
+
+/* ·········································································· */
+
+const Main = docs?.[page]?.main?.Content;
+---
+
+<main class="module-doc-page">
+  <div class="navigations">
+    <div>
+      <h2>Sections</h2>
+      <TreeNavigation pages={docs} currentPage={page} />
+    </div>
+
+    <div class="this-page">
+      <h2>On this page</h2>
+      <TreeNavigation headings={docs?.[page]?.main?.getHeadings()} />
+    </div>
+  </div>
+
+  <article class="article-body">
+    {Main && <Main components={{ a: Link }} />}
+
+    <PrevNextNavigation pages={docs} currentPage={page} />
+  </article>
+</main>

@@ -1,0 +1,42 @@
+@use 'sass:color';
+@use '../vars' as *;
+
+.astro-content-docs.layout-default .module-doc-page {
+  .article-body {
+    width: calc(42rem + 17vw);
+    margin-left: 20vw;
+    @media screen and (max-width: 700px) {
+      width: initial;
+      margin: 5vw;
+    }
+  }
+
+  .navigations {
+    h2 {
+      padding: 0rem 2.5rem 0rem 2.5rem;
+    }
+
+    @media screen and (max-width: 700px) {
+      position: relative;
+      flex-wrap: wrap;
+      height: initial;
+    }
+
+    position: sticky;
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    height: 0;
+
+    .this-page {
+      text-align: right;
+    }
+  }
+
+  .prev-next {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 8rem 1rem 6rem 1rem;
+  }
+}
