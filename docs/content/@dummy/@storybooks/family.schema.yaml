@@ -1,4 +1,7 @@
 properties:
+  testbeds:
+    allOf:
+      - $ref: '#/definitions/MarkdownFile'
   bulma:
     allOf:
       - $ref: '#/definitions/MarkdownFile'

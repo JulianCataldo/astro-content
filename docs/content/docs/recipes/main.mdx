@@ -3,7 +3,7 @@ title: Recipes
 order: 6
 ---
 
-{/* FIXME: Global <MdxComp components={{ CodeEmbed }} /> BREAKS build */}
+{/* FIXME: Global `MdxComp components=CodeEmbed` BREAKS build */}
 import CodeEmbed from '/src/components/CodeEmbed.astro';
 
 # Recipes
@@ -69,3 +69,5 @@ It will show its passed property, either **pages** or current page **headings**,
 We can now import our sidebar widgets like this:
 
 <CodeEmbed file={'/docs/src/pages/docs/[page].astro'} />
+
+<CodeEmbed file={'/docs/src/modules/DocPage.astro'} />

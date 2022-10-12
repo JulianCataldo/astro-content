@@ -14,6 +14,10 @@ legalReferences:
 contractLink: [125]
 ---
 
+| Foo | Bar |
+| --- | --- |
+| Baz | Diz |
+
 # Appropriate needed former longer hurry
 
 A Terms of Service agreement is a legal document that helps you set out the
