@@ -40,8 +40,8 @@ const configSetup: AstroIntegration['hooks']['astro:config:setup'] = async ({
     `
   📚  astro-content — ⚠️ ALPHA PREVIEW ⚠️
   
-  ┃ Local    http://localhost:${config.server.port}/__content
-  ┃ Network  http://0.0.0.0:${config.server.port}/__content
+  ┃ Local    http://localhost:${config.server.port}/${endpoints.contentBase}
+  ┃ Network  http://0.0.0.0:${config.server.port}/${endpoints.contentBase}
   `,
     'info',
   );

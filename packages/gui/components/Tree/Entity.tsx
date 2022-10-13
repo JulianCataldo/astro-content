@@ -1,10 +1,12 @@
 import yaml from 'yaml';
 import { sentenceCase } from 'change-case';
+import { kebabCase } from 'lodash-es';
 import cx from 'classnames';
 import { Link } from '@tanstack/react-location';
 import { Icon } from '@iconify/react';
 import { FloatingDelayGroup } from '@floating-ui/react-dom-interactions';
 /* ·········································································· */
+import { endpoints } from '@astro-content/server/state';
 import type { Content, Schemas } from '@astro-content/types/server-state';
 import Tooltip from '../Tooltip';
 import { useAppStore } from '../../store';
@@ -30,7 +32,7 @@ export default function Entity({ content }: { content: Content }) {
           <Tooltip label={entityLabel(entityKey)} placement="right">
             {/*  eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events */}
             <Link
-              to={`/__content/${entityKey}`}
+              to={`${endpoints.contentBase}/${kebabCase(entityKey)}`}
               className={cx(
                 'entity-link route',
                 entity === entityKey && 'active',
@@ -51,7 +53,7 @@ export default function Entity({ content }: { content: Content }) {
               <div key={entryKey} className="leaf child entry">
                 {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
                 <a
-                  // href={`/__content/${entityKey}/${property ? entryKey : entry}/${property}`}
+                  // href={`${endpoints.contentBase}/${entityKey}/${property ? entryKey : entry}/${property}`}
                   className={cx(
                     'route entry-link',
                     entity === entityKey && entry === entryKey && 'active',

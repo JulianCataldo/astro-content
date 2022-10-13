@@ -179,7 +179,7 @@ importers:
   packages/gui:
     specifiers:
       '@astro-content/server': workspace:*
-      '@astro-content/types': workspace:*
+      '@astro-content/types': workspace:0.0.0-alpha.6
       '@astrojs/mdx': ^0.11.4
       '@astrojs/react': ^1.2.0
       '@floating-ui/react-dom-interactions': ^0.10.1
