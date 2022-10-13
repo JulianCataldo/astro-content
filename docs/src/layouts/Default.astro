@@ -11,13 +11,9 @@ import LazyLoading from '../app/LazyLoading.astro';
 import Footer from '../app/Footer.astro';
 /* ·········································································· */
 import './Default.scss';
-
-const pageClass = `page-${Astro.url.pathname
-  .substring(1)
-  .replaceAll('/', '_')}`;
 ---
 
-<Document class:list={[pageClass, 'astro-content-docs', 'layout-default']}>
+<Document class:list={['pageClass', 'astro-content-docs', 'layout-default']}>
   <Fragment slot="head">
     <SEO
       image={`https://res.cloudinary.com/dzfylx93l/image/upload/w_1200,h_630,c_limit/poster-2_xynb4h.png`}
