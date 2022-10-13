@@ -3,6 +3,7 @@
 // so everything purely Astro-related will be in one place,
 // but some deps issues prevent this.
 import path from 'path';
+import { kebabCase } from 'lodash-es';
 /* ·········································································· */
 import { collect } from '@astro-content/server/collect';
 import { log, setLogLevel } from '@astro-content/server/logger';
@@ -50,12 +51,20 @@ window.loaded = false;
 export async function getStaticPaths() {
   const contentFiles = import.meta.glob('/content/**/*.{md,mdx,yaml}');
 
-  const paths: { params: { path: string } }[] = [{ params: { path: 'test' } }];
+  const paths: { params: { path: string } }[] = [
+    /* Home */
+    // NOTE: Cannot be undefined, but should be?
+    { params: { path: undefined } },
+  ];
 
   await Promise.all(
     Object.entries(contentFiles).map(async ([rawPath]) => {
       const { first, second, third } = getTrio(rawPath);
-      const trioPath = path.join(first, second, third ?? '');
+      const trioPath = path.join(
+        kebabCase(first),
+        kebabCase(second),
+        kebabCase(third) ?? '',
+      );
       log({ trioPath });
       paths.push({ params: { path: trioPath } });
     }),
@@ -67,7 +76,7 @@ export async function getStaticPaths() {
     Object.entries(schemas).map(async ([rawPath]) => {
       const { second } = getTrio(rawPath);
 
-      paths.push({ params: { path: second } });
+      paths.push({ params: { path: kebabCase(second) } });
     }),
   );
 

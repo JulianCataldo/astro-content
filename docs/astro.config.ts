@@ -40,7 +40,9 @@ export default defineConfig({
     // TODO: 2. Try embedding it in Astro Content / Or let user control this?
     // TODO: 3. Monitor any conflict when user has its own pipeline (merge?)
     // mdx({ remarkPlugins: [mdxMermaidPlugin] }),
-    sitemap(),
+    sitemap({
+      filter: (page) => !page.includes('/__content/api/~render/'),
+    }),
   ],
   // TODO: Try to embed it by default with Astro Content
   markdown: {

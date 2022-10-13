@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { ReactLocation, Router } from '@tanstack/react-location';
+import { camelCase } from 'lodash-es';
 /* ·········································································· */
+import { endpoints } from '@astro-content/server/state';
 import { useKeyBoardShortcuts } from './keyboard-shortcuts';
 import Toolbar from '../Toolbar';
 import CopyInlineCode from '../CopyInlineCode';
@@ -42,10 +44,14 @@ export default function App({ isValidContentBase, children }: Props) {
       location={location}
       routes={[
         {
-          path: '__content/:entity/:entry/:property',
+          path: `${endpoints.contentBase}/:entity/:entry/:property`,
           loader: (route) => {
             const { params } = route;
-            setRoute(params.entity, params.entry, params.property);
+            setRoute(
+              camelCase(params.entity),
+              camelCase(params.entry),
+              camelCase(params.property),
+            );
             console.log({ route });
             return {};
           },
@@ -53,10 +59,10 @@ export default function App({ isValidContentBase, children }: Props) {
           caseSensitive: true,
         },
         {
-          path: '__content/:entity',
+          path: `${endpoints.contentBase}/:entity`,
           loader: (route) => {
             const { params } = route;
-            setRoute(params.entity, false, false);
+            setRoute(camelCase(params.entity), false, false);
             return {};
           },
           caseSensitive: true,

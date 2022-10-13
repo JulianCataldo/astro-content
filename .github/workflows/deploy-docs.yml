@@ -1,8 +1,6 @@
 name: Deploy — [Docs]
 
-on:
-  push:
-    branches: [master, develop]
+on: 'push'
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
@@ -60,6 +58,9 @@ jobs:
       - name: Install Node dependencies
         # `NODE_ENV=production` to exclude dev. dependencies
         run: pnpm --recursive install --frozen-lockfile
+
+      - name: Install Puppeteer
+        run: cd ./node_modules/puppeteer && node install.js
 
       # NOTE: It's all built together now (see below).
       # - name: Build Astro Website

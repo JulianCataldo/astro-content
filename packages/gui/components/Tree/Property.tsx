@@ -1,8 +1,10 @@
 import yaml from 'yaml';
 import cx from 'classnames';
 import { sentenceCase } from 'change-case';
+import { kebabCase } from 'lodash-es';
 import { Link } from '@tanstack/react-location';
 /* ·········································································· */
+import { endpoints } from '@astro-content/server/state';
 import type { Content } from '@astro-content/types/server-state';
 import type { FileInstanceExtended } from '@astro-content/types/file';
 import { Icon } from '@iconify/react';
@@ -106,7 +108,9 @@ export default function Property({
               propActive && 'active',
             )}
             // IDEA: Map route to history + location
-            to={`/__content/${entityKey}/${entryKey}/${propKey}`}
+            to={`${endpoints.contentBase}/${kebabCase(entityKey)}/${kebabCase(
+              entryKey,
+            )}/${kebabCase(propKey)}`}
           >
             <div className="file-title">
               <Tooltip label={fileInfo} placement="right">

@@ -40,8 +40,8 @@ const configSetup: AstroIntegration['hooks']['astro:config:setup'] = async ({
     `
   📚  astro-content — ⚠️ ALPHA PREVIEW ⚠️
   
-  ┃ Local    http://localhost:${config.server.port}/__content
-  ┃ Network  http://0.0.0.0:${config.server.port}/__content
+  ┃ Local    http://localhost:${config.server.port}/${endpoints.contentBase}
+  ┃ Network  http://0.0.0.0:${config.server.port}/${endpoints.contentBase}
   `,
     'info',
   );
@@ -98,16 +98,11 @@ const configSetup: AstroIntegration['hooks']['astro:config:setup'] = async ({
     pattern: path.join(endpoints.contentBase, '[...path]'),
     entryPoint: path.join(guiPath, 'ssr-entrypoint.astro'),
   });
-  // NOTE: ^——— Rest parameters are supposed to by optional by default,
-  // matching '/' but this doesn't work, so we double the route below.
-  injectRoute({
-    pattern: endpoints.contentBase,
-    entryPoint: path.join(guiPath, 'ssr-entrypoint.astro'),
-  });
   injectRoute({
     pattern: path.join(endpoints.actions.render, '[...file]'),
     entryPoint: path.join(guiPath, 'preview-markdown.astro'),
   });
+  // }
 
   /* Setup project */
   log(tempDir);

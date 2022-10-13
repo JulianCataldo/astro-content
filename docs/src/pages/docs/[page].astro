@@ -1,10 +1,8 @@
 ---
-import { get, type PageEntryNames } from '/content';
+import { get } from '/content';
 /* ·········································································· */
-import Link from '@julian_cataldo/astro-link/Link.astro';
 import Layout from '../../layouts/Default.astro';
-import TreeNavigation from '../../components/TreeNavigation.astro';
-import PrevNextNavigation from '../../components/PrevNextNavigation.astro';
+import DocPage from '../../modules/DocPage.astro';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 export async function getStaticPaths() {
@@ -17,39 +15,12 @@ export async function getStaticPaths() {
 
 /* —————————————————————————————————————————————————————————————————————————— */
 
-interface Params {
-  page: PageEntryNames;
-}
-const { page } = Astro.params as unknown as Params;
-const currentPage = Astro.url.pathname.split('/')[2] ?? '';
-
-/* ·········································································· */
-
 const content = await get(Astro.glob('/content/**/*.{md,mdx,yaml}'), {
   // NOTE: Ignore this. Used for collecting + building Web GUI static data.
   editMode: import.meta.env.PROD,
 });
-
-const Main = content.docs?.[page]?.main?.Content;
 ---
 
 <Layout>
-  <main class="page-docs">
-    <div class="navigations">
-      <div>
-        <h2>Sections</h2>
-        <TreeNavigation pages={content.docs} currentPage={currentPage} />
-      </div>
-      <div class="this-page">
-        <h2>On this page</h2>
-        <TreeNavigation headings={content.docs?.[page]?.main?.getHeadings()} />
-      </div>
-    </div>
-
-    <article class="article-body">
-      <Main components={{ a: Link }} />
-
-      <PrevNextNavigation pages={content.docs} currentPage={currentPage} />
-    </article>
-  </main>
+  <DocPage docs={content.docs} />
 </Layout>

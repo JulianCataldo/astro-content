@@ -5,6 +5,7 @@ import { Icon } from '@iconify/react';
 import { sentenceCase } from 'change-case';
 import cx from 'classnames';
 import { Link } from '@tanstack/react-location';
+import { endpoints } from '@astro-content/server/state';
 /* ·········································································· */
 import Headings from './Headings';
 import ModalPopover from './ModalPopover';
@@ -137,7 +138,7 @@ export default function Toolbar() {
             // FIXME: JSX A11y
             // eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events
             <Link
-              to={`/__content/${entity}`}
+              to={`${endpoints.contentBase}/${entity}`}
               className={cx('entity-link', entry && 'action')}
             >
               <Icon icon="system-uicons:location" width="2em" />

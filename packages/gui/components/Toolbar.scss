@@ -1,4 +1,5 @@
 .component-toolbar {
+  z-index: 99;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -8,7 +9,9 @@
   overflow-y: hidden;
   background-color: var(--vscode-menu-background);
   outline: 1px solid var(--vscode-scrollbar-shadow);
-  box-shadow: 0 0.15rem 0.15rem var(--vscode-widget-shadow);
+  box-shadow: 0 0.15rem 0.55rem var(--vscode-widget-shadow);
+  // FIXME: Shadow and Monaco, try z-indexes etc.
+  // isolation: isolate;
 
   .actions {
     display: flex;
@@ -112,7 +115,9 @@
     }
 
     &.mdx {
-      border: 1px solid var(--vscode-charts-orange);
+      // Was using (--vscode-charts-orange) before,
+      // but doesn't stand out enough from warnings.
+      border: 1px solid var(--vscode-errorForeground);
     }
 
     &.yaml {

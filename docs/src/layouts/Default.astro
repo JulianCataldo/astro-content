@@ -11,22 +11,23 @@ import LazyLoading from '../app/LazyLoading.astro';
 import Footer from '../app/Footer.astro';
 /* ·········································································· */
 import './Default.scss';
+
+const pageClass = `page-${Astro.url.pathname
+  .substring(1)
+  .replaceAll('/', '_')}`;
 ---
 
-<Document>
+<Document class:list={[pageClass, 'astro-content-docs', 'layout-default']}>
   <Fragment slot="head">
     <SEO
       image={`https://res.cloudinary.com/dzfylx93l/image/upload/w_1200,h_630,c_limit/poster-2_xynb4h.png`}
       title={'Astro Content — Documentation & Demo — Structured content integration for Astro Web Framework'}
       description={'A text based, structured content manager, for edition and consumption — Comes as an AstroJS Integration'}
       siteName={'Astro Content — Structured content framework'}
+      author="Julian Cataldo"
+      copyright="ISC"
+      favicon="/favicon.svg"
     />
-    <link rel="icon" href="favicon.svg" />
-
-    <meta name="author" content="Julian Cataldo" />
-    <meta name="copyright" content="ISC" />
-
-    <meta name="generator" content={Astro.generator} />
 
     <Analytics id={'G-ZNVP52N2SF'} />
 

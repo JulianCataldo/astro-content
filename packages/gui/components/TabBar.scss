@@ -3,7 +3,10 @@
   overflow-x: auto;
   user-select: none;
   background-color: var(--vscode-quickInput-background);
-  box-shadow: 0 0.15rem 0.15rem var(--vscode-widget-shadow);
+  isolation: isolate;
+  border-bottom: 1px solid hsla(0, 0%, 6%, 0.7);
+  box-shadow: 0 0.07rem 0.15rem hsla(0, 0%, 5%, 0.1),
+    0 0.15rem 0.5rem hsla(0, 0%, 0%, 0.15);
 
   & > * {
     padding: 0.75rem 1.25rem;

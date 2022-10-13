@@ -1,7 +1,7 @@
 @use 'sass:color';
 @use '../vars' as *;
 
-.module-landing {
+.astro-content-docs.layout-default .module-landing {
   display: flex;
   flex-wrap: wrap;
   min-height: 87vh;

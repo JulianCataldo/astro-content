@@ -1,0 +1,127 @@
+---
+import { type Entities } from '/content';
+
+import { Picture } from '@astrojs/image/components';
+import Link from '@julian_cataldo/astro-link/Link.astro';
+/* ·········································································· */
+import './Presentation.scss';
+import arrow2 from '../assets/arrow-2.svg?raw';
+import terminal from '../assets/terminal.svg?raw';
+import installationCast from '../assets/installation.cast?url';
+import createEntityCast from '../assets/create-entity.cast?url';
+import AsciinemaPlayer from '../components/AsciinemaPlayer.astro';
+import arrow3 from '../assets/arrow-3.svg?raw';
+/* ·········································································· */
+const { content } = Astro.props as { content: Entities };
+
+const landing = content.modules?.landing;
+const features = content.modules?.features;
+const contentStructure = content.modules?.contentStructure;
+
+// const demos = content.demos;
+// const authoring = content.modules?.authoringExperience;
+// const makeItYourOwn = content.modules?.makeItYourOwn;
+---
+
+<main class="module-presentation">
+  <section class="try-out">
+    <h2 class="section-heading">It's an <em>app</em>,…</h2>
+    <div class="preview">
+      <Picture
+        src={//
+        /* 'src/assets/.dev.web-gui.png' */
+        'https://res.cloudinary.com/dzfylx93l/image/upload/v1665139846/web-gui_zuzn1l.png'}
+        widths={[400, 800, 1000, 1200, 1440, 1920]}
+        sizes="70vw"
+        alt="A landscape image"
+        aspectRatio={1921 / 987}
+        class="lazy"
+        formats={['png']}
+      />
+      <div class="overlay">
+        <Link
+          href="/__content"
+          target="demo"
+          class="unstyled action image-presentation"
+          title="Pre-loaded with data — Static, no updates">Try me!</Link
+        >
+      </div>
+    </div>
+  </section>
+
+  <section class="cli-demo">
+    <div set:html={arrow2} class="arrow-cli"></div>
+    <h2 class="section-heading">
+      <div set:html={terminal} class="icon"></div>it has a <em
+        >command line interface</em
+      >,…
+    </h2>
+    <div class="install-cast">
+      <AsciinemaPlayer url={installationCast} />
+      <hr />
+      <AsciinemaPlayer url={createEntityCast} />
+    </div>
+  </section>
+
+  <section class="ide-demo">
+    <h2 class="section-heading">
+      and it plays nice with <em>your IDE</em>, too…
+    </h2>
+    <div class="ide image-presentation">
+      <Picture
+        src={/* '/src/assets/.dev.ide2.png' */
+        'https://res.cloudinary.com/dzfylx93l/image/upload/v1665142428/ide_mfmcrf.png'}
+        widths={[400, 800, 1000, 1200, 1920, 2560, 3200]}
+        sizes="85vw"
+        alt="A landscape image"
+        aspectRatio={4608 / 2240}
+        class="lazy"
+        formats={['png']}
+      />
+    </div>
+  </section>
+
+  <section class="this-is-ac">
+    <div set:html={arrow3} class="arrow-ac"></div>
+    <h2 class="section-heading">
+      it's <em>Astro Content</em>!<br /><br />
+      Here to help you <br />streamline your<em>
+        content pipeline<br />
+      </em> and improve your <em>author experience</em>.
+    </h2>
+  </section>
+
+  <section class="features">
+    <div class="items feats">
+      <div class="article-body">
+        <features.text.Content />
+      </div>
+    </div>
+  </section>
+
+  <section class="use-cases">
+    <h2 class="section-heading">
+      Special care is given to choose <em>sensible defaults</em>.<br />
+      Still, you have
+      <em>total control</em> to make it your own.<br />
+      <hr />
+      Speaking of ownership… there are no clouds in space.<br /> With Astro Content,
+      <em>you own your data</em>.
+    </h2>
+
+    <!-- <div class="uses-cases">Use cases</div> -->
+    <!-- <hr /> -->
+  </section>
+
+  <section class="structuring">
+    <div class="items under-the-hood">
+      <div class="article-body">
+        <contentStructure.text.Content />
+      </div>
+    </div>
+  </section>
+
+  <section class="similar-inspired">
+    <landing.relations.Content />
+  </section>
+</main>

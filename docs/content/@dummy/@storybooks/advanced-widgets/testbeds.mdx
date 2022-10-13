@@ -1,0 +1,82 @@
+import { Testbed } from 'astro-testbed';
+
+## Astro component testbed
+
+<Testbed
+  component="/src/components-demo/Crab.astro"
+  props={{ character: 'friendly', shellColor: 'salmon' }}
+>
+
+    🏵 **I'm a default slotted content** 🤹🏻‍♂️
+
+</Testbed>
+
+## React component testbed — with embedded settings
+
+<Testbed
+  component="/src/components-demo/ThreeJuggler.tsx"
+  props={{
+    count: 7,
+  }}
+>
+
+    {/* This renders to the default `<ThreeJuggler />` slot. */}
+
+    > **With embedded testbed control schema**
+
+</Testbed>
+
+## Testbed, headless
+
+Bring your own styles!
+
+<details>
+  <summary>Click to see the unstyled component</summary>
+  <Testbed
+    headless
+    component="/src/components-demo/Crab.astro"
+    props={{ character: 'aggressive', shellColor: 'seagreen' }}
+  >
+
+    oh no
+
+  </Testbed>
+</details>
+
+## Testbed, with controls settings as props.
+
+<Testbed
+  component="/src/components-demo/ThreeJuggler.tsx"
+  schema={{
+    properties: {
+      count: {
+        title: 'Object count',
+        type: 'number',
+        minimum: 1,
+        maximum: 20,
+      },
+      mode: {
+        title: 'Scene mode',
+        type: 'string',
+        enum: ['juggler', 'lsd', 'sharkTeeth'],
+      },
+      hue: {
+        title: 'Color hue',
+        type: 'string',
+      },
+      // lemmings: {
+      //   type: 'array',
+      //   items: { type: 'string' },
+      // },
+    },
+  }}
+  props={{
+    count: 7,
+  }}
+/>
+
+🔖  See [documentation for form generation](https://react-jsonschema-form.readthedocs.io/en/latest/).
+
+<hr />
+
+Finito…

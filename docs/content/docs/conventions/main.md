@@ -91,7 +91,7 @@ content
 │   │
 ├── pages
 │   ├── page.schema.yaml          # <- An entry can share ALL, SOME,
-│   ├── home                      #    or NONE of schema defined properties,
+│   ├── home                      #    or NONE of schema defined properties.
 │   │   ├── header.md
 │   │   ├── main.md
 │   │   └── footnotes.md
