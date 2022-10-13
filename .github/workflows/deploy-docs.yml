@@ -59,6 +59,9 @@ jobs:
         # `NODE_ENV=production` to exclude dev. dependencies
         run: pnpm --recursive install --frozen-lockfile
 
+      - name: Install Puppeteer
+        run: cd ./node_modules/puppeteer && pnpm run install
+
       # NOTE: It's all built together now (see below).
       # - name: Build Astro Website
       #   # working-directory: ./docs
