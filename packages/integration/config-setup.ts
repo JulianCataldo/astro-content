@@ -98,16 +98,11 @@ const configSetup: AstroIntegration['hooks']['astro:config:setup'] = async ({
     pattern: path.join(endpoints.contentBase, '[...path]'),
     entryPoint: path.join(guiPath, 'ssr-entrypoint.astro'),
   });
-  // NOTE: ^——— Rest parameters are supposed to by optional by default,
-  // matching '/' but this doesn't work, so we double the route below.
-  injectRoute({
-    pattern: endpoints.contentBase,
-    entryPoint: path.join(guiPath, 'ssr-entrypoint.astro'),
-  });
   injectRoute({
     pattern: path.join(endpoints.actions.render, '[...file]'),
     entryPoint: path.join(guiPath, 'preview-markdown.astro'),
   });
+  // }
 
   /* Setup project */
   log(tempDir);

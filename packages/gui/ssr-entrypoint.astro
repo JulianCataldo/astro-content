@@ -50,7 +50,10 @@ window.loaded = false;
 export async function getStaticPaths() {
   const contentFiles = import.meta.glob('/content/**/*.{md,mdx,yaml}');
 
-  const paths: { params: { path: string } }[] = [{ params: { path: 'test' } }];
+  const paths: { params: { path: string } }[] = [
+    /* Home */
+    { params: {} },
+  ];
 
   await Promise.all(
     Object.entries(contentFiles).map(async ([rawPath]) => {
