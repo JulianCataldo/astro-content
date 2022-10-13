@@ -60,7 +60,7 @@ jobs:
         run: pnpm --recursive install --frozen-lockfile
 
       - name: Install Puppeteer
-        run: cd ./node_modules/puppeteer && pnpm run install
+        run: cd ./node_modules/puppeteer && node install.js
 
       # NOTE: It's all built together now (see below).
       # - name: Build Astro Website
