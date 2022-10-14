@@ -164,17 +164,25 @@
       position: absolute;
       top: 0;
       left: 0;
-      display: none;
       width: 100%;
       height: 100%;
+      pointer-events: none;
       filter: drop-shadow(1px 4px 5px $ca-black);
 
-      .js & {
-        display: initial;
+      @at-root :not(.js).astro-content-docs.layout-default {
+        .placeholders {
+          opacity: 0;
+        }
+
+        .atlantis {
+          img {
+            transform: translateY(0) translateX(0);
+          }
+        }
       }
     }
 
-    .placeholder {
+    .p-holder {
       position: absolute;
       top: 0;
       left: 0;
