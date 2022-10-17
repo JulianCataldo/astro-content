@@ -2,14 +2,14 @@
 import { type Entities } from '/content';
 
 import { Picture } from '@astrojs/image/components';
-import Link from '@julian_cataldo/astro-link/Link.astro';
+import { Link } from 'astro-link';
+import { TerminalPlayer } from 'astro-terminal-player';
 /* ·········································································· */
 import './Presentation.scss';
 import arrow2 from '../assets/arrow-2.svg?raw';
 import terminal from '../assets/terminal.svg?raw';
 import installationCast from '../assets/installation.cast?url';
 import createEntityCast from '../assets/create-entity.cast?url';
-import AsciinemaPlayer from '../components/AsciinemaPlayer.astro';
 import arrow3 from '../assets/arrow-3.svg?raw';
 /* ·········································································· */
 const { content } = Astro.props as { content: Entities };
@@ -57,9 +57,9 @@ const contentStructure = content.modules?.contentStructure;
       >,…
     </h2>
     <div class="install-cast">
-      <AsciinemaPlayer url={installationCast} />
+      <TerminalPlayer src={installationCast} />
       <hr />
-      <AsciinemaPlayer url={createEntityCast} />
+      <TerminalPlayer src={createEntityCast} />
     </div>
   </section>
 

@@ -22,5 +22,8 @@
   "license": "ISC",
   "publishConfig": {
     "access": "public"
+  },
+  "devDependencies": {
+    "remark-lint-frontmatter-schema": "^3.7.5"
   }
 }

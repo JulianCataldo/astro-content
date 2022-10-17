@@ -1,16 +1,16 @@
 ---
-import Document from '@julian_cataldo/astro-base/Document.astro';
-import Body from '@julian_cataldo/astro-base/Body.astro';
-import SEO from '@julian_cataldo/astro-seo/SEO.astro';
-import Analytics from '@julian_cataldo/astro-analytics/Analytics.astro';
-import Prefetch from '@julian_cataldo/astro-prefetch/Prefetch.astro';
-import Tooltips from '@julian_cataldo/astro-tooltips/Tooltips.astro';
+import { Document, Body } from 'astro-base-document';
+import { SEOMetadata } from 'astro-seo-metadata';
+import { GoogleAnalytics } from 'astro-google-analytics';
+import { HoverPrefetch } from 'astro-hover-prefetch';
+import { Tooltips } from 'astro-tooltips';
 /* ·········································································· */
 import NavigationBar from '../app/NavigationBar.astro';
 import LazyLoading from '../app/LazyLoading.astro';
 import Footer from '../app/Footer.astro';
 /* ·········································································· */
 import './Default.scss';
+/* ·········································································· */
 
 const pageClass = `page-${Astro.url.pathname
   .substring(1)
@@ -19,7 +19,7 @@ const pageClass = `page-${Astro.url.pathname
 
 <Document class:list={[pageClass, 'astro-content-docs', 'layout-default']}>
   <Fragment slot="head">
-    <SEO
+    <SEOMetadata
       image={`https://res.cloudinary.com/dzfylx93l/image/upload/w_1200,h_630,c_limit/poster-2_xynb4h.png`}
       title={'Astro Content — Documentation & Demo — Structured content integration for Astro Web Framework'}
       description={'A text based, structured content manager, for edition and consumption — Comes as an AstroJS Integration'}
@@ -29,9 +29,9 @@ const pageClass = `page-${Astro.url.pathname
       favicon="/favicon.svg"
     />
 
-    <Analytics id={'G-ZNVP52N2SF'} />
+    <GoogleAnalytics id={'G-ZNVP52N2SF'} />
 
-    {import.meta.env.PROD && <Prefetch />}
+    {import.meta.env.PROD && <HoverPrefetch />}
 
     <Tooltips />
 
