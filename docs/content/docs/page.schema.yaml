@@ -1,13 +1,10 @@
 properties:
   main:
-    allOf:
-      - $ref: '#/definitions/MarkdownFile'
-      - properties:
-          frontmatter:
-            properties:
-              title:
-                type: string
-              order:
-                type: number
+    properties:
+      title:
+        type: string
+      order:
+        type: number
+
 required:
   - main

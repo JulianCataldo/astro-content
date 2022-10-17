@@ -13,6 +13,7 @@ properties:
           - das
     required:
       - foo
+
   gallery:
     properties:
       sources:
@@ -21,35 +22,29 @@ properties:
           type: string
         required:
           - source
+
   body:
-    allOf:
-      - $ref: '#/definitions/MarkdownFile'
-      - properties:
-          frontmatter:
-            properties:
-              title:
-                description: Entry title
-                type: string
-              image:
-                description: Image path
-                type: string
-              category:
-                type: string
-                enum:
-                  - Cuisine
-                  - Music
-                  - Video
+    properties:
+      title:
+        description: Entry title
+        type: string
+      image:
+        description: Image path
+        type: string
+      category:
+        type: string
+        enum:
+          - Cuisine
+          - Music
+          - Video
 
-            required:
-              - title
-              - image
-              - category
+    required:
+      - title
+      - image
+      - category
 
-        required:
-          - frontmatter
-  footnotes:
-    allOf:
-      - $ref: '#/definitions/MarkdownFile'
+  footnotes: {}
+
 required:
   - content
   - meta

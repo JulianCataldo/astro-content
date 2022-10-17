@@ -17,9 +17,7 @@ properties:
     required:
       - name
 
-  notes:
-    allOf:
-      - $ref: '#/definitions/MarkdownFile'
+  notes: {}
 
 required:
   - informations
