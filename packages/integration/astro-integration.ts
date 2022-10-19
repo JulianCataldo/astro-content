@@ -71,6 +71,7 @@ export default function preset(settings: Settings = {}): AstroIntegration[] {
   }
   // FIXME: Need explicit return type, why?
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
   return integrations;
 }
 export { collect };
