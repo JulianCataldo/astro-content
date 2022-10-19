@@ -31,5 +31,7 @@
     "outDir": "./dist",
 
     "allowSyntheticDefaultImports": true
+
+    // "plugins": [{ "name": "ts-css-modules-vite-plugin", "root": "./" }]
   }
 }

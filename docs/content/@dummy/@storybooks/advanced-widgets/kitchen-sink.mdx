@@ -11,8 +11,8 @@ No frills. Just the code, and its living preview.
 {/* This is where Astro Content really shines: Rich MDX preview FTW! */}
 
 import ThreeJuggler from '/src/components-demo/ThreeJuggler';
-import AsciinemaPlayer from '/src/components/AsciinemaPlayer.astro';
-import MediaMap from '@julian_cataldo/astro-media-map/MediaMap.astro';
+import { TerminalPlayer } from 'astro-terminal-player';
+import { GeoMap } from 'astro-geo-map';
 
 {/* Vite can embed arbitrary, relative files in `dist`, */}
 {/* providing URL for you to use in MDX, Astro, JSX… */}
@@ -27,7 +27,7 @@ Use the _virtual_ SSD sensor, then you can **copy** the open-source firewall!
 
 ## Astro — Asciinema
 
-<AsciinemaPlayer url={asciiCastDemo1} />
+<TerminalPlayer url={asciiCastDemo1} />
 
 I'll copy the wireless SDD monitor, that should alarm the EXE matrix!
 
@@ -39,9 +39,9 @@ flowchart LR
 Eat-->Sleep-->Code-->Eat
 ```
 
-## Astro — Media map
+## Astro — Geo map
 
-<MediaMap
+<GeoMap
   x={35.5079445}
   y={139.2093856}
   z={8}

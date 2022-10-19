@@ -7,7 +7,9 @@ import sitemap from '@astrojs/sitemap';
 // import mdx from '@astrojs/mdx';
 import image from '@astrojs/image';
 import content from 'astro-content';
-import mdxMermaidPlugin from '@julian_cataldo/astro-diagram';
+import remarkMermaid from 'astro-diagram/remark-mermaid';
+// import sassDts from 'vite-plugin-sass-dts';
+
 /* —————————————————————————————————————————————————————————————————————————— */
 
 import remarkEmbed, {
@@ -55,17 +57,66 @@ export default defineConfig({
         } as RemarkEmbedSettings,
       ],
       // [remarkMermaid, { launchOptions: { args: ['--no-sandbox'] } }],
-      mdxMermaidPlugin,
+      remarkMermaid,
       remarkGfm,
     ],
-  }, // vite: {
-  //   css: {
-  //     preprocessorOptions: {
-  //       scss: {
-  //         // TODO: add sass:colors and vars (not working 'cause dup. bug)
-  //         // additionalData: `@use "./src/vars" as *;`,
-  //       },
-  //     },
-  //   },
-  // },
+  },
+
+  vite: {
+    css: {
+      modules: {
+        // generateScopedName: '__[hash:base64:5]',
+        localsConvention: 'camelCase',
+      },
+      //   preprocessorOptions: {
+      //     scss: {
+      //       // TODO: add sass:colors and vars (not working 'cause dup. bug)
+      //       additionalData: `@use '/src/vars' as *;`,
+      //     },
+      //   },
+    },
+    ssr: {
+      external: ['svgo'],
+    },
+
+    // build: {
+    //   rollupOptions: { external: ['@wbmnky/license-report-generator'] },
+    // },
+
+    optimizeDeps: {
+      include: [
+        '@rjsf/core',
+        '@rjsf/validator-ajv6',
+        // 'leaflet',
+        // '@rjsf/utils',
+        // 'react-is'
+      ],
+    },
+
+    plugins: [
+      // sassDts({
+      //   enabledMode: ['development', 'production'],
+      //   global: {
+      //     generate: true,
+      //     outFile: path.resolve(process.cwd(), './src/style.d.ts'),
+      //   },
+      // }),
+    ],
+    // css: {
+    //   preprocessorOptions: {
+    //     scss: {
+    //       additionalData: `@use "@/styles" as common;`,
+    //       importer(...args) {
+    //         if (args[0] !== '@/styles') {
+    //           return;
+    //         }
+
+    //         return {
+    //           file: `${path.resolve(process.cwd(), './src/layouts')}`,
+    //         };
+    //       },
+    //     },
+    //   },
+    // },
+  },
 });
