@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/JulianCataldo/astro-content/develop/docs/src/assets/astro-content-logo.svg" height="125" alt="Astro Content logo" />
+<img src="https://raw.githubusercontent.com/JulianCataldo/astro-content/develop/docs/src/assets/astro-content-logo-bg.svg" height="125" alt="Astro Content logo" />
 
 ~
 
