@@ -10,7 +10,7 @@
 
 </a>
 
-❀✿❀
+❀✿❀  
 **𝚊𝚕𝚙𝚑𝚊**
 
 👷🏻‍♂️  Under heavy development, use it at your own risk!   🚧
@@ -25,10 +25,6 @@ Contributions are welcome
 
 <!-- AUTO-GENERATED-CONTENT:START (FILE:src=../../docs/content/docs/intro/main.md) -->
 <!-- The below content is automatically added from ../../docs/content/docs/intro/main.md -->
----
-title: Introduction
-order: 1
----
 
 ## What is it?
 
@@ -53,14 +49,12 @@ Being content centric, this set of tools will give you:
 ---
 
 > **Warning**: This is an **`alpha`** product — Heavy changes are on-going — [Suggestions are welcome 👐](https://github.com/JulianCataldo/astro-content/issues)
+
 <!-- AUTO-GENERATED-CONTENT:END -->
 
 <!-- AUTO-GENERATED-CONTENT:START (FILE:src=../../docs/content/docs/install/main.md) -->
+
 <!-- The below content is automatically added from ../../docs/content/docs/install/main.md -->
----
-title: Installation
-order: 2
----
 
 ## Method 1: Add to Astro project with _CLI_
 
@@ -133,14 +127,12 @@ A very simple fix is adding this to your `tsconfig.json` > `compilerOptions.path
   }
 }
 ```
+
 <!-- AUTO-GENERATED-CONTENT:END -->
 
 <!-- AUTO-GENERATED-CONTENT:START (FILE:src=../../docs/content/docs/development/main.md) -->
+
 <!-- The below content is automatically added from ../../docs/content/docs/development/main.md -->
----
-title: Development
-order: 8
----
 
 # Development
 
@@ -197,6 +189,7 @@ Preview experiments or future additions in isolation.
 <small>_Les **bugs** glissent sur vous comme les gouttes d'eau sur le plumage d'un canard. 💦🦆_</small>
 
 [`develop--astro-content.netlify.app/__content`](https://develop--astro-content.netlify.app/__content/)
+
 <!-- AUTO-GENERATED-CONTENT:END -->
 
 ---
