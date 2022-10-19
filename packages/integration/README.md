@@ -174,21 +174,11 @@ Web GUI can be opted out by user settings.
 
 ## Deployment environments
 
-### Feature (`[feat-branch]`)
-
-Preview experiments or future additions in isolation.
-
-`[branch]--astro-content.netlify.app/__content`
-
-### Production (`master`)
-
-[`astro-content.netlify.app/__content`](https://astro-content.netlify.app/__content/)
-
-### 🆕  Next! (`develop`)
-
-<small>_Les **bugs** glissent sur vous comme les gouttes d'eau sur le plumage d'un canard. 💦🦆_</small>
-
-[`develop--astro-content.netlify.app/__content`](https://develop--astro-content.netlify.app/__content/)
+| Branch                    | Description                                           | Deployment URL                                                                                          |
+| ------------------------- | ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| Feature (`<feat_branch>`) | Preview experiments or future additions in isolation. | `[branch]--astro-content.netlify.app/__content`                                                         |
+| Production (`master`)     | Stable release.                                       | [`astro-content.netlify.app/__content`](https://astro-content.netlify.app/__content/)                   |
+| 🆕  Next! (`develop`)     | All future features.                                  | [`develop--astro-content.netlify.app/__content`](https://develop--astro-content.netlify.app/__content/) |
 
 <!-- AUTO-GENERATED-CONTENT:END -->
 
