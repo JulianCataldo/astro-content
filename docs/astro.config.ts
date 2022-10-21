@@ -86,11 +86,10 @@ export default defineConfig({
 
     optimizeDeps: {
       include: [
+        //
         '@rjsf/core',
         '@rjsf/validator-ajv6',
-        // 'leaflet',
-        // '@rjsf/utils',
-        // 'react-is'
+        'asciinema-player',
       ],
     },
 
