@@ -1,6 +1,6 @@
 {
   "name": "@astro-content/cli",
-  "version": "0.0.0-alpha.8",
+  "version": "0.0.0-alpha.9",
   "description": "",
   "type": "module",
   "// source": "./index.ts",

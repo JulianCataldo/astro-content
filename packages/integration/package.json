@@ -1,6 +1,6 @@
 {
   "name": "astro-content",
-  "version": "0.0.0-alpha.8",
+  "version": "0.0.0-alpha.9",
   "description": "",
   "// source": "./astro-integration.ts",
   "main": "./dist/astro-integration.js",
