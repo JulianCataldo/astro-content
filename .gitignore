@@ -1,9 +1,17 @@
+# Binaries
+
+# *.png
+
+.turbo-cookie
+
 # NOTE: This could be interesting to keep this for CI/CD workflow
 pnpm-publish-summary.json
 
 *.log
 
+
 # Build artefacts + cache
+.astro-image
 .turbo
 dist
 .build
@@ -18,8 +26,8 @@ dist
 .dev*
 *.dev.*
 .old*
-# .vscode/*
-**/.vscode/settings.json
+.vscode/*
+.vscode
 design
 # **/content*
 

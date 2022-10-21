@@ -101,6 +101,7 @@ importers:
       '@julian_cataldo/astro-resets': ^0.12.4
       '@react-three/drei': ^9.34.3
       '@react-three/fiber': ^8.8.10
+      '@types/sharp': ^0.31.0
       '@types/three': ^0.144.0
       '@wbmnky/license-report-generator': ^2.1.3
       asciinema-player: ^3.0.1
@@ -135,12 +136,13 @@ importers:
     dependencies:
       '@astro-content/gui': link:../packages/gui
       '@astrojs/image': 0.10.0_sharp@0.31.1
-      '@astrojs/mdx': 0.11.4
+      '@astrojs/mdx': 0.11.4_rollup@2.78.1
       '@astrojs/react': 1.2.0_biqbaboplfbrettd7655fr4n2y
       '@astrojs/sitemap': 1.0.0
       '@julian_cataldo/astro-resets': 0.12.4
       '@react-three/drei': 9.36.0_cpod6d3cr76qxhqbh6bdljlrqm
       '@react-three/fiber': 8.8.10_ee34sidbpuk5ebd4phepfgxxdi
+      '@types/sharp': 0.31.0
       '@types/three': 0.144.0
       '@wbmnky/license-report-generator': 2.1.3
       asciinema-player: 3.0.1
@@ -192,7 +194,7 @@ importers:
   packages/gui:
     specifiers:
       '@astro-content/server': workspace:*
-      '@astro-content/types': workspace:0.0.0-alpha.7
+      '@astro-content/types': workspace:*
       '@astrojs/mdx': ^0.11.4
       '@astrojs/react': ^1.2.0
       '@floating-ui/react-dom-interactions': ^0.10.1
@@ -2021,11 +2023,6 @@ packages:
     resolution: {integrity: sha512-w+tIMs3rq2afQdsPJlODhoUEKzFP1ayaoyl1CcnwtIlsVe7K7bA1NGm4s3PraqTLlXnbIN84zuBlxBWo1u9BLw==}
     dev: false
 
-  /@types/node/18.11.0:
-    resolution: {integrity: sha512-IOXCvVRToe7e0ny7HpT/X9Rb2RYtElG1a+VshjwT00HxrM2dWBApHQoqsI6WiY7Q03vdf2bCrIGzVrkF/5t10w==}
-    dev: false
-    optional: true
-
   /@types/node/18.11.2:
     resolution: {integrity: sha512-BWN3M23gLO2jVG8g/XHIRFWiiV4/GckeFIqbU/C4V3xpoBBWSMk4OZomouN0wCkfQFPqgZikyLr7DOYDysIkkw==}
 
@@ -2104,6 +2101,12 @@ packages:
     resolution: {integrity: sha512-WwA1MW0++RfXmCr12xeYOOC5baSC9mSb0ZqCquFzKhcoF4TvHu5MKOuXsncgZcpVFhB1pXd5hZmM0ryAoCp12A==}
     dev: true
 
+  /@types/sharp/0.31.0:
+    resolution: {integrity: sha512-nwivOU101fYInCwdDcH/0/Ru6yIRXOpORx25ynEOc6/IakuCmjOAGpaO5VfUl4QkDtUC6hj+Z2eCQvgXOioknw==}
+    dependencies:
+      '@types/node': 18.11.2
+    dev: false
+
   /@types/supports-color/8.1.1:
     resolution: {integrity: sha512-dPWnWsf+kzIG140B8z2w3fr5D03TLWbOAFQl45xUpI3vcizeXriNR5VYkWZ+WTMsUHqZ9Xlt3hrxGNANFyNQfw==}
     dev: true
@@ -2138,7 +2141,7 @@ packages:
     resolution: {integrity: sha512-Cn6WYCm0tXv8p6k+A8PvbDG763EDpBoTzHdA+Q/MF6H3sapGjCm9NzoaJncJS9tUKSuCoDs9XHxYYsQDgxR6kw==}
     requiresBuild: true
     dependencies:
-      '@types/node': 18.11.0
+      '@types/node': 18.11.2
     dev: false
     optional: true
 

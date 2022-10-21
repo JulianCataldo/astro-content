@@ -1,6 +1,6 @@
 {
   "name": "@astro-content/root",
-  "version": "0.0.0-alpha.7",
+  "version": "0.0.0-alpha.8",
   "private": true,
   "description": "A text based, structured content framework, for edition and consumption.",
   "main": "build.ts",
