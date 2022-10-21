@@ -1,0 +1,67 @@
+---
+import { LicensesReport } from 'astro-licenses-report';
+/* ·········································································· */
+import Layout from '../layouts/Default.astro';
+
+/* —————————————————————————————————————————————————————————————————————————— */
+---
+
+<Layout class="license">
+  <LicensesReport useDev={true} depth={1} packagePath={`..`} />
+</Layout>
+<!-- packagePath={`../${pJson.repository.directory}`} -->
+
+<style lang="scss">
+  .table {
+    padding: 4rem;
+    .th {
+      font-weight: 600;
+      font-variant: small-caps;
+      text-align: center;
+      // background: color.adjust($raisin-black, $alpha: -0.95);
+    }
+
+    .tr {
+      display: flex;
+
+      &:nth-of-type(odd) {
+      }
+
+      &:nth-of-type(even) {
+        // background: color.adjust($rosewood, $alpha: -0.96);
+      }
+    }
+
+    .td,
+    .th {
+      padding: 0.5em;
+      overflow: hidden;
+      word-break: break-all;
+      // border-right: 1px solid color.adjust($raisin-black, $alpha: -0.85);
+
+      &:last-of-type {
+        border-right: none;
+      }
+
+      &:nth-child(1) {
+        width: 23%;
+      }
+
+      &:nth-child(2) {
+        width: 23%;
+      }
+
+      &:nth-child(3) {
+        width: 9%;
+      }
+
+      &:nth-child(4) {
+        width: 45%;
+      }
+    }
+
+    .td {
+      font-size: 85%;
+    }
+  }
+</style>

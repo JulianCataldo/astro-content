@@ -31,7 +31,24 @@
       display: block;
       padding: 1rem;
     }
+  }
+
+  .built-with {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 2rem;
+
+    & > * {
+      display: flex;
+      align-items: center;
+    }
+
+    a {
+      padding: 0 1rem;
+    }
 
     margin-left: auto;
+    text-align: right;
   }
 }

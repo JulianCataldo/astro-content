@@ -11,6 +11,7 @@ import './Footer.scss';
       Julian Cataldo
     </Link>
   </div>
+
   <div class="separator" set:html={guiOverlay}></div>
   <div class="star-me">
     Star me on
@@ -19,7 +20,20 @@ import './Footer.scss';
       GitHub…
     </Link>
   </div>
-  <div>— {Astro.generator} —</div>
+
+  <Link class="link" href="licenses">Licenses</Link>
+
+  <div class="built-with">
+    <a href="https://astro.build">
+      <img
+        src="https://astro.badg.es/v1/built-with-astro.svg"
+        alt="Built with Astro"
+        width="150"
+        height="27.5"
+      />
+    </a>
+    <div>— {Astro.generator.split(' ')[1]} —</div>
+  </div>
 
   <div class="btt"><Link href="#">Back to <strong>TOP</strong> ⬆︎</Link></div>
 </footer>
