@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 /* —————————————————————————————————————————————————————————————————————————— */
 import { useAppStore } from '../../store';
 import { log } from '../../logger';
@@ -6,6 +6,7 @@ import { log } from '../../logger';
 
 export function stateLoader() {
   // const data = useAppStore((state) => state.data_server);
+  const [change, setChange] = useState(Math.random());
 
   useEffect(() => {
     // const socket = new WebSocket('ws://localhost:5011');
@@ -21,11 +22,25 @@ export function stateLoader() {
   }, []);
 
   const fetchData = useAppStore((state) => state.data_fetchServerData);
+  // NOTE: This is a work in progress
+  if (import.meta.hot) {
+    import.meta.hot.on('vite:beforeFullReload', () => {
+      throw '(skipping full reload)';
+    });
+  }
+
+  // useEffect(() => {
+  //   setInterval(() => {
+  //     setChange(Math.random());
+  //   }, 4500);
+  // }, []);
+
+  // FIXME: Not picking up changes
   useEffect(() => {
     fetchData()
       .then((e) => log(e))
-      .catch(() => null);
-  }, []);
+      .catch((e) => log(e));
+  }, [change]);
   // timestamp
 
   const fetchSavedUiState = useAppStore((state) => state.ui_fetchSaved);
