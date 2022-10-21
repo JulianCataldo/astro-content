@@ -1,5 +1,5 @@
 ---
-import { type Docs, type PageEntryNames } from '/content';
+import { type Docs, type DocSectionEntryNames } from '/content';
 /* ·········································································· */
 import { Link } from 'astro-link';
 import TreeNavigation from '../components/TreeNavigation.astro';
@@ -8,7 +8,7 @@ import './DocPage.scss';
 /* —————————————————————————————————————————————————————————————————————————— */
 
 const { docs } = Astro.props as { docs: Docs };
-const { page } = Astro.params as unknown as { page: PageEntryNames };
+const { page } = Astro.params as unknown as { page: DocSectionEntryNames };
 
 /* ·········································································· */
 
