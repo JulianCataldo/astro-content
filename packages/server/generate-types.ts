@@ -1,4 +1,6 @@
 import { pascalCase } from 'change-case';
+import prettier from 'prettier';
+
 /* ·········································································· */
 import type { JSONSchema } from 'json-schema-to-typescript';
 import type {
@@ -42,7 +44,7 @@ export async function generateTypes(
 export type ${pascalCase(schema.title ?? '')}EntryNames = ${entryNames};
 export type ${pascalCase(key)} = {
   [key in ${name}EntryNames]?: ${name};
-};`;
+};\n`;
     }
     return null;
   });
@@ -59,21 +61,20 @@ ${contentSchemas
 }
 `;
 
-  const common = `
-/* Interfaces */
-${iFaces}
-/* /Interfaces */
+  const common = `import type { MarkdownInstance } from "astro";
+import type { YamlInstance } from 'astro-content';
 
+/* — Interfaces — */
+${iFaces}
+/* — /Interfaces — */
+
+/* Types */
+${typesLiteral}
+/* /Types */
 
 /* Entities */
 ${iFacesEntities}
 /* /Entities */
-
-
-/* Types */
-${typesLiteral}
-
-/* /Types */
 `;
 
   const browser = `
@@ -94,7 +95,15 @@ declare namespace Astro {
     .replaceAll('export type', 'type');
 
   // TODO: Re-organize types object ——v
-  return { common: '', browser, ide: common };
+  return {
+    common: '',
+    browser,
+    // ide: common,
+    ide: prettier.format(common, {
+      parser: 'typescript',
+      printWidth: 80,
+    }),
+  };
 }
 
 const importHelper = `// eslint-disable-next-line import/no-extraneous-dependencies

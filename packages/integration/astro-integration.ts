@@ -77,4 +77,4 @@ export default function preset(settings: Settings = {}): AstroIntegration[] {
 export { collect };
 /* ·········································································· */
 export type { Options } from '@astro-content/types/integration';
-export type { FileInstance } from '@astro-content/types/file';
+export type { FileInstance, YamlInstance } from '@astro-content/types/file';
