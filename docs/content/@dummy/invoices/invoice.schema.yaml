@@ -18,10 +18,10 @@ properties:
           - Non-profit
           - Individual
 
-    required:
-      - title
-      - legalReferences
-      - clientType
+    # required:
+    #   - title
+    #   - legalReferences
+    #   - clientType
 
   informations:
     properties:
@@ -33,6 +33,5 @@ properties:
         type: number
 
   footnotes: {}
-
-required:
-  - contract
+# required:
+# - contract
