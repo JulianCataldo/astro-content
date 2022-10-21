@@ -80,18 +80,15 @@ const configSetup: AstroIntegration['hooks']['astro:config:setup'] = async ({
       // Adding this force 'untouched' module resolution.
       // > Might monitor side-effects.
       // https://vitejs.dev/config/dep-optimization-options.html#optimizedeps-exclude
-      // optimizeDeps: {
-      //   include: [
-      // 'react-split',
-      // 'zustand',
-      // 'classnames',
-      // 'prop-types',
-      // 'regenerator',
-      // 'react-is',
-      // 'json-pointer',
-      // 'leaflet',
-      // ],
-      // },
+      optimizeDeps: {
+        include: [
+          //
+          'react-split',
+          'zustand',
+          'classnames',
+          'prop-types',
+        ],
+      },
     },
   });
 
