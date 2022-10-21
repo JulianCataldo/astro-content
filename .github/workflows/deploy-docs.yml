@@ -71,13 +71,12 @@ jobs:
       - name: Install Puppeteer
         run: cd ./node_modules/puppeteer && node install.js
 
-      # NOTE: It's all built together now (see below).
-      # - name: Build Astro Website
-      #   # working-directory: ./docs
-      #   run: cd ./docs && pnpm run build
-
       - name: Build the whole mono-repository
         run: pnpm run build
+
+      - name: Build Astro Website
+        # working-directory: ./docs
+        run: cd ./docs && pnpm run build
 
       # ————————————————————————————————————————————————————————————————————————
       # BRANCH
