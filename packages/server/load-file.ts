@@ -15,7 +15,7 @@ import { state } from './state.js';
 import { handleYaml } from './handle-yaml.js';
 import { handleMd } from './handle-md.js';
 import { getTrio } from './utils.js';
-import generateExcerpt from './generate-excerpt.js';
+import { generateExcerpt } from './generate-excerpt.js';
 import { log } from './logger.js';
 /* —————————————————————————————————————————————————————————————————————————— */
 
@@ -89,9 +89,9 @@ export async function loadFile(
         const frontmatterSchema = propSchema;
 
         log(frontmatterSchema);
-        setTimeout(() => {
-          console.log({ frontmatterSchema });
-        }, 1500);
+        // setTimeout(() => {
+        //   console.log({ frontmatterSchema });
+        // }, 1500);
 
         handleMd(collected.raw, frontmatterSchema, collected.language === 'mdx')
           .then((report) => {
