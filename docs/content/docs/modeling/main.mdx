@@ -1,7 +1,9 @@
 ---
-title: Conventions
+title: Modeling
 order: 4
 ---
+
+import CodeEmbed from '/src/components/CodeEmbed.astro';
 
 With Astro Content, **good conventions** are preferred **over tedious configurations**.
 
@@ -12,7 +14,42 @@ Similarly, where other content frameworks have chosen imperative, non-standard, 
 The ubiquitous, declarative **JSON schemas** are first-class citizen, and are
 placed in the **corresponding entity folder**, which make it ultimately **portable**.
 
-# Hierarchy
+
+# Schema
+
+Astro Content uses JSON Schema under the hood for all your content lifetime:  
+From designing, to importing then finally, rendering in your templates.
+
+See the official [JSON Schema tutorial](https://json-schema.org/learn/getting-started-step-by-step.html).
+
+For example, this is the schema used for all `/docs` pages you are currently viewing:
+
+<CodeEmbed file={'/docs/content/docs/doc-section.schema.yaml'} />
+
+It is co-located with the actual content, so it is **portable**:
+
+```
+./content/docs
+│
+├── doc-section.schema.yaml
+│
+├── development
+│   └── main.md
+├── import
+│   └── main.md
+├── install
+│   └── main.md
+├── modeling
+│   └── main.mdx
+│
+└── ...
+```
+
+See the [doc. sections](https://github.com/JulianCataldo/astro-content/tree/master/docs/content/docs) content for inspiration.
+
+# Conventions
+
+## Content hierarchy
 
 Conventions are modeled upon this relatively flat hierarchy:
 
@@ -129,7 +166,7 @@ Records<-->Polymorphs<-->Singletons
 
 ```
 
-## Naming conventions
+## Naming
 
 Naming can be done inside JSON Schemas themselves with `title`, or if not set, will be inferred from your file paths.
 
@@ -137,11 +174,11 @@ Naming can be done inside JSON Schemas themselves with `title`, or if not set, w
 
 # Tips and tricks
 
-<!-- Not working (Vite / Astro glob difference issue) -->
-<!-- - Symbolic links are working, useful for gathering markdown from relative folder in the same mono-repo., for example here, in [`docs` content](https://github.com/JulianCataldo/astro-content/tree/master/docs/content). -->
+{/* Not working (Vite / Astro glob difference issue) */}
+{/* - Symbolic links are working, useful for gathering markdown from relative folder in the same mono-repo., for example here, in [`docs` content](https://github.com/JulianCataldo/astro-content/tree/master/docs/content). */}
 
 - Folder hierarchy is flattened. It's the `*.schema.yaml` that is authoritative on "what is an entity" to collect, as in the sibling entries folders. That means that you could nest folders as you want, the parent folders (without schema) will be ignored.
 - Use `@` or `_` prefixes, if you want to pin entities on top, e.g.: `@inbox`.  
   Special characters are stripped out anyway, while retaining order for inside your editor (OK, it's a hack 😅).
 
-<!-- Some of these tips here are experiments, or found by accident. They might explode in your hands. It's an alpha version after all 🤫. -->
+{/* Some of these tips here are experiments, or found by accident. They might explode in your hands. It's an alpha version after all 🤫. */}
