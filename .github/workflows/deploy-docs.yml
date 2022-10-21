@@ -53,6 +53,15 @@ jobs:
           restore-keys: |
             turbo-${{ github.job }}-${{ github.ref_name }}-
 
+      - name: Astro image Cache
+        id: astro-image-cache
+        uses: actions/cache@v3
+        with:
+          path: .astro-image
+          key: astro-image-${{ github.job }}-${{ github.ref_name }}-${{ github.sha }}
+          restore-keys: |
+            astro-image-${{ github.job }}-${{ github.ref_name }}-
+
       # ————————————————————————————————————————————————————————————————————————
 
       - name: Install Node dependencies

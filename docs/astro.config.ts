@@ -37,6 +37,7 @@ export default defineConfig({
     }), // ——————————————————————————————————————
     image({
       serviceEntryPoint: '@astrojs/image/sharp',
+      cacheDir: '.astro-image',
     }),
     // TODO: 1. Try mermaid with MDX
     // TODO: 2. Try embedding it in Astro Content / Or let user control this?
