@@ -48,7 +48,7 @@ jobs:
         id: turbo-cache
         uses: actions/cache@v3
         with:
-          path: .turbo
+          path: ./.turbo
           key: turbo-${{ github.job }}-${{ github.ref_name }}-${{ github.sha }}
           restore-keys: |
             turbo-${{ github.job }}-${{ github.ref_name }}-
@@ -57,7 +57,7 @@ jobs:
         id: astro-image-cache
         uses: actions/cache@v3
         with:
-          path: .astro-image
+          path: ./docs/.astro-image
           key: astro-image-${{ github.job }}-${{ github.ref_name }}-${{ github.sha }}
           restore-keys: |
             astro-image-${{ github.job }}-${{ github.ref_name }}-
