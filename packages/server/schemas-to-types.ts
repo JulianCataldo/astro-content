@@ -23,7 +23,9 @@ export default async function schemaToTypes(schema: JSONSchema) {
                   unknownAny: true,
                 })
                   .then((ts) => {
-                    const r = ts.replace('export interface', 'interface');
+                    const r = ts
+                      .replace('export interface', 'interface')
+                      .replace('export type', 'type');
 
                     entriesSchemas += `${r}\n`;
                   })

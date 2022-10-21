@@ -61,9 +61,11 @@ ${contentSchemas
 }
 `;
 
-  const common = `import type { MarkdownInstance } from "astro";
+  const ide = `import type { MarkdownInstance } from "astro";
 import type { YamlInstance } from 'astro-content';
+`;
 
+  const common = `
 /* — Interfaces — */
 ${iFaces}
 /* — /Interfaces — */
@@ -78,7 +80,31 @@ ${iFacesEntities}
 `;
 
   const browser = `
-${common}
+/* Stubs */
+
+type AstroComponentFactory = {};
+type MarkdownHeading = {
+  depth: number;
+  slug: string;
+  text: string;
+};
+interface MarkdownInstance<T extends Record<string, any>> {
+  frontmatter: T;
+  file: string;
+  url: string | undefined;
+  Content: AstroComponentFactory;
+  rawContent(): string;
+  compiledContent(): string;
+  getHeadings(): MarkdownHeading[];
+  getHeaders(): void;
+  default: any;
+}
+
+interface YamlInstance<T> {
+  data: T;
+  file: string;
+  raw: string;
+}
 
 async function get(files: unknown) {
   return files as Entities;
@@ -90,19 +116,22 @@ declare namespace Astro {
  const glob = (pattern: string) => {return []};
  export { glob };
 }
+
+/* /Stubs */
 `
     .replaceAll('export interface', 'interface')
     .replaceAll('export type', 'type');
 
+  const commonFormatted = prettier.format(common, {
+    parser: 'typescript',
+    printWidth: 80,
+  });
+
   // TODO: Re-organize types object ——v
   return {
-    common: '',
+    common: commonFormatted,
     browser,
-    // ide: common,
-    ide: prettier.format(common, {
-      parser: 'typescript',
-      printWidth: 80,
-    }),
+    ide,
   };
 }
 

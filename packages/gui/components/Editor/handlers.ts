@@ -35,7 +35,10 @@ const handleEditorWillMount = (monaco: MonacoType, types: Types) => {
   // monaco.editor.defineTheme('Dracula', cobalt2 as nsEd.IStandaloneThemeData);
 
   if (types.browser) {
-    const global = `${types.common}\n\n${types.browser}`;
+    const global = `${types.browser}\n${types.common
+      .replaceAll('export type ', 'type ')
+      .replaceAll('export interface ', 'interface ')}`;
+
     monaco.languages.typescript.typescriptDefaults.addExtraLib(
       global,
       'global.d.ts',
