@@ -2,7 +2,7 @@
 // import './Default.scss';
 
 // NOTE: We're opting out of HMR totally when treating CSS separately
-import css from '../dist/styles.css?raw';
+import css from '../dist/styles.css?url';
 
 /* —————————————————————————————————————————————————————————————————————————— */
 
@@ -24,7 +24,7 @@ import Base from './Base.astro';
     </script>
 
     <!-- HACK: Bypass Astro (S)CSS handling -->
-    <style set:html={css}></style>
+    <link rel="stylesheet" href={css} />
 
     <!-- _ -->
   </Fragment>
