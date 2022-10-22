@@ -15,7 +15,7 @@ export async function saveFile(object: Save) {
       // NOTE: Double quotes in MDX imports are breaking highlighting
       singleQuote: true,
     });
-    log({ formattedValue, language });
+    log({ formattedValue, language }, 'debug');
   }
 
   const isSuccess = await fs

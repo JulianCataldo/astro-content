@@ -90,7 +90,7 @@ export async function handleMd(
               title: node.title,
             });
           } else if (node.type === 'footnoteDefinition') {
-            log({ value: node, level: 'absurd' });
+            log({ node }, 'absurd');
 
             let html = '';
             if (node.children.length) {
@@ -131,7 +131,7 @@ export async function handleMd(
       const schemaErr = rlFlSchemaError.schema as MdErrorSchema;
 
       schemaErr.position = rlFlSchemaError.position;
-      log(error);
+      log(error, 'absurd');
 
       schemaErrs.push(schemaErr);
     } else {
@@ -151,7 +151,7 @@ export async function handleMd(
     .process(content);
 
   log({ lint }, 'absurd');
-  log({ links });
+  log({ links }, 'absurd');
 
   const Report: PropertyReport = {
     schema: schemaErrs,

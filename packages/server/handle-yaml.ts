@@ -55,10 +55,10 @@ export function handleYaml(
       validate = ajv.compile(schemaForAjv);
     } catch (e) {
       validate = false;
-      log(e);
+      log(e, 'absurd');
       return false;
     }
-    log({ value: validate.errors, level: 'absurd' });
+    log({ value: validate.errors }, 'absurd');
 
     if (state.reports[entity] === undefined) {
       state.reports[entity] = {};

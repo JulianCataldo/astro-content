@@ -26,7 +26,7 @@ export async function getStaticPaths() {
   await Promise.all(
     Object.entries(impts).map(async ([rawPath]) => {
       const file = await fs.realpath(path.join(process.cwd(), rawPath));
-      log({ rawPath, file });
+      log({ rawPath, file }, 'absurd');
 
       paths.push({
         params: { file },

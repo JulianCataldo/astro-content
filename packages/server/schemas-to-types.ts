@@ -30,7 +30,7 @@ export default async function schemaToTypes(schema: JSONSchema) {
                     entriesSchemas += `${r}\n`;
                   })
                   .catch((e) => {
-                    log(e);
+                    log(e, 'absurd');
                   });
               } else {
                 entriesSchemas += `type ${name} = EmptySchema;\n`;

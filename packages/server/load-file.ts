@@ -85,10 +85,10 @@ export async function loadFile(
         return false;
       }
       if (propSchema.properties) {
-        log({ property });
+        log({ property }, 'absurd');
         const frontmatterSchema = propSchema;
 
-        log(frontmatterSchema);
+        log(frontmatterSchema, 'absurd');
         // setTimeout(() => {
         //   console.log({ frontmatterSchema });
         // }, 1500);

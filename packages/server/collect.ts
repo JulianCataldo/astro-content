@@ -72,7 +72,7 @@ const collect = async (
   options?: Options,
 ): Promise<ServerState['content']> => {
   const files = await pFiles.then((p) => p).catch(() => null);
-  log({ files });
+  log({ files }, 'absurd');
 
   if (!Array.isArray(files)) {
     log('No files!');
