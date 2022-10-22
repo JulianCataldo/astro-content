@@ -3,8 +3,8 @@
 // import yaml from 'yaml';
 import { remark } from 'remark';
 import remarkFrontmatter from 'remark-frontmatter';
-import rlFmSchema from '@julian_cataldo/remark-lint-frontmatter-schema';
-import retextCasePolice from '@julian_cataldo/retext-case-police';
+import remarkLintFrontmatterSchema from 'remark-lint-frontmatter-schema';
+import retextCasePolice from 'retext-case-police';
 import remarkPresetLintRecommended from 'remark-preset-lint-recommended';
 import remarkPresetLintMarkdownStyleGuide from 'remark-preset-lint-markdown-style-guide';
 import remarkPresetLintConsistent from 'remark-preset-lint-consistent';
@@ -29,7 +29,7 @@ import { toHtml } from 'hast-util-to-html';
 /* ·········································································· */
 import type { JSONSchema7 } from 'json-schema';
 
-// import type { FrontmatterSchemaMessage } from '@julian_cataldo/remark-lint-frontmatter-schema';
+// import type { FrontmatterSchemaMessage } from 'remark-lint-frontmatter-schema';
 import type {
   ErrorLint,
   MdErrorSchema,
@@ -38,7 +38,7 @@ import type {
   ReportLink,
 } from '@astro-content/types/reports';
 /* ·········································································· */
-import type { FrontmatterSchemaMessage } from '@julian_cataldo/remark-lint-frontmatter-schema';
+import type { FrontmatterSchemaMessage } from 'remark-lint-frontmatter-schema';
 import { log } from './logger.js';
 /* —————————————————————————————————————————————————————————————————————————— */
 
@@ -67,7 +67,7 @@ export async function handleMd(
 
   const lintingAndSchema = await remark()
     .use(remarkFrontmatter)
-    .use(rlFmSchema, { embed: schema })
+    .use(remarkLintFrontmatterSchema, { embed: schema })
     .use(mdx ? remarkMdx : () => (tree) => tree)
     .use(remarkGfm)
     // TODO: extract "validate" to general "handle"?

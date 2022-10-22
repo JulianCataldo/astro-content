@@ -1,5 +1,5 @@
 ---
-import Link from '@julian_cataldo/astro-link/Link.astro';
+import { Link } from 'astro-link';
 import './NavigationBar.scss';
 import logo from '../assets/astro-content-logo.svg?raw';
 import brain from '../assets/brain-circuit-20-filled.svg?raw';
@@ -39,7 +39,7 @@ const current = Astro.url.pathname.split('/')[1] || 'home';
       <Link
         title="Pre-loaded with data — Static, no updates"
         data-tooltip-placement="bottom"
-        href="/__content"
+        href="/__content/storybooks/advanced-widgets/kitchen-sink/"
         class="unstyled"
         target="demo"
       >

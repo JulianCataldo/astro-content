@@ -1,6 +1,6 @@
 {
   "name": "@astro-content/server",
-  "version": "0.0.0-alpha.6",
+  "version": "0.0.0-alpha.9",
   "description": "",
   "type": "module",
   "scripts": {
@@ -32,8 +32,6 @@
   },
   "dependencies": {
     "@faker-js/faker": "^7.6.0",
-    "@julian_cataldo/remark-lint-frontmatter-schema": "^3.7.4",
-    "@julian_cataldo/retext-case-police": "^1.1.4",
     "ajv": "^8.11.0",
     "ajv-formats": "^2.1.1",
     "chalk": "^5.1.1",
@@ -61,6 +59,7 @@
     "remark": "^14.0.2",
     "remark-frontmatter": "^4.0.1",
     "remark-gfm": "^3.0.1",
+    "remark-lint-frontmatter-schema": "^3.7.5",
     "remark-mdx": "^2.1.5",
     "remark-parse": "^10.0.1",
     "remark-preset-lint-consistent": "^5.1.1",
@@ -68,6 +67,7 @@
     "remark-preset-lint-recommended": "^6.1.2",
     "remark-rehype": "^10.1.0",
     "remark-retext": "^5.0.1",
+    "retext-case-police": "^1.1.7",
     "retext-english": "^4.1.0",
     "retext-profanities": "^7.2.1",
     "retext-readability": "^7.2.0",

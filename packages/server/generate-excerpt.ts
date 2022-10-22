@@ -48,7 +48,7 @@ import { log } from './logger.js';
 //   return transformer;
 // };
 
-export default async function generateExcerpt(raw: string) {
+export async function generateExcerpt(raw: string) {
   // FIXME: Using an hard substring for now, could generate unwanted results
   const mdLiteral = await remark()
     .use(remarkFrontmatter)

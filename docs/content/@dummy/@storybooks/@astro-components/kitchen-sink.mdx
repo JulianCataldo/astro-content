@@ -1,0 +1,21 @@
+import { Icon } from 'astro-icon';
+import styles from './styles.module.scss';
+
+# Astro — Icon
+
+[See `astro-icon`](https://github.com/natemoo-re/astro-icon/tree/main/packages/core)
+
+{/* Automatically fetches and inlines Material Design Icon's "account" SVG */}
+
+<Icon pack="mdi" name="account" class:list={[styles.astroIcon]} />
+
+{/* Equivalent shorthand */}
+
+> **Pro tip**: Use [Iconify IntelliSense](https://marketplace.visualstudio.com/items?itemName=antfu.iconify)
+
+<Icon name="cib:sega" class:list={[styles.astroIcon]} width="3rem" />
+<Icon name="mdi:account" class:list={[styles.astroIcon]} style="color: red;" />
+<Icon name="noto:hamburger" width="3rem" />
+<Icon name="mdi:account" class:list={[styles.astroIcon]} style="color: red;" />
+
+<Icon name="noto:hamburger" width="3rem" />

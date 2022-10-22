@@ -1,4 +1,6 @@
 import { pascalCase } from 'change-case';
+import prettier from 'prettier';
+
 /* ·········································································· */
 import type { JSONSchema } from 'json-schema-to-typescript';
 import type {
@@ -42,7 +44,7 @@ export async function generateTypes(
 export type ${pascalCase(schema.title ?? '')}EntryNames = ${entryNames};
 export type ${pascalCase(key)} = {
   [key in ${name}EntryNames]?: ${name};
-};`;
+};\n`;
     }
     return null;
   });
@@ -59,25 +61,50 @@ ${contentSchemas
 }
 `;
 
-  const common = `
-/* Interfaces */
-${iFaces}
-/* /Interfaces */
+  const ide = `import type { MarkdownInstance } from "astro";
+import type { YamlInstance } from 'astro-content';
+`;
 
+  const common = `
+/* — Interfaces — */
+${iFaces}
+/* — /Interfaces — */
+
+/* Types */
+${typesLiteral}
+/* /Types */
 
 /* Entities */
 ${iFacesEntities}
 /* /Entities */
-
-
-/* Types */
-${typesLiteral}
-
-/* /Types */
 `;
 
   const browser = `
-${common}
+/* Stubs */
+
+type AstroComponentFactory = {};
+type MarkdownHeading = {
+  depth: number;
+  slug: string;
+  text: string;
+};
+interface MarkdownInstance<T extends Record<string, any>> {
+  frontmatter: T;
+  file: string;
+  url: string | undefined;
+  Content: AstroComponentFactory;
+  rawContent(): string;
+  compiledContent(): string;
+  getHeadings(): MarkdownHeading[];
+  getHeaders(): void;
+  default: any;
+}
+
+interface YamlInstance<T> {
+  data: T;
+  file: string;
+  raw: string;
+}
 
 async function get(files: unknown) {
   return files as Entities;
@@ -89,12 +116,23 @@ declare namespace Astro {
  const glob = (pattern: string) => {return []};
  export { glob };
 }
+
+/* /Stubs */
 `
     .replaceAll('export interface', 'interface')
     .replaceAll('export type', 'type');
 
+  const commonFormatted = prettier.format(common, {
+    parser: 'typescript',
+    printWidth: 80,
+  });
+
   // TODO: Re-organize types object ——v
-  return { common: '', browser, ide: common };
+  return {
+    common: commonFormatted,
+    browser,
+    ide,
+  };
 }
 
 const importHelper = `// eslint-disable-next-line import/no-extraneous-dependencies

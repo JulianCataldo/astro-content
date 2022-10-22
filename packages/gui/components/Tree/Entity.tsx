@@ -31,22 +31,24 @@ export default function Entity({ content }: { content: Content }) {
         <div key={entityKey} className="leaf entity">
           <Tooltip label={entityLabel(entityKey)} placement="right">
             {/*  eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events */}
-            <Link
-              to={`${endpoints.contentBase}/${kebabCase(entityKey)}`}
-              className={cx(
-                'entity-link route',
-                entity === entityKey && 'active',
-              )}
-            >
-              <div className="folder">
-                <Icon icon="system-uicons:chevron-down" />
-              </div>
-              <span className="tree-label">{sentenceCase(entityKey)}</span>
-              <span className="spacer" />
-              {/* <span onClick={() => createEntity(key)} className="trigger">
+            <div>
+              <Link
+                to={`${endpoints.contentBase}/${kebabCase(entityKey)}`}
+                className={cx(
+                  'entity-link route',
+                  entity === entityKey && 'active',
+                )}
+              >
+                <div className="folder">
+                  <Icon icon="system-uicons:chevron-down" />
+                </div>
+                <span className="tree-label">{sentenceCase(entityKey)}</span>
+                <span className="spacer" />
+                {/* <span onClick={() => createEntity(key)} className="trigger">
               <Icon icon="system-uicons:create" width="1em" />
             </span> */}
-            </Link>
+              </Link>
+            </div>
           </Tooltip>
           {entityTree &&
             Object.entries(entityTree).map(([entryKey, entryTree]) => (

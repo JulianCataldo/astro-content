@@ -1,32 +1,19 @@
 properties:
-  testbeds:
-    allOf:
-      - $ref: '#/definitions/MarkdownFile'
-  bulma:
-    allOf:
-      - $ref: '#/definitions/MarkdownFile'
+  testbeds: {}
+
+  bulma: {}
+
   input:
-    allOf:
-      - $ref: '#/definitions/MarkdownFile'
-      - properties:
-          frontmatter:
-            properties:
-              title:
-                type: string
+    properties:
+      title:
+        type: string
   image:
-    allOf:
-      - $ref: '#/definitions/MarkdownFile'
-      - properties:
-          frontmatter:
-            properties:
-              title:
-                type: string
+    properties:
+      title:
+        type: string
+
   kitchenSink:
-    allOf:
-      - $ref: '#/definitions/MarkdownFile'
-      - properties:
-          frontmatter:
-            additionalProperties: false
-            properties:
-              title:
-                type: string
+    additionalProperties: false
+    properties:
+      title:
+        type: string

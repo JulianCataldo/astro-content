@@ -8,9 +8,7 @@ properties:
           href:
             type: string
 
-  notes:
-    allOf:
-      - $ref: '#/definitions/MarkdownFile'
+  notes: {}
 
 required:
   - website

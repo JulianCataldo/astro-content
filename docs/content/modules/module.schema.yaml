@@ -6,26 +6,19 @@ properties:
     required:
       - source
 
-  text:
-    allOf:
-      - $ref: '#/definitions/MarkdownFile'
+  text: {}
 
-  relations:
-    allOf:
-      - $ref: '#/definitions/MarkdownFile'
+  relations: {}
+
   install:
-    allOf:
-      - $ref: '#/definitions/MarkdownFile'
-      - properties:
-          frontmatter:
-            properties:
-              foo:
-                type: string
-              bar:
-                type: string
-            required:
-              - foo
-              - bar
+    properties:
+      foo:
+        type: string
+      bar:
+        type: string
+    required:
+      - foo
+      - bar
 
 required:
   - text

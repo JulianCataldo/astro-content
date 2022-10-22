@@ -1,6 +1,6 @@
 {
   "name": "@astro-content/types",
-  "version": "0.0.0-alpha.6",
+  "version": "0.0.0-alpha.9",
   "description": "",
   "type": "module",
   "files": [
@@ -22,5 +22,8 @@
   "license": "ISC",
   "publishConfig": {
     "access": "public"
+  },
+  "devDependencies": {
+    "remark-lint-frontmatter-schema": "^3.7.5"
   }
 }

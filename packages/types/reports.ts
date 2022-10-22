@@ -1,4 +1,4 @@
-import type { FrontmatterSchemaMessage } from '@julian_cataldo/remark-lint-frontmatter-schema';
+import type { FrontmatterSchemaMessage } from 'remark-lint-frontmatter-schema';
 import type { Position as UnistPosition } from 'unist';
 import type {
   FootnoteDefinition as MdAstFootnoteDefinition,

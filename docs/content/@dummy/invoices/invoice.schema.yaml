@@ -1,34 +1,27 @@
 properties:
   contract:
-    allOf:
-      - $ref: '#/definitions/MarkdownFile'
-      - properties:
-          frontmatter:
-            properties:
-              title:
-                type: string
-              legalReferences:
-                description: Legal references
-                type: array
-                items:
-                  - type: string
-              contractLink:
-                description: Entry title
-                type: string
-              clientType:
-                type: string
-                enum:
-                  - Corporate
-                  - Non-profit
-                  - Individual
+    properties:
+      title:
+        type: string
+      legalReferences:
+        description: Legal references
+        type: array
+        items:
+          - type: string
+      contractLink:
+        description: Entry title
+        type: string
+      clientType:
+        type: string
+        enum:
+          - Corporate
+          - Non-profit
+          - Individual
 
-            required:
-              - title
-              - legalReferences
-              - clientType
-        required:
-          - frontmatter
-        additionalProperties: false
+    # required:
+    #   - title
+    #   - legalReferences
+    #   - clientType
 
   informations:
     properties:
@@ -39,8 +32,6 @@ properties:
       numberOfDays:
         type: number
 
-  footnotes:
-    allOf:
-      - $ref: '#/definitions/MarkdownFile'
-required:
-  - contract
+  footnotes: {}
+# required:
+# - contract

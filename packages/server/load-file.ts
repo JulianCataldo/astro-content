@@ -15,7 +15,7 @@ import { state } from './state.js';
 import { handleYaml } from './handle-yaml.js';
 import { handleMd } from './handle-md.js';
 import { getTrio } from './utils.js';
-import generateExcerpt from './generate-excerpt.js';
+import { generateExcerpt } from './generate-excerpt.js';
 import { log } from './logger.js';
 /* —————————————————————————————————————————————————————————————————————————— */
 
@@ -63,73 +63,67 @@ export async function loadFile(
       // collected.Content = file?.Content;
 
       if (editMode) {
-        if (collected.language !== 'yaml') {
-          const raw = await fs.readFile(filePath, 'utf8');
-          collected.headingsCompiled = mdFile.getHeadings();
-          collected.raw = raw;
-          // NOTE: Disabled for now, using the separate renderer in iframe.
-          // collected.bodyCompiled = 'NONE';
-          // prettier.format(mdFile.compiledContent(), {
-          //   parser: 'html',
-          // });
-          collected.excerpt = await generateExcerpt(raw);
+        const raw = await fs.readFile(filePath, 'utf8');
+        collected.headingsCompiled = mdFile.getHeadings();
+        collected.raw = raw;
+        // NOTE: Disabled for now, using the separate renderer in iframe.
+        // collected.bodyCompiled = 'NONE';
+        // prettier.format(mdFile.compiledContent(), {
+        //   parser: 'html',
+        // });
+        collected.excerpt = await generateExcerpt(raw);
 
-          log({ file, collected }, 'absurd');
-        }
+        log({ file, collected }, 'absurd');
+      }
 
-        // NO VALIDATION outside edit-mode for now
-        const propSchema =
-          typeof state.schemas.content[entity] === 'object' &&
-          state.schemas.content[entity].properties?.[property];
+      // NO VALIDATION outside edit-mode for now
+      const propSchema =
+        typeof state.schemas.content[entity] === 'object' &&
+        state.schemas.content[entity].properties?.[property];
 
-        if (typeof propSchema !== 'object') {
-          return false;
-        }
-        if (Array.isArray(propSchema.allOf)) {
-          log({ property });
-          const frontmatterSchema =
-            typeof propSchema.allOf[1] === 'object' &&
-            typeof propSchema.allOf[1]?.properties?.frontmatter === 'object' &&
-            propSchema.allOf[1]?.properties?.frontmatter;
+      if (typeof propSchema !== 'object') {
+        return false;
+      }
+      if (propSchema.properties) {
+        log({ property });
+        const frontmatterSchema = propSchema;
 
-          log(frontmatterSchema);
+        log(frontmatterSchema);
+        // setTimeout(() => {
+        //   console.log({ frontmatterSchema });
+        // }, 1500);
 
-          handleMd(
-            collected.raw,
-            frontmatterSchema || {},
-            collected.language === 'mdx',
-          )
-            .then((report) => {
-              if (state.reports[entity] === undefined) {
-                state.reports[entity] = {};
-              }
+        handleMd(collected.raw, frontmatterSchema, collected.language === 'mdx')
+          .then((report) => {
+            if (state.reports[entity] === undefined) {
+              state.reports[entity] = {};
+            }
 
-              if (state.reports[entity]?.[entry] === undefined) {
-                state.reports[entity] = {
-                  ...state.reports[entity],
-                  [entry]: {},
-                };
-              }
-              if (state.reports[entity]?.[entry]?.[property] === undefined) {
-                state.reports[entity] = {
-                  ...state.reports[entity],
-                  [entry]: {
-                    ...state.reports[entity][entry],
-                    [property]: {
-                      schema: [],
-                      lint: [],
-                      prose: [],
-                      footnotes: [],
-                      links: [],
-                    },
+            if (state.reports[entity]?.[entry] === undefined) {
+              state.reports[entity] = {
+                ...state.reports[entity],
+                [entry]: {},
+              };
+            }
+            if (state.reports[entity]?.[entry]?.[property] === undefined) {
+              state.reports[entity] = {
+                ...state.reports[entity],
+                [entry]: {
+                  ...state.reports[entity][entry],
+                  [property]: {
+                    schema: [],
+                    lint: [],
+                    prose: [],
+                    footnotes: [],
+                    links: [],
                   },
-                };
-              }
-              state.reports[entity][entry][property] = report;
-            })
-            .then(() => null)
-            .catch(() => null);
-        }
+                },
+              };
+            }
+            state.reports[entity][entry][property] = report;
+          })
+          .then(() => null)
+          .catch(() => null);
       }
     }
 

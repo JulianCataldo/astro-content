@@ -1,22 +1,10 @@
 properties:
-  personal:
-    allOf:
-      - $ref: '#/definitions/MarkdownFile'
-  business:
-    allOf:
-      - $ref: '#/definitions/MarkdownFile'
-  commerce:
-    allOf:
-      - $ref: '#/definitions/MarkdownFile'
-  art:
-    allOf:
-      - $ref: '#/definitions/MarkdownFile'
-  life:
-    allOf:
-      - $ref: '#/definitions/MarkdownFile'
-  dev:
-    allOf:
-      - $ref: '#/definitions/MarkdownFile'
+  personal: {}
+  business: {}
+  commerce: {}
+  art: {}
+  life: {}
+  dev: {}
 
 required:
   - personal

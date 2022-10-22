@@ -131,9 +131,7 @@ export {}`;
     };
   }
 
-  const typesPrev = `/* Interfaces */\n${types.common.substring(1)}${
-    types.ide.split('/* Interfaces */')[1]
-  }`.trim();
+  const typesPrev = `${types.common}`.trim();
 
   // FIXME: No unnecessary condition
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition

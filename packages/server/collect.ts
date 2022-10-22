@@ -60,7 +60,7 @@ export async function saveTsTypes() {
   await fs
     .writeFile(
       path.join(process.cwd(), '.astro-content', 'types.ts'),
-      `${state.types.ide}`,
+      `${state.types.ide}\n${state.types.common}`,
     )
     .catch(() => null);
 }

@@ -16,7 +16,10 @@ export function getTrio(filePath: string) {
   first = camelCase(first);
   second = camelCase(second);
   if (third) {
-    third = camelCase(path.basename(third, path.extname(third)));
+    const t = path.basename(third, path.extname(third));
+    if (!t.startsWith('_')) {
+      third = camelCase(t);
+    }
   }
   return { first, second, third };
 }

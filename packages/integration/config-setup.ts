@@ -40,8 +40,8 @@ const configSetup: AstroIntegration['hooks']['astro:config:setup'] = async ({
     `
   📚  astro-content — ⚠️ ALPHA PREVIEW ⚠️
   
-  ┃ Local    http://localhost:${config.server.port}/${endpoints.contentBase}
-  ┃ Network  http://0.0.0.0:${config.server.port}/${endpoints.contentBase}
+  ┃ Local    http://localhost:${config.server.port}${endpoints.contentBase}
+  ┃ Network  http://0.0.0.0:${config.server.port}${endpoints.contentBase}
   `,
     'info',
   );
@@ -81,7 +81,13 @@ const configSetup: AstroIntegration['hooks']['astro:config:setup'] = async ({
       // > Might monitor side-effects.
       // https://vitejs.dev/config/dep-optimization-options.html#optimizedeps-exclude
       optimizeDeps: {
-        include: ['react-split', 'zustand', 'classnames', 'prop-types'],
+        include: [
+          //
+          'react-split',
+          'zustand',
+          'classnames',
+          'prop-types',
+        ],
       },
     },
   });
