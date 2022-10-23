@@ -22,6 +22,7 @@ const astroContent = (settings?: Settings): AstroIntegration => {
   const currentLevel = getCurrentLevel();
   // Available in SSR / Client
   process.env.PUBLIC_LOG_LEVEL = currentLevel;
+
   log(`Integration loaded — Log level: ${currentLevel}`, 'info', 'pretty');
   log('1 >>> infos', 'info');
   log('2 >>> debug');
@@ -53,6 +54,22 @@ export default function preset(settings: Settings = {}): AstroIntegration[] {
   if (settings.gui === undefined) {
     userSettings.gui = true;
   }
+  if (settings.includeInBuild === undefined) {
+    userSettings.includeInBuild = false;
+  }
+  const command = process.argv[2] === 'dev' ? 'dev' : 'build';
+
+  if (command === 'dev' && userSettings.gui) {
+    process.env.HAS_GUI = 'true';
+  } else if (
+    command === 'build' &&
+    userSettings.gui &&
+    userSettings.includeInBuild
+  ) {
+    process.env.HAS_GUI = 'true';
+  } else {
+    process.env.HAS_GUI = 'false';
+  }
 
   const integrations = [
     // NOTE: Monitor for side-effects when user already use `@astrojs/mdx`.
@@ -64,7 +81,7 @@ export default function preset(settings: Settings = {}): AstroIntegration[] {
     }),
     astroContent(userSettings),
   ];
-  if (userSettings.gui === true) {
+  if (process.env.HAS_GUI === 'true') {
     // NOTE: Monitor for side-effects when user already use `@astrojs/react`.
     // If so, a `settings.includeReact` boolean might be added.
     integrations.push(react());

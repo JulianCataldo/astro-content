@@ -3,8 +3,13 @@ import type { LogLevel } from './logger';
 export interface UserConfig {
   /** **Default**: `/` */
   previewUrl?: string;
+
   /** **Default**: `'info'` */
   logLevel?: LogLevel;
-  /** **Default**: `true` */
+
+  // /** **Default**: `true` */
   gui?: boolean;
+
+  /** **Default**: `false` */
+  includeInBuild?: boolean;
 }

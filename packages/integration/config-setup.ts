@@ -33,20 +33,23 @@ const configSetup: AstroIntegration['hooks']['astro:config:setup'] = async ({
   injectRoute,
   updateConfig,
   config,
+  command,
 }) => {
   // FIX: Server port is from user config, not actual dev. server
   // This means that it can be wrong if port is already used and incremented.
-  log(
-    `
+  if (process.env.HAS_GUI === 'true') {
+    log(
+      `
   📚  astro-content — ⚠️ ALPHA PREVIEW ⚠️
   
   ┃ Local    http://localhost:${config.server.port}${endpoints.contentBase}
   ┃ Network  http://0.0.0.0:${config.server.port}${endpoints.contentBase}
   `,
-    'info',
-  );
+      'info',
+    );
+  }
 
-  log(config, 'absurd');
+  log({ config }, 'absurd');
 
   /* Inject YAML import + metadata within `Astro.glob()` */
   updateConfig({
@@ -80,37 +83,39 @@ const configSetup: AstroIntegration['hooks']['astro:config:setup'] = async ({
       // Adding this force 'untouched' module resolution.
       // > Might monitor side-effects.
       // https://vitejs.dev/config/dep-optimization-options.html#optimizedeps-exclude
-      optimizeDeps: {
-        include: [
-          //
-          'react-split',
-          'zustand',
-          'classnames',
-          'prop-types',
-          'prettier',
-          'prettier/parser-html',
-        ],
-      },
+      optimizeDeps:
+        process.env.HAS_GUI === 'true'
+          ? {
+              include: [
+                //
+                'react-split',
+                'zustand',
+                'classnames',
+                'prop-types',
+                'prettier',
+                'prettier/parser-html',
+              ],
+            }
+          : {},
     },
   });
 
   /* Inject stateful routes (share same state as all Astro SSR pages) */
 
-  // TODO: Apply option to omit all GUI-related stuff
-  // if () {
-  injectRoute({
-    pattern: path.join(endpoints.apiBase, '[endpoint]'),
-    entryPoint: path.join(integrationPath, 'server-bridge.json.ts'),
-  });
-  injectRoute({
-    pattern: path.join(endpoints.contentBase, '[...path]'),
-    entryPoint: path.join(guiPath, 'ssr-entrypoint.astro'),
-  });
-  injectRoute({
-    pattern: path.join(endpoints.actions.render, '[...file]'),
-    entryPoint: path.join(guiPath, 'preview-markdown.astro'),
-  });
-  // }
+  if (process.env.HAS_GUI === 'true') {
+    injectRoute({
+      pattern: path.join(endpoints.apiBase, '[endpoint]'),
+      entryPoint: path.join(integrationPath, 'server-bridge.json.ts'),
+    });
+    injectRoute({
+      pattern: path.join(endpoints.contentBase, '[...path]'),
+      entryPoint: path.join(guiPath, 'ssr-entrypoint.astro'),
+    });
+    injectRoute({
+      pattern: path.join(endpoints.actions.render, '[...file]'),
+      entryPoint: path.join(guiPath, 'preview-markdown.astro'),
+    });
+  }
 
   /* Setup project */
   log(tempDir);
