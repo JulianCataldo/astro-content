@@ -87,6 +87,8 @@ const configSetup: AstroIntegration['hooks']['astro:config:setup'] = async ({
           'zustand',
           'classnames',
           'prop-types',
+          'prettier',
+          'prettier/parser-html',
         ],
       },
     },
