@@ -32,6 +32,7 @@
     "astro-breakpoints": "^0.6.0",
     "astro-content": "workspace:*",
     "astro-diagram": "^0.6.1",
+    "astro-embed": "^0.1.3",
     "astro-geo-map": "1.0.5",
     "astro-google-analytics": "^1.0.1",
     "astro-hover-prefetch": "^1.0.4",

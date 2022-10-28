@@ -1,4 +1,5 @@
 import { Icon } from 'astro-icon';
+import { Tweet, Vimeo, YouTube } from 'astro-embed';
 import styles from './styles.module.scss';
 
 # Astro — Icon
@@ -19,3 +20,17 @@ import styles from './styles.module.scss';
 <Icon name="mdi:account" class:list={[styles.astroIcon]} style="color: red;" />
 
 <Icon name="noto:hamburger" width="3rem" />
+
+# Astro — Embed
+
+## Youtube
+
+<YouTube id="https://www.youtube.com/watch?v=v-dgpzE7txk" />
+
+## Twitter
+
+<Tweet id="https://twitter.com/Julian_Cataldo/status/1565813182739976192?s=20&t=2r67L1fNMQ0cEhQ97-nbYQ" />
+
+## Vimeo
+
+<Vimeo id="https://vimeo.com/17101446" />
