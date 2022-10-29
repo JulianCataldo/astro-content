@@ -2,8 +2,6 @@
 // @ts-nocheck
 
 import fs from 'node:fs/promises';
-// import path from 'node:path';
-// import prettier from 'prettier';
 /* ·········································································· */
 import type { MarkdownInstance } from 'astro';
 import type {
@@ -47,7 +45,16 @@ export async function loadFile(
         // file: editMode ? path.relative(process.cwd(), filePath) : yamlFile.file,
       };
 
-      handleYaml(entity, entry, property, collected.raw);
+      handleYaml(
+        entity,
+        entry,
+        property,
+        collected.raw,
+        undefined,
+        state.schemas.file[entity],
+      )
+        .then(() => null)
+        .catch(() => null);
     }
     if (filePath.endsWith('md') || filePath.endsWith('mdx')) {
       const mdFile = file as MarkdownInstance<Record<string, unknown>>;
@@ -59,8 +66,6 @@ export async function loadFile(
         ...mdFile,
         // file: editMode ? path.relative(process.cwd(), filePath) : mdFile.file,
       };
-
-      // collected.Content = file?.Content;
 
       if (editMode) {
         const raw = await fs.readFile(filePath, 'utf8');
@@ -84,47 +89,48 @@ export async function loadFile(
       if (typeof propSchema !== 'object') {
         return false;
       }
-      if (propSchema.properties) {
-        log({ property }, 'absurd');
-        const frontmatterSchema = propSchema;
 
-        log(frontmatterSchema, 'absurd');
-        // setTimeout(() => {
-        //   console.log({ frontmatterSchema });
-        // }, 1500);
+      log({ property }, 'absurd');
+      const frontmatterSchema = propSchema;
 
-        handleMd(collected.raw, frontmatterSchema, collected.language === 'mdx')
-          .then((report) => {
-            if (state.reports[entity] === undefined) {
-              state.reports[entity] = {};
-            }
+      log(frontmatterSchema, 'absurd');
 
-            if (state.reports[entity]?.[entry] === undefined) {
-              state.reports[entity] = {
-                ...state.reports[entity],
-                [entry]: {},
-              };
-            }
-            if (state.reports[entity]?.[entry]?.[property] === undefined) {
-              state.reports[entity] = {
-                ...state.reports[entity],
-                [entry]: {
-                  ...state.reports[entity][entry],
-                  [property]: {
-                    schema: [],
-                    lint: [],
-                    prose: [],
-                    footnotes: [],
-                    links: [],
-                  },
+      handleMd(
+        collected.raw,
+        frontmatterSchema,
+        collected.language === 'mdx',
+        state.schemas.file[entity],
+      )
+        .then((report) => {
+          if (state.reports[entity] === undefined) {
+            state.reports[entity] = {};
+          }
+
+          if (state.reports[entity]?.[entry] === undefined) {
+            state.reports[entity] = {
+              ...state.reports[entity],
+              [entry]: {},
+            };
+          }
+          if (state.reports[entity]?.[entry]?.[property] === undefined) {
+            state.reports[entity] = {
+              ...state.reports[entity],
+              [entry]: {
+                ...state.reports[entity][entry],
+                [property]: {
+                  schema: [],
+                  lint: [],
+                  prose: [],
+                  footnotes: [],
+                  links: [],
                 },
-              };
-            }
-            state.reports[entity][entry][property] = report;
-          })
-          .then(() => null)
-          .catch(() => null);
-      }
+              },
+            };
+          }
+          state.reports[entity][entry][property] = report;
+        })
+
+        .catch((_) => null);
     }
 
     log({ collected }, 'absurd');

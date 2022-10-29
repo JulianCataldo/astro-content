@@ -61,7 +61,7 @@ ${entriesSchemas}
           // FIXME:
           // @ts-expect-error
           const l = Object.entries(
-            Object.entries(state.content[entityKey] || {})?.[0],
+            Object.entries(state.content[entityKey] || {})?.[0] || {},
           )?.[1]?.[1]?.[propKey]?.language;
 
           types += `  ${propKey}: ${

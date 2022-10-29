@@ -4,6 +4,8 @@
 import { remark } from 'remark';
 import remarkFrontmatter from 'remark-frontmatter';
 import remarkLintFrontmatterSchema from 'remark-lint-frontmatter-schema';
+/* ·········································································· */
+import { pathToFileURL } from 'node:url';
 import retextCasePolice from 'retext-case-police';
 import remarkPresetLintRecommended from 'remark-preset-lint-recommended';
 import remarkPresetLintMarkdownStyleGuide from 'remark-preset-lint-markdown-style-guide';
@@ -46,15 +48,8 @@ export async function handleMd(
   content: string,
   schema?: JSONSchema7,
   mdx = false,
+  schemaPath?: string,
 ) {
-  // let frontmatterSchema: JSONSchema7 = {};
-  // if (
-  //   schema?.allOf?.length &&
-  //   typeof schema.allOf[1] === 'object' &&
-  //   typeof schema.allOf[1].properties?.frontmatter === 'object'
-  // ) {
-  //   frontmatterSchema = schema.allOf[1].properties.frontmatter;
-  // }
   log('Validate MD', 'debug', 'pretty');
 
   const footnotes: ReportFootnote = {
@@ -67,7 +62,12 @@ export async function handleMd(
 
   const lintingAndSchema = await remark()
     .use(remarkFrontmatter)
-    .use(remarkLintFrontmatterSchema, { embed: schema })
+    .use(remarkLintFrontmatterSchema, {
+      embed: {
+        $id: pathToFileURL(schemaPath ?? '').toString(),
+        ...schema,
+      },
+    })
     .use(mdx ? remarkMdx : () => (tree) => tree)
     .use(remarkGfm)
     // TODO: extract "validate" to general "handle"?
@@ -122,8 +122,6 @@ export async function handleMd(
     .use(remarkPresetLintMarkdownStyleGuide)
     .use(remarkPresetLintConsistent)
     .process(content);
-
-  log({ lintingAndSchema }, 'absurd');
 
   lintingAndSchema.messages.forEach((error) => {
     if (error.ruleId === 'frontmatter-schema') {

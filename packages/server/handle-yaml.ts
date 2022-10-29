@@ -1,7 +1,9 @@
 import type { Part } from '@astro-content/types/gui-state';
-// import yaml from 'yaml';
 import yaml, { isNode, LineCounter } from 'yaml';
 import Ajv from 'ajv';
+
+import { fileURLToPath, pathToFileURL } from 'node:url';
+import { readFile } from 'node:fs/promises';
 import addFormats from 'ajv-formats';
 import type { JSONSchema7 } from 'json-schema';
 /* ·········································································· */
@@ -18,15 +20,37 @@ const ajv = new Ajv({
   strictTypes: false,
   strictTuples: false,
   strictRequired: false,
+
+  loadSchema(uri) {
+    /* Load external referenced schema relatively from schema path */
+    return new Promise((resolve, reject) => {
+      /* We use local file here, but you could use anything (fetch…) */
+      readFile(fileURLToPath(uri), 'utf8')
+        .then((data) => {
+          try {
+            const parsedSchema = yaml.parse(data) as unknown;
+            if (parsedSchema && typeof parsedSchema === 'object') {
+              resolve(parsedSchema);
+            }
+          } catch (_) {
+            reject(new Error(`Could not parse ${uri}`));
+          }
+        })
+        .catch((_) => {
+          reject(new Error(`Could not locate ${uri}`));
+        });
+    });
+  },
 });
 addFormats(ajv);
 
-export function handleYaml(
+export async function handleYaml(
   entity: Part,
   entry: Part,
   property: Part,
   raw: string,
   schema?: JSONSchema7,
+  schemaPath?: string,
 ) {
   log({ raw }, 'absurd', 'table');
 
@@ -44,7 +68,8 @@ export function handleYaml(
 
   if (typeof yamlSchema === 'object') {
     schemaForAjv = {
-      // definitions: { ...state.schemas.internals },
+      $id: pathToFileURL(`${schemaPath ?? ''}`).toString(),
+
       ...yamlSchema,
     };
   }
@@ -52,13 +77,22 @@ export function handleYaml(
   if (schemaForAjv) {
     let validate;
     try {
-      validate = ajv.compile(schemaForAjv);
+      validate = await ajv
+        .compileAsync(schemaForAjv)
+        .then((v) => v)
+        .catch((e) => {
+          validate = false;
+          // eslint-disable-next-line no-console
+          console.error(e);
+          return null;
+        });
     } catch (e) {
       validate = false;
       log(e, 'absurd');
       return false;
     }
-    log({ value: validate.errors }, 'absurd');
+
+    log({ value: validate && validate.errors }, 'absurd');
 
     if (state.reports[entity] === undefined) {
       state.reports[entity] = {};
@@ -76,7 +110,7 @@ export function handleYaml(
       };
     }
 
-    if (raw) {
+    if (raw && validate) {
       const lineCounter = new LineCounter();
 
       const yamlDoc = yaml.parseDocument(raw, { lineCounter });
@@ -86,7 +120,8 @@ export function handleYaml(
 
       if (Array.isArray(state.reports[entity]?.[entry]?.[property]?.schema))
         // FIXME: (possibly undefined)
-        // @ts-ignore
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        // @ts-expect-error
         state.reports[entity][entry][property].schema = validate.errors?.map(
           (error) => {
             const ajvPath = error.instancePath.substring(1).split('/');

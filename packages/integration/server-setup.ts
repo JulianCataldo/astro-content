@@ -70,7 +70,7 @@ const serverSetup: AstroIntegration['hooks']['astro:server:setup'] = ({
             //
             body.language === 'yaml'
           ) {
-            const result = handleYaml(
+            const result = await handleYaml(
               body.entity,
               body.entry,
               body.property,
