@@ -2,9 +2,13 @@
 
 import { itemChecker } from '@astro-content/validator';
 
-const schema = {"properties":{"tags":{"type":"array","uniqueItems":true,"minItems":1,"maxItems":8,"items":{"type":"string","enum":["Music","Video","Development","Cooking","Gardening","Sport"]}}}}
+const schema = {"description":"Used for content classification\n","properties":{"tags":{"type":"array","uniqueItems":true,"minItems":1,"maxItems":8,"items":{"type":"string","enum":["Music","Video","Development","Cooking","Gardening","Sport"]}}}}
 export { schema };
 
+/**
+ * Used for content classification
+ *
+ */
 export interface Tags {
   /**
    * @minItems 1

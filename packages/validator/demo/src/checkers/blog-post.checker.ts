@@ -19,6 +19,10 @@ export type Title = string;
  */
 export type Description = string;
 
+/**
+ * Used for content classification
+ *
+ */
 export interface TagsSchema {
   /**
    * @minItems 1

@@ -1,3 +1,6 @@
+description: |
+  Used for content classification
+
 properties:
   tags:
     type: array

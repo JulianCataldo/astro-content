@@ -4,6 +4,7 @@ import addFormats from 'ajv-formats';
 import path from 'node:path';
 import jsf from 'json-schema-faker';
 import { set, get, cloneDeep } from 'lodash-es';
+import type { JSONSchema7 } from 'json-schema';
 /* ========================================================================== */
 
 const ajv = new Ajv({
@@ -12,12 +13,9 @@ const ajv = new Ajv({
 });
 addFormats(ajv);
 
-type GenericFrontmatter = Record<string, unknown>;
+export type GenericFrontmatter = Record<string, unknown>;
 
-export async function itemChecker<T>(
-  item: GenericFrontmatter,
-  schemaPath: string,
-) {
+export async function itemChecker<T>(item: unknown, schemaPath: string) {
   const schema = await $RefParser
     .bundle(path.join(process.cwd(), schemaPath))
     .then((refSchema) => refSchema as AsyncSchema)
@@ -27,8 +25,12 @@ export async function itemChecker<T>(
 
   let clone: GenericFrontmatter = {};
 
-  if (typeof item === 'object') {
-    clone = cloneDeep(item);
+  if (
+    item &&
+    Object.entries(item).every(([key, val]) => typeof key === 'string' && val)
+  ) {
+    // TODO: Remove assertion
+    clone = cloneDeep(item as GenericFrontmatter);
     // NOTE: Remove Astro
     // {
     //   ...item,
@@ -67,12 +69,14 @@ export async function itemChecker<T>(
         set(clone, dotPath, dummy);
       });
     }
+  } else {
+    console.warn('Could not validate frontmatter section.');
   }
 
   return {
     result: clone as T,
     errors: validate.errors ? validate.errors : undefined,
     original: validate.errors ? item : undefined,
-    schema,
+    schema: schema as JSONSchema7,
   };
 }
