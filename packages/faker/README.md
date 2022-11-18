@@ -32,6 +32,16 @@ content-faker src/mocks/blog-post.template.md content/blog-posts 20
 
 #### Example template
 
+Gist:
+
+<div align="center">
+
+[<img width="400" src="https://res.cloudinary.com/dzfylx93l/image/upload/w_800/astro-content-faker-1_auxvod.png"/>](https://res.cloudinary.com/dzfylx93l/image/upload/astro-content-faker-1_auxvod.png)
+
+</div>
+
+Complete example:
+
 ````markdown
 ---
 '$schema': src/schemas/blog-post.schema.yaml
@@ -179,8 +189,7 @@ See also the **[demo project](./demo)** to play with.
 # Recommendations
 
 For the best experience, use these helpers in combination with [remark-lint-frontmatter-schema](https://github.com/JulianCataldo/remark-lint-frontmatter-schema).
-[![](https://res.cloudinary.com/dzfylx93l/image/upload/c_scale,w_1280/eslint-plugin-mdx-1.png)  
-](https://res.cloudinary.com/dzfylx93l/image/upload/eslint-plugin-mdx-1.png)
+[![](https://res.cloudinary.com/dzfylx93l/image/upload/c_scale,w_1280/eslint-plugin-mdx-1.png)](https://res.cloudinary.com/dzfylx93l/image/upload/eslint-plugin-mdx-1.png)
 
 ---
 
