@@ -1,0 +1,15 @@
+properties:
+  tags:
+    type: array
+    uniqueItems: true
+    minItems: 1
+    maxItems: 8
+    items:
+      type: string
+      enum:
+        - Music
+        - Video
+        - Development
+        - Cooking
+        - Gardening
+        - Sport
