@@ -96,8 +96,8 @@ console.log(blogPosts);
 <Code code={JSON.stringify(blogPosts, null, 2)} lang={'json'} />
 ```
 
-[![](https://res.cloudinary.com/dzfylx93l/image/upload/c_scale,w_1280/astro-content-validator-1_elm7qf.png)  
-](https://res.cloudinary.com/dzfylx93l/image/upload/astro-content-validator-1_elm7qf.png)
+[![](https://res.cloudinary.com/dzfylx93l/image/upload/c_scale,w_1280/astro-content-validator-1b_f9oe8o.png)  
+](https://res.cloudinary.com/dzfylx93l/image/upload/astro-content-validator-1b_f9oe8o.png)
 
 <details>
 <summary>🎊 Yields</summary>
