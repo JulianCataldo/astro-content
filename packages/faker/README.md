@@ -36,7 +36,7 @@ Gist:
 
 <div align="center">
 
-[<img width="400" src="https://res.cloudinary.com/dzfylx93l/image/upload/w_800/astro-content-faker-1_auxvod.png"/>](https://res.cloudinary.com/dzfylx93l/image/upload/astro-content-faker-1_auxvod.png)
+[<img width="640" src="https://res.cloudinary.com/dzfylx93l/image/upload/w_800/astro-content-faker-1_auxvod.png"/>](https://res.cloudinary.com/dzfylx93l/image/upload/astro-content-faker-1_auxvod.png)
 
 </div>
 
