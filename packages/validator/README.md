@@ -32,7 +32,7 @@ export default defineConfig({
 });
 ```
 
----
+—_OR_—
 
 Shallow clone demo project:
 

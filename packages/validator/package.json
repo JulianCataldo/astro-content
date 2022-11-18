@@ -1,6 +1,6 @@
 {
   "name": "@astro-content/validator",
-  "version": "0.0.0-alpha.14",
+  "version": "0.0.0-alpha.16",
   "description": "",
   "keywords": [
     "astro",
@@ -12,6 +12,12 @@
     "frontmatter",
     "markdown"
   ],
+  "homepage": "https://astro-content.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JulianCataldo/astro-content",
+    "directory": "packages/validator"
+  },
   "license": "ISC",
   "author": "Julian Cataldo",
   "type": "module",
