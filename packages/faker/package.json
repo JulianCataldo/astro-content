@@ -1,0 +1,48 @@
+{
+  "name": "@astro-content/faker",
+  "version": "0.0.0-alpha.16",
+  "description": "",
+  "keywords": [
+    "astro",
+    "astro-integration",
+    "json-schema",
+    "faker",
+    "frontmatter",
+    "markdown"
+  ],
+  "homepage": "https://astro-content.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JulianCataldo/astro-content",
+    "directory": "packages/faker"
+  },
+  "license": "ISC",
+  "author": "Julian Cataldo",
+  "type": "module",
+  "main": "./dist/index.js",
+  "bin": {
+    "content-faker": "./dist/cli.js"
+  },
+  "files": [
+    "dist/*"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist .turbo",
+    "dev": "tsc -w",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@apidevtools/json-schema-ref-parser": "^9.0.9",
+    "@faker-js/faker": "^7.6.0",
+    "json-schema-faker": "0.5.0-rcv.46",
+    "yaml": "^2.1.3"
+  },
+  "devDependencies": {
+    "typescript": "^4.8.4"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "// source": "./index.ts"
+}
