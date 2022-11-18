@@ -1,0 +1,25 @@
+title: Blog post
+
+allOf:
+  - $ref: ./tags.schema.yaml
+
+  - properties:
+      title:
+        title: Title
+        default: My untitled blog post
+        description: Used for SEO and tab title! # Will appear in auto-completion
+        type: string
+        minLength: 1
+        maxLength: 80
+
+      description:
+        title: Description
+        default: No description found.
+        description: Used for SEO
+        type: string
+        minLength: 100
+        maxLength: 300
+
+    required:
+      - title
+      - description
