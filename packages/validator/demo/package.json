@@ -1,0 +1,21 @@
+{
+  "name": "@example/basics",
+  "type": "module",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astro-content/validator": "latest",
+    "astro": "^1.6.10"
+  },
+  "devDependencies": {
+    "remark": "^14.0.2",
+    "remark-cli": "^11.0.0"
+  }
+}
