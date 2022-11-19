@@ -17,7 +17,7 @@ export async function getContent({
   paginate,
   sortBy,
   filters,
-  transforms,
+  transformers,
 }: GetContentProps): Promise<ModuleCollection> {
   if (!cache.has(globPath)) {
     const entries: Module[] = [];
@@ -25,7 +25,7 @@ export async function getContent({
 
     await Promise.all(
       files.map(async (f) => {
-        const mod = await getFile(f, transforms);
+        const mod = await getFile(f, transformers);
         if (mod) {
           entries.push(mod);
         }

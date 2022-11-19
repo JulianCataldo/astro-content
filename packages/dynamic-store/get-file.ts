@@ -10,7 +10,7 @@ const modules = new Map<string, Module>();
 
 export async function getFile(
   file: string,
-  transforms?: Transform[] | undefined,
+  transformers?: Transform[] | undefined,
 ) {
   if (modules.has(file)) {
     return modules.get(file);
@@ -37,11 +37,11 @@ export async function getFile(
       }
 
       if (content) {
-        if (transforms) {
-          console.log({ transforms });
-          transforms.forEach((transform) => {
+        if (transformers) {
+          console.log({ transformers });
+          transformers.forEach((transformer) => {
             if (typeof content === 'string') {
-              content = transform(content);
+              content = transformer(content);
             }
           });
         }

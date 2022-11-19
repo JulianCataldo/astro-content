@@ -33,5 +33,5 @@ export interface GetContentProps {
   sortBy?: string | undefined | false;
   filters?: Filters;
   tag?: string | undefined | false;
-  transforms?: Transform[] | undefined;
+  transformers?: Transform[] | undefined;
 }
