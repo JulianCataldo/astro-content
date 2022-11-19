@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+
+    "moduleResolution": "node",
+    // Enable JSON imports.
+    "resolveJsonModule": true,
+
+    "isolatedModules": true,
+
+    "types": ["node"],
+
+    "baseUrl": ".",
+
+    "allowSyntheticDefaultImports": true,
+
+    "noImplicitAny": true,
+
+    "strictNullChecks": true,
+
+    "importsNotUsedAsValues": "error",
+
+    "declaration": true,
+
+    "outDir": "./dist"
+  },
+
+  "include": ["./index.ts"]
+}
