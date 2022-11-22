@@ -1,3 +1,4 @@
+// @ts-ignore
 import chokidar from 'chokidar';
 /* ========================================================================== */
 
@@ -8,10 +9,10 @@ const watcher = chokidar.watch('**/*.{md,mdx}', { ignored: ['node_modules'] });
 const watchers: ((file: string) => void)[] = [];
 
 watcher.on('ready', () => {
-  console.log('Watcher is ready');
+  console.log('Dynamic store watcher is ready');
   watcher.on('all', (event, file) => {
     if (['add', 'change'].includes(event)) {
-      console.log(event);
+      console.log(`${event}: ${file}`);
       watchers.map((callback) => callback(file));
     }
   });

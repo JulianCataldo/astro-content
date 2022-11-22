@@ -1,5 +1,7 @@
-export { getFile } from './get-file';
-export { getContent } from './get-content';
+// @ts-expect-error
 
-export * from './get-related';
-export * from './types';
+export { getFile } from './get-file.js';
+export { getContent } from './get-content.js';
+
+export * from './get-related.js';
+export * from './types.js';
