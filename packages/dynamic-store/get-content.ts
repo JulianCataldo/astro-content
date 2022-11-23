@@ -2,88 +2,82 @@
 /* eslint-disable @typescript-eslint/require-await */
 // @ts-expect-error
 
-import glob from 'glob-promise';
-import { kebabCase } from 'lodash-es';
-import crypto from 'node:crypto';
+import globP from 'glob-promise';
 import { getFile } from './get-file.js';
 /* ·········································································· */
 import type {
-  GenericFrontmatter,
+  GenericData,
   GetContentProps,
   Module,
-  ModuleCollection,
-  Ufm,
+  ModulesEntries,
+  ValFn,
 } from './types';
 import { watchers } from './watcher.js';
 import { createHash } from './utils';
 /* ========================================================================== */
 
-const queriesCache = new Map<string, ModuleCollection<GenericFrontmatter>>();
+const queriesCache = new Map<string, ModulesEntries<GenericData>>();
 
 watchers.push(() => {
   queriesCache.clear();
 });
 
 /* —————————————————————————————————————————————————————————————————————————— */
-export async function getContent<
-  Validator extends (args: { frontmatter: unknown }) => ReturnType<Validator>,
->(
-  args: GetContentProps<GenericFrontmatter, Validator>,
-): Promise<ModuleCollection<GenericFrontmatter> | undefined>;
-// // /* ·········································································· */
-export async function getContent<
-  Validator extends (args: { frontmatter: unknown }) => ReturnType<Validator>,
->(
-  args: GetContentProps<Validator, Validator>,
-): Promise<ModuleCollection<Awaited<ReturnType<Validator>>> | undefined>;
+/* No validator */
+export async function getContent<Validator extends ValFn>(
+  args: GetContentProps<GenericData, Validator>,
+): Promise<ModulesEntries<GenericData>>;
 /* ·········································································· */
-export async function getContent<
-  Validator extends (args: {
-    frontmatter: unknown;
-  }) => ReturnType<Validator> | undefined,
->({
-  globPath,
+/* With validator */
+export async function getContent<Validator extends ValFn>(
+  args: GetContentProps<Validator, Validator>,
+): Promise<ModulesEntries<Awaited<ReturnType<Validator>>>>;
+/* ·········································································· */
+export async function getContent<Validator extends ValFn>({
+  glob,
   paginate,
-  sortBy,
-  order,
-  filters,
-  limit,
-  frontmatterValidator,
+  dataValidator,
   markdownTransformers,
+  modulesProcessor,
   useCache = true,
+  log = false,
 }: GetContentProps<Validator, Validator>): Promise<
-  ModuleCollection<Awaited<ReturnType<Validator>>> | undefined
+  ModulesEntries<Awaited<ReturnType<Validator>>>
 > {
-  const startTime = performance.now();
+  let startTime: number | undefined;
+  if (log) {
+    startTime = performance.now();
+  }
+
   const queryOptions = {
-    globPath,
+    glob,
     paginate,
-    sortBy,
-    filters,
-    limit,
-    frontmatterValidator,
+    dataValidator,
+    modulesProcessor,
     markdownTransformers,
   };
 
   const optionsHash = createHash(queryOptions);
 
   if (useCache && queriesCache.has(optionsHash)) {
-    // console.log('CACHE_HIT_GLOB', globPath);
+    if (log) console.log('Cache hit for ', glob);
     const fromCache = queriesCache.get(optionsHash)!;
-    // const endTime = performance.now();
-    // console.log('DURATION', endTime - startTime);
-    return fromCache as ModuleCollection<Awaited<ReturnType<Validator>>>;
+    if (log && startTime) {
+      const endTime = performance.now();
+      console.log('Total query duration: ', endTime - startTime);
+    }
+    return fromCache as ModulesEntries<Awaited<ReturnType<Validator>>>;
   }
+  if (log) console.log('No cache for ', glob);
 
-  console.log('NO_CACHE_HIT_GLOB', globPath);
-  const entries: Module<GenericFrontmatter>[] = [];
-  const files = await glob(globPath, { dot: true });
+  const entries: Module<GenericData>[] = [];
+  const files = await globP(glob, { dot: true });
   await Promise.all(
     files.map(async (filePath) => {
-      const module: Module<GenericFrontmatter> | undefined = await getFile({
-        filePath,
+      const module: Module<GenericData> | undefined = await getFile({
+        path: filePath,
         markdownTransformers,
-        frontmatterValidator,
+        dataValidator,
         useCache,
       });
       if (module) {
@@ -91,41 +85,22 @@ export async function getContent<
       }
     }),
   );
-  let result: Module<GenericFrontmatter | Awaited<ReturnType<Validator>>>[] =
-    entries;
+
+  let result: Module<GenericData | Awaited<ReturnType<Validator>>>[] = entries;
 
   let start: number | undefined;
   let end: number | undefined;
   let totalEntries = entries.length;
-  let totalPages = 1;
-  if (frontmatterValidator && sortBy) {
-    result = (result as Module<Awaited<ReturnType<Validator>>>[]).sort(
-      (a, b) => {
-        const prev = String(a.frontmatter?.[sortBy]);
-        const next = String(b.frontmatter?.[sortBy]);
-        const oi = order === 'ascending' ? 1 : -1;
-        return prev > next ? oi * -1 : oi;
-      },
-    );
-  }
-  if (frontmatterValidator && filters) {
-    Object.entries(filters).forEach(([name, value]) => {
-      if (value) {
-        result = result.filter(({ frontmatter }) => {
-          const propFilters = (frontmatter as Record<string, unknown>)[name];
-          return (
-            Array.isArray(propFilters) &&
-            propFilters.every((e) => typeof e === 'string') &&
-            propFilters.some((t: string) => kebabCase(t) === kebabCase(value))
-          );
-        });
-      }
+  let totalPages: number | undefined;
+
+  if (modulesProcessor) {
+    result = await modulesProcessor({
+      modules: result as Module<Awaited<ReturnType<Validator>>>[],
     });
   }
-  if (limit) {
-    result = result.slice(0, limit);
-  }
+
   totalEntries = result.length;
+
   if (paginate) {
     const current = paginate.currentPageNumber ?? 1;
     const count = paginate.entriesCount;
@@ -134,15 +109,21 @@ export async function getContent<
     totalPages = Math.floor(totalEntries / (end - start) + 1);
     result = result.slice(start, end);
   }
-  const moduleCollection: ModuleCollection<GenericFrontmatter> = {
-    entries: result as Module<GenericFrontmatter>[],
+
+  const moduleCollection: ModulesEntries<GenericData> = {
+    entries: result as Module<GenericData>[],
     totalEntries,
     start,
     end,
     totalPages,
   };
+
   queriesCache.set(optionsHash, moduleCollection);
-  const endTime = performance.now();
-  console.log('DURATION', endTime - startTime);
-  return moduleCollection as ModuleCollection<Awaited<ReturnType<Validator>>>;
+
+  if (log && startTime) {
+    const endTime = performance.now();
+    console.log('Total query duration: ', endTime - startTime);
+  }
+
+  return moduleCollection as ModulesEntries<Awaited<ReturnType<Validator>>>;
 }

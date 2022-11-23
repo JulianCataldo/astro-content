@@ -1,19 +1,17 @@
 // @ts-ignore
 
-export interface Ufm {
-  frontmatter: unknown;
-}
 export type GenericFrontmatter = Record<string, unknown>;
+export type GenericData = [] | GenericFrontmatter;
 
 export interface Module<T> {
-  filePath: string | undefined;
-  frontmatter: T | undefined;
-  content: string | undefined;
+  path: string | undefined;
+  data: T | undefined;
+  body: string | undefined;
   relationsCount?: number | undefined;
   [key: string]: unknown;
 }
 
-export interface ModuleCollection<T> {
+export interface ModulesEntries<T> {
   entries: Module<T>[] | undefined;
   totalEntries: number | undefined;
   totalPages: number | undefined;
@@ -22,26 +20,31 @@ export interface ModuleCollection<T> {
   [key: string]: unknown;
 }
 
-export type MarkdownTransformer = ({
-  markdown,
-}: {
-  markdown: string;
-}) => string;
+export type MarkdownTransformer = ({ body }: { body: string }) => string;
 
 export type Filters = Record<string, string | undefined | false> | undefined;
 
 export interface GetFileProps<Validator> {
-  filePath: string;
-  frontmatterValidator?: Validator | undefined;
+  path: string;
+  dataValidator?: Validator | undefined;
   markdownTransformers?: MarkdownTransformer[] | undefined;
   useCache?: boolean | undefined;
+  log?: boolean | undefined;
 }
 
 export interface GetContentProps<
   Validator,
-  SortKeys extends (...args: any) => any,
-> extends Omit<GetFileProps<Validator>, 'filePath'> {
-  globPath: string;
+  ValFn extends (...args: any) => any,
+  ValReturn = Module<Awaited<ReturnType<ValFn>>>,
+> extends Omit<GetFileProps<Validator>, 'path'> {
+  glob: string;
+
+  modulesProcessor?: ({
+    modules,
+  }: {
+    modules: ValReturn[];
+  }) => ValReturn[] | Promise<ValReturn[]>;
+
   paginate?:
     | {
         entriesCount: number;
@@ -49,9 +52,10 @@ export interface GetContentProps<
       }
     | undefined
     | false;
-  sortBy?: keyof Awaited<ReturnType<SortKeys>> | undefined;
-  order?: 'ascending' | 'descending' | undefined;
-  filters?: Filters;
-  tag?: string | undefined;
-  limit?: number | undefined;
 }
+
+export interface ValArgs {
+  data: unknown;
+  path: string;
+}
+export type ValFn = (args: ValArgs) => any;

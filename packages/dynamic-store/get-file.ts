@@ -1,37 +1,30 @@
 // @ts-expect-error
-/* eslint-disable max-lines */
 
 import yaml from 'yaml';
-import path from 'node:path';
+import nPath from 'node:path';
 import fs from 'node:fs/promises';
 import { cloneDeep } from 'lodash-es';
 /* ·········································································· */
-import type { Module, GenericFrontmatter, GetFileProps, Ufm } from './types';
+import type { Module, GenericData, GetFileProps, ValFn } from './types';
 import { watchers } from './watcher.js';
 import { createHash } from './utils';
 /* ========================================================================== */
 
 interface QueryStore {
-  module: Module<GenericFrontmatter>;
-  filePath: string;
+  module: Module<GenericData>;
+  path: string;
 }
 const queriesCache = new Map<string, QueryStore>();
 
-function basicInternalFmValidation(
-  fm: unknown,
-): GenericFrontmatter | undefined {
-  if (
-    fm !== null &&
-    typeof fm === 'object' &&
-    !Array.isArray(fm) &&
-    Object.entries(fm).length > 0
-  ) {
-    return fm as GenericFrontmatter;
+function basicInternalDataValidation(
+  incoming: unknown,
+): GenericData | undefined {
+  if (incoming !== null && typeof incoming === 'object') {
+    return incoming as GenericData;
   }
   return undefined;
 }
-
-// From https://github.com/jxson/front-matter/blob/master/index.js
+/* From https://github.com/jxson/front-matter/blob/master/index.js */
 const platform = typeof process !== 'undefined' ? process.platform : '';
 const optionalByteOrderMark = '\\ufeff?';
 const fmPattern =
@@ -42,104 +35,112 @@ const fmPattern =
 
 /* —————————————————————————————————————————————————————————————————————————— */
 export async function getFile(
-  args: GetFileProps<GenericFrontmatter>,
-): Promise<Module<GenericFrontmatter> | undefined>;
+  args: GetFileProps<GenericData>,
+): Promise<Module<GenericData> | undefined>;
 /* ·········································································· */
 export async function getFile<
-  Validator extends (
-    args: Ufm,
-  ) => (Promise<ReturnType<Validator>> | ReturnType<Validator>) | undefined,
+  Validator extends ValFn,
   AwaitedValidator = Awaited<ReturnType<Validator>>,
 >(args: GetFileProps<Validator>): Promise<Module<AwaitedValidator> | undefined>;
 /* ·········································································· */
 export async function getFile<
-  Validator extends (
-    args: Ufm,
-  ) => (Promise<ReturnType<Validator>> | ReturnType<Validator>) | undefined,
+  Validator extends ValFn,
   AwaitedValidator = Awaited<ReturnType<Validator>>,
 >({
   //
-  filePath,
+  path,
   markdownTransformers,
   /* This is the trick */
-  frontmatterValidator = undefined,
+  dataValidator = undefined,
   useCache = true,
+  log = false,
 }: GetFileProps<Validator>): Promise<
-  Module<AwaitedValidator | GenericFrontmatter> | undefined
+  Module<AwaitedValidator | GenericData> | undefined
 > {
   const queryOptions = {
-    filePath,
+    path,
     markdownTransformers,
-    frontmatterValidator,
+    dataValidator,
   };
   const optionsHash = createHash(queryOptions);
 
   if (useCache && queriesCache.has(optionsHash)) {
-    // console.log('CACHE_HIT_FILE', filePath);
+    if (log) console.log('Cache hit for ', path);
     return queriesCache.get(optionsHash)!.module;
   }
-  // console.log('NO_CACHE_HIT_FILE', filePath);
+  if (log) console.log('No cache for ', path);
 
-  let fmRaw: string | undefined;
-  let content: string | undefined;
+  let rawFrontmatter: string | undefined;
+  let body: string | undefined;
 
   const result = await fs
-    .readFile(path.join(process.cwd(), filePath), 'utf8')
+    .readFile(nPath.join(process.cwd(), path), 'utf8')
     .then(async (md) => {
-      let frontmatter: GenericFrontmatter | undefined;
+      let data: GenericData | undefined;
 
       const regex = new RegExp(fmPattern, 'm');
       const match = regex.exec(md);
 
       if (match) {
-        fmRaw = match[match.length - 1].replace(/^\s+|\s+$/g, '');
-        content = md.replace(match[0], '');
-      } else {
-        content = md;
+        const fmWithFences = match[match.length - 1];
+        rawFrontmatter = fmWithFences.replace(/^\s+|\s+$/g, '');
+        body = md.replace(match[0], '');
       }
 
-      if (fmRaw) {
+      if (rawFrontmatter) {
         try {
-          const unknownFm = yaml.parse(fmRaw) as unknown;
-          const valFm = basicInternalFmValidation(unknownFm);
-          frontmatter = cloneDeep(valFm);
-        } catch (e) {
-          console.log(e);
-        }
-      }
-      if (frontmatter && frontmatterValidator) {
-        try {
-          const validatedFm = await frontmatterValidator({ frontmatter });
-          if (validatedFm) {
-            frontmatter = validatedFm;
+          const unknownFm = yaml.parse(rawFrontmatter) as unknown;
+          const validData = basicInternalDataValidation(unknownFm);
+          if (validData) {
+            data = cloneDeep(validData);
+          } else {
+            console.warn('Invalid incoming data for ', path);
           }
         } catch (e) {
-          console.log(e);
+          console.warn(e);
         }
       }
-      if (content) {
-        if (markdownTransformers) {
+      if (data && dataValidator) {
+        try {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+          data = await dataValidator({ data, path });
+          // console.log({ data });
+          if (data && Object.entries(data).length === 0) {
+            data = undefined;
+          }
+        } catch (e) {
+          console.warn(e);
+        }
+      }
+      if (body !== undefined) {
+        if (body.trim() === '') {
+          body = undefined;
+        }
+        if (markdownTransformers && body) {
           markdownTransformers.forEach((transformer) => {
-            if (typeof content === 'string') {
-              content = transformer({ markdown: content });
+            if (typeof body === 'string') {
+              body = transformer({ body });
             }
           });
         }
-        const mod: Module<GenericFrontmatter> = {
-          filePath,
-          frontmatter,
-          content,
+        if (!data && !body) {
+          return undefined;
+        }
+        const module: Module<GenericData> = {
+          path,
+          data,
+          body,
         };
         queriesCache.set(optionsHash, {
-          module: mod,
-          filePath,
+          module,
+          path,
         });
-        return mod;
+        return module;
       }
       return undefined;
     })
     .catch((e) => {
-      console.log(e);
+      console.warn(e);
       return undefined;
     });
 
@@ -148,7 +149,7 @@ export async function getFile<
 
 watchers.push((file) => {
   queriesCache.forEach((query, key) => {
-    if (query.filePath === file) {
+    if (query.path === file) {
       queriesCache.delete(key);
     }
   });
