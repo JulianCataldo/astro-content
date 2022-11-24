@@ -59,8 +59,8 @@ export async function getFile<
 > {
   const queryOptions = {
     path,
-    markdownTransformers,
-    dataValidator,
+    dataValidator: dataValidator?.toString(),
+    markdownTransformers: markdownTransformers?.toString(),
   };
   const optionsHash = createHash(queryOptions);
 

@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/require-await */
 // @ts-expect-error
 
 import globP from 'glob-promise';
@@ -49,15 +47,14 @@ export async function getContent<Validator extends ValFn>({
     startTime = performance.now();
   }
 
-  const queryOptions = {
+  const queryMemo = {
     glob,
     paginate,
-    dataValidator,
-    modulesProcessor,
-    markdownTransformers,
+    dataValidator: dataValidator?.toString(),
+    modulesProcessor: modulesProcessor?.toString(),
+    markdownTransformers: markdownTransformers?.toString(),
   };
-
-  const optionsHash = createHash(queryOptions);
+  const optionsHash = createHash(queryMemo);
 
   if (useCache && queriesCache.has(optionsHash)) {
     if (log) console.log('Cache hit for ', glob);
