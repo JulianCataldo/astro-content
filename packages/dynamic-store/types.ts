@@ -1,13 +1,18 @@
-// @ts-ignore
+// @ts-expect-error
 
 export type GenericFrontmatter = Record<string, unknown>;
-export type GenericData = [] | GenericFrontmatter;
+export type GenericData = unknown[] | GenericFrontmatter;
 
 export interface Module<T> {
-  path: string | undefined;
+  path: string;
+  normalizedPath: string;
+  fileType: string;
+  fileBaseName: string;
+  directory: string;
+
   data: T | undefined;
   body: string | undefined;
-  relationsCount?: number | undefined;
+
   [key: string]: unknown;
 }
 
@@ -30,16 +35,25 @@ export interface GetFileProps<Validator> {
   markdownTransformers?: MarkdownTransformer[] | undefined;
   useCache?: boolean | undefined;
   log?: boolean | undefined;
+
+  matcherGlob: any;
+  matcherName: any;
 }
 
 export interface GetContentProps<
+  Sources,
   Validator,
   ValFn extends (...args: any) => any,
   ValReturn = Module<Awaited<ReturnType<ValFn>>>,
-> extends Omit<GetFileProps<Validator>, 'path'> {
-  glob: string;
+> extends Omit<
+    GetFileProps<Validator>,
+    'path' | 'matcherGlob' | 'matcherName'
+  > {
+  sources: Required<Sources>;
 
-  modulesProcessor?: ({
+  useFileCache?: boolean | undefined;
+
+  modulesHandler?: ({
     modules,
   }: {
     modules: ValReturn[];
@@ -52,10 +66,15 @@ export interface GetContentProps<
       }
     | undefined
     | false;
+
+  limit?: number | undefined;
 }
 
-export interface ValArgs {
+export interface ValArgs<Sources> {
   data: unknown;
   path: string;
+  pathParts: string[];
+  matcherName: keyof Sources | undefined;
+  matcherGlob: Sources[keyof Sources] | undefined;
 }
-export type ValFn = (args: ValArgs) => any;
+export type ValFn<Sources> = (args: ValArgs<Sources>) => any;

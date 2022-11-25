@@ -46,7 +46,7 @@
   "devDependencies": {
     "typescript": "^4.8.4"
   },
-  "publishConfig": {
+  "// publishConfig": {
     "access": "public"
   },
   "// source": "./index.ts"

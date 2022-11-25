@@ -4,6 +4,11 @@ import yaml from 'yaml';
 import nPath from 'node:path';
 import fs from 'node:fs/promises';
 import { cloneDeep } from 'lodash-es';
+import {
+  basicInternalDataValidation,
+  fmPattern,
+  getFileInfos,
+} from './file-loader';
 /* ·········································································· */
 import type { Module, GenericData, GetFileProps, ValFn } from './types';
 import { watchers } from './watcher.js';
@@ -16,40 +21,25 @@ interface QueryStore {
 }
 const queriesCache = new Map<string, QueryStore>();
 
-function basicInternalDataValidation(
-  incoming: unknown,
-): GenericData | undefined {
-  if (incoming !== null && typeof incoming === 'object') {
-    return incoming as GenericData;
-  }
-  return undefined;
-}
-/* From https://github.com/jxson/front-matter/blob/master/index.js */
-const platform = typeof process !== 'undefined' ? process.platform : '';
-const optionalByteOrderMark = '\\ufeff?';
-const fmPattern =
-  `^(${optionalByteOrderMark}(= yaml =|---)` +
-  `$([\\s\\S]*?)` +
-  `^(?:\\2|\\.\\.\\.)\\s*` +
-  `$${platform === 'win32' ? '\\r?' : ''}(?:\\n)?)`;
-
 /* —————————————————————————————————————————————————————————————————————————— */
 export async function getFile(
   args: GetFileProps<GenericData>,
 ): Promise<Module<GenericData> | undefined>;
 /* ·········································································· */
 export async function getFile<
-  Validator extends ValFn,
+  Validator extends ValFn<any>,
   AwaitedValidator = Awaited<ReturnType<Validator>>,
 >(args: GetFileProps<Validator>): Promise<Module<AwaitedValidator> | undefined>;
 /* ·········································································· */
 export async function getFile<
-  Validator extends ValFn,
+  Validator extends ValFn<any>,
   AwaitedValidator = Awaited<ReturnType<Validator>>,
 >({
   //
   path,
   markdownTransformers,
+  matcherName = undefined,
+  matcherGlob = undefined,
   /* This is the trick */
   dataValidator = undefined,
   useCache = true,
@@ -102,9 +92,11 @@ export async function getFile<
       }
       if (data && dataValidator) {
         try {
+          const pathParts = path.split('/');
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-          data = await dataValidator({ data, path });
-          // console.log({ data });
+          const infos = { path, pathParts, matcherGlob, matcherName };
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+          data = await dataValidator({ data, ...infos });
           if (data && Object.entries(data).length === 0) {
             data = undefined;
           }
@@ -130,6 +122,7 @@ export async function getFile<
           path,
           data,
           body,
+          ...getFileInfos(path),
         };
         queriesCache.set(optionsHash, {
           module,
