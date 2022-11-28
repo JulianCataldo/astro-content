@@ -1,144 +1,24 @@
 // @ts-expect-error
 
-import yaml from 'yaml';
 import nPath from 'node:path';
 import fs from 'node:fs/promises';
-import { cloneDeep } from 'lodash-es';
-import {
-  basicInternalDataValidation,
-  fmPattern,
-  getFileInfos,
-} from './file-loader';
+import { getFileInfos, parseMd } from './file-loader';
 /* ·········································································· */
-import type { Module, GenericData, GetFileProps, ValFn } from './types';
+import type {
+  Module,
+  GetFileProps,
+  GenericModule,
+  GetFileReturn,
+} from './types';
 import { watchers } from './watcher.js';
 import { createHash } from './utils';
 /* ========================================================================== */
 
 interface QueryStore {
-  module: Module<GenericData>;
+  module: GenericModule;
   path: string;
 }
 const queriesCache = new Map<string, QueryStore>();
-
-/* —————————————————————————————————————————————————————————————————————————— */
-export async function getFile(
-  args: GetFileProps<GenericData>,
-): Promise<Module<GenericData> | undefined>;
-/* ·········································································· */
-export async function getFile<
-  Validator extends ValFn<any>,
-  AwaitedValidator = Awaited<ReturnType<Validator>>,
->(args: GetFileProps<Validator>): Promise<Module<AwaitedValidator> | undefined>;
-/* ·········································································· */
-export async function getFile<
-  Validator extends ValFn<any>,
-  AwaitedValidator = Awaited<ReturnType<Validator>>,
->({
-  //
-  path,
-  markdownTransformers,
-  matcherName = undefined,
-  matcherGlob = undefined,
-  /* This is the trick */
-  dataValidator = undefined,
-  useCache = true,
-  log = false,
-}: GetFileProps<Validator>): Promise<
-  Module<AwaitedValidator | GenericData> | undefined
-> {
-  const queryOptions = {
-    path,
-    dataValidator: dataValidator?.toString(),
-    markdownTransformers: markdownTransformers?.toString(),
-  };
-  const optionsHash = createHash(queryOptions);
-
-  if (useCache && queriesCache.has(optionsHash)) {
-    if (log) console.log('Cache hit for ', path);
-    return queriesCache.get(optionsHash)!.module;
-  }
-  if (log) console.log('No cache for ', path);
-
-  let rawFrontmatter: string | undefined;
-  let body: string | undefined;
-
-  const result = await fs
-    .readFile(nPath.join(process.cwd(), path), 'utf8')
-    .then(async (md) => {
-      let data: GenericData | undefined;
-
-      const regex = new RegExp(fmPattern, 'm');
-      const match = regex.exec(md);
-
-      if (match) {
-        const fmWithFences = match[match.length - 1];
-        rawFrontmatter = fmWithFences.replace(/^\s+|\s+$/g, '');
-        body = md.replace(match[0], '');
-      }
-
-      if (rawFrontmatter) {
-        try {
-          const unknownFm = yaml.parse(rawFrontmatter) as unknown;
-          const validData = basicInternalDataValidation(unknownFm);
-          if (validData) {
-            data = cloneDeep(validData);
-          } else {
-            console.warn('Invalid incoming data for ', path);
-          }
-        } catch (e) {
-          console.warn(e);
-        }
-      }
-      if (data && dataValidator) {
-        try {
-          const pathParts = path.split('/');
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-          const infos = { path, pathParts, matcherGlob, matcherName };
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-          data = await dataValidator({ data, ...infos });
-          if (data && Object.entries(data).length === 0) {
-            data = undefined;
-          }
-        } catch (e) {
-          console.warn(e);
-        }
-      }
-      if (body !== undefined) {
-        if (body.trim() === '') {
-          body = undefined;
-        }
-        if (markdownTransformers && body) {
-          markdownTransformers.forEach((transformer) => {
-            if (typeof body === 'string') {
-              body = transformer({ body });
-            }
-          });
-        }
-        if (!data && !body) {
-          return undefined;
-        }
-        const module: Module<GenericData> = {
-          path,
-          data,
-          body,
-          ...getFileInfos(path),
-        };
-        queriesCache.set(optionsHash, {
-          module,
-          path,
-        });
-        return module;
-      }
-      return undefined;
-    })
-    .catch((e) => {
-      console.warn(e);
-      return undefined;
-    });
-
-  return result;
-}
 
 watchers.push((file) => {
   queriesCache.forEach((query, key) => {
@@ -147,3 +27,117 @@ watchers.push((file) => {
     }
   });
 });
+
+/* —————————————————————————————————————————————————————————————————————————— */
+
+export const parse = <T, D>(
+  module: Module<any, unknown>,
+  {
+    source,
+    // rawBody,
+    body = undefined,
+    data,
+  }: {
+    source?: T;
+    body?: string | undefined;
+    data: D | undefined;
+  },
+): Module<T, D> => {
+  const parsedModule: Module<T, D> = {
+    ...(module as Module<T, D>),
+    source,
+    body,
+    data: (data ?? {}) as D,
+  };
+  return parsedModule;
+};
+
+/* —————————————————————————————————————————————————————————————————————————— */
+
+export async function getFile<
+  Sources extends Record<string, string>,
+  CustomModule extends Module<any, any>,
+  ModuleType = CustomModule extends Module<any, any>
+    ? /* No handler defined */
+      GenericModule
+    : /* With handler parsed module return type */
+      CustomModule,
+>({
+  path,
+  moduleHandler = undefined,
+  source = undefined,
+  glob = undefined,
+
+  useCache = true,
+  log = false,
+}: //
+
+GetFileProps<Sources, ModuleType>): GetFileReturn<ModuleType | undefined> {
+  //
+
+  const queryOptions = {
+    path,
+    moduleHandler: moduleHandler?.toString(),
+  };
+  const optionsHash = createHash(queryOptions);
+
+  if (useCache && queriesCache.has(optionsHash)) {
+    if (log) console.log('Cache hit for:', path, optionsHash);
+    return queriesCache.get(optionsHash)!.module as ModuleType;
+  }
+  if (log) console.log('No cache for:', path, optionsHash);
+
+  const result = await fs
+    .readFile(nPath.join(process.cwd(), path), 'utf8')
+    .then(async (markdownFileContent) => {
+      const { body, data } = parseMd(markdownFileContent);
+
+      const genericModule: GenericModule | CustomModule = {
+        data: {},
+        source: undefined,
+        body,
+        glob,
+        path: getFileInfos(path),
+      };
+
+      if (data) {
+        if (Object.entries(data).length !== 0) {
+          genericModule.data = data;
+        }
+
+        if (moduleHandler) {
+          let customModule: ModuleType = genericModule as ModuleType;
+
+          try {
+            customModule = await moduleHandler({
+              module: genericModule,
+              parse,
+              source: source ?? genericModule.path.baseName,
+              glob,
+            });
+
+            return customModule;
+          } catch (e) {
+            console.warn(e);
+          }
+        }
+      }
+
+      if (!data && !body) {
+        return undefined;
+      }
+
+      return genericModule as ModuleType;
+    })
+    .catch((e) => {
+      console.warn(e);
+      return undefined;
+    });
+
+  queriesCache.set(optionsHash, {
+    module: result as GenericModule,
+    path,
+  });
+
+  return result;
+}

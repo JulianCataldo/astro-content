@@ -2,57 +2,46 @@
 
 import globP from 'glob-promise';
 import { getFile } from './get-file.js';
-/* ·········································································· */
-import type {
-  GenericData,
-  GetContentProps,
-  Module,
-  ModulesEntries,
-  ValFn,
-} from './types';
 import { watchers } from './watcher.js';
 import { createHash } from './utils';
+/* ·········································································· */
+import type {
+  GetContentProps,
+  GetContentReturn,
+  MatcherKeyValTuple,
+  GenericModule,
+  Module,
+  ModulesEntries,
+} from './types';
 /* ========================================================================== */
 
-const queriesCache = new Map<string, ModulesEntries<GenericData>>();
+const queriesCache = new Map<string, ModulesEntries<GenericModule>>();
 
 watchers.push(() => {
   queriesCache.clear();
 });
 
 /* —————————————————————————————————————————————————————————————————————————— */
-/* No validator */
+
 export async function getContent<
   Sources extends Record<string, string>,
-  Validator extends ValFn<Sources>,
->(
-  args: GetContentProps<Sources, GenericData, Validator>,
-): Promise<ModulesEntries<GenericData>>;
-/* ·········································································· */
-/* With validator */
-export async function getContent<
-  Sources extends Record<string, string>,
-  Validator extends ValFn<Sources>,
->(
-  args: GetContentProps<Sources, Validator, Validator>,
-): Promise<ModulesEntries<Awaited<ReturnType<Validator>>>>;
-/* ·········································································· */
-export async function getContent<
-  Sources extends Record<string, string>,
-  Validator extends ValFn<Sources>,
+  CustomModule extends Module<any, any>,
+  ModuleType = CustomModule extends Module<any, any>
+    ? /* No handler defined */
+      GenericModule
+    : /* With handler parsed module return type */
+      CustomModule,
 >({
   sources,
-  dataValidator,
-  markdownTransformers,
-  modulesHandler,
+  moduleHandler = undefined,
+  modulesListHandler = undefined,
+
   useCache = true,
   useFileCache = true,
-  limit = undefined,
-  paginate,
   log = false,
-}: GetContentProps<Sources, Validator, Validator>): Promise<
-  ModulesEntries<Awaited<ReturnType<Validator>>>
-> {
+
+  paginate,
+}: GetContentProps<Sources, ModuleType>): GetContentReturn<ModuleType> {
   let startTime: number | undefined;
   if (log) {
     startTime = performance.now();
@@ -61,40 +50,41 @@ export async function getContent<
   const queryMemo = {
     sources,
     paginate,
-    dataValidator: dataValidator?.toString(),
-    modulesHandler: modulesHandler?.toString(),
-    markdownTransformers: markdownTransformers?.toString(),
+    moduleHandler: moduleHandler?.toString(),
+    modulesListHandler: modulesListHandler?.toString(),
   };
   const optionsHash = createHash(queryMemo);
 
   if (useCache && queriesCache.has(optionsHash)) {
-    if (log) console.log('Cache hit for ', optionsHash);
+    if (log) console.log('Cache hit for batch:', optionsHash);
+
     const fromCache = queriesCache.get(optionsHash)!;
+
     if (log && startTime) {
       const endTime = performance.now();
       console.log('Total query duration: ', endTime - startTime);
     }
-    return fromCache as ModulesEntries<Awaited<ReturnType<Validator>>>;
+
+    return fromCache as ModulesEntries<ModuleType>;
   }
-  if (log) console.log('No cache for ', optionsHash);
+  if (log) console.log('No cache for batch:', optionsHash);
 
-  const entries: Module<GenericData>[] = [];
+  const entries: ModuleType[] = [];
 
-  // const filesPath: string[] = [];
   await Promise.all(
     Object.entries(sources).map(
-      async ([matcher, glob]) =>
-        typeof glob === 'string' &&
+      async ([name, glob]: MatcherKeyValTuple<Sources>) =>
         globP(glob, { dot: true }).then(async (filesPath) =>
           Promise.all(
             filesPath.map(async (filePath) => {
-              const module: Module<GenericData> | undefined = await getFile({
+              const module: ModuleType | undefined = await getFile({
                 path: filePath,
-                markdownTransformers,
-                dataValidator,
-                matcherName: matcher,
-                matcherGlob: String(glob),
+                moduleHandler,
                 useCache: useFileCache,
+                log,
+
+                source: name,
+                glob,
               });
               if (module) {
                 entries.push(module);
@@ -105,47 +95,48 @@ export async function getContent<
     ),
   );
 
-  let result: Module<GenericData | Awaited<ReturnType<Validator>>>[] = entries;
-
+  let result: ModuleType[] | undefined = entries;
   let start: number | undefined;
   let end: number | undefined;
   let totalEntries = entries.length;
   let totalPages: number | undefined;
 
-  if (modulesHandler) {
-    result = await modulesHandler({
-      modules: result as Module<Awaited<ReturnType<Validator>>>[],
+  if (modulesListHandler) {
+    result = await modulesListHandler({
+      modules: result,
     });
   }
+  totalEntries = result?.length ?? 0;
 
-  totalEntries = result.length;
-
-  if (limit) {
-    result = result.slice(0, limit);
-  }
-  if (paginate) {
+  if (result && paginate) {
     const current = paginate.currentPageNumber ?? 1;
     const count = paginate.entriesCount;
+
     start = current === 0 ? current : current * count;
     end = current === 0 ? current + count : current * count + count;
     totalPages = Math.floor(totalEntries / (end - start) + 1);
+
     result = result.slice(start, end);
   }
 
-  const moduleCollection: ModulesEntries<GenericData> = {
-    entries: result as Module<GenericData>[],
+  const moduleCollection: ModulesEntries<ModuleType> = {
+    entries: result,
     start,
     end,
     totalPages,
     totalEntries,
   };
 
-  queriesCache.set(optionsHash, moduleCollection);
+  /* Since it is validated, we can store the resulting query as generic data */
+  queriesCache.set(
+    optionsHash,
+    moduleCollection as ModulesEntries<GenericModule>,
+  );
 
   if (log && startTime) {
     const endTime = performance.now();
     console.log('Total query duration: ', endTime - startTime);
   }
 
-  return moduleCollection as ModulesEntries<Awaited<ReturnType<Validator>>>;
+  return moduleCollection;
 }
