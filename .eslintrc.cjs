@@ -10,5 +10,5 @@ module.exports = {
    * https://github.com/JulianCataldo/web-garden/blob/develop/configs/eslint-all.cjs
    *
    * */
-  extends: ['./node_modules/@julian_cataldo/astro-configs/eslint-all.cjs'],
+  extends: ['./node_modules/webdev-configs/eslint-all.cjs'],
 };

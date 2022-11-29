@@ -7,5 +7,5 @@ module.exports = {
    * https://github.com/JulianCataldo/web-garden/blob/develop/configs/prettier-astro.cjs
    *
    * */
-  ...require('@julian_cataldo/astro-configs/prettier-astro.cjs'),
+  ...require('webdev-configs/prettier-astro.cjs'),
 };
