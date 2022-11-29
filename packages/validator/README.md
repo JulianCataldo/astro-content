@@ -21,13 +21,13 @@ pnpm astro add @astro-content/validator
 `pnpm i @astro-content/validator`, then add to your `astro.config.mjs`:
 
 ```js
-import { schemasToCheckers } from '@astro-content/validator';
+import contentValidator from '@astro-content/validator';
 
 export default defineConfig({
   // ...
   integrations: [
     //...
-    schemasToCheckers({ outDir: 'src/checkers' }),
+    contentValidator({ outDir: 'src/checkers' }),
   ],
 });
 ```

@@ -1,12 +1,13 @@
-import { generateChecker, generateAllCheckers } from './schema-to-validator';
-import { integration, type Settings } from './integration';
-import { itemChecker } from './validator';
+import { generateChecker, generateAllCheckers } from './schema-to-validator.js';
+import { integration, type Settings } from './integration.js';
+import { itemChecker } from './validator.js';
 
 export {
-  integration as schemasToCheckers,
   Settings,
   /* ———————————————————————————————————————————————————————————————————————— */
   itemChecker,
   generateChecker,
   generateAllCheckers,
 };
+
+export default integration;

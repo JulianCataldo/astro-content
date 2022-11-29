@@ -13,11 +13,11 @@ export interface Settings {
 }
 
 const integration = (settings: Settings = {}): AstroIntegration => ({
-  name: 'schemas-to-checkers',
+  name: 'content-validator',
   hooks: {
     'astro:server:setup': async ({ server }) => {
       const { generateChecker, generateAllCheckers } = await import(
-        './schema-to-validator'
+        './schema-to-validator.js'
       );
 
       await generateAllCheckers(settings.outDir);
