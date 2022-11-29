@@ -15,7 +15,7 @@ export interface Path {
   baseName: string;
   parts: string[];
   dir: string;
-  // file: string;
+
   language: string;
   original: string;
 }
@@ -26,7 +26,7 @@ export interface Module<Discriminator, DataType> {
   data: DataType;
   body: string | undefined;
 
-  source: Discriminator | undefined;
+  from: Discriminator | undefined;
 
   [key: string]: unknown;
 }
@@ -43,35 +43,31 @@ export interface ModulesEntries<ModuleType> {
 
 /* —————————————————————————————————————————————————————————————————————————— */
 
-export type MatcherKeyValTuple<Sources> = [
-  keyof Sources,
-  Sources[keyof Sources],
-];
-
 type ModuleParser = typeof parse;
 
-type ModuleHandler<Sources, Input> = ({
+type ModuleHandler<From, Glob, Input> = ({
   module,
 }: {
   readonly module: GenericModule;
   readonly parse: ModuleParser;
 
-  readonly source: keyof Sources;
-  readonly glob: Sources[keyof Sources] | undefined;
+  readonly from: From;
+  readonly glob: Glob;
 }) => Input | Promise<Input>;
 
 /* ·········································································· */
 
-export interface GetFileProps<Sources, Input> {
-  path: string;
+export interface GetFileProps<Input, UniquePath, From, Glob> {
+  baseDir?: string | undefined;
+  path: UniquePath;
 
   useCache?: boolean | undefined;
   log?: boolean | undefined;
 
-  moduleHandler?: ModuleHandler<Sources, Input> | undefined;
+  moduleHandler?: ModuleHandler<From, Glob, Input> | undefined;
 
-  readonly source?: keyof Sources | undefined;
-  readonly glob?: Sources[keyof Sources] | undefined;
+  readonly from?: From | undefined;
+  readonly glob?: Glob | undefined;
 }
 export type GetFileReturn<ModuleType> = Promise<ModuleType>;
 
@@ -95,8 +91,8 @@ type Paginate =
 
 /* ·········································································· */
 
-export interface GetContentProps<Sources, Input>
-  extends Omit<GetFileProps<Sources, Input>, 'path'> {
+export interface GetContentProps<Sources, Input, From, Glob>
+  extends Omit<GetFileProps<Input, undefined, From, Glob>, 'path'> {
   sources: Required<Sources>;
   useFileCache?: boolean | undefined;
 

@@ -8,7 +8,6 @@ import { createHash } from './utils';
 import type {
   GetContentProps,
   GetContentReturn,
-  MatcherKeyValTuple,
   GenericModule,
   Module,
   ModulesEntries,
@@ -25,13 +24,18 @@ watchers.push(() => {
 
 export async function getContent<
   Sources extends Record<string, string>,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   CustomModule extends Module<any, any>,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ModuleType = CustomModule extends Module<any, any>
     ? /* No handler defined */
       GenericModule
     : /* With handler parsed module return type */
       CustomModule,
+  From = keyof Sources,
+  Glob = Sources[keyof Sources],
 >({
+  baseDir = '',
   sources,
   moduleHandler = undefined,
   modulesListHandler = undefined,
@@ -41,7 +45,12 @@ export async function getContent<
   log = false,
 
   paginate,
-}: GetContentProps<Sources, ModuleType>): GetContentReturn<ModuleType> {
+}: GetContentProps<
+  Sources,
+  ModuleType,
+  From,
+  Glob
+>): GetContentReturn<ModuleType> {
   let startTime: number | undefined;
   if (log) {
     startTime = performance.now();
@@ -56,35 +65,40 @@ export async function getContent<
   const optionsHash = createHash(queryMemo);
 
   if (useCache && queriesCache.has(optionsHash)) {
+    // eslint-disable-next-line no-console
     if (log) console.log('Cache hit for batch:', optionsHash);
 
     const fromCache = queriesCache.get(optionsHash)!;
 
     if (log && startTime) {
       const endTime = performance.now();
+      // eslint-disable-next-line no-console
       console.log('Total query duration: ', endTime - startTime);
     }
 
     return fromCache as ModulesEntries<ModuleType>;
   }
+  // eslint-disable-next-line no-console
   if (log) console.log('No cache for batch:', optionsHash);
 
   const entries: ModuleType[] = [];
 
   await Promise.all(
     Object.entries(sources).map(
-      async ([name, glob]: MatcherKeyValTuple<Sources>) =>
-        globP(glob, { dot: true }).then(async (filesPath) =>
+      async ([from, glob]: [keyof Sources, Sources[keyof Sources]]) =>
+        globP(`${baseDir}/${glob}`, { dot: true }).then(async (filesPath) =>
           Promise.all(
             filesPath.map(async (filePath) => {
               const module: ModuleType | undefined = await getFile({
                 path: filePath,
+
                 moduleHandler,
+
+                from: from as From,
+                glob: glob as Glob,
+
                 useCache: useFileCache,
                 log,
-
-                source: name,
-                glob,
               });
               if (module) {
                 entries.push(module);
@@ -135,6 +149,7 @@ export async function getContent<
 
   if (log && startTime) {
     const endTime = performance.now();
+    // eslint-disable-next-line no-console
     console.log('Total query duration: ', endTime - startTime);
   }
 

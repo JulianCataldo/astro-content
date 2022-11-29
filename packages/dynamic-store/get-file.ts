@@ -31,23 +31,23 @@ watchers.push((file) => {
 /* —————————————————————————————————————————————————————————————————————————— */
 
 export const parse = <T, D>(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   module: Module<any, unknown>,
   {
-    source,
-    // rawBody,
+    from,
     body = undefined,
     data,
   }: {
-    source?: T;
+    from?: T;
     body?: string | undefined;
     data: D | undefined;
   },
 ): Module<T, D> => {
   const parsedModule: Module<T, D> = {
     ...(module as Module<T, D>),
-    source,
-    body,
-    data: (data ?? {}) as D,
+    from,
+    body: body ?? module.body,
+    data: data ?? (module.data as D),
   };
   return parsedModule;
 };
@@ -55,46 +55,54 @@ export const parse = <T, D>(
 /* —————————————————————————————————————————————————————————————————————————— */
 
 export async function getFile<
-  Sources extends Record<string, string>,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   CustomModule extends Module<any, any>,
+  UniquePath extends string,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ModuleType = CustomModule extends Module<any, any>
     ? /* No handler defined */
       GenericModule
     : /* With handler parsed module return type */
       CustomModule,
+  From = UniquePath,
+  Glob = undefined,
 >({
-  path,
+  baseDir = '',
+  from = undefined,
   moduleHandler = undefined,
-  source = undefined,
   glob = undefined,
+  path,
 
   useCache = true,
   log = false,
 }: //
 
-GetFileProps<Sources, ModuleType>): GetFileReturn<ModuleType | undefined> {
+GetFileProps<ModuleType, UniquePath, From, Glob>): GetFileReturn<
+  ModuleType | undefined
+> {
   //
-
   const queryOptions = {
-    path,
+    from,
     moduleHandler: moduleHandler?.toString(),
   };
   const optionsHash = createHash(queryOptions);
 
   if (useCache && queriesCache.has(optionsHash)) {
+    // eslint-disable-next-line no-console
     if (log) console.log('Cache hit for:', path, optionsHash);
     return queriesCache.get(optionsHash)!.module as ModuleType;
   }
+  // eslint-disable-next-line no-console
   if (log) console.log('No cache for:', path, optionsHash);
 
   const result = await fs
-    .readFile(nPath.join(process.cwd(), path), 'utf8')
+    .readFile(nPath.join(process.cwd(), baseDir, path), 'utf8')
     .then(async (markdownFileContent) => {
       const { body, data } = parseMd(markdownFileContent);
 
       const genericModule: GenericModule | CustomModule = {
         data: {},
-        source: undefined,
+        from: undefined,
         body,
         glob,
         path: getFileInfos(path),
@@ -112,12 +120,13 @@ GetFileProps<Sources, ModuleType>): GetFileReturn<ModuleType | undefined> {
             customModule = await moduleHandler({
               module: genericModule,
               parse,
-              source: source ?? genericModule.path.baseName,
-              glob,
+              from: (from ?? path) as From,
+              glob: glob as Glob,
             });
 
             return customModule;
           } catch (e) {
+            // eslint-disable-next-line no-console
             console.warn(e);
           }
         }
@@ -130,6 +139,7 @@ GetFileProps<Sources, ModuleType>): GetFileReturn<ModuleType | undefined> {
       return genericModule as ModuleType;
     })
     .catch((e) => {
+      // eslint-disable-next-line no-console
       console.warn(e);
       return undefined;
     });
