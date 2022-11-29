@@ -74,7 +74,7 @@ export async function itemChecker<T>(item: unknown, schemaPath: string) {
   }
 
   return {
-    result: clone as T,
+    data: clone as T,
     errors: validate.errors ? validate.errors : undefined,
     original: validate.errors ? item : undefined,
     schema: schema as JSONSchema7,
