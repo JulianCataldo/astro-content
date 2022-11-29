@@ -27,7 +27,9 @@ export async function itemChecker<T>(item: unknown, schemaPath: string) {
 
   if (
     item &&
-    Object.entries(item).every(([key, val]) => typeof key === 'string' && val)
+    Object.entries(item).every(
+      ([key, val]) => typeof key === 'string' && val !== undefined,
+    )
   ) {
     // TODO: Remove assertion
     clone = cloneDeep(item as GenericFrontmatter);
