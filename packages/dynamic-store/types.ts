@@ -43,9 +43,9 @@ export interface ModulesEntries<ModuleType> {
 
 /* —————————————————————————————————————————————————————————————————————————— */
 
-type ModuleParser = typeof parse;
+export type ModuleParser = typeof parse;
 
-type ModuleHandler<From, Glob, Input> = ({
+export type ModuleHandler<From, Glob, Input> = ({
   module,
 }: {
   readonly module: GenericModule;
@@ -73,7 +73,7 @@ export type GetFileReturn<ModuleType> = Promise<ModuleType>;
 
 /* —————————————————————————————————————————————————————————————————————————— */
 
-type ModulesListHandler<Input> =
+export type ModulesListHandler<Input> =
   | (({
       modules,
     }: {
@@ -81,7 +81,7 @@ type ModulesListHandler<Input> =
     }) => Promise<Input[] | undefined> | Input[] | undefined)
   | undefined;
 
-type Paginate =
+export type Paginate =
   | {
       entriesCount: number;
       currentPageNumber: number | undefined;

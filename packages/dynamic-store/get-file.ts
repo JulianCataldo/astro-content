@@ -2,7 +2,7 @@
 
 import nPath from 'node:path';
 import fs from 'node:fs/promises';
-import { getFileInfos, parseMd } from './file-loader';
+import { getFileInfos, parseMd } from './file-loader.js';
 /* ·········································································· */
 import type {
   Module,
@@ -11,7 +11,7 @@ import type {
   GetFileReturn,
 } from './types';
 import { watchers } from './watcher.js';
-import { createHash } from './utils';
+import { createHash } from './utils.js';
 /* ========================================================================== */
 
 interface QueryStore {

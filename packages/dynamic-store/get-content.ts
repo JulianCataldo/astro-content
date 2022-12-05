@@ -3,7 +3,7 @@
 import globP from 'glob-promise';
 import { getFile } from './get-file.js';
 import { watchers } from './watcher.js';
-import { createHash } from './utils';
+import { createHash } from './utils.js';
 /* ·········································································· */
 import type {
   GetContentProps,
