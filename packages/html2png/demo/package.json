@@ -1,0 +1,17 @@
+{
+	"name": "@astro-content--example/html2png",
+	"type": "module",
+	"version": "0.0.1",
+	"private": true,
+	"scripts": {
+		"dev": "astro dev",
+		"start": "astro dev",
+		"build": "astro build",
+		"preview": "astro preview",
+		"astro": "astro"
+	},
+	"dependencies": {
+		"@astro-content/html2png": "^0.0.0",
+		"astro": "^1.9.0"
+	}
+}
