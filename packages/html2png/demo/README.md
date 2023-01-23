@@ -2,6 +2,49 @@
 npm i @astro-content/html2png
 ```
 
+## Interface
+
+```ts
+export declare function toBase64URL(buffer: Uint8Array): string;
+export declare function html2png({
+	markup,
+	fonts,
+	width,
+	height,
+	objectURL,
+}: {
+	markup: ReturnType<typeof html>;
+	fonts?: SatoriOptions['fonts'];
+	width?: number;
+	height?: number;
+	objectURL?: boolean;
+}): Promise<{
+	png: Uint8Array;
+	svg: string;
+	url: string | undefined;
+	responses: {
+		png: readonly [
+			Uint8Array,
+			{
+				readonly status: 200;
+				readonly headers: {
+					readonly 'Content-Type': 'image/png';
+				};
+			},
+		];
+		svg: readonly [
+			string,
+			{
+				readonly status: 200;
+				readonly headers: {
+					readonly 'Content-Type': 'image/svg';
+				};
+			},
+		];
+	};
+}>;
+```
+
 # Astro Starter Kit: Minimal
 
 ```
