@@ -1,4 +1,4 @@
-import { html2png, toBase64URL } from './generate-thumbnail.js';
+import { html2png, toBase64URL } from './html2png.js';
 
 export { html2png, toBase64URL };
 

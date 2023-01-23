@@ -36,14 +36,14 @@ export async function html2png({
 	const svg = await satori(m, {
 		width,
 		height,
-
+		//
 		fonts: fonts ?? [
 			{
 				name: 'Roboto',
 				data:
 					// await fs.readFile('./SourceSans3-Regular.otf.woff'),
 					await fetch(
-						'http://localhost:3000/SourceSans3-Regular.otf.woff',
+						'http://localhost:3000/open-sans-all-400-normal.woff',
 					).then((r) => r.arrayBuffer()),
 				weight: 400,
 				style: 'normal',

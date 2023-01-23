@@ -1,3 +1,5 @@
+*.woff
+
 # build output
 dist/
 
