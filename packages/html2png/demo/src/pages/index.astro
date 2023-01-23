@@ -26,6 +26,7 @@ const styles = {
 };
 
 const title = 'Mars';
+const fromEndpoint = '/open-graph/default.png';
 ---
 
 <Layout>
@@ -39,6 +40,11 @@ const title = 'Mars';
 
 		<h1>From browser (image blob)</h1>
 		<img id="from-browser" />
+	</section>
+
+	<section>
+		<h1>From static endpoint (<a href={fromEndpoint}>{fromEndpoint}</a>)</h1>
+		<iframe src={fromEndpoint}></iframe>
 	</section>
 
 	<template id="markup">
@@ -86,6 +92,12 @@ const title = 'Mars';
 <style>
 	input {
 		font-size: 4rem;
+	}
+
+	iframe {
+		border: 10px dashed grey;
+		width: 1200px;
+		height: 630px;
 	}
 
 	body {

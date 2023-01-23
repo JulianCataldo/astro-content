@@ -1,16 +1,30 @@
-import { Resvg, initWasm } from '@resvg/resvg-wasm';
-// import fs from 'node:fs/promises';
+/* NOTE: Could offer the option to speed things up with native lib. */
 // import { Resvg } from '@resvg/resvg-js';
-
+import { Resvg, initWasm } from '@resvg/resvg-wasm';
 import satori, { SatoriOptions } from 'satori';
 import type { html } from 'satori-html';
 /* ========================================================================== */
 
-// FIXME: Top level await bug
+// FIXME: Top level await bug?
 let inited = false;
 async function init() {
-	await initWasm(fetch('https://unpkg.com/@resvg/resvg-wasm/index_bg.wasm'));
-	inited = true;
+	/* NODE */
+	if (typeof process === 'object') {
+		const fs = await import('fs/promises');
+		const path = await import('path');
+		const p = path.join(
+			process.cwd(),
+			'./node_modules/@resvg/resvg-wasm/index_bg.wasm',
+		);
+		const m = await fs.readFile(p);
+		await initWasm(m);
+		inited = true;
+	} else if (typeof window === 'object') {
+		/* BROWSER */
+		/* NOTE: Could be sourced from public, Vite URL, etc. */
+		await initWasm(fetch('https://unpkg.com/@resvg/resvg-wasm/index_bg.wasm'));
+		inited = true;
+	}
 }
 export function toBase64URL(buffer: Uint8Array) {
 	const url = URL.createObjectURL(new Blob([buffer], { type: 'image/png' }));
@@ -22,13 +36,11 @@ export async function html2png({
 	fonts,
 	width = 1200,
 	height = 630,
-	objectURL = false,
 }: {
 	markup: ReturnType<typeof html>;
 	fonts?: SatoriOptions['fonts'];
 	width?: number;
 	height?: number;
-	objectURL?: boolean;
 }) {
 	if (!inited) await init();
 
@@ -68,8 +80,6 @@ export async function html2png({
 	return {
 		png: pngBuffer,
 		svg,
-
-		url: objectURL ? toBase64URL(pngBuffer) : undefined,
 
 		responses: {
 			png: [

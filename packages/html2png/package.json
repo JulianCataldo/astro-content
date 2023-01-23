@@ -1,6 +1,6 @@
 {
 	"name": "@astro-content/html2png",
-	"version": "0.0.0",
+	"version": "0.0.0-d",
 	"description": "",
 	"keywords": [
 		"experimental"
@@ -26,6 +26,7 @@
 		"satori-html": "^0.3.2"
 	},
 	"devDependencies": {
+		"@types/react": "^18.0.27",
 		"@types/yoga-layout": "^1.9.4",
 		"tsx": "^3.12.2"
 	},
