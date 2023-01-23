@@ -8,12 +8,10 @@
 		"start": "astro dev",
 		"build": "astro build",
 		"preview": "astro preview",
-		"astro": "astro",
-		"postinstall": "cp ./node_modules/@fontsource/open-sans/files/open-sans-all-400-normal.woff ./public"
+		"astro": "astro"
 	},
 	"dependencies": {
-		"@astro-content/html2png": "^0.0.0",
-		"@fontsource/open-sans": "^4.5.14",
+		"@astro-content/html2png": "0.0.0-b",
 		"astro": "^1.9.0"
 	}
 }

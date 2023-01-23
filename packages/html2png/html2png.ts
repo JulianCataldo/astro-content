@@ -37,13 +37,20 @@ export async function html2png({
 		width,
 		height,
 		//
-		fonts: fonts ?? [
+		fonts: fonts ?? /* Fallback to basic font */ [
 			{
 				name: 'Roboto',
 				data:
+					/* Alternative methods… */
+					// await import(
+					// 	'/node_modules/@fontsource/open-sans/files/open-sans-all-400-normal.woff?raw'
+					// ),
 					// await fs.readFile('./SourceSans3-Regular.otf.woff'),
+					// await fetch(
+					// 	'http://localhost:3000/SourceSans3-Regular.otf.woff',
+					// ).then((r) => r.arrayBuffer()),
 					await fetch(
-						'http://localhost:3000/open-sans-all-400-normal.woff',
+						'https://unpkg.com/typeface-source-sans-pro@1.1.13/files/source-sans-pro-400.woff',
 					).then((r) => r.arrayBuffer()),
 				weight: 400,
 				style: 'normal',
