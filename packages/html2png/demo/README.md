@@ -4,6 +4,8 @@ npm i @astro-content/html2png
 
 ## Interface
 
+<!--  -->
+
 ```ts
 export declare function toBase64URL(buffer: Uint8Array): string;
 export declare function html2png({
@@ -11,17 +13,14 @@ export declare function html2png({
 	fonts,
 	width,
 	height,
-	objectURL,
 }: {
 	markup: ReturnType<typeof html>;
 	fonts?: SatoriOptions['fonts'];
 	width?: number;
 	height?: number;
-	objectURL?: boolean;
 }): Promise<{
 	png: Uint8Array;
 	svg: string;
-	url: string | undefined;
 	responses: {
 		png: readonly [
 			Uint8Array,
