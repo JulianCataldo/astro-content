@@ -1,0 +1,35 @@
+{
+	"name": "@astro-content/html2png",
+	"version": "0.0.0",
+	"description": "",
+	"keywords": [
+		"experimental"
+	],
+	"license": "ISC",
+	"author": "Julian Cataldo",
+	"type": "module",
+	"main": "./dist/index.js",
+	"// bin": {},
+	"files": [
+		"./dist/*"
+	],
+	"scripts": {
+		"build": "tsc",
+		"clean": "rm -rf dist .turbo",
+		"dev": "tsc -w",
+		"test": "echo \"Error: no test specified\" &amp;&amp; exit 0"
+	},
+	"dependencies": {
+		"@resvg/resvg-wasm": "^2.2.0",
+		"lit": "^2.6.1",
+		"satori": "^0.1.1",
+		"satori-html": "^0.3.2"
+	},
+	"devDependencies": {
+		"@types/yoga-layout": "^1.9.4",
+		"tsx": "^3.12.2"
+	},
+	"publishConfig": {
+		"access": "public"
+	}
+}

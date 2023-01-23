@@ -1,0 +1,37 @@
+{
+	"compilerOptions": {
+		"target": "ESNext",
+		"module": "ESNext",
+
+		"moduleResolution": "node",
+
+		"resolveJsonModule": true,
+
+		"isolatedModules": true,
+
+		// "types": [
+		// 	//
+		// 	"astro/client",
+		// 	"node"
+		// ],
+
+		"baseUrl": ".",
+
+		// "noEmit": true,
+
+		"allowSyntheticDefaultImports": true,
+
+		"noImplicitAny": true,
+
+		"strictNullChecks": true,
+
+		"importsNotUsedAsValues": "error",
+
+		// "noEmitOnError": false,
+		"outDir": "./dist",
+
+		"declaration": true
+	},
+
+	"include": ["index.ts" /* , "cli.ts" */]
+}
