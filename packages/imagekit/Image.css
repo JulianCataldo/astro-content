@@ -1,0 +1,53 @@
+/* Overlay the placeholder */
+picture[data-is-lazy] {
+	position: relative;
+	width: var(--width);
+	height: var(--height);
+}
+
+picture[data-is-lazy] img {
+	display: block;
+	width: var(--width);
+	height: var(--height);
+	/* object-fit: cover; */
+}
+
+/* No JavaScript */
+picture > img:nth-of-type(1),
+picture > img:nth-of-type(2) {
+	display: none;
+}
+
+/* With JavaScript */
+picture[data-has-js] > img:nth-of-type(1),
+picture[data-has-js] > img:nth-of-type(2) {
+	display: initial;
+}
+
+/* Overlay the placeholder */
+picture[data-has-js][data-is-lazy] {
+	position: relative;
+}
+
+picture[data-has-js][data-is-lazy] > img:nth-of-type(2) {
+	position: absolute;
+	left: 0;
+	filter: blur(7px);
+	opacity: 1;
+	transition: opacity 3s;
+}
+
+/* Loading transitions */
+
+picture[data-has-js][data-is-lazy] img:nth-of-type(1) {
+	opacity: 0;
+	transition: opacity 1s;
+}
+
+picture[data-has-js][data-is-lazy] img:nth-of-type(1)[data-is-loaded] {
+	opacity: 1;
+}
+
+picture[data-has-js][data-is-lazy] img:nth-of-type(1)[data-is-loaded] ~ img {
+	opacity: 0;
+}

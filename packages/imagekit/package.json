@@ -1,0 +1,67 @@
+{
+	"name": "@astro-content/imagekit",
+	"version": "0.0.1-c",
+	"description": "Integrate the ImageKit media provider in your Astro projects. Auto-synchronization, CLI, Component.",
+	"keywords": [
+		"medias",
+		"astro-integration",
+		"experimental",
+		"astro-component",
+		"astro",
+		"image",
+		"ssr",
+		"transformation",
+		"cloud",
+		"imagekit",
+		"responsive",
+		"transitions",
+		"synchronization",
+		"cloudinary",
+		"component",
+		"indexing",
+		"api",
+		"cli",
+		"urls",
+		"helpers"
+	],
+	"license": "ISC",
+	"author": "Julian Cataldo",
+	"type": "module",
+	"main": "./dist/index.js",
+	"bin": {
+		"imagekit": "./dist/cli.js"
+	},
+	"files": [
+		"./dist/*",
+		"./Image.css",
+		"./Image.astro"
+	],
+	"scripts": {
+		"build": "tsc",
+		"clean": "rm -rf dist .turbo",
+		"dev": "tsc -w",
+		"test": "echo \"Error: no test specified\" &amp;&amp; exit 0"
+	},
+	"dependencies": {
+		"@commander-js/extra-typings": "^9.4.1",
+		"cli-highlight": "^2.1.11",
+		"commander": "^9.4.1",
+		"dotenv": "^16.0.3",
+		"glob-promise": "^5.0.0",
+		"imagekit": "^4.1.2",
+		"kleur": "^4.1.5",
+		"yaml": "^2.2.1"
+	},
+	"devDependencies": {
+		"@types/node": "^18.11.18",
+		"astro": "^1.9.2"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"typedoc": {
+		"entryPoint": "./index.ts",
+		"readmeFile": "README.md",
+		"displayName": "imagekit"
+	}
+}

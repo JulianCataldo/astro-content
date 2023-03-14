@@ -1,0 +1,40 @@
+---
+import loadImageInstance from './image-instances.js';
+import { attributes, Props as BaseProps } from './Image.Props.js';
+
+export interface Props extends BaseProps, astroHTML.JSX.HTMLAttributes {}
+
+/* ========================================================================== */
+
+const props = Astro.props as Props;
+
+const {
+	b64Placeholder,
+	width,
+	sourceSet,
+	sizes: responsiveSizes,
+} = await loadImageInstance(props);
+
+const dimensionsCSSVars = { '--width': width /* , '--height': height */ };
+---
+
+<picture {...{ [attributes.isLazy]: true }} style={{ ...dimensionsCSSVars }}>
+	<script is:inline define:vars={{ hasJs: attributes.hasJs }}>
+		document.currentScript.parentElement.toggleAttribute(hasJs);
+	</script>
+
+	<noscript>
+		<img src={b64Placeholder} srcset={sourceSet} sizes={responsiveSizes} />
+	</noscript>
+
+	<img srcset={sourceSet} sizes={responsiveSizes} />
+	<img src={b64Placeholder} />
+</picture>
+
+<script>
+	import './Image.client.js';
+</script>
+
+<style>
+	@import './Image.css';
+</style>
